@@ -1,0 +1,94 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root{
+  --brand-900: #000D1A;
+  --brand-800: #002A53;
+  --brand-700: #00478C;
+  --brand-600: #0064C5;
+  --brand-500: #0082FF;
+  --brand-400: #399EFF;
+  --brand-300: #72BAFF;
+  --brand-200: #ABD6FF;
+  --brand-100: #E5F3FF;
+
+  --accent-900: #0B0D0E;
+  --accent-800: #23282D;
+  --accent-700: #3B434C;
+  --accent-600: #535E6B;
+  --accent-500: #697A89;
+  --accent-400: #8B98A4;
+  --accent-300: #ADB6BF;
+  --accent-200: #CFD4DA;
+  --accent-100: #F1F2F4;
+}
+
+@font-face {
+  font-family: 'TeleNeo Thin';
+  src: url('assets/fonts/TeleNeoWeb-Thin.woff2') format('woff2'),
+    url('assets/fonts/TeleNeoWeb-Thin.woff') format('woff');
+}
+@font-face {
+  font-family: 'TeleNeo Thin Italic';
+  src: url('assets/fonts/TeleNeoWeb-ThinItalic.woff2') format('woff2'),
+    url('assets/fonts/TeleNeoWeb-ThinItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'TeleNeo Regular';
+  src: url('assets/fonts/TeleNeoWeb-Regular.woff2') format('woff2'),
+    url('assets/fonts/TeleNeoWeb-Regular.woff') format('woff');
+}
+@font-face {
+  font-family: 'TeleNeo Regular Italic';
+  src: url('assets/fonts/TeleNeoWeb-RegularItalic.woff2') format('woff2'),
+    url('assets/fonts/TeleNeoWeb-RegularItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'TeleNeo Medium';
+  src: url('assets/fonts/TeleNeoWeb-Medium.woff2') format('woff2'),
+    url('assets/fonts/TeleNeoWeb-Medium.woff') format('woff');
+}
+@font-face {
+  font-family: 'TeleNeo Medium Italic';
+  src: url('assets/fonts/TeleNeoWeb-MediumItalic.woff2') format('woff2'),
+    url('assets/fonts/TeleNeoWeb-MediumItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'TeleNeo Bold';
+  src: url('assets/fonts/TeleNeoWeb-Bold.woff2') format('woff2'),
+    url('assets/fonts/TeleNeoWeb-Bold.woff') format('woff');
+}
+@font-face {
+  font-family: 'TeleNeo Bold Italic';
+  src: url('assets/fonts/TeleNeoWeb-BoldItalic.woff2') format('woff2'),
+    url('assets/fonts/TeleNeoWeb-BoldItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'TeleNeo ExtraBold';
+  src: url('assets/fonts/TeleNeoWeb-ExtraBold.woff2') format('woff2'),
+    url('assets/fonts/TeleNeoWeb-ExtraBold.woff') format('woff');
+}
+@font-face {
+  font-family: 'TeleNeo ExtraBold Italic';
+  src: url('assets/fonts/TeleNeoWeb-ExtraBoldItalic.woff2') format('woff2'),
+    url('assets/fonts/TeleNeoWeb-ExtraBoldItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'TeleNeo Ultra';
+  src: url('assets/fonts/TeleNeoWeb-Ultra.woff2') format('woff2'),
+    url('assets/fonts/TeleNeoWeb-Ultra.woff') format('woff');
+}
+@font-face {
+  font-family: 'TeleNeo Ultra Italic';
+  src: url('assets/fonts/TeleNeoWeb-UltraItalic.woff2') format('woff2'),
+    url('assets/fonts/TeleNeoWeb-UltraItalic.woff') format('woff');
+}
