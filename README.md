@@ -2,11 +2,14 @@
 
 ## Setup
 
-1. Clone Git Project ```https://github.com/Squad-Mandalore/Frontend.git``` (Or SSH / Github CLI)  
-  
-  
+1. Clone Git Project ```https://github.com/Squad-Mandalore/Frontend.git``` Or SSH / Github CLI  
+
+*In case of access denied push, generate Personal access token or SSH Usage 
+
+```Profile > Settings > Developer Settings > Personal access token (classic)``` 
+
 2. Install all Modules (Requirement Node.js installed) ```npm install```  
-  
+
 
 3. You`re good to go!  
 
