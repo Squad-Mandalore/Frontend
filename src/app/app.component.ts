@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import {LoggerService} from "./shared/logger.service";
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,15 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'Squad-Mandalore-Frontend';
+
+  constructor(private logger: LoggerService) {
+  }
+
+  ngOnInit(): void {
+    this.logger.info("I need Help")
+
+  }
+
 }
