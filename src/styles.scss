@@ -19,7 +19,9 @@
   --accent-400: #8B98A4;
   --accent-300: #ADB6BF;
   --accent-200: #CFD4DA;
-  --accent-100: #F1F2F4;
+  --accent-150: #EEEEEE;
+  --accent-100: #F1F2F2;
+  --accent-50: #F9F9F9;
 }
 
 @font-face {
@@ -91,4 +93,12 @@
   font-family: 'TeleNeo Ultra Italic';
   src: url('assets/fonts/TeleNeoWeb-UltraItalic.woff2') format('woff2'),
     url('assets/fonts/TeleNeoWeb-UltraItalic.woff') format('woff');
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
 }
