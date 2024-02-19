@@ -2,27 +2,34 @@
 
 ## Setup
 
-1. Clone Git Project ```https://github.com/Squad-Mandalore/Frontend.git``` Or SSH / Github CLI  
+1. Clone Git Project ```https://github.com/Squad-Mandalore/Frontend.git``` Or SSH / Github CLI
 
-*In case of access denied push, generate Personal access token or SSH Usage 
+*In case of access denied push, generate Personal access token or SSH Usage
 
-```Profile > Settings > Developer Settings > Personal access token (classic)``` 
+```Profile > Settings > Developer Settings > Personal access token (classic)```
 
-2. Install all Modules (Requirement Node.js installed) ```npm install```  
+2. Install all Modules (Requirement Node.js installed) ```npm install```
 
 
-3. You`re good to go!  
+3. You`re good to go!
 
 
 ## Dependencies
 
-Already installed dependencies are:  
+Already installed dependencies are:
 
 - [ESLint](https://eslint.org/docs/latest/) and [angular-eslint/schematics](https://github.com/angular-eslint/angular-eslint) Code Convention and Style
 
 
 # Angular Introduction
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.9.
+>[!NOTE]
+>To use the local installed Angular CLI **all** `ng` commands have to be prefixed with `npx`
+<details>
+  <summary>Example</summary>
+
+  Run `npx ng serve` for a dev server.
+</details>
 
 ## Development server
 
