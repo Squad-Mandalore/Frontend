@@ -1,0 +1,78 @@
+<div id="card">
+    <div id="progress">
+        <div class="grid-item" id="icon">
+            <p>{{ user.firstname[0]}}{{ user.lastname[0] }}</p>
+        </div>
+        <svg *ngIf="progress" id="progress-bar" class="grid-item" style="transform:scale(1.4); padding:1px;" width="40" height="40" viewBox="0 0 50 50" fill="none" stroke-width="3" xmlns="http://www.w3.org/2000/svg">
+            <path
+              style="transform: scale(.96) translate(1px, 1px);"
+              [style.stroke]="progressColor()"
+              [style.stroke-dasharray]="circumference"
+              [style.stroke-dashoffset]="dashOffset()"
+              [style.transition]="'stroke-dashoffset 0.35s'"
+              fill="none"
+              d="M25 1A24 24 0 0 1 49 25 24 24 0 0 1 25 49 24 24 0 0 1 1 25 24 24 0 0 1 25 1"
+              stroke-linejoin="round"
+            />
+        </svg>
+    </div>
+    <div *ngIf="!showIconOnly" id="text-wrapper">
+        <p id="name">{{ user.firstname }}&nbsp;{{ user.lastname }}</p>
+        <p id="role">{{ user.type }}</p>
+    </div>
+</div>
+
+<style>
+    #progress{
+        display: grid;
+        place-items: center;
+        height: 40px;
+        width: 40px;
+    }
+    .grid-item{
+        grid-row-start: 1;
+        grid-row-end: 2;
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+    #name{
+        font-size: 16px;
+        font-family: "TeleNeo Bold";
+        width: 100%;
+        overflow: hidden;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+    }
+    #role{
+        font-size: 16px;
+        font-family: "TeleNeo Medium";
+        color: var(--accent-300);
+        overflow: hidden;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+    }
+    #card{
+        display: flex;
+        gap: 20px;
+        width: fit-content;
+        align-items: center;
+        height: 40px;
+    }
+    #icon{
+        background-color: var(--accent-150);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 100%;
+        font-family: "TeleNeo Bold";
+        font-size: 16px;
+    }
+    #text-wrapper{
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        max-width: 180px;
+    }
+</style>

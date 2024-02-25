@@ -334,3 +334,17 @@
 
 
 <router-outlet></router-outlet>
+<div id="wrapper">
+    <app-user-card [showIconOnly]="false" [progress]="60"></app-user-card>
+    <app-user-card [showIconOnly]="false"></app-user-card>
+    <app-user-card [showIconOnly]="true"></app-user-card>
+</div>
+
+<style>
+    #wrapper{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        background-color: white;
+    }
+</style>
