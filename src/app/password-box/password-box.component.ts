@@ -2,53 +2,54 @@ import { Component } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-password-box',
-  standalone: true,
-  imports: [],
-  templateUrl: './password-box.component.html',
-  styleUrl: './password-box.component.scss', 
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR, 
-      multi: true,
-      useExisting: PasswordBoxComponent
-    }
-  ]
+    selector: 'app-password-box',
+    standalone: true,
+    imports: [],
+    templateUrl: './password-box.component.html',
+    styleUrl: './password-box.component.scss',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: PasswordBoxComponent
+        }
+    ]
 
 })
 export class PasswordBoxComponent implements ControlValueAccessor {
 
-  disabled = false;
-  value: string = "";
-  onChange = (value:string) => {};
-  onTouched = () => {};
-  touched = false;
-  
-  constructor(){
+    disabled = false;
+    value!: string;
+    onChange = (value: string) => { };
+    onTouched = () => { };
+    touched = false;
 
-  }
+    constructor() {
 
-  registerOnChange(onChange: any) {
-    this.onChange = onChange;
-  }
+    }
 
-  registerOnTouched(onTouched: any) {
-    this.onTouched = onTouched;
-  }
+    registerOnChange(onChange: any) {
+        this.onChange = onChange;
+    }
 
-  setDisabledState(isDisabled: boolean) {
-    this.disabled = isDisabled;
-  }
+    registerOnTouched(onTouched: any) {
+        this.onTouched = onTouched;
+    }
 
-  writeValue(value: string): void {
-    this.value = value;
-  }
+    setDisabledState(isDisabled: boolean) {
+        this.disabled = isDisabled;
+    }
 
-  setBar(event: Event): void{
-    const passwordInput = document.getElementById('password');
-    const passwordStrengthFill = document.getElementById('password-strength-fill');
-    const passwordStrengthText = document.getElementById('password-strength-text');
-    const passwordLength = (<HTMLInputElement>passwordInput).value.length;
+    writeValue(value: string): void {
+        this.value = value;
+    }
+
+    onInput(value: string): void {
+        this.value = value;
+
+        const passwordStrengthFill = document.getElementById('password-strength-fill');
+        const passwordStrengthText = document.getElementById('password-strength-text');
+        const passwordLength = this.value.length;
 
         // Evaluate password strength
         let strength = '';
@@ -72,6 +73,8 @@ export class PasswordBoxComponent implements ControlValueAccessor {
 
         // Display password strength
         (<HTMLDivElement>passwordStrengthText).textContent = 'Passwortstärke: ' + strength;
+
+        this.onChange(this.value);
     }
 
 }
