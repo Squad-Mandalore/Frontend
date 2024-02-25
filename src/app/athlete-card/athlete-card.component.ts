@@ -10,9 +10,9 @@ import { UserCardComponent } from '../user-card/user-card.component';
   styleUrl: './athlete-card.component.scss'
 })
 export class AthleteCardComponent {
-  hasSwimmingCertificate=false;
-  numberGoldMedals=1;
-  numberSilverMedals=1;
-  numberBronzeMedals=1;
-  isActive=false;
+  hasSwimmingCertificate = false;
+  numberGoldMedals = 1;
+  numberSilverMedals = 1;
+  numberBronzeMedals = 1;
+  isActive = true;
 }

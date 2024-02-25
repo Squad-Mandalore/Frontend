@@ -1,5 +1,5 @@
 <div id="athlete-card" [ngClass]="{'isActive': isActive, 'isInactive': !isActive}">
-    <app-user-card></app-user-card>
+    <app-user-card [progress]="65" [medal]="'none'"></app-user-card>
     <div id="achievement-wrapper">
         <div *ngIf="hasSwimmingCertificate" class="border-right-grey medal-wrapper">
             <div id="blue" class="circle"></div>
