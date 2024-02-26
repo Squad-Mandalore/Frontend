@@ -3,7 +3,13 @@
     <div id="details">
         <p class="headline">Sportler-Übersicht</p>
         <div class="border-1px-grey width-full" id="first"></div>
-        <div class="border-1px-grey width-full" id="second"></div>
+        <div id="container-wrapper">
+            <div class="border-1px-grey width-full" id="second"></div>
+            <div id="container-wrapper-vertical">
+                <div class="border-1px-grey" id="third"></div>
+                <div class="border-1px-grey" id="fourth"></div>
+            </div>
+        </div>
         <div id="modal">
             <svg width="210" height="148" viewBox="0 0 210 148" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <rect width="210" height="148" fill="url(#pattern0)"/>
@@ -23,12 +29,31 @@
 </div>
  
 <style>
+    #container-wrapper{
+        display: flex;
+        gap: 20px;
+        height: 85%;
+        max-width: 100%;
+    }
+    #container-wrapper-vertical{
+        height: 100%;
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
     #first{
         height: 60px;
     }
     #second{
         height: 100%;
+        width: 70%;
     }
+    #third, #fourth{
+        height: 50%;
+        aspect-ratio: 1/1;
+    }
+
     #text-wrapper{
         display: grid;
         place-items: center;
