@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { SidebarComponentComponent } from '../sidebar-component/sidebar-component.component';
+import { NavbarBottomComponentComponent } from '../navbar-bottom-component/navbar-bottom-component.component';
 
 @Component({
   selector: 'app-dashboard-page',
   standalone: true,
-  imports: [SidebarComponentComponent],
+  imports: [SidebarComponentComponent, NavbarBottomComponentComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss'
 })

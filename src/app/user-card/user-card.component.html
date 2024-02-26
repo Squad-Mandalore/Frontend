@@ -9,7 +9,6 @@
               [style.stroke]="progressColor()"
               [style.stroke-dasharray]="circumference"
               [style.stroke-dashoffset]="dashOffset()"
-              [style.transition]="'stroke-dashoffset 0.35s'"
               fill="none"
               d="M25 1A24 24 0 0 1 49 25 24 24 0 0 1 25 49 24 24 0 0 1 1 25 24 24 0 0 1 25 1"
               stroke-linejoin="round"
@@ -23,6 +22,13 @@
 </div>
 
 <style>
+    @keyframes progress-bar {
+        from {stroke-dashoffset: 0;}
+        to {stroke-dashoffset: attr(dashoffset);}
+    }
+    #progressbar *{
+        animation: progress-bar 1s;
+    }
     #progress{
         display: grid;
         place-items: center;
