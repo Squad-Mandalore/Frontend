@@ -18,7 +18,7 @@
     </div>
     <div *ngIf="!showIconOnly" id="text-wrapper">
         <p id="name">{{ user.firstname }}&nbsp;{{ user.lastname }}</p>
-        <p id="role">{{ user.type }}</p>
+        <p id="role">{{ user.type === 'athlete' ? 'Sportler' : user.type }}</p>
     </div>
 </div>
 

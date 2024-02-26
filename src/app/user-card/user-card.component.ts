@@ -10,8 +10,21 @@ import { CommonModule } from "@angular/common"
 })
 export class UserCardComponent {
   @Input() showIconOnly: boolean = false;
-  @Input() progress: number = 0;
-  @Input() medal: string = 'none';
+  @Input() progress: number = this.getRandomNumber(); // 0
+  @Input() medal: string = this.getRandomMedalStatus(); // none
+
+  getRandomNumber() {
+    return Math.floor(Math.random() * 100) + 1;
+  }
+
+  getRandomMedalStatus() {
+    const medalStatusOptions = ["none", "gold", "silver", "bronze"];
+    const randomIndex = Math.floor(Math.random() * medalStatusOptions.length);
+    return medalStatusOptions[randomIndex];
+  }
+  
+
+  @Input() user!: User;
 
   circumference: number = 2 * Math.PI * 24;
 
@@ -24,7 +37,7 @@ export class UserCardComponent {
     return `var(--${this.medal})`;
   }
 
-  user = {
+  user_example = {
     id: 1,
     username: "KaySchulz42",
     email: "kay@schulz.de",
@@ -37,4 +50,12 @@ export class UserCardComponent {
     type: "Sportler",
     salt: ""
   }
+}
+
+
+interface User {
+  id: string,
+  firstname: string,
+  lastname: string,
+  type: string,
 }
