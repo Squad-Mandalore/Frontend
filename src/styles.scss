@@ -56,6 +56,14 @@ a{
   color: initial;
 }
 
+body{
+  margin: 0;
+  min-width: 100dvw;
+  max-width: 1920px;
+  min-height: 100dvh;
+  max-height: 1080p;
+}
+
 @font-face {
   font-family: 'TeleNeo Thin';
   src: url('assets/fonts/TeleNeoWeb-Thin.woff2') format('woff2'),
