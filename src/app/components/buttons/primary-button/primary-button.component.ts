@@ -1,7 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-primary-button',
+  standalone: true,
+  imports: [CommonModule],
   template: `
     <button class="primary-button" [ngClass]="{ 'with-icon': showIcon }">
       <ng-container *ngIf="showIcon">
@@ -15,6 +18,15 @@ import { Component, Input } from '@angular/core';
   `,
   styleUrls: ['./primary-button.component.scss'],
 })
+
+
 export class PrimaryButtonComponent {
   @Input() showIcon = true;
+  @Input() text: string = '';
+  @Input() icon: string = '';
+  @Output() buttonClick = new EventEmitter<void>();
+
+  onClick(): void {
+    this.buttonClick.emit();
+  }
 }
