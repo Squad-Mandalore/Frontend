@@ -1,0 +1,50 @@
+.quaternary-button {
+    padding: 12px 30px;
+    width: 39px;
+    height: 39px;
+    border-radius: 5px;
+    background-color: var(--accent-50);
+    color: #FFFFFF;
+    display: flex;
+    gap: 0px;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    font-family: "TeleNeo Medium";
+    font-size: 1.1rem;
+    transition: all 200ms;
+    cursor: pointer;
+    outline: 1px solid transparent;
+    outline-offset: 1px;
+    z-index: 1;
+  
+    &.with-icon {
+      padding: 12px 12px 12px 12px;
+      gap: 8px;
+    }
+  
+    &:hover {
+        z-index: 2;
+        &:before {
+            content: "Button";
+            position: absolute;
+            background-color: #000;
+            color: #fff;
+            border-radius: 5px;
+            padding: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 3;
+            top: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 200ms;
+        }
+
+        &:before {
+            opacity: 1;
+        }
+    }
+  }
+  

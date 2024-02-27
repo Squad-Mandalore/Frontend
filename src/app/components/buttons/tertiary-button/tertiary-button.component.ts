@@ -1,12 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-tertiary-button',
   standalone: true,
   imports: [],
-  templateUrl: './tertiary-button.component.html',
-  styleUrl: './tertiary-button.component.scss'
+  template: `
+    <button class="tertiary-button">
+      <span>{{ text }}</span>
+    </button>
+  `,
+  styleUrls: ['./tertiary-button.component.scss'],
 })
-export class TertiaryButtonComponent {
 
+
+export class TertiaryButtonComponent {
+  @Input() text: string = '';
 }
