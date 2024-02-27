@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IconComponent } from '../../icon/icon.component';
 
@@ -10,7 +10,7 @@ import { IconComponent } from '../../icon/icon.component';
     <button class="primary-button" [ngClass]="{ 'with-icon': showIcon }">
       <span>{{ text }}</span>
       <ng-container *ngIf="showIcon">
-        <app-icon [iconName]="iconName" [iconColor]="iconColor" [iconHeight]="'15px'" [iconWidth]="'15px'" [strokeWidth]="'2.5'"]></app-icon>
+        <app-icon [iconName]="iconName" [iconColor]="iconColor"></app-icon>
       </ng-container>
       <ng-content></ng-content>
     </button>
