@@ -1,0 +1,30 @@
+.secondary-button {
+    padding: 12px 30px;
+    width: 105px;
+    height: 39px;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    color: var(--accent-900);
+    display: flex;
+    gap: 0px;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--accent-200);
+    font-family: "TeleNeo Medium";
+    font-size: 1.1rem;
+    transition: all 200ms;
+    cursor: pointer;
+  
+    &.with-icon {
+      padding: 12px 22px 12px 14px;
+      gap: 8px;
+    }
+  
+    &:hover {
+      border-color: var(--brand-900);
+    }
+  
+    &:active {
+      background-color: var(--accent-50);
+    }
+  }
