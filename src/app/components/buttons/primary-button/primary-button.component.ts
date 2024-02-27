@@ -1,17 +1,16 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IconComponent } from '../../icon/icon.component';
 
 @Component({
   selector: 'app-primary-button',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, IconComponent],
   template: `
     <button class="primary-button" [ngClass]="{ 'with-icon': showIcon }">
+      <span>{{ text }}</span>
       <ng-container *ngIf="showIcon">
-        <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5 12H19" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M12 5L19 12L12 19" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <app-icon [iconName]="iconName" [iconColor]="iconColor" [iconHeight]="'15px'" [iconWidth]="'15px'" [strokeWidth]="'2.5'"]></app-icon>
       </ng-container>
       <ng-content></ng-content>
     </button>
@@ -21,12 +20,8 @@ import { CommonModule } from '@angular/common';
 
 
 export class PrimaryButtonComponent {
-  @Input() showIcon = true;
+  @Input() showIcon: Boolean = false;
   @Input() text: string = '';
-  @Input() icon: string = '';
-  @Output() buttonClick = new EventEmitter<void>();
-
-  onClick(): void {
-    this.buttonClick.emit();
-  }
+  @Input() iconName: string = '';
+  @Input() iconColor: string = "var(--accent-50)";
 }
