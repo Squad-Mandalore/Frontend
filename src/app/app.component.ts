@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { UserCardComponent } from './user-card/user-card.component';
-import { AthleteCardComponent } from './athlete-card/athlete-card.component';
+import { AlertComponent } from './alert/alert.component';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, UserCardComponent, AthleteCardComponent],
+  imports: [CommonModule, RouterOutlet, AlertComponent, ConfirmationModalComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
