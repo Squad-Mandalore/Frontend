@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { AlertComponent } from './alert/alert.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+import {LoggerService} from "./shared/logger.service";
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,15 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'Squad-Mandalore-Frontend';
+
+  constructor(private logger: LoggerService) {
+  }
+
+  ngOnInit(): void {
+    this.logger.info("I need Help")
+
+  }
+
 }

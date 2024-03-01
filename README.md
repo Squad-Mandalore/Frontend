@@ -2,21 +2,28 @@
 
 ## Setup
 
-1. Clone Git Project ```https://github.com/Squad-Mandalore/Frontend.git``` Or SSH / Github CLI
+1. Clone Git Project ```https://github.com/Squad-Mandalore/Frontend.git``` Or SSH / Github CLI  
 
-*In case of access denied push, generate Personal access token or SSH Usage
+*In case of access denied push, generate Personal access token or SSH Usage 
 
-```Profile > Settings > Developer Settings > Personal access token (classic)```
+```Profile > Settings > Developer Settings > Personal access token (classic)``` 
 
-2. Install all Modules (Requirement Node.js installed) ```npm install```
+2. Install all Modules (Requirement Node.js installed) ```npm install```  
 
+3. To install all OpenApi files that are needed in this Project, use
 
-3. You`re good to go!
+```npm run apigen``` *(this requires the Backend running on localhost)*
+
+or
+
+```npm run apigen-f``` *(this may uses an older version of the Backend-API)*
+
+4. You`re good to go!
 
 
 ## Dependencies
 
-Already installed dependencies are:
+Already installed dependencies are:  
 
 - [ESLint](https://eslint.org/docs/latest/) and [angular-eslint/schematics](https://github.com/angular-eslint/angular-eslint) Code Convention and Style
 
@@ -44,8 +51,10 @@ Run `ng generate component component-name` to generate a new component. You can 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Running unit tests
+The Unit Tests ***require*** Chrome / Chromium Web Browser installed.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).  
+
 
 ## Running end-to-end tests
 
