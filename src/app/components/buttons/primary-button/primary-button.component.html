@@ -1,1 +1,4 @@
-<p>primary-button works!</p>
+<button class="primary-button" (click)="activateLoader()" [ngClass]="{ 'with-icon': iconName }">
+    <span>{{ text }}</span>
+    <app-icon *ngIf="iconName" [iconName]="iconName" [iconColor]="iconColor"></app-icon>
+</button>

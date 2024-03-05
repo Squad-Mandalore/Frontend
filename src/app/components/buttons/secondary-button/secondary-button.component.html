@@ -1,1 +1,4 @@
-<p>secondary-button works!</p>
+<button class="secondary-button" [ngClass]="{'with-icon': iconName}">
+    <span>{{ text }}</span>
+    <app-icon *ngIf="iconName" [iconName]="iconName" [iconColor]="iconColor"></app-icon>
+</button>

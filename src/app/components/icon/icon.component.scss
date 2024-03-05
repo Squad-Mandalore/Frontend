@@ -1,0 +1,17 @@
+#icon-wrapper{
+    display: grid;
+    place-items: center;
+}
+
+.animate-rotate{
+    animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate{
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

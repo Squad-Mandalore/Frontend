@@ -4,11 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-tertiary-button',
   standalone: true,
   imports: [],
-  template: `
-    <button class="tertiary-button">
-      <span>{{ text }}</span>
-    </button>
-  `,
+  templateUrl: './tertiary-button.component.html',
   styleUrls: ['./tertiary-button.component.scss'],
 })
 

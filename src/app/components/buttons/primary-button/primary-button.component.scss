@@ -1,29 +1,33 @@
 .primary-button {
   padding: 12px 30px;
-  width: 105px;
+  min-width: 80px;
+  max-width: max-content;
   height: 39px;
   border-radius: 5px;
   background-color: var(--brand-500);
-  color: #FFFFFF;
+  color: var(--accent-0);
   display: flex;
-  gap: 0px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border: 0;
   font-family: "TeleNeo Medium";
   font-size: 1.1rem;
   transition: all 200ms;
   cursor: pointer;
-  outline: 1px solid transparent;
+  outline: 2px solid transparent;
   outline-offset: 1px;
 
   &.with-icon {
-    padding: 12px 22px 12px 14px;
-    gap: 8px;
+    padding: 12px 12px 12px 22px;
+    gap: 6px;
+  }
+
+  &.with-icon app-icon {
+    transform: scale(.6);
   }
 
   &:hover {
-    background-color: var(--brand-400);
+    outline-color: var(--brand-500);
   }
 
   &:active {

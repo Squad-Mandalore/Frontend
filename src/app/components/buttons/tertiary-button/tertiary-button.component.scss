@@ -1,12 +1,12 @@
 .tertiary-button {
     padding: 12px 30px;
-    width: 105px;
+    min-width: 80px;
+    max-width: max-content;
     height: 39px;
     border-radius: 5px;
-    background-color: #FFFFFF;
+    background-color: var(--accent-0);
     color: var(--accent-900);
     display: flex;
-    gap: 0px;
     justify-content: center;
     align-items: center;
     border: 0;
