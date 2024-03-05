@@ -1,34 +1,30 @@
 .secondary-button {
-    padding: 12px 30px;
-    min-width: 80px;
-    max-width: max-content;
-    height: 39px;
-    border-radius: 5px;
-    background-color: transparent;
-    color: var(--accent-900);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid var(--accent-200);
-    font-family: "TeleNeo Medium";
-    font-size: 1.1rem;
-    transition: all 200ms;
-    cursor: pointer;
-  
-    &.with-icon {
-      padding: 12px 12px 12px 22px;
-      gap: 6px;
-    }
-  
-    &.with-icon app-icon {
-      transform: scale(.6);
-    }
-  
-    &:hover {
-      border-color: var(--accent-900);
-    }
-  
-    &:active {
-      background-color: var(--accent-50);
-    }
+  padding: 12px 30px;
+  min-width: 80px;
+  max-width: max-content;
+  height: 39px;
+  border-radius: 5px;
+  background-color: transparent;
+  color: var(--accent-900);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--accent-200);
+  font-family: "TeleNeo Medium";
+  font-size: 1.1rem;
+  transition: all 200ms;
+  cursor: pointer;
+
+  &.with-icon {
+    padding: 12px 14px 12px 22px;
+    gap: 8px;
   }
+
+  &:hover {
+    border-color: var(--accent-900);
+  }
+
+  &:active {
+    background-color: var(--accent-50);
+  }
+}

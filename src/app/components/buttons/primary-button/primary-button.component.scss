@@ -18,14 +18,10 @@
   outline-offset: 1px;
 
   &.with-icon {
-    padding: 12px 12px 12px 22px;
-    gap: 6px;
+    padding: 12px 14px 12px 22px;
+    gap: 8px;
   }
-
-  &.with-icon app-icon {
-    transform: scale(.6);
-  }
-
+  
   &:hover {
     outline-color: var(--brand-500);
   }

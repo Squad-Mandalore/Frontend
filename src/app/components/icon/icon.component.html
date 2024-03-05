@@ -1,27 +1,27 @@
 <div [ngSwitch]="iconName" id="icon-wrapper">
 
-    <svg *ngSwitchCase="'user-plus'" class = "icon" [style.stroke]="iconColor" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M8.5 11C10.7091 11 12.5 9.20914 12.5 7C12.5 4.79086 10.7091 3 8.5 3C6.29086 3 4.5 4.79086 4.5 7C4.5 9.20914 6.29086 11 8.5 11Z" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M20 8V14" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M23 11H17" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg *ngSwitchCase="'user-plus'" class = "icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8.5 11C10.7091 11 12.5 9.20914 12.5 7C12.5 4.79086 10.7091 3 8.5 3C6.29086 3 4.5 4.79086 4.5 7C4.5 9.20914 6.29086 11 8.5 11Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M20 8V14" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M23 11H17" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
         
-    <svg *ngSwitchCase="'user-minus'" class = "icon" [style.stroke]="iconColor" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M8.5 11C10.7091 11 12.5 9.20914 12.5 7C12.5 4.79086 10.7091 3 8.5 3C6.29086 3 4.5 4.79086 4.5 7C4.5 9.20914 6.29086 11 8.5 11Z" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M23 11H17" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg *ngSwitchCase="'user-minus'" class = "icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8.5 11C10.7091 11 12.5 9.20914 12.5 7C12.5 4.79086 10.7091 3 8.5 3C6.29086 3 4.5 4.79086 4.5 7C4.5 9.20914 6.29086 11 8.5 11Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M23 11H17" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'loader'" class="icon animate-rotate" [style.stroke]="iconColor" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2V6" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M12 18V22" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M4.92999 4.92993L7.75999 7.75993" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M16.24 16.24L19.07 19.07" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M2 12H6" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M18 12H22" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M4.92999 19.07L7.75999 16.24" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M16.24 7.75993L19.07 4.92993" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg *ngSwitchCase="'loader'" class="icon animate-rotate" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2V6" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 18V22" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4.92999 4.92993L7.75999 7.75993" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M16.24 16.24L19.07 19.07" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 12H6" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M18 12H22" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4.92999 19.07L7.75999 16.24" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M16.24 7.75993L19.07 4.92993" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
         
         
