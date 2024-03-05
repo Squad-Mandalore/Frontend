@@ -15,4 +15,5 @@ export class SecondaryButtonComponent {
   @Input() text: string = '';
   @Input() iconName: string = '';
   @Input() iconColor: string = "var(--accent-900)";
+  @Input() description: string = '';
 }

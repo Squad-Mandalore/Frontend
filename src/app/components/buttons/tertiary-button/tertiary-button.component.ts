@@ -11,4 +11,5 @@ import { Component, Input } from '@angular/core';
 
 export class TertiaryButtonComponent {
   @Input() text: string = '';
+  @Input() description: string = '';
 }
