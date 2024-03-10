@@ -18,6 +18,7 @@ export class PrimaryButtonComponent {
   @Input() iconColor: string = "var(--accent-0)";
   @Input() showLoader: boolean = false;
   @Input() description: string = '';
+  @Input() minWidth: string = '80px';
   tempIcon : string = '';
 
   activateLoader(){
