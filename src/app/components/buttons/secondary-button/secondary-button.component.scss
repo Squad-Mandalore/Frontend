@@ -1,13 +1,12 @@
 .secondary-button {
   padding: 12px 30px;
-  min-width: 80px;
   max-width: max-content;
   height: 39px;
   border-radius: 5px;
   background-color: transparent;
   color: var(--accent-900);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   border: 1px solid var(--accent-200);
   font-family: "TeleNeo Medium";

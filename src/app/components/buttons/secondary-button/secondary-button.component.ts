@@ -16,4 +16,5 @@ export class SecondaryButtonComponent {
   @Input() iconName: string = '';
   @Input() iconColor: string = "var(--accent-900)";
   @Input() description: string = '';
+  @Input() minWidth: string = '80px';
 }
