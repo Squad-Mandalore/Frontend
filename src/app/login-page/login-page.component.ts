@@ -30,10 +30,4 @@ export class LoginPageComponent {
             //TODO redirect to Dashboard
         });
     }
-
-    test() {
-        this.athleteService.getAllAthletesAthletesAllGet().subscribe(token => {
-            console.log(token);
-        });
-    }
 }
