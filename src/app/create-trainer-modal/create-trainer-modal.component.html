@@ -1,7 +1,7 @@
 <div id="modal">
     <div id="modal-header">
         <p id="modal-headline">Neuen Trainer hinzufügen</p>
-        <span id="cross">&times;</span>
+        <app-icon id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
     </div>
     <div id="input-wrapper">
         <label class="label">
@@ -34,11 +34,7 @@
         </label>
     </div>
     <div id="modal-footer">
-        <button class="secondary-button" title="Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.">
-            <span>Abbrechen</span>
-        </button>
-        <button class="primary-button" title="Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.">
-            <span>Trainer hinzufügen</span>
-        </button>
+        <app-secondary-button [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+        <app-primary-button [text]="'Trainer hinzufügen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
     </div>
 </div>
