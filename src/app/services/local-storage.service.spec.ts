@@ -37,7 +37,7 @@ describe('LocalStorageService', () => {
 
     it('should set string and get data from localStorage', () => {
         const key = 'testKey';
-        const testData = 'Hello, World!';
+        const testData: string = 'Hello, World!';
 
         service.setItem(key, testData);
         const retrievedData = service.getItem(key);
