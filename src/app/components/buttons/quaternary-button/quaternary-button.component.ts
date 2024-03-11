@@ -20,4 +20,5 @@ export class QuaternaryButtonComponent {
   @Input() iconWidth: string = '15';
   @Input() iconHeight: string = '15';
   @Input() tooltipText: string = '';
+  @Input() backgroundColor: string ="var(--accent-50)";
 }
