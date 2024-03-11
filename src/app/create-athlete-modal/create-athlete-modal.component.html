@@ -1,0 +1,76 @@
+<div id="modal" xmlns="http://www.w3.org/1999/html">
+  <div id="modal-header">
+    <p id="modal-headline">Neuen Sportler hinzufügen</p>
+    <app-icon id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+  </div>
+    <div id="input-wrapper">
+      <ng-container *ngIf="showFirstPage">
+        <label class="label">
+          <p class="label-text">Benutzername</p>
+          <input class="input" type="text" name="benutzername" placeholder="Benutzername"/>
+        </label>
+        <div id="password-password-strength-wrapper">
+          <label class="label">
+            <p class="label-text">Password</p>
+            <input class="input" type="password" name="password" placeholder="Passwort"/>
+          </label>
+          <div id="progress-wrapper">
+            <div id="progress-bar" [style.width]="'50%'" [style.backgroundColor]="progressBarColor"></div>
+          </div>
+          <p id="password-strength-text">Passwortstärke: {{passwordStrength}}</p>
+        </div>
+        <label class="label">
+          <p class="label-text">E-Mail</p>
+          <input class="input" type="email" name="email" placeholder="E-Mail"/>
+        </label>
+      </ng-container>
+      <ng-container *ngIf="!showFirstPage">
+        <div id="name-input-wrapper">
+          <label class="label">
+            <p class="label-text">Vorname</p>
+            <input class="input" type="text" name="forename" placeholder="Vorname"/>
+          </label>
+          <label class="label">
+            <p class="label-text">Nachname</p>
+            <input class="input" type="text" name="lastname" placeholder="Nachname"/>
+          </label>
+        </div>
+        <div id="birth-input-wrapper">
+          <label class="label">
+              <p class="label-text">Geburtsdatum</p>
+              <input class="input" type="text" name="day" placeholder="Tag"/>
+          </label>
+          <label class="label">
+            <p class="label-text"> Monat</p>
+            <input class="input" type="text" name="month" placeholder="Monat"/>
+          </label>
+          <label class="label">
+            <p class="label-text"> Jahr </p>
+            <input class="input" type="text" name="year" placeholder="Jahr"/>
+          </label>
+        </div>
+        <div id="gender-input-wrapper">
+          <label class="label">
+            <p class="label-text"> Geschlecht </p>
+            <input class="input" type="button" value="Männlich"/>
+          </label>
+          <label class="label">
+            <p class="label-text"> Weiblich </p>
+            <input class="input" type="button" value="Weiblich"/>
+          </label>
+        </div>
+      </ng-container>
+    </div>
+  <div id="modal-footer">
+    <ng-container *ngIf="showFirstPage">
+      <app-secondary-button [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+      <app-primary-button (click)=onClickSwitchPage() [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
+    </ng-container>
+    <ng-container *ngIf="!showFirstPage">
+      <app-secondary-button (click)=onClickSwitchPage() [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+      <app-primary-button [text]="'Sportler hinzufügen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
+    </ng-container>
+  </div>
+</div>
+
+
