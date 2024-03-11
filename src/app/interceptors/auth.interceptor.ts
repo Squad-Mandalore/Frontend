@@ -13,11 +13,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         console.log('refresh')
         return next(req).pipe(
             catchError((error) => {
-                if (error.status === 401) {
-                    //TODO logout
-                    localStorageService.clear();
+                if (error.status != 401) {
+                    return throwError(() => error);
                 }
-                return throwError(() => error);
+
+                //TODO logout
+                localStorageService.clear();
             })
         );
     }
@@ -29,19 +30,20 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     let authService = inject(AuthService);
     return next(newreq).pipe(
         catchError((error) => {
-            if (error.status === 401) {
-                return authService.refreshAccessTokenAuthRefreshPost(localStorageService.getItem('refresh_token')).pipe(
-                    switchMap((token) => {
-                        localStorageService.setItem('access_token', token.access_token);
-                        localStorageService.setItem('refresh_token', token.refresh_token);
-
-                        const newAccessToken = localStorageService.getItem('access_token');
-                        let newnewreq = newreq.clone({ headers: newreq.headers.set('Authorization', `Bearer ${newAccessToken}`) });
-                        return next(newnewreq);
-                    })
-                );
+            if (error.status != 401) {
+                return throwError(() => error);
             }
-            return throwError(() => error);
+            
+            return authService.refreshAccessTokenAuthRefreshPost(localStorageService.getItem('refresh_token')).pipe(
+                switchMap((token) => {
+                    localStorageService.setItem('access_token', token.access_token);
+                    localStorageService.setItem('refresh_token', token.refresh_token);
+
+                    const newAccessToken = localStorageService.getItem('access_token');
+                    let newnewreq = newreq.clone({ headers: newreq.headers.set('Authorization', `Bearer ${newAccessToken}`) });
+                    return next(newnewreq);
+                })
+            );
         })
     );
 };
