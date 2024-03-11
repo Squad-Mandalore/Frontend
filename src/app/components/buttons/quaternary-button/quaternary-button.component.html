@@ -1,1 +1,3 @@
-<p>quaternary-button works!</p>
+<button [title]="description" [style.minWidth]="minWidth" class="quaternary-button" [ngClass]="{'with-icon': iconName}" [attr.data-tooltip]="tooltipText">
+    <app-icon *ngIf="iconName" [iconName]="iconName" [iconColor]="iconColor" [strokeWidth]="strokeWidth" [iconWidth]="iconWidth" [iconHeight]="iconHeight"></app-icon>
+</button>

@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IconComponent } from '../../icon/icon.component';
-import { DeclarationListEmitMode } from '@angular/compiler';
 
 @Component({
   selector: 'app-primary-button',
