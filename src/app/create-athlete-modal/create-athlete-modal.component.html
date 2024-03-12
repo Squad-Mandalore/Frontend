@@ -1,4 +1,4 @@
-<div id="modal" xmlns="http://www.w3.org/1999/html">
+<div id="modal">
   <div id="modal-header">
     <p id="modal-headline">Neuen Sportler hinzufügen</p>
     <app-icon id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
@@ -37,26 +37,21 @@
         </div>
         <div id="birth-input-wrapper">
           <label class="label">
-              <p class="label-text">Geburtsdatum</p>
-              <input class="input" type="text" name="day" placeholder="Tag"/>
-          </label>
-          <label class="label">
-            <p class="label-text"> Monat</p>
-            <input class="input" type="text" name="month" placeholder="Monat"/>
-          </label>
-          <label class="label">
-            <p class="label-text"> Jahr </p>
-            <input class="input" type="text" name="year" placeholder="Jahr"/>
+            <p class="label-text">Geburtsdatum</p>
+            <p class="multi-input">
+              <input class="input" type="number" min=1 max=31 name="day" placeholder="Tag"/>
+              <input class="input" type="number" min=1 max=12 name="month" placeholder="Monat"/>
+              <input class="input" type="number" min=1945 name="year" placeholder="Jahr"/>
+            </p>
           </label>
         </div>
         <div id="gender-input-wrapper">
           <label class="label">
             <p class="label-text"> Geschlecht </p>
-            <input class="input" type="button" value="Männlich"/>
-          </label>
-          <label class="label">
-            <p class="label-text"> Weiblich </p>
-            <input class="input" type="button" value="Weiblich"/>
+              <p class="multi-input">
+                <input class="input" type="button" value="Männlich" name="Männlich">
+                <input class="input" type="button" value="Weiblich" name="Weiblich">
+              </p>
           </label>
         </div>
       </ng-container>

@@ -23,9 +23,17 @@ export class CreateAthleteModalComponent {
   progressBarColor = "var(--danger)";
   showFirstPage: boolean = true;
   showSecondPage: boolean = false;
+  genderMale: boolean = true;
+  genderFemale: boolean = false;
 
   onClickSwitchPage() {
     this.showFirstPage = !this.showFirstPage;
     this.showSecondPage = !this.showSecondPage;
+  }
+
+  onClickSwitchGender() {
+    this.genderMale = !this.genderMale;
+    this.genderFemale = !this.genderFemale;
+
   }
 }
