@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {IconComponent} from "../components/icon/icon.component";
 import {PrimaryButtonComponent} from "../components/buttons/primary-button/primary-button.component";
 import {SecondaryButtonComponent} from "../components/buttons/secondary-button/secondary-button.component";
-import {NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
+import {NgClass, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -13,7 +13,8 @@ import {NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
     SecondaryButtonComponent,
     NgIf,
     NgSwitch,
-    NgSwitchCase
+    NgSwitchCase,
+    NgClass
   ],
   templateUrl: './create-athlete-modal.component.html',
   styleUrl: './create-athlete-modal.component.scss'
@@ -22,18 +23,13 @@ export class CreateAthleteModalComponent {
   passwordStrength = "schwach";
   progressBarColor = "var(--danger)";
   showFirstPage: boolean = true;
-  showSecondPage: boolean = false;
-  genderMale: boolean = true;
-  genderFemale: boolean = false;
+  isMale: boolean = true;
 
   onClickSwitchPage() {
     this.showFirstPage = !this.showFirstPage;
-    this.showSecondPage = !this.showSecondPage;
   }
 
   onClickSwitchGender() {
-    this.genderMale = !this.genderMale;
-    this.genderFemale = !this.genderFemale;
-
+    this.isMale = !this.isMale;
   }
 }
