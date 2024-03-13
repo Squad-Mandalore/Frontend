@@ -48,13 +48,11 @@
         <div class="label">
           <p class="label-text"> Geschlecht </p>
           <div id="slider-wrapper">
-            <!-- implement logic: clicked element gets class active, other element gets class disabled -->
-            <div class="slider-element active"> <!--gender === "male" ? 'active' : 'disabled'-->
-              <span>männlich</span>
+            <div class="slider-element" [ngClass]="{'active': isMale, 'disabled': !isMale}" (click)="onClickSwitchGender()">
+              <span>Männlich</span>
             </div>
-            <!-- implement logic: clicked element gets class active, other element gets class disabled -->
-            <div class="slider-element disabled"> <!--gender === "female" ? 'active' : 'disabled'-->
-              <span>weiblich</span>
+            <div class="slider-element" [ngClass]="{'active': !isMale, 'disabled': isMale}" (click)="onClickSwitchGender()">
+              <span>Weiblich</span>
             </div>
           </div>
         </div>
