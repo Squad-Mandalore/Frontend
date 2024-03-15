@@ -1,21 +1,21 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SidebarComponentComponent } from '../sidebar-component/sidebar-component.component';
-import { NavbarBottomComponentComponent } from '../navbar-bottom-component/navbar-bottom-component.component';
+import { SidebarComponentComponent } from '../../components/sidebar-component/sidebar-component.component';
+import { NavbarBottomComponentComponent } from '../../components/navbar-bottom-component/navbar-bottom-component.component';
 import { NgIf } from '@angular/common';
 import { Subscription } from 'rxjs';
-import Athlete from '../models/athlete';
-import { UserCardComponent } from '../user-card/user-card.component';
+import Athlete from '../../models/athlete';
+import { UserCardComponent } from '../../components/user-card/user-card.component';
 
 @Component({
-  selector: 'app-dashboard-page',
+  selector: 'app-dashboard',
   standalone: true,
   imports: [SidebarComponentComponent, NavbarBottomComponentComponent, NgIf, UserCardComponent],
-  templateUrl: './dashboard-page.component.html',
-  styleUrl: './dashboard-page.component.scss'
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss'
 })
 
-export class DashboardPageComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private router: Router) { }
   athletes: Athlete[] = []
   selectedAthlete: Athlete | null = null;

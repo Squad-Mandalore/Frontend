@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserCardComponent } from '../user-card/user-card.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import Athlete from '../models/athlete';
+import Athlete from '../../models/athlete';
 
 @Component({
   selector: 'app-athlete-card',
