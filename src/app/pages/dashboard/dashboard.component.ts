@@ -1,16 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SidebarComponentComponent } from '../../components/sidebar-component/sidebar-component.component';
-import { NavbarBottomComponentComponent } from '../../components/navbar-bottom-component/navbar-bottom-component.component';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
+import { NavbarBottomComponent } from '../../components/navbar-bottom/navbar-bottom.component';
 import { NgIf } from '@angular/common';
 import { Subscription } from 'rxjs';
 import Athlete from '../../models/athlete';
 import { UserCardComponent } from '../../components/user-card/user-card.component';
+import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponentComponent, NavbarBottomComponentComponent, NgIf, UserCardComponent],
+  imports: [SidebarComponent, NavbarBottomComponent, NgIf, UserCardComponent, PrimaryButtonComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })

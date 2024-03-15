@@ -1,5 +1,5 @@
 <div id="page">
-    <app-sidebar-component [athletes]="athletes"></app-sidebar-component>
+    <app-sidebar [athletes]="athletes"></app-sidebar>
     <div class="details" *ngIf="selectedAthlete; else elseBlock">
         <div id="headline-wrapper">
             <p class="headline">Sportler-Übersicht für {{selectedAthlete.username}},{{selectedAthlete.id}}</p>
@@ -7,6 +7,7 @@
         </div>
         <div id="general-information-wrapper">
             <app-user-card [user]="selectedAthlete"></app-user-card>
+            <app-primary-button [text]="'Bearbeiten'" [iconName]="'edit-1'"></app-primary-button>
         </div>
         <div id="container-wrapper">
             <div class="border-1px-grey width-full" id="second"></div>
@@ -37,4 +38,4 @@
         </div>
     </ng-template>
 </div>
-<app-navbar-bottom-component></app-navbar-bottom-component>
+<app-navbar-bottom></app-navbar-bottom>

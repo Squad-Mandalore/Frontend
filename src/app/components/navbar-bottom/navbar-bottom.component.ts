@@ -5,13 +5,13 @@ import { RouterModule, ActivatedRoute } from '@angular/router';
 
 
 @Component({
-  selector: 'app-navbar-bottom-component',
+  selector: 'app-navbar-bottom',
   standalone: true,
   imports: [UserCardComponent, CommonModule, RouterModule],
-  templateUrl: './navbar-bottom-component.component.html',
-  styleUrl: './navbar-bottom-component.component.scss'
+  templateUrl: './navbar-bottom.component.html',
+  styleUrl: './navbar-bottom.component.scss'
 })
-export class NavbarBottomComponentComponent {
+export class NavbarBottomComponent {
   urlParts: any = [];
 
   constructor(private route: ActivatedRoute) {

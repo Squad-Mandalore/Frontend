@@ -4,12 +4,12 @@ import { AthleteCardComponent } from '../athlete-card/athlete-card.component';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-sidebar-component',
+  selector: 'app-sidebar',
   standalone: true,
   imports: [CommonModule, AthleteCardComponent, RouterModule],
-  templateUrl: './sidebar-component.component.html',
-  styleUrl: './sidebar-component.component.scss'
+  templateUrl: './sidebar.component.html',
+  styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponentComponent {
+export class SidebarComponent {
   @Input() athletes:any = [];
 }
