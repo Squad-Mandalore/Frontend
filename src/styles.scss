@@ -23,6 +23,38 @@
   --accent-100: #F1F2F2;
   --accent-50: #F9F9F9;
   --accent-0: #FFFFFF;
+
+  --gold: #FFD700;
+  --silver: #C0C0C0;
+  --bronze: #CD7F32;
+  --none: #399EFF;
+  --danger: #FF0000;
+  --accept: #00FF47;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+body{
+  display: grid;
+  place-items: center;
+  margin: 0;
+  min-width: 100dvw;
+  max-width: 1920px;
+  min-height: 100dvh;
+  max-height: 1080px;
+  background-color: var(--accent-100);
+  overflow: hidden;
+}
+
+a{
+  text-decoration: none;
+  color: initial;
 }
 
 @font-face {
@@ -94,12 +126,4 @@
   font-family: 'TeleNeo Ultra Italic';
   src: url('assets/fonts/TeleNeoWeb-UltraItalic.woff2') format('woff2'),
     url('assets/fonts/TeleNeoWeb-UltraItalic.woff') format('woff');
-}
-
-p, h1, h2, h3, h4, h5, h6 {
-  margin: 0;
-}
-
-* {
-  box-sizing: border-box;
 }
