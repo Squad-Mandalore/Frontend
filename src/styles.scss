@@ -47,7 +47,7 @@ body{
   min-width: 100dvw;
   max-width: 1920px;
   min-height: 100dvh;
-  max-height: 1080p;
+  max-height: 1080px;
   background-color: var(--accent-100);
   overflow: hidden;
 }
@@ -55,14 +55,6 @@ body{
 a{
   text-decoration: none;
   color: initial;
-}
-
-body{
-  margin: 0;
-  min-width: 100dvw;
-  max-width: 1920px;
-  min-height: 100dvh;
-  max-height: 1080p;
 }
 
 @font-face {
