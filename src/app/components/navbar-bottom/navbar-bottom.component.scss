@@ -73,11 +73,17 @@
     background-color: var(--accent-900);
 }
 #navbar{
-    width: minmax(90dvw, 1920px);
+    min-width: 100dvw;
+    max-width: 1920px;
     height: 70px;
     background-color: var(--accent-0);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    box-shadow: 0px -4px 20px #00000010;
 }

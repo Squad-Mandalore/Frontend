@@ -1,31 +1,65 @@
 <div id="page">
     <app-sidebar [athletes]="athletes"></app-sidebar>
-    <div class="details" *ngIf="selectedAthlete; else elseBlock">
+    <div id="details" *ngIf="selectedAthlete; else elseBlock">
         <div id="headline-wrapper">
-            <p class="headline">Sportler-Übersicht für {{selectedAthlete.username}},{{selectedAthlete.id}}</p>
+            <p class="headline">Sportler-Übersicht</p>
             <p class="meta-text">registriert am {{selectedAthlete.created_at}} von {{selectedAthlete.created_by}}</p>
         </div>
         <div id="general-information-wrapper">
             <app-user-card [user]="selectedAthlete"></app-user-card>
+            <div class="chip margin-left-auto">
+                <span>{{selectedAthlete.gender}}</span>
+                <app-icon [iconName]="selectedAthlete.gender === 'männlich' ? 'male' : 'female'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
+            </div>
+            <div class="chip">
+                <span>geboren am {{selectedAthlete.date_of_birth}}</span>
+                <app-icon [iconName]="'star'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
+            </div>
+            <app-secondary-button class="secondary-button" [text]="'Details'" [strokeWidth]="'1.5'"></app-secondary-button>
             <app-primary-button [text]="'Bearbeiten'" [iconName]="'edit-1'"></app-primary-button>
         </div>
         <div id="container-wrapper">
-            <div class="border-1px-grey width-full" id="second"></div>
+            <div id="results-container" [ngClass]="{'background-color-white': selectedAthlete}">
+                <div id="results-header">
+                    <p class="headline-small">Erfasste Leistungen:</p>
+                    <app-secondary-button *ngIf="selectedAthlete.results.length > 0" class="secondary-button margin-left-auto" [text]="'Filter'" [iconName]="'filter-1'"></app-secondary-button>
+                    <app-primary-button *ngIf="selectedAthlete.results.length > 0" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
+                </div>
+                <div class="empty-state" *ngIf="selectedAthlete.results.length > 0; else filledState">
+                    <img src="assets/img/humans-placeholder.png" alt="people-image">
+                    <p class="headline-small">Noch keine Werte vorhanden</p>
+                    <p class="text-small">Starte jetzt eine Leistungserfassung in den Kategorien Kraft, Ausdauer, Schnelligkeit oder Koordination.</p>
+                    <app-primary-button [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
+                </div>
+                <ng-template #filledState>
+                    <!-- filled state for exercise results here -->
+                </ng-template>
+            </div>
             <div id="container-wrapper-vertical">
-                <div class="border-1px-grey" id="third"></div>
-                <div class="border-1px-grey" id="fourth"></div>
+                <div class="border-1px-grey" id="progress-container"></div>
+                <div id="swimcert-container" [ngClass]="{'background-color-white': selectedAthlete}">
+                    <div id="swimcert-inset-container">
+                        <img src="assets/img/humans-images.png" alt="missing swimming certificate"/>
+                        <p class="headline-small text-align-center">Kein Schwimmnachweis<br/>vorhanden</p>
+                        <p class="text-small">Tippe auf "Dateien durchsuchen" oder <br/>ziehe die Datei einfach in dieses Feld.</p>
+                        <label class="text-align-center cursor-pointer">
+                            <span class="label-text">Dateien durchsuchen</span>
+                            <input class="hide-element" type="file" multiple="false"/>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <ng-template #elseBlock>
-        <div class="details">
+        <div id="details">
             <p class="headline paly">Sportler-Übersicht</p>
-            <div class="border-1px-grey width-full" id="first"></div>
+            <div class="border-1px-grey" id="header-container"></div>
             <div id="container-wrapper">
-                <div class="border-1px-grey width-full" id="second"></div>
+                <div class="border-1px-grey" id="results-container"></div>
                 <div id="container-wrapper-vertical">
-                    <div class="border-1px-grey" id="third"></div>
-                    <div class="border-1px-grey" id="fourth"></div>
+                    <div class="border-1px-grey" id="progress-container"></div>
+                    <div class="border-1px-grey" id="swimcert-container"></div>
                 </div>
             </div>
             <div id="modal">

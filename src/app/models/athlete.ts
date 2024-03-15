@@ -1,3 +1,5 @@
+import Result from "./result"
+
 export default interface Athlete {
     id: number,
     username: string,
@@ -6,6 +8,8 @@ export default interface Athlete {
     lastname: string,
     created_at: string,
     created_by: string,
+    gender: string,
+    date_of_birth: string,
     last_password_change: string,
     last_edited_at: string,
     type: string,
@@ -13,4 +17,5 @@ export default interface Athlete {
     numberSilverMedals: number,
     numberGoldMedals: number,
     hasSwimmingCertificate: boolean,
+    results: Result[]
 }

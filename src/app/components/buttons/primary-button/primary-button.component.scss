@@ -9,8 +9,8 @@
   justify-content: center;
   align-items: center;
   border: 0;
-  font-family: "TeleNeo Medium";
-  font-size: 1.1rem;
+  font-family: "Inter Medium";
+  font-size: .95rem;
   transition: all 200ms;
   cursor: pointer;
   outline: 2px solid transparent;
@@ -22,7 +22,8 @@
   }
   
   &:hover {
-    outline-color: var(--brand-500);
+    // outline-color: var(--brand-500);
+    background-color: var(--brand-400);
   }
 
   &:active {
