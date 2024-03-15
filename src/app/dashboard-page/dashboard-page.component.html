@@ -1,8 +1,13 @@
 <div id="page">
     <app-sidebar-component [athletes]="athletes"></app-sidebar-component>
-    <div id="details">
-        <p class="headline">Sportler-Übersicht</p>
-        <div class="border-1px-grey width-full" id="first"></div>
+    <div class="details" *ngIf="selectedAthlete; else elseBlock">
+        <div id="headline-wrapper">
+            <p class="headline">Sportler-Übersicht für {{selectedAthlete.username}},{{selectedAthlete.id}}</p>
+            <p class="meta-text">registriert am {{selectedAthlete.created_at}} von {{selectedAthlete.created_by}}</p>
+        </div>
+        <div id="general-information-wrapper">
+            <app-user-card [user]="selectedAthlete"></app-user-card>
+        </div>
         <div id="container-wrapper">
             <div class="border-1px-grey width-full" id="second"></div>
             <div id="container-wrapper-vertical">
@@ -10,13 +15,26 @@
                 <div class="border-1px-grey" id="fourth"></div>
             </div>
         </div>
-        <div id="modal">
-            <img src="assets/img/statistics-image.png" alt="statistics"/>
-            <div id="text-wrapper">
-                <p class="large-text">Wähle einen Athlet aus</p>
-                <p class="small-text">Tippe auf einen Athleten in der Navigation links</p>
+    </div>
+    <ng-template #elseBlock>
+        <div class="details">
+            <p class="headline paly">Sportler-Übersicht</p>
+            <div class="border-1px-grey width-full" id="first"></div>
+            <div id="container-wrapper">
+                <div class="border-1px-grey width-full" id="second"></div>
+                <div id="container-wrapper-vertical">
+                    <div class="border-1px-grey" id="third"></div>
+                    <div class="border-1px-grey" id="fourth"></div>
+                </div>
+            </div>
+            <div id="modal">
+                <img src="assets/img/statistics-image.png" alt="statistics"/>
+                <div id="text-wrapper">
+                    <p class="large-text">Wähle einen Athlet aus</p>
+                    <p class="small-text">Tippe auf einen Athleten in der Navigation links</p>
+                </div>
             </div>
         </div>
-    </div>
+    </ng-template>
 </div>
 <app-navbar-bottom-component></app-navbar-bottom-component>

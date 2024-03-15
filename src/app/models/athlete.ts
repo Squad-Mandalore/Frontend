@@ -1,0 +1,16 @@
+export default interface Athlete {
+    id: number,
+    username: string,
+    email: string,
+    firstname: string,
+    lastname: string,
+    created_at: string,
+    created_by: string,
+    last_password_change: string,
+    last_edited_at: string,
+    type: string,
+    numberBronzeMedals: number,
+    numberSilverMedals: number,
+    numberGoldMedals: number,
+    hasSwimmingCertificate: boolean,
+}

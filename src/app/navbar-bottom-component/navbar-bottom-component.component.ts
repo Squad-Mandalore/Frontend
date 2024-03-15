@@ -23,7 +23,7 @@ export class NavbarBottomComponentComponent {
   }
 
   user = {
-    id: '1',
+    id: 1,
     firstname: 'Kay',
     lastname: 'Schulz',
     type: 'Administrator',

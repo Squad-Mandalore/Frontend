@@ -1,6 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserCardComponent } from '../user-card/user-card.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import Athlete from '../models/athlete';
 
 @Component({
   selector: 'app-athlete-card',
@@ -10,26 +13,34 @@ import { UserCardComponent } from '../user-card/user-card.component';
   styleUrl: './athlete-card.component.scss'
 })
 
-export class AthleteCardComponent {
+export class AthleteCardComponent implements OnInit, OnDestroy {
+  constructor(private route: ActivatedRoute, private router: Router) { }
+  routeSubscription!: Subscription;
 
-  // add some logic for determining if user is active here
-
-  isActive = false;
+  isActive: boolean = false;
   @Input() athlete!: Athlete;
+
+  getRandomNumber(){
+    return Math.floor(Math.random() * 100) + 1;
+  }
+
+  getRandomMedalStatus() {
+    const medalStatusOptions = ["none", "gold", "silver", "bronze"];
+    const randomIndex = Math.floor(Math.random() * medalStatusOptions.length);
+    return medalStatusOptions[randomIndex];
+  }
+
+  ngOnInit(): void {
+    this.routeSubscription = this.route.params.subscribe(params => {
+      const routeId = params['id'];
+      this.isActive = routeId && routeId == this.athlete.id ? true : false;
+    })
+  }
+
+  ngOnDestroy(): void {
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
+  }
 }
 
-interface Athlete {
-  id: string,
-  username: string,
-  email: string,
-  firstname: string,
-  lastname: string,
-  created_at: string,
-  last_password_change: string,
-  last_edited_at: string,
-  type: string,
-  numberBronzeMedals: number,
-  numberSilverMedals: number,
-  numberGoldMedals: number,
-  hasSwimmingCertificate: boolean
-}

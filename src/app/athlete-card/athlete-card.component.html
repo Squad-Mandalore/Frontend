@@ -1,5 +1,5 @@
 <div id="athlete-card" [ngClass]="{'isActive': isActive, 'isInactive': !isActive}">
-    <app-user-card [user]="athlete"></app-user-card>
+    <app-user-card [user]="athlete" [progress]="getRandomNumber()" [medal]="getRandomMedalStatus()"></app-user-card>
     <div id="achievement-wrapper">
         <div *ngIf="athlete.hasSwimmingCertificate" class="border-right-grey medal-wrapper">
             <div id="blue" class="circle"></div>

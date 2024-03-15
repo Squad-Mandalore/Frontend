@@ -8,22 +8,11 @@ import { CommonModule } from "@angular/common"
   templateUrl: './user-card.component.html',
   styleUrl: './user-card.component.scss'
 })
+
 export class UserCardComponent {
   @Input() showIconOnly: boolean = false;
-  @Input() progress: number = this.getRandomNumber(); // 0
-  @Input() medal: string = this.getRandomMedalStatus(); // none
-
-  getRandomNumber() {
-    return Math.floor(Math.random() * 100) + 1;
-  }
-
-  getRandomMedalStatus() {
-    const medalStatusOptions = ["none", "gold", "silver", "bronze"];
-    const randomIndex = Math.floor(Math.random() * medalStatusOptions.length);
-    return medalStatusOptions[randomIndex];
-  }
-  
-
+  @Input() progress: number = 0;
+  @Input() medal: string | null = null;
   @Input() user!: User;
 
   circumference: number = 2 * Math.PI * 24;
@@ -54,7 +43,7 @@ export class UserCardComponent {
 
 
 interface User {
-  id: string,
+  id: number,
   firstname: string,
   lastname: string,
   type: string,
