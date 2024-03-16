@@ -1,34 +1,3 @@
-.icon{
-  stroke: var(--accent-0);
-  height: 15px;
-  width: 15px;
-  stroke-width: 2.5;
-}
-#primary-button{
-  padding: 10px 14px 10px 22px;
-  width: fit-content;
-  height: fit-content;
-  border-radius: 5px;
-  background-color: var(--brand-500);
-  color: var(--accent-0);
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  align-items: center;
-  border: 0;
-  font-family: "TeleNeo Medium";
-  font-size: 1.1rem;
-  transition: all 200ms;
-  cursor: pointer;
-  outline: 2px solid transparent;
-  outline-offset: 1px;
-}
-#primary-button:hover{
-  outline-color: var(--brand-500);
-}
-#primary-button:active{
-  background-color: var(--brand-600);
-}
 #password-reset-wrapper{
   display: flex;
   flex-direction: column;
