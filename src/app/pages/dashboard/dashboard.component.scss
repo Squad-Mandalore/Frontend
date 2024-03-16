@@ -61,6 +61,14 @@
     margin-left: auto;
 }
 
+.margin-top-auto{
+    margin-top: auto;
+}
+
+.margin-left-40{
+    margin-left: 40px;
+}
+
 .chip{
     max-width: max-content;
     height: 39px;
@@ -82,9 +90,9 @@
 }
 
 .text-small{
+    font-family: "Inter Medium";
     font-size: 13px;
     color: var(--accent-300);
-    text-align: center;
 }
 
 #container-wrapper{
@@ -209,6 +217,15 @@
     display: grid;
     place-items: center;
     margin: auto;
+}
+
+@keyframes progress-bar {
+    from {stroke-dashoffset: 500;}
+    to {stroke-dashoffset: attr(dashoffset);}
+}
+
+.upper *{
+    animation: progress-bar 1s;
 }
 
 .upper, .lower, #current-points-wrapper{
@@ -345,7 +362,6 @@
     width: 180px;
     font-size: 13px;
     color: var(--accent-300);
-    text-align: center;
 }
 
 .background-color-white{
@@ -358,4 +374,128 @@
 
 .position-absolute{
     position: absolute;
+}
+
+#athlete-details{
+    position: fixed;
+    top: 0;
+    right: -550px;
+    width: 550px;
+    height: 100dvh;
+    background-color: var(--accent-0);
+    transition: all 300ms;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    z-index: 20;
+}
+
+#athlete-details.active{
+    transform: translateX(-550px);
+    box-shadow: -40px 0 50px #00000010;
+}
+
+.margin-bottom-20{
+    margin-bottom: 20px;
+}
+
+#close-button{
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+
+.flex{
+    display: flex;
+}
+
+.flex-col{
+    flex-direction: column;
+}
+
+.items-center{
+    align-items: center;
+}
+
+.justify-between{
+    justify-content: space-between;
+}
+
+.inter-medium{
+    font-family: "Inter Medium";
+}
+
+.inter-regular{
+    font-family: "Inter Regular";
+}
+
+.gap-5{
+    gap: 5px;
+}
+
+.gap-10{
+    gap: 10px;
+}
+
+.gap-20{
+    gap: 20px;
+}
+
+.gap-30{
+    gap: 30px;
+}
+
+.gap-50{
+    gap: 50px;
+}
+
+.half-width{
+    width: 50%;
+}
+
+.full-width{
+    width: 100%;
+}
+
+.font-size-15{
+    font-size: 15px;
+}
+.font-size-13{
+    font-size: 13px;
+}
+
+.accent-300{
+    color: var(--accent-300);
+}
+.accent-500{
+    color: var(--accent-500);
+}
+
+.hover-underline:hover{
+    text-decoration: underline;
+}
+
+#delete-button{
+    border-radius: 5px;
+    background-color: var(--danger);
+}
+
+#overlay{
+    opacity: 0;
+    visibility: hidden;
+    width: 100dvw;
+    height: 100dvh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    transition: all 300ms;
+    background-color: #00000030;
+}
+
+#overlay.active{
+    z-index: 10;
+    opacity: 100;
+    visibility: visible;
 }

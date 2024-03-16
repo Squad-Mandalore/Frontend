@@ -3,9 +3,9 @@
         <div class="grid-item" id="icon">
             <p>{{ user.firstname[0]}}{{ user.lastname[0] }}</p>
         </div>
-        <svg *ngIf="progress" id="progress-bar" class="grid-item" style="transform:scale(1.4); padding:1px;" width="40" height="40" viewBox="0 0 50 50" fill="none" stroke-width="3" xmlns="http://www.w3.org/2000/svg">
+        <svg *ngIf="progress" id="progress-bar" class="grid-item" width="40" height="40" viewBox="0 0 50 50" fill="none" stroke-width="3" xmlns="http://www.w3.org/2000/svg">
             <path
-              style="transform: scale(.96) translate(1px, 1px);"
+              style="transform: scale(.96) translate(1px, 1px)"
               [style.stroke]="progressColor()"
               [style.stroke-dasharray]="circumference"
               [style.stroke-dashoffset]="dashOffset()"
@@ -23,11 +23,15 @@
 
 <style>
     @keyframes progress-bar {
-        from {stroke-dashoffset: 0;}
+        from {stroke-dashoffset: 150;}
         to {stroke-dashoffset: attr(dashoffset);}
     }
-    #progressbar *{
+    #progress-bar *{
         animation: progress-bar 1s;
+    }
+    #progress-bar{
+        transform: scale(1.4) rotate(180deg); 
+        padding: 1px;
     }
     #progress{
         display: grid;

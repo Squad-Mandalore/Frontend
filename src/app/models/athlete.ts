@@ -14,6 +14,7 @@ export default interface Athlete {
     last_edited_at: string,
     type: string,
     progress: number,
+    progress_points: number,
     progress_medal: string,
     number_bronze_medals: number,
     number_silver_medals: number,

@@ -23,6 +23,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
   athletes: Athlete[] = []
   selectedAthlete: Athlete | null = null;
   routeSubscription!: Subscription;
+  showDetails = false;
+
+  customFilter(array : any[], filterOptions : Object){
+    return array.filter(element => {
+      let counter = 0;
+      for (const [key, value] of Object.entries(filterOptions)){
+        if (element[key] === value) counter++;
+      }
+      if(counter === Object.entries(filterOptions).length) return element;
+    })
+  }
+
+  triggerDetailsByValue(value: boolean){
+    this.showDetails = value;
+  }
+
   getRandomNumber(){
     return Math.floor(Math.random() * 100) + 1;
   }
@@ -61,12 +77,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
       last_edited_at: '2024-02-26',
       date_of_birth: '2003-02-26',
       type: 'Sportler',
-      number_bronze_medals: 2,
-      number_silver_medals: 3,
-      number_gold_medals: 1,
       has_swimming_certificate: false,
       progress: this.getRandomNumber(),
+      progress_points: 8,
       progress_medal: this.getRandomMedalStatus(),
+      number_bronze_medals: 0,
+      number_silver_medals: 0,
+      number_gold_medals: 0,
       results: [
         {
           id: 1,
@@ -118,11 +135,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       last_edited_at: '2024-02-26',
       date_of_birth: '2003-02-26',
       type: 'Sportler',
-      number_bronze_medals: 1,
-      number_silver_medals: 1,
-      number_gold_medals: 4,
+      number_bronze_medals: 0,
+      number_silver_medals: 0,
+      number_gold_medals: 0,
       has_swimming_certificate: false,
       progress: this.getRandomNumber(),
+      progress_points: 8,
       progress_medal: this.getRandomMedalStatus(),
       results: [
         {
@@ -175,11 +193,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       last_edited_at: '2024-02-26',
       date_of_birth: '2003-02-26',
       type: 'Sportler',
-      number_bronze_medals: 2,
-      number_silver_medals: 3,
-      number_gold_medals: 1,
+      number_bronze_medals: 0,
+      number_silver_medals: 0,
+      number_gold_medals: 0,
       has_swimming_certificate: false,
       progress: this.getRandomNumber(),
+      progress_points: 8,
       progress_medal: this.getRandomMedalStatus(),
       results: [
         {
@@ -340,14 +359,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
       last_edited_at: '2024-02-26',
       date_of_birth: '2003-02-26',
       type: 'Sportler',
-      number_bronze_medals: 1,
-      number_silver_medals: 1,
-      number_gold_medals: 4,
+      number_bronze_medals: 0,
+      number_silver_medals: 0,
+      number_gold_medals: 0,
       has_swimming_certificate: false,
       progress: this.getRandomNumber(),
+      progress_points: 7,
       progress_medal: this.getRandomMedalStatus(),
       results: []
     }]
+
+    for(const athlete of this.athletes){
+      athlete.number_gold_medals = this.customFilter(athlete.results, {medal: "Gold"}).length;
+      athlete.number_silver_medals = this.customFilter(athlete.results, {medal: "Silver"}).length;
+      athlete.number_bronze_medals = this.customFilter(athlete.results, {medal: "Bronze"}).length;
+    }
     
     this.routeSubscription = this.route.params.subscribe(params => {
       const athleteId = params['id'];
