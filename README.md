@@ -10,8 +10,15 @@
 
 2. Install all Modules (Requirement Node.js installed) ```npm install```  
 
+3. To install all OpenApi files that are needed in this Project, use
 
-3. You`re good to go!  
+```npm run apigen``` *(this requires the Backend running on localhost)*
+
+or
+
+```npm run apigen-f``` *(this may uses an older version of the Backend-API)*
+
+4. You`re good to go!
 
 
 ## Dependencies
@@ -23,6 +30,13 @@ Already installed dependencies are:
 
 # Angular Introduction
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.9.
+>[!NOTE]
+>To use the local installed Angular CLI **all** `ng` commands have to be prefixed with `npx`
+<details>
+  <summary>Example</summary>
+
+  Run `npx ng serve` for a dev server.
+</details>
 
 ## Development server
 
@@ -37,8 +51,10 @@ Run `ng generate component component-name` to generate a new component. You can 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Running unit tests
+The Unit Tests ***require*** Chrome / Chromium Web Browser installed.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).  
+
 
 ## Running end-to-end tests
 

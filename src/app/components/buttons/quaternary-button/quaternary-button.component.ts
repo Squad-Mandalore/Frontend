@@ -6,20 +6,19 @@ import { IconComponent } from '../../icon/icon.component';
   selector: 'app-quaternary-button',
   standalone: true,
   imports: [CommonModule, IconComponent],
-  template: `
-    <button class="quaternary-button" [ngClass]="{ 'with-icon': showIcon }">
-      <ng-container *ngIf="showIcon">
-        <app-icon [iconName]="iconName" [iconColor]="iconColor"></app-icon>
-      </ng-container>
-      <ng-content></ng-content>
-    </button>
-  `,
+  templateUrl: './quaternary-button.component.html',
   styleUrls: ['./quaternary-button.component.scss'],
 })
 
 
 export class QuaternaryButtonComponent {
-  @Input() showIcon: Boolean = true;
   @Input() iconName: string = '';
-  @Input() iconColor: string = "var(--brand-900)";
+  @Input() iconColor: string = "var(--accent-900)";
+  @Input() description: string = '';
+  @Input() minWidth: string = '39px';
+  @Input() strokeWidth: string = '2.3';
+  @Input() iconWidth: string = '15';
+  @Input() iconHeight: string = '15';
+  @Input() tooltipText: string = '';
+  @Input() backgroundColor: string ="var(--accent-50)";
 }
