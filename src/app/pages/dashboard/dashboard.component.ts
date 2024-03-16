@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { NavbarBottomComponent } from '../../components/navbar-bottom/navbar-bottom.component';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Subscription } from 'rxjs';
 import Athlete from '../../models/athlete';
 import { UserCardComponent } from '../../components/user-card/user-card.component';
@@ -13,7 +13,7 @@ import { IconComponent } from '../../components/icon/icon.component';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponent, NavbarBottomComponent, NgIf, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
+  imports: [SidebarComponent, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -23,6 +23,29 @@ export class DashboardComponent implements OnInit, OnDestroy {
   athletes: Athlete[] = []
   selectedAthlete: Athlete | null = null;
   routeSubscription!: Subscription;
+  getRandomNumber(){
+    return Math.floor(Math.random() * 100) + 1;
+  }
+  getRandomMedalStatus() {
+    const medalStatusOptions = ["none", "gold", "silver", "bronze"];
+    const randomIndex = Math.floor(Math.random() * medalStatusOptions.length);
+    return medalStatusOptions[randomIndex];
+  }
+  getColorVariable(medal: string){
+    const colorMap: any  = {
+      none: "var(--brand-400)",
+      gold: "var(--gold)",
+      silver: "var(--silver)",
+      bronze: "var(--bronze)"
+    }
+    return colorMap[medal] ?? "transparent";
+  }
+  dashArray: number = 525;
+
+  dashOffset(athlete: Athlete): number {
+    const progressDecimal = athlete.progress / 100;
+    return this.dashArray * (1 - progressDecimal);
+  }
 
   ngOnInit(): void {
     this.athletes = [{
@@ -38,10 +61,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       last_edited_at: '2024-02-26',
       date_of_birth: '2003-02-26',
       type: 'Sportler',
-      numberBronzeMedals: 2,
-      numberSilverMedals: 3,
-      numberGoldMedals: 1,
-      hasSwimmingCertificate: false,
+      number_bronze_medals: 2,
+      number_silver_medals: 3,
+      number_gold_medals: 1,
+      has_swimming_certificate: false,
+      progress: this.getRandomNumber(),
+      progress_medal: this.getRandomMedalStatus(),
       results: [
         {
           id: 1,
@@ -93,10 +118,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       last_edited_at: '2024-02-26',
       date_of_birth: '2003-02-26',
       type: 'Sportler',
-      numberBronzeMedals: 1,
-      numberSilverMedals: 1,
-      numberGoldMedals: 4,
-      hasSwimmingCertificate: false,
+      number_bronze_medals: 1,
+      number_silver_medals: 1,
+      number_gold_medals: 4,
+      has_swimming_certificate: false,
+      progress: this.getRandomNumber(),
+      progress_medal: this.getRandomMedalStatus(),
       results: [
         {
           id: 1,
@@ -148,10 +175,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       last_edited_at: '2024-02-26',
       date_of_birth: '2003-02-26',
       type: 'Sportler',
-      numberBronzeMedals: 2,
-      numberSilverMedals: 3,
-      numberGoldMedals: 1,
-      hasSwimmingCertificate: false,
+      number_bronze_medals: 2,
+      number_silver_medals: 3,
+      number_gold_medals: 1,
+      has_swimming_certificate: false,
+      progress: this.getRandomNumber(),
+      progress_medal: this.getRandomMedalStatus(),
       results: [
         {
           id: 1,
@@ -182,6 +211,114 @@ export class DashboardComponent implements OnInit, OnDestroy {
         },
         {
           id: 4,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 5,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 6,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 7,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 8,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 9,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 10,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 11,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 12,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 13,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 14,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 15,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 16,
           discipline: "50 Meter Sprint",
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
@@ -203,48 +340,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
       last_edited_at: '2024-02-26',
       date_of_birth: '2003-02-26',
       type: 'Sportler',
-      numberBronzeMedals: 1,
-      numberSilverMedals: 1,
-      numberGoldMedals: 4,
-      hasSwimmingCertificate: false,
-      results: [
-        {
-          id: 1,
-          discipline: "50 Meter Sprint",
-          category: "Schnelligkeit",
-          score: "08:05 Sekunden",
-          medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
-          tracked_by: "Kay Schulz"
-        },
-        {
-          id: 2,
-          discipline: "50 Meter Sprint",
-          category: "Schnelligkeit",
-          score: "08:05 Sekunden",
-          medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
-          tracked_by: "Kay Schulz"
-        },
-        {
-          id: 3,
-          discipline: "50 Meter Sprint",
-          category: "Schnelligkeit",
-          score: "08:05 Sekunden",
-          medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
-          tracked_by: "Kay Schulz"
-        },
-        {
-          id: 4,
-          discipline: "50 Meter Sprint",
-          category: "Schnelligkeit",
-          score: "08:05 Sekunden",
-          medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
-          tracked_by: "Kay Schulz"
-        }
-      ]
+      number_bronze_medals: 1,
+      number_silver_medals: 1,
+      number_gold_medals: 4,
+      has_swimming_certificate: false,
+      progress: this.getRandomNumber(),
+      progress_medal: this.getRandomMedalStatus(),
+      results: []
     }]
     
     this.routeSubscription = this.route.params.subscribe(params => {

@@ -131,9 +131,146 @@
     margin: auto;
 }
 
+#table-wrapper{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: auto;
+}
+
+#table-wrapper::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent;
+}
+
+#table-wrapper::-webkit-scrollbar-thumb {
+    background: var(--accent-200);
+    border-radius: 20px;
+}
+
+#table-head{
+    width: 100%;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: 1fr 1fr 80px 110px 1fr 1fr;
+    gap: 10px;
+    grid-template-rows: 1fr;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    position: sticky;
+    top: 0;
+    background-color: var(--accent-0);
+}
+
+#table-head > span{
+    font-size: 15px;
+    color: var(--accent-400);
+}
+
+.table-item{
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    border: 1px solid var(--accent-200);
+    display: grid;
+    gap: 10px;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 80px 110px 1fr 1fr;
+    grid-template-rows: 1fr;
+    padding: 15px 0 15px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--accent-500);
+    background-color: var(--accent-50);
+    transition: background-color 200ms;
+}
+
+.table-item:hover{
+    background-color: var(--accent-150);
+}
+
+.table-item > span:first-child{
+    color: var(--accent-900);
+}
+
 #progress-container, #swimcert-container{
     height: 50%;
     aspect-ratio: 1/1;
+}
+
+#progress-container{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#progress-bar{
+    display: grid;
+    place-items: center;
+    margin: auto;
+}
+
+.upper, .lower, #current-points-wrapper{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+#current-points-wrapper{
+    display: grid;
+    place-items: center;
+    transform: translateY(20px);
+    font-size: 32px;
+    color: var(--accent-300);
+}
+
+#all-points-wrapper{
+    grid-row-start: 2;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    font-size: 20px;
+    color: var(--accent-400);
+    transform: translateY(-5px);
+}
+
+#progress-footer{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 30px;
+    justify-content: center;
+}
+
+.medal-wrapper{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.medal-text{
+    font-size: 20px;
+    color: var(--accent-500)
+}
+
+.gold{
+    background-color: var(--gold);
+}
+
+.silver{
+    background-color: var(--silver);
+}
+
+.bronze{
+    background-color: var(--bronze);
+}
+
+.medal{
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
 }
 
 #swimcert-container{
@@ -213,4 +350,12 @@
 
 .background-color-white{
     background-color: var(--accent-0);
+}
+
+.position-relative{
+    position: relative;
+}
+
+.position-absolute{
+    position: absolute;
 }

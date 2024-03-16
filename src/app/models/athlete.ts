@@ -13,9 +13,11 @@ export default interface Athlete {
     last_password_change: string,
     last_edited_at: string,
     type: string,
-    numberBronzeMedals: number,
-    numberSilverMedals: number,
-    numberGoldMedals: number,
-    hasSwimmingCertificate: boolean,
+    progress: number,
+    progress_medal: string,
+    number_bronze_medals: number,
+    number_silver_medals: number,
+    number_gold_medals: number,
+    has_swimming_certificate: boolean,
     results: Result[]
 }

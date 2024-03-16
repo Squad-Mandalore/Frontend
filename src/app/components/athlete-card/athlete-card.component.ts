@@ -20,16 +20,6 @@ export class AthleteCardComponent implements OnInit, OnDestroy {
   isActive: boolean = false;
   @Input() athlete!: Athlete;
 
-  getRandomNumber(){
-    return Math.floor(Math.random() * 100) + 1;
-  }
-
-  getRandomMedalStatus() {
-    const medalStatusOptions = ["none", "gold", "silver", "bronze"];
-    const randomIndex = Math.floor(Math.random() * medalStatusOptions.length);
-    return medalStatusOptions[randomIndex];
-  }
-
   ngOnInit(): void {
     this.routeSubscription = this.route.params.subscribe(params => {
       const routeId = params['id'];
