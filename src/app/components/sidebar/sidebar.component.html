@@ -10,7 +10,7 @@
                     <path d="M9.16667 16.3333C12.8486 16.3333 15.8333 13.3486 15.8333 9.66667C15.8333 5.98477 12.8486 3 9.16667 3C5.48477 3 2.5 5.98477 2.5 9.66667C2.5 13.3486 5.48477 16.3333 9.16667 16.3333Z" stroke="#ADB6BF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M17.5 18L13.875 14.375" stroke="#ADB6BF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <input id="search-input" placeholder="Suchen" type="text"/>
+                <input #searchInput id="search-input" [value]="searchInput.value" (input)="changeSearchValue(searchInput.value)" placeholder="Suchen" type="text"/>
             </div>
             <app-quaternary-button [iconName]="'user-plus'" [tooltipText]="'Sportler hinzufügen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"></app-quaternary-button>
         </div>
@@ -25,7 +25,7 @@
     </div>
     <ng-template #hasAthletes>
         <div id="sidebar-content" class="filled">
-            <div *ngFor="let athlete of athletes">
+            <div *ngFor="let athlete of customFilterCall(athletes, {firstname: searchValue, lastname: searchValue})">
                 <a [routerLink]="['/athleten', athlete.id]">
                     <app-athlete-card [athlete]="athlete"></app-athlete-card>
                 </a>

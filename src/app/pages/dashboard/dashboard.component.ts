@@ -9,6 +9,8 @@ import { UserCardComponent } from '../../components/user-card/user-card.componen
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
+import customFilter from '../../../utils/custom-filter';
+import Result from '../../models/result';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,15 +26,42 @@ export class DashboardComponent implements OnInit, OnDestroy {
   selectedAthlete: Athlete | null = null;
   routeSubscription!: Subscription;
   showDetails = false;
+  filter: any = {};
 
-  customFilter(array : any[], filterOptions : Object){
-    return array.filter(element => {
-      let counter = 0;
-      for (const [key, value] of Object.entries(filterOptions)){
-        if (element[key] === value) counter++;
-      }
-      if(counter === Object.entries(filterOptions).length) return element;
-    })
+  getActiveFilters(){
+    let counter = 0;
+    for (const [key, value] of Object.entries(this.filter)){
+      if(this.filter[key]) counter++;
+    }
+    return counter;
+  }
+
+  getTrackingDates(results: Result[]){
+    const trackingDates : string[] = [];
+    for(const result of results){
+      if(!trackingDates.find(date => date === result.tracked_at)) trackingDates.push(result.tracked_at);
+    }
+    return trackingDates;
+  }
+
+  getTrackingTrainers(results: Result[]){
+    const trackingTrainers: string[] = [];
+    for(const result of results){
+      if(!trackingTrainers.find(trainer => trainer === result.tracked_by)) trackingTrainers.push(result.tracked_by);
+    }
+    return trackingTrainers;
+  }
+
+  setFilter(key:string, value:string){
+    // if(this.filter[key]) delete this.filter[key];
+    // else this.filter[key] = value;
+    this.filter[key] = this.filter[key] == value ? "" : value;
+    console.log("filter option: ", this.filter);
+  }
+
+  customFilterCall(array: any[], options: Object, fullFit:boolean = false){
+    console.log(array, options);
+    return customFilter(array, options, fullFit);
   }
 
   triggerDetailsByValue(value: boolean){
@@ -91,7 +120,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -100,7 +129,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -109,7 +138,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -118,7 +147,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         }
       ]
@@ -149,7 +178,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -158,7 +187,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -167,7 +196,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -176,7 +205,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         }
       ]
@@ -207,7 +236,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -216,7 +245,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -225,7 +254,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -234,7 +263,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -243,7 +272,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "16.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -252,7 +281,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -261,7 +290,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -270,7 +299,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -279,7 +308,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -288,7 +317,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -297,7 +326,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -306,7 +335,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -315,7 +344,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -324,7 +353,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -333,7 +362,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
+          tracked_at: "14.02.2024",
           tracked_by: "Kay Schulz"
         },
         {
@@ -342,8 +371,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
           category: "Schnelligkeit",
           score: "08:05 Sekunden",
           medal: "Gold",
-          tracked_at: "2023-02-14 14:52 Uhr",
-          tracked_by: "Kay Schulz"
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz2"
         }
       ]
     },{
@@ -370,9 +399,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }]
 
     for(const athlete of this.athletes){
-      athlete.number_gold_medals = this.customFilter(athlete.results, {medal: "Gold"}).length;
-      athlete.number_silver_medals = this.customFilter(athlete.results, {medal: "Silver"}).length;
-      athlete.number_bronze_medals = this.customFilter(athlete.results, {medal: "Bronze"}).length;
+      athlete.number_gold_medals = customFilter(athlete.results, {medal: "Gold"}).length;
+      athlete.number_silver_medals = customFilter(athlete.results, {medal: "Silver"}).length;
+      athlete.number_bronze_medals = customFilter(athlete.results, {medal: "Bronze"}).length;
     }
     
     this.routeSubscription = this.route.params.subscribe(params => {
@@ -382,7 +411,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if(!this.selectedAthlete){
           this.router.navigate(['/athleten']);
         }
-        // console.log(this.selectedAthlete)
       }
     })
   }

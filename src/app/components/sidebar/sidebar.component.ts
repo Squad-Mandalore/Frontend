@@ -4,6 +4,7 @@ import { AthleteCardComponent } from '../athlete-card/athlete-card.component';
 import { RouterModule } from '@angular/router';
 import { QuaternaryButtonComponent } from '../buttons/quaternary-button/quaternary-button.component';
 import { PrimaryButtonComponent } from '../buttons/primary-button/primary-button.component';
+import customFilter from '../../../utils/custom-filter';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,4 +15,13 @@ import { PrimaryButtonComponent } from '../buttons/primary-button/primary-button
 })
 export class SidebarComponent {
   @Input() athletes:any = [];
+  searchValue = "";
+
+  customFilterCall(array: any[], options: Object, fullFit:boolean = false){
+    return customFilter(array, options, fullFit);
+  }
+
+  changeSearchValue(value: string){
+    this.searchValue = value;
+  }
 }

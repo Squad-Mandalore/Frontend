@@ -1,4 +1,4 @@
-<button [title]="description" [style.minWidth]="minWidth" class="primary-button" (click)="activateLoader()" [ngClass]="{ 'with-icon': iconName }">
+<button [title]="description" [style.minWidth]="minWidth" class="primary-button" (click)="activateLoader()" [ngClass]="{ 'with-icon': iconName, 'danger': isDeleteButton }">
     <span>{{ text }}</span>
     <app-icon *ngIf="iconName" [iconName]="iconName" [iconColor]="iconColor" [strokeWidth]="strokeWidth" [iconWidth]="iconWidth" [iconHeight]="iconHeight"></app-icon>
 </button>

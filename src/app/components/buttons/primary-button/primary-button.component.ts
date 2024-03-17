@@ -21,6 +21,7 @@ export class PrimaryButtonComponent {
   @Input() strokeWidth: string = '2.3';
   @Input() iconWidth: string = '15';
   @Input() iconHeight: string = '15';
+  @Input() isDeleteButton: boolean = false;
   tempIcon : string = '';
 
   activateLoader(){
