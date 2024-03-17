@@ -1,16 +1,16 @@
-export default function customFilter(array: any[], filterOptions: Object, fullFit: boolean = false){
+export default function customFilter(array: any[], filterOptions: Object, valueFullFit: boolean = true, selectionFullFit: boolean = true){
   return array.filter(element => {
 
-    const filterOptionsEntryArray = Object.entries(filterOptions)
-    if(filterOptionsEntryArray.length === 0) return element;
+    const entries = Object.entries(filterOptions);
+    if (entries.length === 0) return element;
     
     let counter = 0;
-    for (const [key, value] of filterOptionsEntryArray){
+    for (const [key, value] of entries){
       if (!value) counter++;
-      if (fullFit && element[key] === value) counter++;
-      else if (!fullFit && element[key].toLowerCase().includes(value.toLowerCase())) counter++;
+      else if (valueFullFit && element[key] === value) counter++;
+      else if (!valueFullFit && element[key].toLowerCase().includes(value.toLowerCase())) counter++;
     }
     
-    if (fullFit && counter === filterOptionsEntryArray.length || !fullFit && counter >=1) return element;
+    if (selectionFullFit && counter === entries.length || !selectionFullFit && counter >=1) return element;
   })
 }

@@ -17,8 +17,8 @@ export class SidebarComponent {
   @Input() athletes:any = [];
   searchValue = "";
 
-  customFilterCall(array: any[], options: Object, fullFit:boolean = false){
-    return customFilter(array, options, fullFit);
+  customFilterCall(array: any[], options: Object, valueFullFit:boolean = false, selectionFullFit:boolean = false){
+    return customFilter(array, options, valueFullFit, selectionFullFit);
   }
 
   changeSearchValue(value: string){
