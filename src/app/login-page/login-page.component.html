@@ -15,6 +15,8 @@
                 <a href="#" id="password-reset">Passwort vergessen?</a>
             </div>
         </div>
+        <app-alert (closed)="alertClosed()" *ngIf="isError" class="alert" [alertTitle]="alertTitle"
+            [alertDescription]="alertDescription" [alertType]="'error'"></app-alert>
         <button type="submit" id="primary-button" [disabled]="!loginForm.valid">
             <span>Login</span>
             <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
