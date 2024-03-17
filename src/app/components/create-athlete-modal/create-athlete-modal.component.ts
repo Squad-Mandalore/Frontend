@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {IconComponent} from "../components/icon/icon.component";
-import {PrimaryButtonComponent} from "../components/buttons/primary-button/primary-button.component";
-import {SecondaryButtonComponent} from "../components/buttons/secondary-button/secondary-button.component";
+import {IconComponent} from "../icon/icon.component";
+import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
+import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-button.component";
 import {NgIf, NgSwitch, NgSwitchCase, NgClass} from "@angular/common";
 
 @Component({
