@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { LocalStorageService } from '../shared/local-storage.service';
 import { inject } from '@angular/core';
-import { EMPTY, catchError, switchMap, throwError } from 'rxjs';
+import { EMPTY, catchError, switchMap } from 'rxjs';
 import { AuthService, Token } from '../shared/generated';
 import { AuthExtentionService } from '../shared/auth-extention.service';
 
@@ -28,7 +28,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req).pipe(
         catchError(error => {
             if (error.status !== 401) {
-                return throwError(() => error);
+                throw error;
             }
 
             // Triggers token refresh and retries the request if access token is invalid
@@ -61,4 +61,4 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             );
         })
     );
-};
+}
