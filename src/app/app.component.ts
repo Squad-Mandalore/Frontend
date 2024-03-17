@@ -14,7 +14,7 @@ import {LoggerService} from "./shared/logger.service";
 })
 export class AppComponent implements OnInit{
   title = 'Squad-Mandalore-Frontend';
-
+  
   constructor(private logger: LoggerService) {
   }
 
