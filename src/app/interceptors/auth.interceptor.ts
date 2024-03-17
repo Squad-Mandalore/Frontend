@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { LocalStorageService } from '../shared/local-storage.service';
 import { inject } from '@angular/core';
-import { EMPTY, catchError, switchMap } from 'rxjs';
+import { catchError, switchMap } from 'rxjs';
 import { AuthService, Token } from '../shared/generated';
 import { AuthExtentionService } from '../shared/auth-extention.service';
 
@@ -36,7 +36,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             if (!refreshToken) {
                 // Handle case where there's no refresh token
                 authExtService.logout;
-                return EMPTY;
+                throw error;
             }
 
             return authService.refreshAccessTokenAuthRefreshPost(refreshToken as string).pipe(
@@ -53,10 +53,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
                     return next(req);
                 }),
-                catchError(() => {
+                catchError(error => {
                     // Handle case where refresh token is also invalid
                     authExtService.logout();
-                    return EMPTY;
+                    throw error
                 })
             );
         })
