@@ -1,4 +1,6 @@
-<button [title]="description" [style.minWidth]="minWidth" class="secondary-button" [ngClass]="{'with-icon': iconName}">
+<button [title]="description" [style.minWidth]="minWidth" class="secondary-button" [ngClass]="{'with-icon': iconName}"
+    [disabled]="disabled">
     <span>{{ text }}</span>
-    <app-icon *ngIf="iconName" [iconName]="iconName" [iconColor]="iconColor" [strokeWidth]="strokeWidth" [iconWidth]="iconWidth" [iconHeight]="iconHeight"></app-icon>
+    <app-icon *ngIf="iconName" [iconName]="iconName" [iconColor]="iconColor" [strokeWidth]="strokeWidth"
+        [iconWidth]="iconWidth" [iconHeight]="iconHeight"></app-icon>
 </button>
