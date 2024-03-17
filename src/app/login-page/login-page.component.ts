@@ -8,11 +8,12 @@ import { LocalStorageService } from '../shared/local-storage.service';
 import { AuthExtentionService } from '../shared/auth-extention.service';
 import { NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PrimaryButtonComponent } from '../components/buttons/primary-button/primary-button.component';
 
 @Component({
     selector: 'app-login-page',
     standalone: true,
-    imports: [ReactiveFormsModule, AlertComponent, NgIf],
+    imports: [ReactiveFormsModule, AlertComponent, NgIf, PrimaryButtonComponent],
     templateUrl: './login-page.component.html',
     styleUrl: './login-page.component.scss'
 })
