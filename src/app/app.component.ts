@@ -1,26 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { AlertComponent } from './alert/alert.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
-import {LoggerService} from "./shared/logger.service";
+import { LoggerService } from "./shared/logger.service";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet, AlertComponent, ConfirmationModalComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    standalone: true,
+    imports: [CommonModule, RouterOutlet, AlertComponent, ConfirmationModalComponent],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit{
-  title = 'Squad-Mandalore-Frontend';
+export class AppComponent implements OnInit {
 
-  constructor(private logger: LoggerService) {
-  }
+    constructor(private logger: LoggerService) {
+    }
 
-  ngOnInit(): void {
-    this.logger.info("I need Help")
+    ngOnInit(): void {
+        this.logger.info("I need Help")
 
-  }
+    }
 
 }
