@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { UserCardComponent } from '../user-card/user-card.component';
 import { CommonModule } from '@angular/common';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AuthExtentionService } from '../shared/auth-extention.service';
+import { AthleteResponseSchema } from '../shared/generated';
 
 @Component({
     selector: 'app-navbar-bottom-component',
@@ -12,25 +13,26 @@ import { AuthExtentionService } from '../shared/auth-extention.service';
     styleUrl: './navbar-bottom-component.component.scss'
 })
 export class NavbarBottomComponentComponent {
-    urlParts: string[] = [];
-
-    constructor(private route: ActivatedRoute, private authExtService: AuthExtentionService) {
-        this.urlParts = this.route.snapshot.url.map(segment => segment.toString());
-    }
-
-    checkIfIsActive(routeParameter: string) {
-        return this.urlParts.includes(routeParameter);
+    constructor(private authExtService: AuthExtentionService) {
     }
 
     onClick() {
         this.authExtService.logout();
     }
 
-    user = {
+    user: AthleteResponseSchema = {
         id: '1',
         firstname: 'Kay',
         lastname: 'Schulz',
         type: 'Administrator',
-        username: 'KaySchulz42'
+        username: 'KaySchulz42',
+        email: 'test1@example.com',
+        created_at: '2024-02-26',
+        last_password_change: '2024-02-26',
+        last_edited_at: '2024-02-26',
+        gender: 'm',
+        has_disease: false,
+        birthday: '2024-02-25',
+        trainer_id: 'tsa;lk',
     }
 }
