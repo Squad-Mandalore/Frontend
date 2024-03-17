@@ -26,62 +26,62 @@
                         <app-secondary-button id="filter-button" [ngClass]="{'has-filter': getActiveFilters() !== 0}" [attr.active-filters]="getActiveFilters()" *ngIf="selectedAthlete.results.length > 0" class="secondary-button" [text]="'Filter'" [iconName]="'filter-1'"></app-secondary-button>
                         <div class="undermenu accent-500">
                             <div class="menu-item filter cursor-pointer position-relative">
-                                <span>Kategorie</span>
+                                <span class="accent-900">Kategorie</span>
                                 <span class="arrow-right">></span>
                                 <div class="under-undermenu accent-500">
-                                    <div class="menu-item cursor-pointer" (click)="setFilter('category', 'Schnelligkeit')">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('category', 'Schnelligkeit')">
                                         <span>Schnelligkeit</span>
-                                        <app-icon *ngIf="filter['category'] === 'Schnelligkeit'" [iconName]="'check'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
+                                        <app-icon *ngIf="filter['category'] === 'Schnelligkeit'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
-                                    <div class="menu-item cursor-pointer" (click)="setFilter('category', 'Koordination')">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('category', 'Koordination')">
                                         <span>Koordination</span>
-                                        <app-icon *ngIf="filter['category'] === 'Koordination'" [iconName]="'check'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
+                                        <app-icon *ngIf="filter['category'] === 'Koordination'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
-                                    <div class="menu-item cursor-pointer" (click)="setFilter('category', 'Ausdauer')">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('category', 'Ausdauer')">
                                         <span>Ausdauer</span>
-                                        <app-icon *ngIf="filter['category'] === 'Ausdauer'" [iconName]="'check'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
+                                        <app-icon *ngIf="filter['category'] === 'Ausdauer'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
-                                    <div class="menu-item cursor-pointer" (click)="setFilter('category', 'Kraft')">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('category', 'Kraft')">
                                         <span>Kraft</span>
-                                        <app-icon *ngIf="filter['category'] === 'Kraft'" [iconName]="'check'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
+                                        <app-icon *ngIf="filter['category'] === 'Kraft'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                 </div>
                             </div>
                             <div class="menu-item filter cursor-pointer position-relative">
-                                <span>Medaille</span>
+                                <span class="accent-900">Medaille</span>
                                 <span class="arrow-right">></span>
                                 <div class="under-undermenu accent-500">
-                                    <div class="menu-item cursor-pointer" (click)="setFilter('medal', 'Gold')">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('medal', 'Gold')">
                                         <span>Gold</span>
-                                        <app-icon *ngIf="filter['medal']  === 'Gold'" [iconName]="'check'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
+                                        <app-icon *ngIf="filter['medal']  === 'Gold'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
-                                    <div class="menu-item cursor-pointer" (click)="setFilter('medal', 'Silber')">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('medal', 'Silber')">
                                         <span>Silber</span>
-                                        <app-icon *ngIf="filter['medal']  === 'Silber'" [iconName]="'check'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
+                                        <app-icon *ngIf="filter['medal']  === 'Silber'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
-                                    <div class="menu-item cursor-pointer" (click)="setFilter('medal', 'Bronze')">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('medal', 'Bronze')">
                                         <span>Bronze</span>
-                                        <app-icon *ngIf="filter['medal']  === 'Bronze'" [iconName]="'check'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
+                                        <app-icon *ngIf="filter['medal']  === 'Bronze'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                 </div>
                             </div>
                             <div class="menu-item filter cursor-pointer position-relative">
-                                <span>Trainer</span>
+                                <span class="accent-900">Trainer</span>
                                 <span class="arrow-right">></span>
                                 <div class="under-undermenu accent-500">
-                                    <div *ngFor="let trainer of getTrackingTrainers(selectedAthlete.results)" class="menu-item cursor-pointer" (click)="setFilter('tracked_by', trainer)">
+                                    <div *ngFor="let trainer of getTrackingTrainers(selectedAthlete.results)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_by', trainer)">
                                         <span>{{trainer}}</span>
-                                        <app-icon *ngIf="filter['tracked_by'] === trainer" [iconName]="'check'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
+                                        <app-icon *ngIf="filter['tracked_by'] === trainer" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                 </div>
                             </div>
                             <div class="menu-item filter cursor-pointer position-relative">
-                                <span>Datum</span>
+                                <span class="accent-900">Datum</span>
                                 <span class="arrow-right">></span>
                                 <div class="under-undermenu accent-500">
-                                    <div *ngFor="let date of getTrackingDates(selectedAthlete.results)" class="menu-item cursor-pointer" (click)="setFilter('tracked_at', date)">
+                                    <div *ngFor="let date of getTrackingDates(selectedAthlete.results)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_at', date)">
                                         <span>{{date}}</span>
-                                        <app-icon *ngIf="filter['tracked_at'] === date" [iconName]="'check'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
+                                        <app-icon *ngIf="filter['tracked_at'] === date" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                 </div>
                             </div>
@@ -217,7 +217,7 @@
         </div>
     </ng-template>
 </div>
-<app-navbar-bottom></app-navbar-bottom>
+<app-navbar-bottom [isCreateTrainerModalActive]="isCreateTrainerModalActive"></app-navbar-bottom>
 <div id="athlete-details" *ngIf="selectedAthlete;" [ngClass]="{'active': selectedAthlete && showDetails}">
     <div>
         <p class="headline margin-bottom-20">Sportler Details</p>

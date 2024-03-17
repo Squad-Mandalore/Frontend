@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   routeSubscription!: Subscription;
   showDetails = false;
   filter: any = {};
+  isCreateTrainerModalActive = false;
 
   getActiveFilters(){
     let counter = 0;
@@ -53,14 +54,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   setFilter(key:string, value:string){
-    // if(this.filter[key]) delete this.filter[key];
-    // else this.filter[key] = value;
     this.filter[key] = this.filter[key] == value ? "" : value;
-    console.log("filter option: ", this.filter);
   }
 
   customFilterCall(array: any[], options: Object, fullFit:boolean = false){
-    console.log(array, options);
     return customFilter(array, options, fullFit);
   }
 
@@ -396,8 +393,617 @@ export class DashboardComponent implements OnInit, OnDestroy {
       progress_points: 7,
       progress_medal: this.getRandomMedalStatus(),
       results: []
+    },{
+      id: 5,
+      username: 'test1',
+      email: 'test1@example.com',
+      firstname: 'John',
+      lastname: 'Doe',
+      created_at: '2024-02-26',
+      created_by: "kay_schulz1",
+      gender: "männlich",
+      last_password_change: '2024-02-26',
+      last_edited_at: '2024-02-26',
+      date_of_birth: '2003-02-26',
+      type: 'Sportler',
+      has_swimming_certificate: false,
+      progress: this.getRandomNumber(),
+      progress_points: 8,
+      progress_medal: this.getRandomMedalStatus(),
+      number_bronze_medals: 0,
+      number_silver_medals: 0,
+      number_gold_medals: 0,
+      results: [
+        {
+          id: 1,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 2,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 3,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 4,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        }
+      ]
+    },{
+      id: 6,
+      username: 'test2',
+      email: 'test1@example.com',
+      firstname: 'Jane',
+      lastname: 'Doe',
+      created_at: '2024-02-26',
+      created_by: "kay_schulz1",
+      gender: "weiblich",
+      last_password_change: '2024-02-26',
+      last_edited_at: '2024-02-26',
+      date_of_birth: '2003-02-26',
+      type: 'Sportler',
+      number_bronze_medals: 0,
+      number_silver_medals: 0,
+      number_gold_medals: 0,
+      has_swimming_certificate: false,
+      progress: this.getRandomNumber(),
+      progress_points: 8,
+      progress_medal: this.getRandomMedalStatus(),
+      results: [
+        {
+          id: 1,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 2,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 3,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 4,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        }
+      ]
+    },{
+      id: 7,
+      username: 'test1',
+      email: 'test1@example.com',
+      firstname: 'Jimmy',
+      lastname: 'Doe',
+      created_at: '2024-02-26',
+      created_by: "kay_schulz1",
+      gender: "männlich",
+      last_password_change: '2024-02-26',
+      last_edited_at: '2024-02-26',
+      date_of_birth: '2003-02-26',
+      type: 'Sportler',
+      number_bronze_medals: 0,
+      number_silver_medals: 0,
+      number_gold_medals: 0,
+      has_swimming_certificate: false,
+      progress: this.getRandomNumber(),
+      progress_points: 8,
+      progress_medal: this.getRandomMedalStatus(),
+      results: [
+        {
+          id: 1,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 2,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 3,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 4,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 5,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "16.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 6,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 7,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 8,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 9,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 10,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 11,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 12,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 13,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 14,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 15,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 16,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz2"
+        }
+      ]
+    },{
+      id: 8,
+      username: 'test2',
+      email: 'test1@example.com',
+      firstname: 'Jenny',
+      lastname: 'Doe',
+      created_at: '2024-02-26',
+      created_by: "kay_schulz1",
+      gender: "weiblich",
+      last_password_change: '2024-02-26',
+      last_edited_at: '2024-02-26',
+      date_of_birth: '2003-02-26',
+      type: 'Sportler',
+      number_bronze_medals: 0,
+      number_silver_medals: 0,
+      number_gold_medals: 0,
+      has_swimming_certificate: false,
+      progress: this.getRandomNumber(),
+      progress_points: 7,
+      progress_medal: this.getRandomMedalStatus(),
+      results: []
+    },{
+      id: 9,
+      username: 'test1',
+      email: 'test1@example.com',
+      firstname: 'John',
+      lastname: 'Doe',
+      created_at: '2024-02-26',
+      created_by: "kay_schulz1",
+      gender: "männlich",
+      last_password_change: '2024-02-26',
+      last_edited_at: '2024-02-26',
+      date_of_birth: '2003-02-26',
+      type: 'Sportler',
+      has_swimming_certificate: false,
+      progress: this.getRandomNumber(),
+      progress_points: 8,
+      progress_medal: this.getRandomMedalStatus(),
+      number_bronze_medals: 0,
+      number_silver_medals: 0,
+      number_gold_medals: 0,
+      results: [
+        {
+          id: 1,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 2,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 3,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 4,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        }
+      ]
+    },{
+      id: 10,
+      username: 'test2',
+      email: 'test1@example.com',
+      firstname: 'Jane',
+      lastname: 'Doe',
+      created_at: '2024-02-26',
+      created_by: "kay_schulz1",
+      gender: "weiblich",
+      last_password_change: '2024-02-26',
+      last_edited_at: '2024-02-26',
+      date_of_birth: '2003-02-26',
+      type: 'Sportler',
+      number_bronze_medals: 0,
+      number_silver_medals: 0,
+      number_gold_medals: 0,
+      has_swimming_certificate: false,
+      progress: this.getRandomNumber(),
+      progress_points: 8,
+      progress_medal: this.getRandomMedalStatus(),
+      results: [
+        {
+          id: 1,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 2,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 3,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 4,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        }
+      ]
+    },{
+      id: 11,
+      username: 'test1',
+      email: 'test1@example.com',
+      firstname: 'Jimmy',
+      lastname: 'Doe',
+      created_at: '2024-02-26',
+      created_by: "kay_schulz1",
+      gender: "männlich",
+      last_password_change: '2024-02-26',
+      last_edited_at: '2024-02-26',
+      date_of_birth: '2003-02-26',
+      type: 'Sportler',
+      number_bronze_medals: 0,
+      number_silver_medals: 0,
+      number_gold_medals: 0,
+      has_swimming_certificate: false,
+      progress: this.getRandomNumber(),
+      progress_points: 8,
+      progress_medal: this.getRandomMedalStatus(),
+      results: [
+        {
+          id: 1,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 2,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 3,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 4,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 5,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "16.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 6,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 7,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 8,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 9,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 10,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 11,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 12,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 13,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 14,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 15,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz"
+        },
+        {
+          id: 16,
+          discipline: "50 Meter Sprint",
+          category: "Schnelligkeit",
+          score: "08:05 Sekunden",
+          medal: "Gold",
+          tracked_at: "14.02.2024",
+          tracked_by: "Kay Schulz2"
+        }
+      ]
+    },{
+      id: 12,
+      username: 'test2',
+      email: 'test1@example.com',
+      firstname: 'Jenny',
+      lastname: 'Doe',
+      created_at: '2024-02-26',
+      created_by: "kay_schulz1",
+      gender: "weiblich",
+      last_password_change: '2024-02-26',
+      last_edited_at: '2024-02-26',
+      date_of_birth: '2003-02-26',
+      type: 'Sportler',
+      number_bronze_medals: 0,
+      number_silver_medals: 0,
+      number_gold_medals: 0,
+      has_swimming_certificate: false,
+      progress: this.getRandomNumber(),
+      progress_points: 7,
+      progress_medal: this.getRandomMedalStatus(),
+      results: []
     }]
 
+    this.athletes = this.athletes.slice(0, 5);
+    // this.athletes = [];
+    
     for(const athlete of this.athletes){
       athlete.number_gold_medals = customFilter(athlete.results, {medal: "Gold"}).length;
       athlete.number_silver_medals = customFilter(athlete.results, {medal: "Silver"}).length;

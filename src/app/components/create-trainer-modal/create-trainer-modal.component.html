@@ -1,7 +1,8 @@
-<div id="modal">
+<div id="overlay" (click)="close(false)" [ngClass]="{'is-active': isActive, 'is-inactive': !isActive}"></div>
+<div id="modal" [ngClass]="{'is-active': isActive, 'is-inactive': !isActive}">
     <div id="modal-header">
         <p id="modal-headline">Neuen Trainer hinzufügen</p>
-        <app-icon id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+        <app-icon (click)="close(false)" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
     </div>
     <div id="input-wrapper">
         <label class="label">
@@ -34,7 +35,7 @@
         </label>
     </div>
     <div id="modal-footer">
-        <app-secondary-button [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
-        <app-primary-button [text]="'Trainer hinzufügen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
+        <app-secondary-button (click)="close(false)" [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+        <app-primary-button [text]="'Trainer anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
     </div>
 </div>

@@ -18,10 +18,10 @@
     align-items: center;
     justify-content: center;
 }
-.item.isActive{
+.item.is-active{
     background-color: var(--brand-100);
 }
-.item.isActive > .active-bar{
+.item.is-active > .active-bar{
     display: block;
     background-color: var(--brand-500);
     width: 25px;
@@ -32,16 +32,16 @@
     transform: translateX(-50%);
     border-radius: 20px;
 }
-.item.isActive > svg{
+.item.is-active > svg{
     stroke: var(--brand-500);
 }
-.item.isInactive > svg{
+.item.is-inactive > svg{
     stroke: var(--accent-900);
 }
-.item.isInactive{
+.item.is-inactive{
     background-color: var(--accent-150);
 }
-.item.isInactive:hover{
+.item.is-inactive:hover{
     cursor: pointer;
     background-color: var(--accent-200);
 }
