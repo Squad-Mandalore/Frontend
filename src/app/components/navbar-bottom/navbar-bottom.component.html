@@ -17,7 +17,7 @@
             </svg>
             <div class="active-bar"></div>
         </a>
-        <a class="item is-inactive" (click)="activateModal()" data-tooltip="Trainer hinzufügen">
+        <a class="item is-inactive" (click)="modals.createTrainerModal.isActive = true" data-tooltip="Trainer hinzufügen">
             <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_533_19)">
                 <path d="M13.8334 17.5V15.8333C13.8334 14.9493 13.4822 14.1014 12.8571 13.4763C12.2319 12.8512 11.3841 12.5 10.5 12.5H4.66671C3.78265 12.5 2.93481 12.8512 2.30968 13.4763C1.68456 14.1014 1.33337 14.9493 1.33337 15.8333V17.5" stroke="#0B0D0E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -71,4 +71,5 @@
     </div>
 </div>
 
-<app-create-trainer-modal (closeModal)="close($event)" [isActive]="isCreateTrainerModalActive"></app-create-trainer-modal>
+<app-create-trainer-modal [modals]="modals"></app-create-trainer-modal>
+<app-create-athlete-modal [modals]="modals"></app-create-athlete-modal>

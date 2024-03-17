@@ -15,6 +15,7 @@ import customFilter from '../../../utils/custom-filter';
 })
 export class SidebarComponent {
   @Input() athletes:any = [];
+  @Input() modals:any = {};
   searchValue = "";
 
   customFilterCall(array: any[], options: Object, valueFullFit:boolean = false, selectionFullFit:boolean = false){

@@ -12,7 +12,7 @@
                 </svg>
                 <input #searchInput id="search-input" [value]="searchInput.value" (input)="changeSearchValue(searchInput.value)" placeholder="Suchen" type="text"/>
             </div>
-            <app-quaternary-button [iconName]="'user-plus'" [tooltipText]="'Sportler hinzufügen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"></app-quaternary-button>
+            <app-quaternary-button (click)="modals.createAthleteModal.isActive = true" [iconName]="'user-plus'" [tooltipText]="'Sportler hinzufügen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"></app-quaternary-button>
         </div>
     </div>
     <div id="sidebar-content" class="empty" *ngIf="athletes.length === 0; else hasAthletes">

@@ -1,7 +1,8 @@
-<div id="modal">
+<div id="overlay" (click)="modals.createAthleteModal.isActive = false" [ngClass]="{'is-active': modals.createAthleteModal.isActive, 'is-inactive': !modals.createAthleteModal.isActive}"></div>
+<div id="modal" [ngClass]="{'is-active': modals.createAthleteModal.isActive, 'is-inactive': !modals.createAthleteModal.isActive}">
   <div id="modal-header">
     <p id="modal-headline">Neuen Sportler hinzufügen</p>
-    <app-icon id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+    <app-icon (click)="modals.createAthleteModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
   </div>
     <div id="input-wrapper">
       <ng-container *ngIf="showFirstPage">
@@ -60,7 +61,7 @@
     </div>
   <div id="modal-footer">
     <ng-container *ngIf="showFirstPage">
-      <app-secondary-button [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+      <app-secondary-button (click)="modals.createAthleteModal.isActive = false" [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
       <app-primary-button (click)=onClickSwitchPage() [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
     </ng-container>
     <ng-container *ngIf="!showFirstPage">

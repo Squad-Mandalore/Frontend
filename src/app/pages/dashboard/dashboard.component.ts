@@ -11,11 +11,12 @@ import { SecondaryButtonComponent } from '../../components/buttons/secondary-but
 import { IconComponent } from '../../components/icon/icon.component';
 import customFilter from '../../../utils/custom-filter';
 import Result from '../../models/result';
+import { ConfirmationModalComponent } from '../../components/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponent, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
+  imports: [SidebarComponent, ConfirmationModalComponent, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -27,8 +28,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
   routeSubscription!: Subscription;
   showDetails = false;
   filter: any = {};
-  isCreateTrainerModalActive = false;
+  dashArray: number = 525;
+  modals = {
+    createTrainerModal: {
+      isActive: false,
+    },
+    createAthleteModal: {
+      isActive: false,
+    },
+    confirmationModal: {
+      isActive: false,
+      modalTitle: "Benutzer wirklich löschen?",
+      modalDescription: "Mit dieser Aktion wird der ausgewählte Benutzer unwiderruflich gelöscht.",
+      primaryButtonText: "Benutzer löschen",
+      secondaryButtonText: "Abbrechen",
+    }
+  }
 
+  deleteElement(){
+    // do deletion logic
+    console.log("delete");
+  }
+  
   getActiveFilters(){
     let counter = 0;
     for (const [key, value] of Object.entries(this.filter)){
@@ -61,18 +82,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return customFilter(array, options, fullFit);
   }
 
-  triggerDetailsByValue(value: boolean){
+  triggerAthleteDetails(value: boolean){
     this.showDetails = value;
   }
 
   getRandomNumber(){
     return Math.floor(Math.random() * 100) + 1;
   }
+
   getRandomMedalStatus() {
     const medalStatusOptions = ["none", "gold", "silver", "bronze"];
     const randomIndex = Math.floor(Math.random() * medalStatusOptions.length);
     return medalStatusOptions[randomIndex];
   }
+
   getColorVariable(medal: string){
     const colorMap: any  = {
       none: "var(--brand-400)",
@@ -82,7 +105,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
     return colorMap[medal] ?? "transparent";
   }
-  dashArray: number = 525;
 
   dashOffset(athlete: Athlete): number {
     const progressDecimal = athlete.progress / 100;

@@ -1,19 +1,27 @@
 #modal{
-    height: 170px;
+    z-index: 110;
+    height: minmax(170px, fit-content);
     width: 500px;
     padding: 20px;
     background-color: var(--accent-0);
-    box-shadow: 0px 0px 20px var(--accent-200);
     display: flex;
     flex-direction: column;
+    gap: 30px;
     border-radius: 5px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
+
 #modal-body{
     width: 100%;
+    height: fit-content;
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+    gap: 10px;
 }
+
 #modal-content{
     width: calc(100% - 50px);
     height: fit-content;
@@ -21,8 +29,8 @@
     flex-direction: column;
     gap: 15px;
 }
+
 #modal-footer{
-    margin-top: auto;
     height: fit-content;
     width: 100%;
     display: flex;
@@ -30,76 +38,43 @@
     justify-content: end;
     gap: 10px;
 }
-.icon{
-  stroke: var(--accent-0);
-  height: 15px;
-  width: 15px;
-  stroke-width: 2.5;
-}
-.button{
-    padding: 12px 30px;
-    width: fit-content;
-    height: fit-content;
-    border-radius: 5px;
-    border: 0;
-    font-family: "TeleNeo Medium";
-    font-size: 15px;
-    cursor: pointer;
-    transition: all 200ms;
-}
 
-#secondary-button{
-  background-color: var(--accent-0);
-  color: var(--accent-900);
-  border: 1px solid var(--accent-200);
-}
-#secondary-button:hover{
-    border-color: var(--accent-900);
-}
-#secondary-button:active{
-    background-color: var(--accent-100);
-}
-
-#primary-button{
-  background-color: var(--brand-500);
-  color: var(--accent-0);
-  outline: 2px solid transparent;
-  outline-offset: 1px;
-}
-#primary-button:hover{
-  outline-color: var(--brand-500);
-}
-#primary-button:active{
-  background-color: var(--brand-600);
+#overlay{
+    width: 100dvw;
+    height: 100dvh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    transition: all 100ms;
+    background-color: #00000030;
+    z-index: 100;
 }
 
 #title{
-    font-family: 'TeleNeo Bold';
+    font-family: 'Inter Bold';
     font-size: 1.1rem;
     line-clamp: 1;
-    text-wrap: nowrap;
+    white-space: nowrap;
     text-overflow: ellipsis;
     width: 100%;
     overflow: hidden;
 }
+
 #description{
-    font-family: 'TeleNeo Medium';
-    font-size: 1.07rem;
+    font-family: 'Inter Medium';
+    font-size: 15px;
     color: var(--accent-400);
     width: 100%;
-    text-wrap: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    line-height: 1.25rem;
+    height: 2.5rem;
 }
+
 #close-button{
     cursor: pointer;
     width: fit-content;
     text-wrap: nowrap;
     text-overflow: ellipsis;
-}
-p{
-    margin: 0;
-}
-*{
-    box-sizing: border-box;
 }

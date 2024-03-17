@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
 import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-button.component";
@@ -24,6 +24,7 @@ export class CreateAthleteModalComponent {
   progressBarColor = "var(--danger)";
   showFirstPage: boolean = true;
   isMale: boolean = true;
+  @Input() modals!: any;
 
   onClickSwitchPage() {
     this.showFirstPage = !this.showFirstPage;

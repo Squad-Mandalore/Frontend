@@ -12,12 +12,7 @@ import { NgClass } from '@angular/common';
   styleUrl: './create-trainer-modal.component.scss'
 })
 export class CreateTrainerModalComponent {
-  @Input() isActive: boolean = false;
-
-  @Output() closeModal = new EventEmitter<boolean>();
-  close(value: boolean){
-    this.closeModal.emit(value);
-  }
+  @Input() modals!: any;
 
   passwordStrength = "schwach";
   progressBarColor = "var(--danger)";

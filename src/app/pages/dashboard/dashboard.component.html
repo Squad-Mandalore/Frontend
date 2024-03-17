@@ -1,6 +1,6 @@
 <div id="page">
-    <app-sidebar [athletes]="athletes"></app-sidebar>
-    <div id="details" *ngIf="selectedAthlete; else elseBlock">
+    <app-sidebar [athletes]="athletes" [modals]="modals"></app-sidebar>
+    <div id="content" *ngIf="selectedAthlete; else elseBlock">
         <div id="headline-wrapper">
             <p class="headline">Sportler-Übersicht</p>
             <p class="meta-text">registriert am {{selectedAthlete.created_at}} von {{selectedAthlete.created_by}}</p>
@@ -15,7 +15,7 @@
                 <span>geboren am {{selectedAthlete.date_of_birth}}</span>
                 <app-icon [iconName]="'star'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
             </div>
-            <app-secondary-button class="secondary-button" [text]="'Details'" [strokeWidth]="'1.5'" (click)="triggerDetailsByValue(true)"></app-secondary-button>
+            <app-secondary-button class="secondary-button" [text]="'Details'" [strokeWidth]="'1.5'" (click)="triggerAthleteDetails(true)"></app-secondary-button>
             <app-primary-button [text]="'Bearbeiten'" [iconName]="'edit-1'"></app-primary-button>
         </div>
         <div id="container-wrapper">
@@ -217,12 +217,13 @@
         </div>
     </ng-template>
 </div>
-<app-navbar-bottom [isCreateTrainerModalActive]="isCreateTrainerModalActive"></app-navbar-bottom>
+<app-navbar-bottom [modals]="modals"></app-navbar-bottom>
+<app-confirmation-modal (secondaryButtonClick)="modals.confirmationModal.isActive = false" (closeButtonClick)="modals.confirmationModal.isActive = false" (primaryButtonClick)="deleteElement()" [ngClass]="{'active': modals.confirmationModal.isActive}" [modalTitle]="modals.confirmationModal.modalTitle" [modalDescription]="modals.confirmationModal.modalDescription" [isDeleteButton]="true" [iconName]="'delete'" [primaryButtonText]="modals.confirmationModal.primaryButtonText" [secondaryButtonText]="modals.confirmationModal.secondaryButtonText"></app-confirmation-modal>
 <div id="athlete-details" *ngIf="selectedAthlete;" [ngClass]="{'active': selectedAthlete && showDetails}">
     <div>
         <p class="headline margin-bottom-20">Sportler Details</p>
         <p class="text-small">In diesem Menü finden Sie grundlegende Informationen zum ausgewählten Benutzer</p>
-        <app-icon id="close-button" class="cursor-pointer" (click)="triggerDetailsByValue(false)" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [iconHeight]="'24'" [iconWidth]="'24'" [strokeWidth]="'2'"></app-icon>
+        <app-icon id="close-button" class="cursor-pointer" (click)="triggerAthleteDetails(false)" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [iconHeight]="'24'" [iconWidth]="'24'" [strokeWidth]="'2'"></app-icon>
     </div>
     <div class="flex flex-col gap-30">
         <p class="headline-small">Grundinformationen:</p>
@@ -339,9 +340,9 @@
     <div class="flex flex-col gap-30 margin-top-auto">
         <span class="margin-left-auto inter-medium accent-500 font-size-15">erstellt am {{selectedAthlete.created_at}} von {{selectedAthlete.created_by}}</span>
         <div class="flex items-center gap-10 full-width">
-            <app-secondary-button class="full-width" (click)="triggerDetailsByValue(false)" [text]="'Abbrechen'" [minWidth]="'100%'"></app-secondary-button>
-            <app-primary-button class="full-width" [isDeleteButton]="true" [text]="'Benutzer löschen'" [minWidth]="'100%'" [iconName]="'delete'" [strokeWidth]="'2'" id="delete-button"></app-primary-button>
+            <app-secondary-button class="full-width" (click)="triggerAthleteDetails(false)" [text]="'Abbrechen'" [minWidth]="'100%'"></app-secondary-button>
+            <app-primary-button class="full-width" [isDeleteButton]="true" [text]="'Benutzer löschen'" [minWidth]="'100%'" [iconName]="'delete'" [strokeWidth]="'2'" (click)="modals.confirmationModal.isActive = true" id="delete-button"></app-primary-button>
         </div>
     </div>
 </div>
-<div id="overlay" *ngIf="selectedAthlete;" (click)="triggerDetailsByValue(false)" [ngClass]="{'active': selectedAthlete && showDetails}"></div>
+<div id="overlay-lower" *ngIf="selectedAthlete;" (click)="triggerAthleteDetails(false)" [ngClass]="{'active': selectedAthlete && showDetails}"></div>

@@ -3,34 +3,36 @@ import { UserCardComponent } from '../user-card/user-card.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { CreateTrainerModalComponent } from '../create-trainer-modal/create-trainer-modal.component';
+import { CreateAthleteModalComponent } from '../create-athlete-modal/create-athlete-modal.component';
 
 
 @Component({
   selector: 'app-navbar-bottom',
   standalone: true,
-  imports: [UserCardComponent, CommonModule, RouterModule, CreateTrainerModalComponent],
+  imports: [UserCardComponent, CommonModule, RouterModule, CreateTrainerModalComponent, CreateAthleteModalComponent],
   templateUrl: './navbar-bottom.component.html',
   styleUrl: './navbar-bottom.component.scss'
 })
 export class NavbarBottomComponent {
   urlParts: any = [];
-  @Input() isCreateTrainerModalActive: boolean = false;
+  @Input() modals!: any;
 
-  close(value: boolean){
-    this.deactivateModal();
-  }
+  // close(modalName: string){
+  //   console.log(modalName);
+  //   this.deactivateModal(modalName);
+  // }
 
-  triggerModal(){
-    this.isCreateTrainerModalActive = !this.isCreateTrainerModalActive;
-  }
+  // triggerModal(modalName: string){
+  //   this.modals[modalName].isActive = !this.modals[modalName].isActive;
+  // }
 
-  activateModal(){
-    this.isCreateTrainerModalActive = true;
-  }
+  // activateModal(modalName: string){
+  //   this.modals[modalName].isActive = true;
+  // }
   
-  deactivateModal(){
-    this.isCreateTrainerModalActive = false;
-  }
+  // deactivateModal(modalName: string){
+  //   this.modals[modalName].isActive = false;
+  // }
 
   constructor(private route: ActivatedRoute) {
     this.urlParts = this.route.snapshot.url.map(segment => segment.toString());
