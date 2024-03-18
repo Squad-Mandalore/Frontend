@@ -1,17 +1,18 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from "@angular/common"
+import { CommonModule, NgClass } from "@angular/common"
 
 @Component({
     selector: 'app-alert',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, NgClass],
     templateUrl: './alert.component.html',
     styleUrl: './alert.component.scss'
 })
 export class AlertComponent {
     @Input() alertTitle?: string;
     @Input() alertDescription?: string;
-    @Input() alertType?: 'success' | 'error';
+    @Input({ required: true }) alertType!: 'success' | 'error';
+    @Input({ required: true }) isActive!: boolean;
 
     @Output() closed = new EventEmitter<void>();
 
