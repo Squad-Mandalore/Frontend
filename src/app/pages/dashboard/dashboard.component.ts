@@ -79,8 +79,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       filterValue: this.filter[key] && this.filter[key].filterValue == value ? "" : value,
       valueFullFit: valueFullFit,
     }
-    // this.filter[key].filterValue = this.filter[key] == value.filterValue ? "" : value;
-    // this.filter[key].
   }
 
   customFilterCall(array: any[], options: Object, selectionFullFit: boolean){

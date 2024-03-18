@@ -70,8 +70,8 @@
                                 <span class="arrow-right">></span>
                                 <div class="under-undermenu accent-500">
                                     <div class="menu-item cursor-pointer accent-900">
-                                        <app-icon [iconName]="'search'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconWidth]="'16'" [iconHeight]="'16'"></app-icon>
-                                        <input class="input" placeholder="Suchen" #customFilter (input)="setFilter('tracked_by', customFilter.value, false)" [value]="customFilter.value"/>
+                                        <app-icon [iconName]="'search'" [iconColor]="'var(--accent-300)'" [strokeWidth]="'2'" [iconWidth]="'16'" [iconHeight]="'16'"></app-icon>
+                                        <input class="input" placeholder="Suchen" #customTrainerFilter (input)="setFilter('tracked_by', customTrainerFilter.value, false)" [value]="customTrainerFilter.value"/>
                                     </div>
                                     <div *ngFor="let trainer of getTrackingTrainers(selectedAthlete.results)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_by', trainer)">
                                         <span>{{trainer}}</span>
@@ -84,8 +84,8 @@
                                 <span class="arrow-right">></span>
                                 <div class="under-undermenu accent-500">
                                     <div class="menu-item cursor-pointer accent-900">
-                                        <app-icon [iconName]="'search'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconWidth]="'16'" [iconHeight]="'16'"></app-icon>
-                                        <input class="input" placeholder="Suchen" #customFilter (input)="setFilter('tracked_at', customFilter.value, false)" [value]="customFilter.value"/>
+                                        <app-icon [iconName]="'search'" [iconColor]="'var(--accent-300)'" [strokeWidth]="'2'" [iconWidth]="'16'" [iconHeight]="'16'"></app-icon>
+                                        <input class="input" placeholder="Suchen" #customDateFilter (input)="setFilter('tracked_at', customDateFilter.value, false)" [value]="customDateFilter.value"/>
                                     </div>
                                     <div *ngFor="let date of getTrackingDates(selectedAthlete.results)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_at', date)">
                                         <span>{{date}}</span>
