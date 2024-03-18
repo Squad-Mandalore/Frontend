@@ -31,19 +31,19 @@
                                 <div class="under-undermenu accent-500">
                                     <div class="menu-item cursor-pointer accent-900" (click)="setFilter('category', 'Schnelligkeit')">
                                         <span>Schnelligkeit</span>
-                                        <app-icon *ngIf="filter['category'] === 'Schnelligkeit'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['category'] && filter['category'].filterValue === 'Schnelligkeit'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                     <div class="menu-item cursor-pointer accent-900" (click)="setFilter('category', 'Koordination')">
                                         <span>Koordination</span>
-                                        <app-icon *ngIf="filter['category'] === 'Koordination'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['category'] && filter['category'].filterValue === 'Koordination'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                     <div class="menu-item cursor-pointer accent-900" (click)="setFilter('category', 'Ausdauer')">
                                         <span>Ausdauer</span>
-                                        <app-icon *ngIf="filter['category'] === 'Ausdauer'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['category'] && filter['category'].filterValue === 'Ausdauer'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                     <div class="menu-item cursor-pointer accent-900" (click)="setFilter('category', 'Kraft')">
                                         <span>Kraft</span>
-                                        <app-icon *ngIf="filter['category'] === 'Kraft'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['category'] && filter['category'].filterValue === 'Kraft'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                 </div>
                             </div>
@@ -53,15 +53,15 @@
                                 <div class="under-undermenu accent-500">
                                     <div class="menu-item cursor-pointer accent-900" (click)="setFilter('medal', 'Gold')">
                                         <span>Gold</span>
-                                        <app-icon *ngIf="filter['medal']  === 'Gold'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['medal'] && filter['medal'].filterValue  === 'Gold'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                     <div class="menu-item cursor-pointer accent-900" (click)="setFilter('medal', 'Silber')">
                                         <span>Silber</span>
-                                        <app-icon *ngIf="filter['medal']  === 'Silber'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['medal'] && filter['medal'].filterValue  === 'Silber'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                     <div class="menu-item cursor-pointer accent-900" (click)="setFilter('medal', 'Bronze')">
                                         <span>Bronze</span>
-                                        <app-icon *ngIf="filter['medal']  === 'Bronze'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['medal'] && filter['medal'].filterValue  === 'Bronze'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                 </div>
                             </div>
@@ -69,9 +69,13 @@
                                 <span class="accent-900">Trainer</span>
                                 <span class="arrow-right">></span>
                                 <div class="under-undermenu accent-500">
+                                    <div class="menu-item cursor-pointer accent-900">
+                                        <app-icon [iconName]="'search'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconWidth]="'16'" [iconHeight]="'16'"></app-icon>
+                                        <input class="input" placeholder="Suchen" #customFilter (input)="setFilter('tracked_by', customFilter.value, false)" [value]="customFilter.value"/>
+                                    </div>
                                     <div *ngFor="let trainer of getTrackingTrainers(selectedAthlete.results)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_by', trainer)">
                                         <span>{{trainer}}</span>
-                                        <app-icon *ngIf="filter['tracked_by'] === trainer" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['tracked_by'] && filter['tracked_by'].filterValue === trainer" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                 </div>
                             </div>
@@ -79,9 +83,13 @@
                                 <span class="accent-900">Datum</span>
                                 <span class="arrow-right">></span>
                                 <div class="under-undermenu accent-500">
+                                    <div class="menu-item cursor-pointer accent-900">
+                                        <app-icon [iconName]="'search'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconWidth]="'16'" [iconHeight]="'16'"></app-icon>
+                                        <input class="input" placeholder="Suchen" #customFilter (input)="setFilter('tracked_at', customFilter.value, false)" [value]="customFilter.value"/>
+                                    </div>
                                     <div *ngFor="let date of getTrackingDates(selectedAthlete.results)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_at', date)">
                                         <span>{{date}}</span>
-                                        <app-icon *ngIf="filter['tracked_at'] === date" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['tracked_at'] && filter['tracked_at'].filterValue === date" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                 </div>
                             </div>
@@ -116,11 +124,11 @@
                                 <app-icon [iconName]="'more-vertical'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'20'" [iconWidth]="'20'"></app-icon>
                                 <div class="undermenu">
                                     <div class="menu-item">
-                                        <span class="font-size-15">Bearbeiten</span>
+                                        <span class="font-size-15 accent-900">Bearbeiten</span>
                                         <app-icon [iconName]="'edit-1'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
                                     </div>
                                     <div class="menu-item">
-                                        <span class="font-size-15">Löschen</span>
+                                        <span class="font-size-15 accent-900">Löschen</span>
                                         <app-icon [iconName]="'delete'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
                                     </div>
                                 </div>
@@ -248,17 +256,17 @@
             <p>Schnelligkeit</p>
             <div class="flex gap-10 items-center margin-left-auto">
                 <div class="flex items-center gap-10 border-right-1px border-accent-300">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: "Schnelligkeit", medal: "Gold"}, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Schnelligkeit", valueFullFit: true}, medal: {filterValue: "Gold", valueFullFit: true} }, true).length}}</span>
                     <div class="medal gold"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: "Schnelligkeit", medal: "Silber"}, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Schnelligkeit", valueFullFit: true}, medal: {filterValue: "Silber", valueFullFit: true} }, true).length}}</span>
                     <div class="medal silver"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: "Schnelligkeit", medal: "Bronze"}, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Schnelligkeit", valueFullFit: true}, medal: {filterValue: "Bronze", valueFullFit: true} }, true).length}}</span>
                     <div class="medal bronze"></div>
                 </div>
             </div>
@@ -271,17 +279,17 @@
             <p>Koordination</p>
             <div class="flex gap-10 items-center margin-left-auto">
                 <div class="flex items-center gap-10 border-right-1px border-accent-300">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: "Koordination", medal: "Gold"}, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Koordination", valueFullFit: true}, medal: {filterValue: "Gold", valueFullFit: true} }, true).length}}</span>
                     <div class="medal gold"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: "Koordination", medal: "Silber"}, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Koordination", valueFullFit: true}, medal: {filterValue: "Silber", valueFullFit: true} }, true).length}}</span>
                     <div class="medal silver"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: "Koordination", medal: "Bronze"}, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Koordination", valueFullFit: true}, medal: {filterValue: "Bronze", valueFullFit: true} }, true).length}}</span>
                     <div class="medal bronze"></div>
                 </div>
             </div>
@@ -294,17 +302,17 @@
             <p>Ausdauer</p>
             <div class="flex gap-10 items-center margin-left-auto">
                 <div class="flex items-center gap-10 border-right-1px border-accent-300">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: "Ausdauer", medal: "Gold"}, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Ausdauer", valueFullFit: true}, medal: {filterValue: "Gold", valueFullFit: true} }, true).length}}</span>
                     <div class="medal gold"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: "Ausdauer", medal: "Silber"}, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Ausdauer", valueFullFit: true}, medal: {filterValue: "Silber", valueFullFit: true} }, true).length}}</span>
                     <div class="medal silver"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: "Ausdauer", medal: "Bronze"}, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Ausdauer", valueFullFit: true}, medal: {filterValue: "Bronze", valueFullFit: true} }, true).length}}</span>
                     <div class="medal bronze"></div>
                 </div>
             </div>
@@ -317,17 +325,17 @@
             <p>Kraft</p>
             <div class="flex gap-10 items-center margin-left-auto">
                 <div class="flex items-center gap-10 border-right-1px border-accent-300">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: "Kraft", medal: "Gold"}, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Kraft", valueFullFit: true}, medal: {filterValue: "Gold", valueFullFit: true} }, true).length}}</span>
                     <div class="medal gold"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: "Kraft", medal: "Silber"}, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Kraft", valueFullFit: true}, medal: {filterValue: "Silber", valueFullFit: true} }, true).length}}</span>
                     <div class="medal silver"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: "Kraft", medal: "Bronze"}, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Kraft", valueFullFit: true}, medal: {filterValue: "Bronze", valueFullFit: true} }, true).length}}</span>
                     <div class="medal bronze"></div>
                 </div>
             </div>

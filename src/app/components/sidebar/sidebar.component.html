@@ -26,7 +26,7 @@
     <ng-template #hasAthletes>
         <div id="sidebar-content-wrapper">
             <div id="sidebar-content" class="filled">
-                <div *ngFor="let athlete of customFilterCall(athletes, {firstname: searchValue, lastname: searchValue}, false, false)">
+                <div *ngFor="let athlete of customFilterCall(athletes, {firstname: {filterValue: searchValue, valueFullFit: false}, lastname: {filterValue: searchValue, valueFullFit: false} }, false)">
                     <a [routerLink]="['/athleten', athlete.id]">
                         <app-athlete-card [athlete]="athlete"></app-athlete-card>
                     </a>

@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   getActiveFilters(){
     let counter = 0;
     for (const [key, value] of Object.entries(this.filter)){
-      if(this.filter[key]) counter++;
+      if(this.filter[key] && this.filter[key].filterValue) counter++;
     }
     return counter;
   }
@@ -74,12 +74,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return trackingTrainers;
   }
 
-  setFilter(key:string, value:string){
-    this.filter[key] = this.filter[key] == value ? "" : value;
+  setFilter(key:string, value:any, valueFullFit: boolean = true){
+    this.filter[key] = {
+      filterValue: this.filter[key] && this.filter[key].filterValue == value ? "" : value,
+      valueFullFit: valueFullFit,
+    }
+    // this.filter[key].filterValue = this.filter[key] == value.filterValue ? "" : value;
+    // this.filter[key].
   }
 
-  customFilterCall(array: any[], options: Object, fullFit:boolean = false){
-    return customFilter(array, options, fullFit);
+  customFilterCall(array: any[], options: Object, selectionFullFit: boolean){
+    return customFilter(array, options, selectionFullFit);
   }
 
   triggerAthleteDetails(value: boolean){
@@ -1027,9 +1032,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // this.athletes = [];
     
     for(const athlete of this.athletes){
-      athlete.number_gold_medals = customFilter(athlete.results, {medal: "Gold"}).length;
-      athlete.number_silver_medals = customFilter(athlete.results, {medal: "Silver"}).length;
-      athlete.number_bronze_medals = customFilter(athlete.results, {medal: "Bronze"}).length;
+      athlete.number_gold_medals = customFilter(athlete.results, {medal: {filterValue: "Gold", valueFullFit: true}}).length;
+      athlete.number_silver_medals = customFilter(athlete.results, {medal: {filterValue: "Silber", valueFullFit: true}}).length;
+      athlete.number_bronze_medals = customFilter(athlete.results, {medal: {filterValue: "Bronze", valueFullFit: true}}).length;
     }
     
     this.routeSubscription = this.route.params.subscribe(params => {

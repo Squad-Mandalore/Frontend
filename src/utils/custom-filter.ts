@@ -1,4 +1,4 @@
-export default function customFilter(array: any[], filterOptions: Object, valueFullFit: boolean = true, selectionFullFit: boolean = true){
+export default function customFilter(array: any[], filterOptions: Object, selectionFullFit: boolean = false){
   return array.filter(element => {
 
     const entries = Object.entries(filterOptions);
@@ -6,9 +6,9 @@ export default function customFilter(array: any[], filterOptions: Object, valueF
     
     let counter = 0;
     for (const [key, value] of entries){
-      if (!value) counter++;
-      else if (valueFullFit && element[key] === value) counter++;
-      else if (!valueFullFit && element[key].toLowerCase().includes(value.toLowerCase())) counter++;
+      if (!value.filterValue) counter++;
+      else if (value.valueFullFit && element[key] === value.filterValue) counter++;
+      else if (!value.valueFullFit && element[key].toLowerCase().includes(value.filterValue.toLowerCase())) counter++;
     }
     
     if (selectionFullFit && counter === entries.length || !selectionFullFit && counter >=1) return element;

@@ -18,8 +18,8 @@ export class SidebarComponent {
   @Input() modals:any = {};
   searchValue = "";
 
-  customFilterCall(array: any[], options: Object, valueFullFit:boolean = false, selectionFullFit:boolean = false){
-    return customFilter(array, options, valueFullFit, selectionFullFit);
+  customFilterCall(array: any[], options: Object, selectionFullFit:boolean = false){
+    return customFilter(array, options, selectionFullFit);
   }
 
   changeSearchValue(value: string){
