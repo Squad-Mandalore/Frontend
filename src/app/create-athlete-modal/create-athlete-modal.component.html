@@ -11,13 +11,9 @@
         </label>
         <div id="password-password-strength-wrapper">
           <label class="label">
-            <p class="label-text">Password</p>
-            <input class="input" type="password" name="password" placeholder="Passwort"/>
+            <p class="label-text">Passwort</p>
+            <app-password-box></app-password-box>
           </label>
-          <div id="progress-wrapper">
-            <div id="progress-bar" [style.width]="'50%'" [style.backgroundColor]="progressBarColor"></div>
-          </div>
-          <p id="password-strength-text">Passwortstärke: {{passwordStrength}}</p>
         </div>
         <label class="label">
           <p class="label-text">E-Mail</p>

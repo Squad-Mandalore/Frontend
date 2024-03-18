@@ -3,6 +3,7 @@ import {IconComponent} from "../components/icon/icon.component";
 import {PrimaryButtonComponent} from "../components/buttons/primary-button/primary-button.component";
 import {SecondaryButtonComponent} from "../components/buttons/secondary-button/secondary-button.component";
 import {NgIf, NgSwitch, NgSwitchCase, NgClass} from "@angular/common";
+import {PasswordBoxComponent} from "../password-box/password-box.component";
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -14,7 +15,8 @@ import {NgIf, NgSwitch, NgSwitchCase, NgClass} from "@angular/common";
     NgIf,
     NgSwitch,
     NgSwitchCase,
-    NgClass
+    NgClass,
+    PasswordBoxComponent
   ],
   templateUrl: './create-athlete-modal.component.html',
   styleUrl: './create-athlete-modal.component.scss'
