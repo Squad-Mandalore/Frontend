@@ -1,23 +1,20 @@
-<div id="page-wrapper">
-    <form id="login-wrapper" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <p class="headline teleneo-bold">Login</p>
-        <div id="input-wrapper">
-            <label class="label">
-                <p class="label-text">Benutzername</p>
-                <input class="input" name="benutzername" placeholder="Benutzername" formControlName="username" />
-            </label>
-            <div id="password-reset-wrapper">
-                <label class="label">
-                    <p class="label-text">Passwort</p>
-                    <input type="password" class="input" name="password" placeholder="Passwort"
-                        formControlName="password" />
-                </label>
-                <a href="#" id="password-reset">Passwort vergessen?</a>
-            </div>
-        </div>
-        <app-alert (closed)="alertClosed()" *ngIf="isError" class="alert" [alertTitle]="alertTitle"
-            [alertDescription]="alertDescription" [alertType]="'error'"></app-alert>
-        <app-primary-button [iconName]="'arrow-right'" [text]="'Login'"
-            [disabled]="!loginForm.valid"></app-primary-button>
-    </form>
-</div>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <p>Login</p>
+
+    <div id="input-wrapper">
+        <label>
+            <span>Benutzername</span>
+            <input name="benutzername" placeholder="Benutzername" formControlName="username" />
+        </label>
+
+        <label>
+            <span>Passwort</span>
+            <input type="password" name="password" placeholder="Passwort" formControlName="password" />
+            <!-- <a href="#" id="password-reset">Passwort vergessen?</a> -->
+        </label>
+    </div>
+
+    <app-primary-button [iconName]="'arrow-right'" [text]="'Login'" [disabled]="!loginForm.valid"></app-primary-button>
+</form>
+<app-alert (closed)="closeAlert()" [isActive]="isError" [alertTitle]="alertTitle" [alertDescription]="alertDescription"
+    [alertType]="'error'"></app-alert>

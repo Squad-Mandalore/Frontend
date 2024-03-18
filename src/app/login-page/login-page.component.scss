@@ -1,79 +1,72 @@
-#password-reset-wrapper {
+:host {
+    display: grid;
+    height: 100dvb;
+    width: 100dvi;
+    place-items: center;
+    background-color: var(--accent-100);
+}
+
+form {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    font-family: "TeleNeo Medium";
-}
-
-#password-reset {
-    font-size: 14px;
-    color: var(--accent-400);
-    margin-left: auto;
-    text-decoration: none;
-}
-
-#password-reset:hover {
-    text-decoration: underline;
+    justify-content: space-between;
+    padding: 30px;
+    min-width: 480px;
+    width: min-content;
+    min-height: 525px;
+    height: min-content;
+    background-color: var(--accent-0);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px #00000010;
 }
 
 #input-wrapper {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    margin: 25px 0;
 }
 
-.label {
+label {
     display: flex;
     flex-direction: column;
     gap: 8px;
-}
-
-.label-text {
     font-family: "TeleNeo Medium";
     font-size: 1rem;
 }
 
-.input {
+input {
     padding: 5px 20px;
     height: 50px;
-    width: 100%;
     border: 1px solid var(--accent-300);
     color: var(--accent-500);
     transition: all 150ms;
     border-radius: 5px;
 }
 
-.input:focus,
-.input:hover {
+input:focus,
+input:hover {
     outline: 0;
     border: 1px solid var(--brand-500);
 }
 
-.teleneo-bold {
+p {
     font-family: "TeleNeo Bold";
-}
-
-.headline {
     font-size: 1.7rem;
 }
 
-#page-wrapper {
-    height: 100dvh;
-    width: 100dvw;
-    display: grid;
-    place-items: center;
-    background-color: var(--accent-100);
+a {
+    font-size: 14px;
+    color: var(--accent-400);
+    margin-left: auto;
+    text-decoration: none;
 }
 
-#login-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 70px;
-    padding: 30px;
-    min-width: 480px;
-    max-width: 100%;
-    background-color: var(--accent-0);
-    border-radius: 10px;
-    box-shadow: 0 4px 15px #00000010;
-}
+/* app-alert {
+    position: fixed;
+    top: 70px;
+    right: 70px;
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: right;
+    margin: 20px;
+} */
