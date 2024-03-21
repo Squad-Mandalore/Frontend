@@ -1,26 +1,44 @@
-#alert{
+:host {
+    position: fixed;
+    top: 70px;
+    right: 50px;
+}
+
+#alert {
     width: 400px;
     height: 77px;
     padding: 15px;
     border-radius: 5px;
-    background-color: white;
+    background-color: var(--accent-0);
     box-shadow: 0px 0px 20px var(--accent-200);
     display: flex;
     justify-content: space-between;
     gap: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 300ms;
 }
-#alert-content{
+
+#alert.active {
+    transform: translateX(-20px);
+    opacity: 100;
+    visibility: visible;
+}
+
+#alert-content {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-#title{
+
+#title {
     font-family: 'TeleNeo Bold';
     font-size: 1.08rem;
 }
-#description{
+
+#description {
     font-family: 'TeleNeo Medium';
     font-size: 15px;
     color: var(--accent-400);
@@ -28,16 +46,11 @@
     text-wrap: nowrap;
     text-overflow: ellipsis;
 }
-#close-button{
+
+#close-button {
     cursor: pointer;
     width: 16px;
     height: 16px;
     text-wrap: nowrap;
     text-overflow: ellipsis;
-}
-p{
-    margin: 0;
-}
-*{
-    box-sizing: border-box;
 }

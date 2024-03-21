@@ -1,14 +1,16 @@
-.item-wrapper{
+.item-wrapper {
     display: flex;
     align-items: center;
     gap: 10px;
     height: 100%;
     width: fit-content;
 }
-.active-bar{
+
+.active-bar {
     display: none;
 }
-.item{
+
+.item {
     position: relative;
     height: 50px;
     width: 50px;
@@ -18,10 +20,12 @@
     align-items: center;
     justify-content: center;
 }
-.item.isActive{
+
+.item.isActive {
     background-color: var(--brand-100);
 }
-.item.isActive > .active-bar{
+
+.item.isActive>.active-bar {
     display: block;
     background-color: var(--brand-500);
     width: 25px;
@@ -32,20 +36,25 @@
     transform: translateX(-50%);
     border-radius: 20px;
 }
-.item.isActive > svg{
+
+.item.isActive>svg {
     stroke: var(--brand-500);
 }
-.item.isInactive > svg{
+
+.item:not(isActive)>svg {
     stroke: var(--accent-900);
 }
-.item.isInactive{
+
+.item:not(isActive) {
     background-color: var(--accent-150);
 }
-.item.isInactive:hover{
+
+.item:not(isActive):hover {
     cursor: pointer;
     background-color: var(--accent-200);
 }
-.item:hover::after{
+
+.item:hover::after {
     content: attr(data-tooltip);
     position: absolute;
     border-radius: 5px;
@@ -61,7 +70,8 @@
     color: var(--accent-0);
     display: block;
 }
-.item:hover::before{
+
+.item:hover::before {
     content: '';
     display: block;
     width: 13px;
@@ -72,8 +82,9 @@
     transform: translate(-50%, -160%) rotate(45deg);
     background-color: var(--accent-900);
 }
-#navbar{
-    width: minmax(90dvw, 1920px);
+
+#navbar {
+    min-width: 90dvw;
     height: 70px;
     background-color: var(--accent-0);
     display: flex;
