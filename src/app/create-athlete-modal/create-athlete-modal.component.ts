@@ -7,6 +7,10 @@ import {PasswordBoxComponent} from "../password-box/password-box.component";
 import {AthletePostSchema, AthleteResponseSchema, AthletesService} from "../shared/generated";
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {LoggerService} from "../shared/logger.service";
+import {AlertComponent} from "../alert/alert.component";
+import {Router} from "@angular/router";
+import {timeout} from "rxjs";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -21,7 +25,8 @@ import {LoggerService} from "../shared/logger.service";
     NgClass,
     PasswordBoxComponent,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    AlertComponent
   ],
   templateUrl: './create-athlete-modal.component.html',
   styleUrl: './create-athlete-modal.component.scss'
@@ -31,27 +36,11 @@ export class CreateAthleteModalComponent implements OnInit {
   showFirstPage: boolean = true;
   isMale: boolean = true;
 
-  constructor(private athleteApi: AthletesService,
-              private logger: LoggerService,
-              private formBuilder: FormBuilder
-  ) {
-    this.createAthleteForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      unhashed_password: ['', Validators.required],
-      email: ['', Validators.required],
-      firstname: ['', Validators.required],
-      lastname: ['', Validators.required],
-      day: ['', Validators.required],
-      month: ['', Validators.required],
-      year: ['', Validators.required],
-    })
-  }
-
-  ngOnInit(): void {
-    this.logger.info("maschalla" + this.athleteData)
-
-
-    }
+  alertTitle?: string;
+  alertDescription?: string;
+  isSuccess: boolean;
+  closeAlert;
+  timeout!: ReturnType<typeof setTimeout>;
 
 
   public athleteData: AthletePostSchema = {
@@ -66,6 +55,36 @@ export class CreateAthleteModalComponent implements OnInit {
     trainer_id: '',
   }
 
+  constructor(private athleteApi: AthletesService,
+              private logger: LoggerService,
+              private formBuilder: FormBuilder,
+              private router: Router,
+
+  ) {
+    this.createAthleteForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      unhashed_password: ['', Validators.required],
+      email: ['', Validators.required],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      day: ['', Validators.required],
+      month: ['', Validators.required],
+      year: ['', Validators.required],
+    })
+
+    this.isSuccess= false;
+    this.closeAlert = () => {
+      clearTimeout(this.timeout);
+      this.isSuccess = false;
+    }
+  }
+
+  ngOnInit(): void {
+    this.logger.info("gock")
+
+
+    }
+
   onSubmit() {
     if (this.createAthleteForm.invalid){
       this.logger.error("Form invalid")
@@ -79,15 +98,30 @@ export class CreateAthleteModalComponent implements OnInit {
     this.athleteData.firstname = firstname!;
     this.athleteData.lastname = lastname!;
     this.athleteData.birthday = year! + "-" + month!.toString().padStart(2,'0') + "-" + day!.toString().padStart(2,'0');
+    if (!this.isMale) {
+      this.athleteData.gender = "f"
+    }
 
 
       this.athleteApi.createAthleteAthletesPost(this.athleteData).subscribe({
       next: (athlete: AthleteResponseSchema) => {
-        this.logger.info(athlete.email)
+        this.displayAlert(athlete.firstname);
+        this.logger.info(athlete.firstname + " " + athlete.lastname + " wurde Erstellt")
+      },
+      error: (error: HttpErrorResponse) => {
+        this.logger.error(`Error ${error.message}`)
       }
     })
-    this.logger.info("Athlete created")
+  }
 
+  displayAlert(username: string ) {
+    if (this.isSuccess) {
+      return;
+    }
+    this.alertTitle = 'Neuer Sportler wurde erstellt';
+    this.alertDescription = `${username} wurde den Athleten hinzugefügt`;
+    this.isSuccess = true;
+    this.timeout = setTimeout(this.closeAlert, 4000);
   }
 
 
@@ -97,7 +131,7 @@ export class CreateAthleteModalComponent implements OnInit {
   }
 
   onClickSwitchGender(value: string) {
-    this.isMale = value === "male" ? true : false;
+    this.isMale = value === "male";
   }
 }
 

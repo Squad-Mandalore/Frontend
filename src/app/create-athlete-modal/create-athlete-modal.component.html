@@ -1,3 +1,4 @@
+<script src="../login-page/login-page.component.ts"></script>
 <div id="modal">
   <div id="modal-header">
     <p id="modal-headline">Neuen Sportler hinzufügen</p>
@@ -76,5 +77,8 @@
     </ng-container>
   </div>
 </div>
+
+<app-alert (closed)="closeAlert()" [isActive]="isSuccess" [alertTitle]="alertTitle" [alertDescription]="alertDescription"
+           [alertType]="'success'"></app-alert>
 
 
