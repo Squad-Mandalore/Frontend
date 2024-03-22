@@ -5,7 +5,7 @@ import {SecondaryButtonComponent} from "../components/buttons/secondary-button/s
 import {NgClass, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
 import {AthletePostSchema, AthleteResponseSchema, AthletesService} from "../shared/generated";
-import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {LoggerService} from "../shared/logger.service";
 
 @Component({
@@ -27,37 +27,23 @@ import {LoggerService} from "../shared/logger.service";
   styleUrl: './create-athlete-modal.component.scss'
 })
 export class CreateAthleteModalComponent implements OnInit {
-  PageOneForm;
-  PageTwoForm;
+  createAthleteForm;
   showFirstPage: boolean = true;
   isMale: boolean = true;
-
-  username = new FormControl('', {nonNullable: true,});
-  email=  new FormControl('', {nonNullable: true,});
-  unhashed_password = new FormControl('', {nonNullable: true,});
-  firstname= new FormControl('', {nonNullable: true,});
-  lastname = new FormControl('', {nonNullable: true,});
-  day = new FormControl('', {nonNullable: true,});
-  month = new FormControl('', {nonNullable: true,});
-  year = new FormControl('', {nonNullable: true,});
-
 
   constructor(private athleteApi: AthletesService,
               private logger: LoggerService,
               private formBuilder: FormBuilder
   ) {
-    this.PageOneForm = this.formBuilder.group({
+    this.createAthleteForm = this.formBuilder.group({
       username: ['', Validators.required],
       unhashed_password: ['', Validators.required],
-      email: ['', Validators.required]
-    })
-    this.PageTwoForm = this.formBuilder.group({
+      email: ['', Validators.required],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       day: ['', Validators.required],
       month: ['', Validators.required],
       year: ['', Validators.required],
-
     })
   }
 
@@ -68,8 +54,7 @@ export class CreateAthleteModalComponent implements OnInit {
     }
 
 
-
-  athleteData: AthletePostSchema = {
+  public athleteData: AthletePostSchema = {
     username: '',
     email: '',
     unhashed_password: '',
@@ -79,24 +64,24 @@ export class CreateAthleteModalComponent implements OnInit {
     gender: 'm',
     has_disease: false,
     trainer_id: '',
-
   }
 
   onSubmit() {
-    this.athleteData = {
-      username: this.username.value,
-      email: this.email.value,
-      unhashed_password: this.unhashed_password.value,
-      firstname: this.firstname.value,
-      lastname: this.lastname.value,
-      birthday: this.year.value + "-" + this.month.value + "-" + this.day.value,
-      gender: 'm',
-      has_disease: false,
-      trainer_id: "",
-
+    if (this.createAthleteForm.invalid){
+      this.logger.error("Form invalid")
+      return;
     }
+    const { username, email, unhashed_password, firstname, lastname, day, month, year } = this.createAthleteForm.value;
 
-    this.athleteApi.createAthleteAthletesPost(this.athleteData).subscribe({
+    this.athleteData.username = username!
+    this.athleteData.email = email!;
+    this.athleteData.unhashed_password = unhashed_password!;
+    this.athleteData.firstname = firstname!;
+    this.athleteData.lastname = lastname!;
+    this.athleteData.birthday = year! + "-" + month!.toString().padStart(2,'0') + "-" + day!.toString().padStart(2,'0');
+
+
+      this.athleteApi.createAthleteAthletesPost(this.athleteData).subscribe({
       next: (athlete: AthleteResponseSchema) => {
         this.logger.info(athlete.email)
       }

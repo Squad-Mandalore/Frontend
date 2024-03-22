@@ -6,37 +6,37 @@
     <div id="input-wrapper">
       <ng-container *ngIf="showFirstPage">
 
-        <ng-form [formGroup]="PageOneForm">
+        <form [formGroup]="createAthleteForm" (ngSubmit)="onSubmit()">
           <label class="label">
             <p class="label-text">Benutzername</p>
-            <input class="input" type="text" [formControl]="username" placeholder="Benutzername">
+            <input class="input" type="text" formControlName="username" placeholder="Benutzername">
           </label>
 
           <div id="password-password-strength-wrapper">
             <label class="label">
               <p class="label-text">Passwort</p>
-              <app-password-box [formControl]="unhashed_password"/>
+              <app-password-box formControlName="unhashed_password"/>
             </label>
           </div>
 
           <label class="label">
             <p class="label-text">E-Mail</p>
-            <input class="input" type="email" [formControl]="email" placeholder="E-Mail">
+            <input class="input" type="email" formControlName="email" placeholder="E-Mail">
           </label>
-        </ng-form>
+        </form>
 
       </ng-container>
       <ng-container *ngIf="!showFirstPage">
-        <ng-form [formGroup]="PageTwoForm">
+        <form [formGroup]="createAthleteForm" (ngSubmit)="onSubmit()">
           <div id="name-input-wrapper">
             <label class="label">
               <p class="label-text">Vorname</p>
-              <input class="input" type="text" [formControl]="firstname" placeholder="Vorname">
+              <input class="input" type="text" formControlName="firstname" placeholder="Vorname">
             </label>
 
             <label class="label">
               <p class="label-text">Nachname</p>
-              <input class="input" type="text" [formControl]="lastname" placeholder="Nachname">
+              <input class="input" type="text" formControlName="lastname" placeholder="Nachname">
             </label>
           </div>
 
@@ -44,9 +44,9 @@
             <label for="day" class="label">
               <p class="label-text">Geburtsdatum</p>
               <p class="multi-input">
-                <input id="day" class="input" type="number" min=1 max=31 [formControl]="day" placeholder="Tag"/>
-                <input class="input" type="number" min=1 max=12 [formControl]="month" placeholder="Monat"/>
-                <input class="input" type="number" min=1945 [formControl]="year" placeholder="Jahr"/>
+                <input id="day" class="input" type="number" min=1 max=31 formControlName="day" placeholder="Tag"/>
+                <input class="input" type="number" min=1 max=12 formControlName="month" placeholder="Monat"/>
+                <input class="input" type="number" min=1945 formControlName="year" placeholder="Jahr"/>
               </p>
             </label>
           </div>
@@ -62,17 +62,17 @@
               </div>
             </div>
           </div>
-        </ng-form>
+        </form>
       </ng-container>
     </div>
   <div id="modal-footer">
     <ng-container *ngIf="showFirstPage">
       <app-secondary-button [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
-      <app-primary-button [disabled]="PageOneForm.invalid" (click)=onClickSwitchPage() [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
+      <app-primary-button (click)=onClickSwitchPage() [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
     </ng-container>
     <ng-container *ngIf="!showFirstPage">
       <app-secondary-button (click)=onClickSwitchPage() [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
-      <app-primary-button (click)=onSubmit() [text]="'Sportler anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
+      <app-primary-button [disabled]="createAthleteForm.invalid" (click)=onSubmit() [text]="'Sportler anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
     </ng-container>
   </div>
 </div>
