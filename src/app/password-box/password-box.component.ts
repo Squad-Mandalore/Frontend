@@ -6,6 +6,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
  */
 @Component({
     selector: 'app-password-box',
+    standalone: true,
     templateUrl: './password-box.component.html',
     styleUrls: ['./password-box.component.scss'],
     providers: [
@@ -102,19 +103,19 @@ export class PasswordBoxComponent implements ControlValueAccessor {
 
         // Evaluate password strength
         if (passwordLength < 5) {
-            this.strengthTextContent = 'Weak';
+            this.strengthTextContent = 'Schwach';
             this.strengthBarWidth = '20%'; // Red
             this.strengthBarColor = '#ff6347'; // Red
         } else if (passwordLength < 10) {
-            this.strengthTextContent = 'Medium';
+            this.strengthTextContent = 'Mittel';
             this.strengthBarWidth = '50%'; // Red
             this.strengthBarColor = '#ff6347'; // Red
         } else if (passwordLength >= 10 && passwordLength < 12) {
-            this.strengthTextContent = 'Medium';
+            this.strengthTextContent = 'Mittel';
             this.strengthBarWidth = '75%'; // Red
             this.strengthBarColor = '#ff6347'; // Red
         } else {
-            this.strengthTextContent = 'Strong';
+            this.strengthTextContent = 'Stark';
             this.strengthBarWidth = '100%'; // Green
             this.strengthBarColor = '#2ecc71'; // Green
         }

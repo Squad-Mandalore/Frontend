@@ -7,7 +7,7 @@ describe('PasswordBoxComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PasswordBoxComponent]
+      imports: [PasswordBoxComponent]
     })
     .compileComponents();
 
@@ -20,30 +20,30 @@ describe('PasswordBoxComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should update password strength to "Weak" for a password with less than 5 characters', () => {
+  it('should update password strength to "Schwach" for a password with less than 5 characters', () => {
     component.onInput('1234'); // Less than 5 characters
-    expect(component.strengthTextContent).toEqual('Weak');
+    expect(component.strengthTextContent).toEqual('Schwach');
     expect(component.strengthBarWidth).toEqual('20%');
     expect(component.strengthBarColor).toEqual('#ff6347');
   });
 
-  it('should update password strength to "Medium" for a password with 5 to 9 characters', () => {
+  it('should update password strength to "Mittel" for a password with 5 to 9 characters', () => {
     component.onInput('abcd123'); // 7 characters
-    expect(component.strengthTextContent).toEqual('Medium');
+    expect(component.strengthTextContent).toEqual('Mittel');
     expect(component.strengthBarWidth).toEqual('50%');
     expect(component.strengthBarColor).toEqual('#ff6347');
   });
 
-  it('should update password strength to "Medium" for a password with 10 to 11 characters', () => {
+  it('should update password strength to "Mittel" for a password with 10 to 11 characters', () => {
     component.onInput('strongPwd12'); // 10 characters
-    expect(component.strengthTextContent).toEqual('Medium');
+    expect(component.strengthTextContent).toEqual('Mittel');
     expect(component.strengthBarWidth).toEqual('75%');
     expect(component.strengthBarColor).toEqual('#ff6347');
   });
 
-  it('should update password strength to "Strong" for a password with 12 or more characters', () => {
+  it('should update password strength to "Stark" for a password with 12 or more characters', () => {
     component.onInput('VeryStrongPwd!'); // 13 characters
-    expect(component.strengthTextContent).toEqual('Strong');
+    expect(component.strengthTextContent).toEqual('Stark');
     expect(component.strengthBarWidth).toEqual('100%');
     expect(component.strengthBarColor).toEqual('#2ecc71');
   });
