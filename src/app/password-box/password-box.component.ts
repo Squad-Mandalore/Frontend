@@ -57,7 +57,7 @@ export class PasswordBoxComponent implements ControlValueAccessor {
     /**
      * The text content of the password strength.
      */
-    strengthTextContent: string = 'Weak';
+    strengthTextContent: string = 'Schwach';
 
     constructor() { }
 
