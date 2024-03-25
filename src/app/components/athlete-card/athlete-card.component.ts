@@ -1,9 +1,8 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { UserCardComponent } from '../user-card/user-card.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import Athlete from '../../models/athlete';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {UserCardComponent} from '../user-card/user-card.component';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-athlete-card',
@@ -14,7 +13,7 @@ import Athlete from '../../models/athlete';
 })
 
 export class AthleteCardComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute) { }
   routeSubscription!: Subscription;
 
   isActive: boolean = false;
@@ -43,7 +42,7 @@ export class AthleteCardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeSubscription = this.route.params.subscribe(params => {
       const routeId = params['id'];
-      this.isActive = routeId && routeId == this.athlete.id ? true : false;
+      this.isActive = !!(routeId && routeId == this.athlete.id);
     })
   }
 

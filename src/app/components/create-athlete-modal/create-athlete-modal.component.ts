@@ -4,7 +4,6 @@ import {NgClass, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AlertComponent} from "../alert/alert.component";
-import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
@@ -55,8 +54,7 @@ export class CreateAthleteModalComponent implements OnInit {
 
   constructor(private athleteApi: AthletesService,
               private logger: LoggerService,
-              private formBuilder: FormBuilder,
-              private router: Router,
+              private formBuilder: FormBuilder
 
   ) {
     this.createAthleteForm = this.formBuilder.group({
