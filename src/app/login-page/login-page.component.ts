@@ -9,11 +9,12 @@ import { AuthExtentionService } from '../shared/auth-extention.service';
 import { NgClass } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PrimaryButtonComponent } from '../components/buttons/primary-button/primary-button.component';
+import { CreateAthleteModalComponent } from '../create-athlete-modal/create-athlete-modal.component';
 
 @Component({
     selector: 'app-login-page',
     standalone: true,
-    imports: [ReactiveFormsModule, AlertComponent, NgClass, PrimaryButtonComponent],
+    imports: [ReactiveFormsModule, AlertComponent, NgClass, PrimaryButtonComponent, CreateAthleteModalComponent],
     templateUrl: './login-page.component.html',
     styleUrl: './login-page.component.scss'
 })

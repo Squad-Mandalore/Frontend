@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { IconComponent } from '../components/icon/icon.component';
 
 @Component({
     selector: 'app-password-box',
     standalone: true,
-    imports: [],
+    imports: [IconComponent],
     templateUrl: './password-box.component.html',
     styleUrl: './password-box.component.scss',
     providers: [
@@ -26,9 +27,14 @@ export class PasswordBoxComponent implements ControlValueAccessor {
     width: string = '20';
     backgroundColor: string = '#ff6347';
     textContent: string = 'Schwach';
+    inputType = "password";
 
     constructor() {
 
+    }
+
+    triggerInputType(){
+        this.inputType = this.inputType === "password" ? "text" : "password";
     }
 
     registerOnChange(onChange: (_: string) => void): void {
