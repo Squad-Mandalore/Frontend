@@ -1,0 +1,356 @@
+<div id="page">
+    <app-sidebar [athletes]="athletes" [modals]="modals"></app-sidebar>
+    <div id="content" *ngIf="selectedAthlete; else elseBlock">
+        <div id="headline-wrapper">
+            <p class="headline">Sportler-Übersicht</p>
+            <p class="meta-text">registriert am {{selectedAthlete.created_at}} von {{selectedAthlete.created_by}}</p>
+        </div>
+        <div id="general-information-wrapper">
+            <app-user-card [user]="selectedAthlete"></app-user-card>
+            <div class="chip margin-left-auto">
+                <span>{{selectedAthlete.gender}}</span>
+                <app-icon [iconName]="selectedAthlete.gender === 'männlich' ? 'male' : 'female'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
+            </div>
+            <div class="chip">
+                <span>geboren am {{selectedAthlete.date_of_birth}}</span>
+                <app-icon [iconName]="'star'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
+            </div>
+            <app-secondary-button class="secondary-button" [text]="'Details'" [strokeWidth]="'1.5'" (click)="triggerAthleteDetails(true)"></app-secondary-button>
+            <app-primary-button [text]="'Bearbeiten'" [iconName]="'edit-1'"></app-primary-button>
+        </div>
+        <div id="container-wrapper">
+            <div id="results-container" [ngClass]="{'background-color-white': selectedAthlete}">
+                <div id="results-header">
+                    <p class="headline-small">Erfasste Leistungen</p>
+                    <div class="margin-left-auto position-relative filter">
+                        <app-secondary-button id="filter-button" [ngClass]="{'has-filter': getActiveFilters() !== 0}" [attr.active-filters]="getActiveFilters()" *ngIf="selectedAthlete.results.length > 0" class="secondary-button" [text]="'Filter'" [iconName]="'filter-1'"></app-secondary-button>
+                        <div class="undermenu accent-500">
+                            <div class="menu-item filter cursor-pointer position-relative">
+                                <span class="accent-900">Kategorie</span>
+                                <span class="arrow-right">></span>
+                                <div class="under-undermenu accent-500">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('category', 'Schnelligkeit')">
+                                        <span>Schnelligkeit</span>
+                                        <app-icon *ngIf="filter['category'] && filter['category'].filterValue === 'Schnelligkeit'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                    </div>
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('category', 'Koordination')">
+                                        <span>Koordination</span>
+                                        <app-icon *ngIf="filter['category'] && filter['category'].filterValue === 'Koordination'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                    </div>
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('category', 'Ausdauer')">
+                                        <span>Ausdauer</span>
+                                        <app-icon *ngIf="filter['category'] && filter['category'].filterValue === 'Ausdauer'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                    </div>
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('category', 'Kraft')">
+                                        <span>Kraft</span>
+                                        <app-icon *ngIf="filter['category'] && filter['category'].filterValue === 'Kraft'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="menu-item filter cursor-pointer position-relative">
+                                <span class="accent-900">Medaille</span>
+                                <span class="arrow-right">></span>
+                                <div class="under-undermenu accent-500">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('medal', 'Gold')">
+                                        <span>Gold</span>
+                                        <app-icon *ngIf="filter['medal'] && filter['medal'].filterValue  === 'Gold'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                    </div>
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('medal', 'Silber')">
+                                        <span>Silber</span>
+                                        <app-icon *ngIf="filter['medal'] && filter['medal'].filterValue  === 'Silber'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                    </div>
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('medal', 'Bronze')">
+                                        <span>Bronze</span>
+                                        <app-icon *ngIf="filter['medal'] && filter['medal'].filterValue  === 'Bronze'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="menu-item filter cursor-pointer position-relative">
+                                <span class="accent-900">Trainer</span>
+                                <span class="arrow-right">></span>
+                                <div class="under-undermenu accent-500">
+                                    <div class="menu-item cursor-pointer accent-900">
+                                        <app-icon [iconName]="'search'" [iconColor]="'var(--accent-300)'" [strokeWidth]="'2'" [iconWidth]="'16'" [iconHeight]="'16'"></app-icon>
+                                        <input class="input" placeholder="Suchen" #customTrainerFilter (input)="setFilter('tracked_by', customTrainerFilter.value, false)" [value]="customTrainerFilter.value"/>
+                                    </div>
+                                    <div *ngFor="let trainer of getTrackingTrainers(selectedAthlete.results)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_by', trainer)">
+                                        <span>{{trainer}}</span>
+                                        <app-icon *ngIf="filter['tracked_by'] && filter['tracked_by'].filterValue === trainer" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="menu-item filter cursor-pointer position-relative">
+                                <span class="accent-900">Datum</span>
+                                <span class="arrow-right">></span>
+                                <div class="under-undermenu accent-500">
+                                    <div class="menu-item cursor-pointer accent-900">
+                                        <app-icon [iconName]="'search'" [iconColor]="'var(--accent-300)'" [strokeWidth]="'2'" [iconWidth]="'16'" [iconHeight]="'16'"></app-icon>
+                                        <input class="input" placeholder="Suchen" #customDateFilter (input)="setFilter('tracked_at', customDateFilter.value, false)" [value]="customDateFilter.value"/>
+                                    </div>
+                                    <div *ngFor="let date of getTrackingDates(selectedAthlete.results)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_at', date)">
+                                        <span>{{date}}</span>
+                                        <app-icon *ngIf="filter['tracked_at'] && filter['tracked_at'].filterValue === date" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <app-primary-button *ngIf="selectedAthlete.results.length > 0" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
+                </div>
+                <div class="empty-state" *ngIf="selectedAthlete.results.length === 0; else filledState">
+                    <img src="assets/img/humans-placeholder.png" alt="people-image">
+                    <p class="headline-small">Noch keine Werte vorhanden</p>
+                    <p class="text-small text-align-center">Starte jetzt eine Leistungserfassung in den Kategorien Kraft, Ausdauer, Schnelligkeit oder Koordination.</p>
+                    <app-primary-button [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
+                </div>
+                <ng-template #filledState>
+                    <div id="table-wrapper">
+                        <div id="table-head">
+                            <span>Disziplin</span>
+                            <span>Wert</span>
+                            <span>Medaille</span>
+                            <span>Kategorie</span>
+                            <span>Erfassungsdatum</span>
+                            <span>erfasst von</span>
+                        </div>
+                        <div class="table-item" *ngFor="let result of customFilterCall(selectedAthlete.results, filter, true); index as i;">
+                            <span>{{result.discipline}}</span>
+                            <span>{{result.score}}</span>
+                            <span>{{result.medal}}</span>
+                            <span>{{result.category}}</span>
+                            <span>{{result.tracked_at}}</span>
+                            <span>{{result.tracked_by}}</span>
+                            <div class="flex items-center more-icon cursor-pointer">
+                                <app-icon [iconName]="'more-vertical'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'20'" [iconWidth]="'20'"></app-icon>
+                                <div class="undermenu">
+                                    <div class="menu-item">
+                                        <span class="font-size-15 accent-900">Bearbeiten</span>
+                                        <app-icon [iconName]="'edit-1'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
+                                    </div>
+                                    <div class="menu-item">
+                                        <span class="font-size-15 accent-900">Löschen</span>
+                                        <app-icon [iconName]="'delete'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+            <div id="container-wrapper-vertical">
+                <div id="progress-container" [ngClass]="{'background-color-white': selectedAthlete}">
+                    <p class="headline-small">Sportabzeichen Fortschritt</p>
+                    <div id="progress-bar">
+                        <svg class="lower" width="207" height="190" viewBox="0 0 207 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path [style.strokeDasharray]="dashArray" stroke-dashoffset="0" style="transform: scale(.95) translate(7px, 18px);" d="M53.356 189.422 48.3392 190.289 45.7901
+                            188.565C28.7339 177.028 15.4887 160.613 7.82869 141.408C-0.520919 120.473 -1.7734
+                            97.3773 4.26329 75.6624C10.3 53.9475 23.2926 34.8121 41.2488 21.1903C59.2051
+                            7.56856 81.1336 0.21251 103.672 0.250144C126.21 0.287778 148.114 7.71702 166.025
+                            21.3987C183.936 35.0803 196.864 54.259 202.828 75.994C208.792 97.7289 207.463
+                            120.82 199.043 141.727C191.319 160.907 178.019 177.277 160.925 188.757C158.37
+                            190.473 154.94 189.594 153.365" fill="none" stroke="var(--accent-150)" stroke-width="10" stroke-
+                            linecap="round"/>
+                        </svg>
+                        <svg class="upper" width="207" height="190" viewBox="0 0 207 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path [style.strokeDasharray]="dashArray" [style.stroke-dashoffset]="dashOffset(selectedAthlete)" style="transform: scale(.95) translate(7px, 18px);" d="M53.356 189.422 48.3392 190.289 45.7901
+                            188.565C28.7339 177.028 15.4887 160.613 7.82869 141.408C-0.520919 120.473 -1.7734
+                            97.3773 4.26329 75.6624C10.3 53.9475 23.2926 34.8121 41.2488 21.1903C59.2051
+                            7.56856 81.1336 0.21251 103.672 0.250144C126.21 0.287778 148.114 7.71702 166.025
+                            21.3987C183.936 35.0803 196.864 54.259 202.828 75.994C208.792 97.7289 207.463
+                            120.82 199.043 141.727C191.319 160.907 178.019 177.277 160.925 188.757C158.37
+                            190.473 154.94 189.594 153.365" fill="none" [style.stroke]="getColorVariable(selectedAthlete.progress_medal)" stroke-width="10" stroke-
+                            linecap="round"/>
+                        </svg>
+                        <div id="current-points-wrapper">
+                            <p>{{selectedAthlete.progress_points}}</p>
+                        </div>
+                        <div id="all-points-wrapper">
+                            <p>/12</p>
+                        </div>
+                        <!-- <svg width="207" height="190" viewBox="0 0 207 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path [style.strokeDasharray]="dashArray" [style.strokeDashoffset]="dashOffset()" d="M53.356 186.783C51.7721 189.422 48.3392 190.289 45.7901 188.565C28.7339 177.028 15.4887 160.613 7.82869 141.408C-0.520919 120.473 -1.7734 97.3773 4.26329 75.6624C10.3 53.9475 23.2926 34.8121 41.2488 21.1903C59.2051 7.56856 81.1336 0.21251 103.672 0.250144C126.21 0.287778 148.114 7.71702 166.025 21.3987C183.936 35.0803 196.864 54.259 202.828 75.994C208.792 97.7289 207.463 120.82 199.043 141.727C191.319 160.907 178.019 177.277 160.925 188.757C158.37 190.473 154.94 189.594 153.365 186.95C151.79 184.306 152.667 180.9 155.211 179.168C170.215 168.948 181.893 154.481 188.706 137.564C196.214 118.919 197.4 98.3263 192.081 78.943C186.762 59.5597 175.233 42.4561 159.26 30.2548C143.287 18.0535 123.753 11.428 103.653 11.3945C83.5536 11.3609 63.9977 17.9211 47.9843 30.069C31.9708 42.2169 20.384 59.2819 15.0005 78.6473C9.61692 98.0127 10.7339 118.609 18.1801 137.279C24.9365 154.219 36.5655 168.724 51.5361 178.994C54.0738 180.735 54.9399 184.144 53.356 186.783Z" fill="var(--brand-400)"/>
+                        </svg> -->
+                        <!-- <svg id="svg" width="200" height="200" viewPort="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                            <circle r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+                            <circle r="90" cx="100" cy="100" stroke="red" stroke-width="5" fill="transparent" stroke-dasharray="405.48" [style.strokeDashoffset]="dashOffset()" ></circle>
+                        </svg> -->
+                    </div>
+                    <div id="progress-footer">
+                        <div class="medal-wrapper">
+                            <span class="medal-text">{{selectedAthlete.number_gold_medals}}</span>
+                            <div class="medal gold"></div>
+                        </div>
+                        <div class="medal-wrapper">
+                            <span class="medal-text">{{selectedAthlete.number_silver_medals}}</span>
+                            <div class="medal silver"></div>
+                        </div>
+                        <div class="medal-wrapper">
+                            <span class="medal-text">{{selectedAthlete.number_bronze_medals}}</span>
+                            <div class="medal bronze"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="swimcert-container" [ngClass]="{'background-color-white': selectedAthlete}">
+                    <div id="swimcert-inset-container">
+                        <img src="assets/img/humans-images.png" alt="missing swimming certificate"/>
+                        <p class="headline-small text-align-center">Kein Schwimmnachweis<br/>vorhanden</p>
+                        <p class="text-small text-align-center">Tippe auf "Dateien durchsuchen" oder <br/>ziehe die Datei einfach in dieses Feld.</p>
+                        <label class="position-relative text-align-center cursor-pointer">
+                            <span class="label-text">Dateien durchsuchen</span>
+                            <input class="position-absolute hide-element" type="file" multiple="false"/>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #elseBlock>
+        <div id="content">
+            <p class="headline paly">Sportler-Übersicht</p>
+            <div class="border-1px-grey" id="header-container"></div>
+            <div id="container-wrapper">
+                <div class="border-1px-grey" id="results-container"></div>
+                <div id="container-wrapper-vertical">
+                    <div class="border-1px-grey" id="progress-container"></div>
+                    <div class="border-1px-grey" id="swimcert-container"></div>
+                </div>
+            </div>
+            <div id="modal">
+                <img src="assets/img/statistics-image.png" alt="statistics"/>
+                <div id="text-wrapper">
+                    <p class="large-text">Wähle einen Athlet aus</p>
+                    <p class="small-text text-align-center">Tippe auf einen Athleten in der Navigation links</p>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
+<app-navbar-bottom [modals]="modals"></app-navbar-bottom>
+<app-confirmation-modal (secondaryButtonClick)="modals.confirmationModal.isActive = false" (closeButtonClick)="modals.confirmationModal.isActive = false" (primaryButtonClick)="deleteElement()" [ngClass]="{'active': modals.confirmationModal.isActive}" [modalTitle]="modals.confirmationModal.modalTitle" [modalDescription]="modals.confirmationModal.modalDescription" [isDeleteButton]="true" [iconName]="'delete'" [primaryButtonText]="modals.confirmationModal.primaryButtonText" [secondaryButtonText]="modals.confirmationModal.secondaryButtonText"></app-confirmation-modal>
+<div id="athlete-details" *ngIf="selectedAthlete;" [ngClass]="{'active': selectedAthlete && showDetails}">
+    <div>
+        <p class="headline margin-bottom-20">Sportler Details</p>
+        <p class="text-small">In diesem Menü finden Sie grundlegende Informationen zum ausgewählten Benutzer</p>
+        <app-icon id="close-button" class="cursor-pointer" (click)="triggerAthleteDetails(false)" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [iconHeight]="'24'" [iconWidth]="'24'" [strokeWidth]="'2'"></app-icon>
+    </div>
+    <div class="flex flex-col gap-30">
+        <p class="headline-small">Grundinformationen:</p>
+        <app-user-card [user]="selectedAthlete"></app-user-card>
+        <div class="flex flex-col gap-10">
+            <div class="flex items-center full-width justify-between inter-medium">
+                <div class="font-size-15 half-width accent-500">Geschlecht:</div>
+                <div class="font-size-15 half-width accent-500">{{selectedAthlete.gender}}</div>
+            </div>
+            <div class="flex items-center full-width justify-between inter-medium">
+                <div class="font-size-15 half-width accent-500">geboren am:</div>
+                <div class="font-size-15 half-width accent-500">{{selectedAthlete.date_of_birth}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-30 inter-medium">
+        <div class="flex items-center justify-between">
+            <p class="headline-small">Leistungsübersicht:</p>
+            <span class="accent-500 hover-underline cursor-pointer inter-regular">PDF herunterladen</span>
+        </div>
+        <div class="flex items-center">
+            <p>Schnelligkeit</p>
+            <div class="flex gap-10 items-center margin-left-auto">
+                <div class="flex items-center gap-10 border-right-1px border-accent-300">
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Schnelligkeit", valueFullFit: true}, medal: {filterValue: "Gold", valueFullFit: true} }, true).length}}</span>
+                    <div class="medal gold"></div>
+                </div>
+                <span class="accent-300">&middot;</span>
+                <div class="flex items-center gap-10">
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Schnelligkeit", valueFullFit: true}, medal: {filterValue: "Silber", valueFullFit: true} }, true).length}}</span>
+                    <div class="medal silver"></div>
+                </div>
+                <span class="accent-300">&middot;</span>
+                <div class="flex items-center gap-10">
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Schnelligkeit", valueFullFit: true}, medal: {filterValue: "Bronze", valueFullFit: true} }, true).length}}</span>
+                    <div class="medal bronze"></div>
+                </div>
+            </div>
+            <div class="flex items-center gap-10 margin-left-40">
+                <p class="font-size-15 accent-500 inter-regular">gesamt</p>
+                <div class="medal" [ngClass]="{'gold': true, 'silver': false, 'bronze': false}"></div>
+            </div>
+        </div>
+        <div class="flex items-center">
+            <p>Koordination</p>
+            <div class="flex gap-10 items-center margin-left-auto">
+                <div class="flex items-center gap-10 border-right-1px border-accent-300">
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Koordination", valueFullFit: true}, medal: {filterValue: "Gold", valueFullFit: true} }, true).length}}</span>
+                    <div class="medal gold"></div>
+                </div>
+                <span class="accent-300">&middot;</span>
+                <div class="flex items-center gap-10">
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Koordination", valueFullFit: true}, medal: {filterValue: "Silber", valueFullFit: true} }, true).length}}</span>
+                    <div class="medal silver"></div>
+                </div>
+                <span class="accent-300">&middot;</span>
+                <div class="flex items-center gap-10">
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Koordination", valueFullFit: true}, medal: {filterValue: "Bronze", valueFullFit: true} }, true).length}}</span>
+                    <div class="medal bronze"></div>
+                </div>
+            </div>
+            <div class="flex items-center gap-10 margin-left-40">
+                <p class="font-size-15 accent-500 inter-regular">gesamt</p>
+                <div class="medal" [ngClass]="{'gold': true, 'silver': false, 'bronze': false}"></div>
+            </div>
+        </div>
+        <div class="flex items-center">
+            <p>Ausdauer</p>
+            <div class="flex gap-10 items-center margin-left-auto">
+                <div class="flex items-center gap-10 border-right-1px border-accent-300">
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Ausdauer", valueFullFit: true}, medal: {filterValue: "Gold", valueFullFit: true} }, true).length}}</span>
+                    <div class="medal gold"></div>
+                </div>
+                <span class="accent-300">&middot;</span>
+                <div class="flex items-center gap-10">
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Ausdauer", valueFullFit: true}, medal: {filterValue: "Silber", valueFullFit: true} }, true).length}}</span>
+                    <div class="medal silver"></div>
+                </div>
+                <span class="accent-300">&middot;</span>
+                <div class="flex items-center gap-10">
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Ausdauer", valueFullFit: true}, medal: {filterValue: "Bronze", valueFullFit: true} }, true).length}}</span>
+                    <div class="medal bronze"></div>
+                </div>
+            </div>
+            <div class="flex items-center gap-10 margin-left-40">
+                <p class="font-size-15 accent-500 inter-regular">gesamt</p>
+                <div class="medal" [ngClass]="{'gold': true, 'silver': false, 'bronze': false}"></div>
+            </div>
+        </div>
+        <div class="flex items-center">
+            <p>Kraft</p>
+            <div class="flex gap-10 items-center margin-left-auto">
+                <div class="flex items-center gap-10 border-right-1px border-accent-300">
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Kraft", valueFullFit: true}, medal: {filterValue: "Gold", valueFullFit: true} }, true).length}}</span>
+                    <div class="medal gold"></div>
+                </div>
+                <span class="accent-300">&middot;</span>
+                <div class="flex items-center gap-10">
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Kraft", valueFullFit: true}, medal: {filterValue: "Silber", valueFullFit: true} }, true).length}}</span>
+                    <div class="medal silver"></div>
+                </div>
+                <span class="accent-300">&middot;</span>
+                <div class="flex items-center gap-10">
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Kraft", valueFullFit: true}, medal: {filterValue: "Bronze", valueFullFit: true} }, true).length}}</span>
+                    <div class="medal bronze"></div>
+                </div>
+            </div>
+            <div class="flex items-center gap-10 margin-left-40">
+                <p class="font-size-15 accent-500 inter-regular">gesamt</p>
+                <div class="medal" [ngClass]="{'gold': true, 'silver': false, 'bronze': false}"></div>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-30 margin-top-auto">
+        <span class="margin-left-auto inter-medium accent-500 font-size-15">erstellt am {{selectedAthlete.created_at}} von {{selectedAthlete.created_by}}</span>
+        <div class="flex items-center gap-10 full-width">
+            <app-secondary-button class="full-width" (click)="triggerAthleteDetails(false)" [text]="'Abbrechen'" [minWidth]="'100%'"></app-secondary-button>
+            <app-primary-button class="full-width" [isDeleteButton]="true" [text]="'Benutzer löschen'" [minWidth]="'100%'" [iconName]="'delete'" [strokeWidth]="'2'" (click)="modals.confirmationModal.isActive = true" id="delete-button"></app-primary-button>
+        </div>
+    </div>
+</div>
+<div id="overlay-lower" *ngIf="selectedAthlete;" (click)="triggerAthleteDetails(false)" [ngClass]="{'active': selectedAthlete && showDetails}"></div>
