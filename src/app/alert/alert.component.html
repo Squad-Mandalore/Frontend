@@ -4,7 +4,7 @@
     add AlertComponent to imports property in same file
 -->
 
-<div id="alert" [ngClass]="alertService.IsVisible ? 'active': ''">
+<div id="alert" [@enterAnimation] *ngIf="alertService.IsVisible">
     <div [ngSwitch]="alertService.Type">
         <svg *ngSwitchCase="'success'" style="transform:scale(.88)" width="20" height="20" viewBox="0 0 20 20"
             fill="none" xmlns="http://www.w3.org/2000/svg">

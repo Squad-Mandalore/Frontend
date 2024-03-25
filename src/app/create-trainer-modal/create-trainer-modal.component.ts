@@ -6,6 +6,7 @@ import { PasswordBoxComponent } from '../components/password-box/password-box.co
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertComponent } from '../alert/alert.component';
 import { AlertService } from '../shared/alert.service';
+import { UtilService } from '../shared/service-util';
 
 @Component({
   selector: 'app-create-trainer-modal',
@@ -23,10 +24,10 @@ export class CreateTrainerModalComponent {
   }
   
   trainerForm;
-  constructor(private formBuilder: FormBuilder, private alertService: AlertService){
+  constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService){
     this.trainerForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, utilService.passwordValidator()]],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
