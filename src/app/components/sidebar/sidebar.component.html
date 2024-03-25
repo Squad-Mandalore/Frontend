@@ -1,0 +1,37 @@
+<div id="sidebar">
+    <div id="header">
+        <div>
+            <p class="headline">Meine Athleten</p>
+            <p class="description">Tippe auf einen Sportler um dessen Daten zu laden</p>
+        </div>
+        <div id="action-wrapper">
+            <div id="search-bar">
+                <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.16667 16.3333C12.8486 16.3333 15.8333 13.3486 15.8333 9.66667C15.8333 5.98477 12.8486 3 9.16667 3C5.48477 3 2.5 5.98477 2.5 9.66667C2.5 13.3486 5.48477 16.3333 9.16667 16.3333Z" stroke="#ADB6BF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M17.5 18L13.875 14.375" stroke="#ADB6BF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <input #searchInput id="search-input" [value]="searchInput.value" (input)="changeSearchValue(searchInput.value)" placeholder="Suchen" type="text"/>
+            </div>
+            <app-quaternary-button (click)="modals.createAthleteModal.isActive = true" [iconName]="'user-plus'" [tooltipText]="'Sportler hinzufügen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"></app-quaternary-button>
+        </div>
+    </div>
+    <div id="sidebar-content" class="empty" *ngIf="athletes.length === 0; else hasAthletes">
+        <img src="assets/img/humans-statistics-sitting-woman.png" alt="create-athlete"/>
+        <p id="information-text-big">Erstelle deinen ersten Athlet</p>
+        <p id="information-text-small">
+            Füge jetzt einen neuen Athlet hinzu und starte die Erfassung von Übungen
+        </p>
+        <app-primary-button [iconName]="'user-plus'" [text]="'Erstellen'"></app-primary-button>
+    </div>
+    <ng-template #hasAthletes>
+        <div id="sidebar-content-wrapper">
+            <div id="sidebar-content" class="filled">
+                <div *ngFor="let athlete of customFilterCall(athletes, {firstname: {filterValue: searchValue, valueFullFit: false}, lastname: {filterValue: searchValue, valueFullFit: false} }, false)">
+                    <a [routerLink]="['/athleten', athlete.id]">
+                        <app-athlete-card [athlete]="athlete"></app-athlete-card>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
