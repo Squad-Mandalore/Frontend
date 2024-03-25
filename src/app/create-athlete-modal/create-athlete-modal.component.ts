@@ -50,7 +50,6 @@ export class CreateAthleteModalComponent implements OnInit {
     lastname: '',
     birthday: '',
     gender: 'm',
-    has_disease: false,
     trainer_id: '',
   }
 
