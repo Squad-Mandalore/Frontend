@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule, NgClass } from "@angular/common"
-import { AlertService } from '../shared/alert.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {Component} from '@angular/core';
+import {CommonModule, NgClass} from "@angular/common";
+
+import {animate, style, transition, trigger} from '@angular/animations';
+import {AlertService} from "../../shared/alert.service";
 
 @Component({
     selector: 'app-alert',

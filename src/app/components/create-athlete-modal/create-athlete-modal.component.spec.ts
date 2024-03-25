@@ -2,8 +2,9 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CreateAthleteModalComponent} from './create-athlete-modal.component';
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {AthletesService} from "../shared/generated";
+
 import {ReactiveFormsModule} from "@angular/forms";
+import {AthletesService} from "../../shared/generated";
 
 describe('CreateAthleteModalComponent', () => {
   let component: CreateAthleteModalComponent;

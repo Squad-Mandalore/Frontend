@@ -18,7 +18,27 @@ export class AthleteCardComponent implements OnInit, OnDestroy {
   routeSubscription!: Subscription;
 
   isActive: boolean = false;
-  @Input() athlete!: Athlete;
+  @Input() athlete!: {
+    firstname: string;
+    gender: string;
+    date_of_birth: string;
+    has_swimming_certificate: boolean;
+    number_silver_medals: number;
+    created_at: string;
+    progress_points: number;
+    type: string;
+    created_by: string;
+    last_password_change: string;
+    lastname: string;
+    number_bronze_medals: number;
+    number_gold_medals: number;
+    last_edited_at: string;
+    progress: number;
+    progress_medal: string;
+    id: number;
+    email: string;
+    username: string
+  };
 
   ngOnInit(): void {
     this.routeSubscription = this.route.params.subscribe(params => {

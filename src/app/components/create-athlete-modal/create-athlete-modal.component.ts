@@ -1,15 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {IconComponent} from "../components/icon/icon.component";
-import {PrimaryButtonComponent} from "../components/buttons/primary-button/primary-button.component";
-import {SecondaryButtonComponent} from "../components/buttons/secondary-button/secondary-button.component";
+
 import {NgClass, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
-import {AthletePostSchema, AthleteResponseSchema, AthletesService} from "../shared/generated";
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {LoggerService} from "../shared/logger.service";
 import {AlertComponent} from "../alert/alert.component";
 import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
+import {IconComponent} from "../icon/icon.component";
+import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
+import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-button.component";
+import {AthletePostSchema, AthleteResponseSchema, AthletesService} from "../../shared/generated";
+import {LoggerService} from "../../shared/logger.service";
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -49,8 +50,7 @@ export class CreateAthleteModalComponent implements OnInit {
     firstname: '',
     lastname: '',
     birthday: '',
-    gender: 'm',
-    trainer_id: '',
+    gender: 'm'
   }
 
   constructor(private athleteApi: AthletesService,

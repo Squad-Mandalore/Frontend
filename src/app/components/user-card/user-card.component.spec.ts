@@ -15,19 +15,10 @@ describe('UserCardComponent', () => {
         fixture = TestBed.createComponent(UserCardComponent);
         component = fixture.componentInstance;
         component.user = {
-            id: '1',
-            username: 'test1',
-            email: 'test1@example.com',
-            firstname: 'John',
-            lastname: 'Doe',
-            created_at: '2024-02-26',
-            last_password_change: '2024-02-26',
-            last_edited_at: '2024-02-26',
-            gender: 'm',
-            has_disease: false,
-            birthday: '2024-02-25',
-            trainer_id: 'tsa;lk',
-            type: 'athlete',
+          id: 1,
+          firstname: "Long",
+          lastname: "schlong",
+          type: "cheesse",
         }
         fixture.detectChanges();
     });
