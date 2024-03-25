@@ -1,4 +1,4 @@
-<button [title]="description" [style.minWidth]="minWidth" class="quaternary-button" [ngClass]="{'with-icon': iconName}"
+<button (click)="onButtonClick($event)" [title]="description" [style.minWidth]="minWidth" class="quaternary-button" [ngClass]="{'with-icon': iconName}"
     [attr.data-tooltip]="tooltipText" [style.backgroundColor]="backgroundColor" [disabled]="disabled">
     <app-icon *ngIf="iconName" [iconName]="iconName" [iconColor]="iconColor" [strokeWidth]="strokeWidth"
         [iconWidth]="iconWidth" [iconHeight]="iconHeight"></app-icon>
