@@ -11,11 +11,11 @@ export class AlertService {
   private closeAlert;
   private timeout!: ReturnType<typeof setTimeout>;
 
-  get AlertTitle(){
+  get Title(){
     return this.alertTitle;
   };
 
-  get AlertDescription(){
+  get Description(){
     return this.alertDescription;
   };
 
