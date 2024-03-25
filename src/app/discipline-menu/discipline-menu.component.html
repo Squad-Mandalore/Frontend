@@ -1,1 +1,107 @@
-<p>discipline-menu works!</p>
+<div id="discipline-menu">
+  <div id="discipline-menu-header">
+    <h2>Neue Leistung erfassen</h2>
+  </div>
+  <div id="category-wrapper">
+    <div id="choose-discipline">
+      <h3>Disziplin wählen</h3>
+      <div id="search-bar">
+        <input type="text" placeholder="Disziplin suchen">
+      </div>
+    </div>
+    <div id="Schnelligkeit" class="category">
+      <div class="category-title-wrapper">
+          <h3>Schnelligkeit</h3>
+      </div>
+      <div class="discipline-wrapper">
+        <div class="discipline">
+          <div class="discipline-title-wrapper">
+            <h4>30 Meter Lauf</h4>
+          </div>
+          <div class="last-date">
+            <h4>zuletzt: 12.02.2022</h4>
+          </div>
+          <div class="medal">
+            <div id="gold" class="circle"></div>
+          </div>
+        </div>
+        <div class="discipline">
+          <div class="discipline-title-wrapper">
+            <h4>50 Meter Lauf</h4>
+          </div>
+          <div class="last-date">
+            <h4>zuletzt: 12.02.2022</h4>
+          </div>
+          <div class="medal">
+            <div id="silver" class="circle"></div>
+          </div>
+        </div>
+        <div class="discipline">
+          <div class="discipline-title-wrapper">
+            <h4>100 Meter Lauf</h4>
+          </div>
+          <div class="last-date">
+            <h4>zuletzt: 12.02.2022</h4>
+          </div>
+          <div class="medal">
+            <div id="bronze" class="circle"></div>
+          </div>
+        </div>
+        <div class="discipline">
+          <div class="discipline-title-wrapper">
+            <h4>25 Meter Schwimmen</h4>
+          </div>
+          <div class="last-date">
+            <h4>zuletzt: 12.02.2022</h4>
+          </div>
+          <div class="medal">
+            <div id="gold" class="circle"></div>
+          </div>
+        </div>
+        <div class="discipline">
+          <div class="discipline-title-wrapper">
+            <h4>200 Meter Radfahren</h4>
+          </div>
+          <div class="last-date">
+            <h4>zuletzt: 12.02.2022</h4>
+          </div>
+          <div class="medal"></div>
+        </div>
+        <div class="discipline">
+          <div class="discipline-title-wrapper">
+            <h4>Gerätturnen</h4>
+          </div>
+          <div class="last-date">
+            <h4>zuletzt: 12.02.2022</h4>
+          </div>
+          <div class="medal"></div>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+    <div id="Ausdauer" class="category">
+      <div class="category-title-wrapper">
+          <h3>Ausdauer</h3>
+      </div>
+      <div class="discipline-wrapper">
+
+      </div>
+    </div>
+    <hr>
+    <div id="Kraft" class="category">
+      <div class="category-title-wrapper">
+          <h3>Kraft</h3>
+      </div>
+      <div class="discipline-wrapper">
+
+      </div>
+    </div>
+  </div>
+  <div id="button-wrapper">
+    <app-secondary-button [text]="'Schließen'" [strokeWidth]="2"></app-secondary-button>
+    <app-primary-button [text]="'Weiter'" [strokeWidth]="2"></app-primary-button>
+  </div>
+
+
+</div>
