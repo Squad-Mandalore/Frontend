@@ -492,6 +492,10 @@
         "responses": {
           "200": {
             "description": "Successful Response"
+          },
+          "404": {
+            "description": "Not Found",
+            "route": "Not found"
           }
         }
       }
@@ -506,6 +510,10 @@
         "responses": {
           "200": {
             "description": "Successful Response"
+          },
+          "404": {
+            "description": "Not Found",
+            "route": "Not found"
           }
         }
       }
@@ -520,62 +528,12 @@
         "responses": {
           "200": {
             "description": "Successful Response"
+          },
+          "404": {
+            "description": "Not Found",
+            "route": "Not found"
           }
         }
-      }
-    },
-    "/csv/parse": {
-      "post": {
-        "tags": [
-          "csv"
-        ],
-        "summary": "Parse Trainer Csv",
-        "operationId": "parse_trainer_csv_csv_parse_post",
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "$ref": "#/components/schemas/Body_parse_trainer_csv_csv_parse_post"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "anyOf": [
-                    {
-                      "type": "object"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ],
-                  "title": "Response Parse Trainer Csv Csv Parse Post"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
       }
     },
     "/auth/login": {
@@ -660,669 +618,6 @@
           }
         }
       }
-    },
-    "/categories/all": {
-      "get": {
-        "tags": [
-          "categories"
-        ],
-        "summary": "Get All Categorys",
-        "operationId": "get_all_categorys_categories_all_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/CategoryResponseSchema"
-                  },
-                  "type": "array",
-                  "title": "Response Get All Categorys Categories All Get"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
-      }
-    },
-    "/categories/{id}": {
-      "get": {
-        "tags": [
-          "categories"
-        ],
-        "summary": "Get Category",
-        "operationId": "get_category_categories__id__get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CategoryResponseSchema"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "categories"
-        ],
-        "summary": "Delete Ahtlete",
-        "operationId": "delete_ahtlete_categories__id__delete",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "categories"
-        ],
-        "summary": "Update Category",
-        "operationId": "update_category_categories__id__patch",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Id"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CategoryPatchSchema"
-              }
-            }
-          }
-        },
-        "responses": {
-          "202": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CategoryResponseSchema"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/categories/": {
-      "post": {
-        "tags": [
-          "categories"
-        ],
-        "summary": "Create Category",
-        "operationId": "create_category_categories__post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CategoryPostSchema"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CategoryResponseSchema"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
-      }
-    },
-    "/exercises/all": {
-      "get": {
-        "tags": [
-          "exercises"
-        ],
-        "summary": "Get All Exercises",
-        "operationId": "get_all_exercises_exercises_all_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/ExerciseResponseSchema"
-                  },
-                  "type": "array",
-                  "title": "Response Get All Exercises Exercises All Get"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
-      }
-    },
-    "/exercises/{id}": {
-      "get": {
-        "tags": [
-          "exercises"
-        ],
-        "summary": "Get Exercise",
-        "operationId": "get_exercise_exercises__id__get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExerciseResponseSchema"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "exercises"
-        ],
-        "summary": "Delete Ahtlete",
-        "operationId": "delete_ahtlete_exercises__id__delete",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "exercises"
-        ],
-        "summary": "Update Exercise",
-        "operationId": "update_exercise_exercises__id__patch",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Id"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ExercisePatchSchema"
-              }
-            }
-          }
-        },
-        "responses": {
-          "202": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExerciseResponseSchema"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/exercises/": {
-      "post": {
-        "tags": [
-          "exercises"
-        ],
-        "summary": "Create Exercise",
-        "operationId": "create_exercise_exercises__post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ExercisePostSchema"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExerciseResponseSchema"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
-      }
-    },
-    "/completess/all": {
-      "get": {
-        "tags": [
-          "completess"
-        ],
-        "summary": "Get All Completess",
-        "operationId": "get_all_completess_completess_all_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/CompletesResponseSchema"
-                  },
-                  "type": "array",
-                  "title": "Response Get All Completess Completess All Get"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
-      }
-    },
-    "/completess/{id}": {
-      "get": {
-        "tags": [
-          "completess"
-        ],
-        "summary": "Get Completes",
-        "operationId": "get_completes_completess__id__get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CompletesResponseSchema"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "completess"
-        ],
-        "summary": "Delete Ahtlete",
-        "operationId": "delete_ahtlete_completess__id__delete",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "completess"
-        ],
-        "summary": "Update Completes",
-        "operationId": "update_completes_completess__id__patch",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Id"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CompletesPatchSchema"
-              }
-            }
-          }
-        },
-        "responses": {
-          "202": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CompletesResponseSchema"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/completess/": {
-      "post": {
-        "tags": [
-          "completess"
-        ],
-        "summary": "Create Completes",
-        "operationId": "create_completes_completess__post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CompletesPostSchema"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CompletesResponseSchema"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
-      }
     }
   },
   "components": {
@@ -1376,19 +671,23 @@
           "gender": {
             "$ref": "#/components/schemas/Gender"
           },
+          "has_disease": {
+            "type": "boolean",
+            "title": "Has Disease"
+          },
           "trainer": {
             "$ref": "#/components/schemas/TrainerResponseSchema"
           },
           "completes": {
             "items": {
-              "$ref": "#/components/schemas/CompletesResponseSchema"
+              "$ref": "#/components/schemas/CompletesSchema"
             },
             "type": "array",
             "title": "Completes"
           },
           "certificates": {
             "items": {
-              "$ref": "#/components/schemas/CertificateResponseSchema"
+              "$ref": "#/components/schemas/CertificateSchema"
             },
             "type": "array",
             "title": "Certificates"
@@ -1407,6 +706,7 @@
           "type",
           "birthday",
           "gender",
+          "has_disease",
           "trainer",
           "completes",
           "certificates"
@@ -1480,6 +780,28 @@
                 "type": "null"
               }
             ]
+          },
+          "has_disease": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Has Disease"
+          },
+          "trainer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trainer Id"
           }
         },
         "type": "object",
@@ -1514,6 +836,14 @@
           },
           "gender": {
             "$ref": "#/components/schemas/Gender"
+          },
+          "has_disease": {
+            "type": "boolean",
+            "title": "Has Disease"
+          },
+          "trainer_id": {
+            "type": "string",
+            "title": "Trainer Id"
           }
         },
         "type": "object",
@@ -1524,7 +854,9 @@
           "firstname",
           "lastname",
           "birthday",
-          "gender"
+          "gender",
+          "has_disease",
+          "trainer_id"
         ],
         "title": "AthletePostSchema"
       },
@@ -1577,6 +909,10 @@
           "gender": {
             "$ref": "#/components/schemas/Gender"
           },
+          "has_disease": {
+            "type": "boolean",
+            "title": "Has Disease"
+          },
           "trainer": {
             "$ref": "#/components/schemas/TrainerResponseSchema"
           }
@@ -1594,6 +930,7 @@
           "type",
           "birthday",
           "gender",
+          "has_disease",
           "trainer"
         ],
         "title": "AthleteResponseSchema"
@@ -1655,54 +992,7 @@
         ],
         "title": "Body_login_for_access_token_auth_login_post"
       },
-      "Body_parse_trainer_csv_csv_parse_post": {
-        "properties": {
-          "file": {
-            "type": "string",
-            "format": "binary",
-            "title": "File"
-          }
-        },
-        "type": "object",
-        "required": [
-          "file"
-        ],
-        "title": "Body_parse_trainer_csv_csv_parse_post"
-      },
-      "CategoryPatchSchema": {
-        "properties": {
-          "title": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Title"
-          }
-        },
-        "type": "object",
-        "required": [
-          "title"
-        ],
-        "title": "CategoryPatchSchema"
-      },
-      "CategoryPostSchema": {
-        "properties": {
-          "title": {
-            "type": "string",
-            "title": "Title"
-          }
-        },
-        "type": "object",
-        "required": [
-          "title"
-        ],
-        "title": "CategoryPostSchema"
-      },
-      "CategoryResponseSchema": {
+      "CategorySchema": {
         "properties": {
           "id": {
             "type": "string",
@@ -1718,9 +1008,9 @@
           "id",
           "title"
         ],
-        "title": "CategoryResponseSchema"
+        "title": "CategorySchema"
       },
-      "CertificateResponseSchema": {
+      "CertificateSchema": {
         "properties": {
           "id": {
             "type": "string",
@@ -1757,149 +1047,16 @@
           "title",
           "blob"
         ],
-        "title": "CertificateResponseSchema"
+        "title": "CertificateSchema"
       },
-      "CompletesPatchSchema": {
-        "properties": {
-          "athlete_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Athlete Id"
-          },
-          "exercise_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Exercise Id"
-          },
-          "tracked_at": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Tracked At"
-          },
-          "completed_at": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Completed At"
-          },
-          "result": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Result"
-          },
-          "points": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Points"
-          },
-          "dbs": {
-            "anyOf": [
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Dbs"
-          }
-        },
-        "type": "object",
-        "required": [
-          "athlete_id",
-          "exercise_id",
-          "tracked_at",
-          "completed_at",
-          "result",
-          "points",
-          "dbs"
-        ],
-        "title": "CompletesPatchSchema"
-      },
-      "CompletesPostSchema": {
+      "CompletesSchema": {
         "properties": {
           "athlete_id": {
             "type": "string",
             "title": "Athlete Id"
           },
           "exercise_id": {
-            "type": "string",
-            "title": "Exercise Id"
-          },
-          "tracked_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Tracked At"
-          },
-          "result": {
-            "type": "string",
-            "title": "Result"
-          },
-          "points": {
-            "type": "integer",
-            "title": "Points"
-          },
-          "dbs": {
-            "type": "boolean",
-            "title": "Dbs"
-          }
-        },
-        "type": "object",
-        "required": [
-          "athlete_id",
-          "exercise_id",
-          "tracked_at",
-          "result",
-          "points",
-          "dbs"
-        ],
-        "title": "CompletesPostSchema"
-      },
-      "CompletesResponseSchema": {
-        "properties": {
-          "athlete_id": {
-            "type": "string",
-            "title": "Athlete Id"
-          },
-          "exercise_id": {
-            "$ref": "#/components/schemas/ExerciseResponseSchema"
+            "$ref": "#/components/schemas/ExerciseSchema"
           },
           "tracked_at": {
             "type": "string",
@@ -1941,93 +1098,9 @@
           "points",
           "dbs"
         ],
-        "title": "CompletesResponseSchema"
+        "title": "CompletesSchema"
       },
-      "ExercisePatchSchema": {
-        "properties": {
-          "title": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Title"
-          },
-          "category_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Category Id"
-          },
-          "from_age": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "From Age"
-          },
-          "to_age": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "To Age"
-          }
-        },
-        "type": "object",
-        "required": [
-          "title",
-          "category_id",
-          "from_age",
-          "to_age"
-        ],
-        "title": "ExercisePatchSchema"
-      },
-      "ExercisePostSchema": {
-        "properties": {
-          "title": {
-            "type": "string",
-            "title": "Title"
-          },
-          "category_id": {
-            "type": "string",
-            "title": "Category Id"
-          },
-          "from_age": {
-            "type": "integer",
-            "title": "From Age"
-          },
-          "to_age": {
-            "type": "integer",
-            "title": "To Age"
-          }
-        },
-        "type": "object",
-        "required": [
-          "title",
-          "category_id",
-          "from_age",
-          "to_age"
-        ],
-        "title": "ExercisePostSchema"
-      },
-      "ExerciseResponseSchema": {
+      "ExerciseSchema": {
         "properties": {
           "id": {
             "type": "string",
@@ -2038,7 +1111,7 @@
             "title": "Title"
           },
           "category": {
-            "$ref": "#/components/schemas/CategoryResponseSchema"
+            "$ref": "#/components/schemas/CategorySchema"
           },
           "from_age": {
             "type": "integer",
@@ -2057,7 +1130,7 @@
           "from_age",
           "to_age"
         ],
-        "title": "ExerciseResponseSchema"
+        "title": "ExerciseSchema"
       },
       "Gender": {
         "type": "string",
@@ -2157,6 +1230,22 @@
           "type": {
             "type": "string",
             "title": "Type"
+          },
+          "uses_otp": {
+            "type": "boolean",
+            "title": "Uses Otp"
+          },
+          "birthday": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Birthday"
           }
         },
         "type": "object",
@@ -2169,7 +1258,9 @@
           "created_at",
           "last_password_change",
           "last_edited_at",
-          "type"
+          "type",
+          "uses_otp",
+          "birthday"
         ],
         "title": "TrainerResponseSchema"
       },
