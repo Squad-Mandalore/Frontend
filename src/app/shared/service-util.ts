@@ -39,7 +39,7 @@ export class UtilService {
    * @return {boolean} - true or false Value if valid / not valid
    */
 
-  private validatePass(password:string) {
+  public validatePass(password:string) {
     return schema.validate(password);
   }
 

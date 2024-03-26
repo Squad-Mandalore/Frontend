@@ -7,6 +7,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertComponent } from '../alert/alert.component';
 import { AlertService } from '../shared/alert.service';
 import { UtilService } from '../shared/service-util';
+import { TrainerPostSchema, TrainersService } from '../shared/generated';
 
 @Component({
   selector: 'app-create-trainer-modal',
@@ -22,9 +23,9 @@ export class CreateTrainerModalComponent {
     console.log("close");
     this.click.emit();
   }
-  
+
   trainerForm;
-  constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService){
+  constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService){
     this.trainerForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, utilService.passwordValidator()]],
@@ -35,11 +36,24 @@ export class CreateTrainerModalComponent {
   }
 
   onSubmit(){
-    console.log('createTrainer');
-    if(false){
-      this.click.emit();
-    }else{
-      this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen! Bitte nochmal versuchen.',"error");
-    }
+    let body: TrainerPostSchema = {
+      username: this.trainerForm.value.username!,
+      unhashed_password: this.trainerForm.value.password!,
+      firstname: this.trainerForm.value.firstname!,
+      lastname: this.trainerForm.value.lastname!,
+      email: this.trainerForm.value.email!,
+    };
+    this.trainerService.createTrainerTrainersPost(body).subscribe({
+      next: () => {
+        this.click.emit();
+      },
+      error: (error) => {
+        if(error.status == 422){
+          this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
+        }else{
+          this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen! Bitte nochmal versuchen.',"error");
+        }
+      }
+    });
   }
 }
