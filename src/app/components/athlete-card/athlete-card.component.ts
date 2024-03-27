@@ -23,7 +23,7 @@ export class AthleteCardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeSubscription = this.route.params.subscribe(params => {
       const routeId = params['id'];
-      this.isActive = routeId && routeId == this.athlete.id ? true : false;
+      this.isActive = !!(routeId && routeId == this.athlete.id);
     })
   }
 

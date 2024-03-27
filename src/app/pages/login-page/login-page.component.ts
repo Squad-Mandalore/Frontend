@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AthletesService, AuthService, Token } from '../shared/generated';
-import { Router } from '@angular/router';
-import { AlertComponent } from '../alert/alert.component';
-import { LoggerService } from '../shared/logger.service';
-import { LocalStorageService } from '../shared/local-storage.service';
-import { AuthExtentionService } from '../shared/auth-extention.service';
-import { NgClass } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
-import { PrimaryButtonComponent } from '../components/buttons/primary-button/primary-button.component';
-import { AlertService } from '../shared/alert.service';
+import {Component} from '@angular/core';
+import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AlertComponent} from "../../components/alert/alert.component";
+import {NgClass} from "@angular/common";
+import {PrimaryButtonComponent} from "../../components/buttons/primary-button/primary-button.component";
+import {AuthExtentionService} from "../../shared/auth-extention.service";
+import {LoggerService} from "../../shared/logger.service";
+import {LocalStorageService} from "../../shared/local-storage.service";
+import {AlertService} from "../../shared/alert.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {AthletesService, AuthService, Token} from "../../shared/generated";
+
 
 @Component({
     selector: 'app-login-page',

@@ -14,21 +14,6 @@ describe('AthleteCardComponent', () => {
 
         fixture = TestBed.createComponent(AthleteCardComponent);
         component = fixture.componentInstance;
-        component.athlete = {
-            id: '1',
-            username: 'test1',
-            email: 'test1@example.com',
-            firstname: 'John',
-            lastname: 'Doe',
-            created_at: '2024-02-26',
-            last_password_change: '2024-02-26',
-            last_edited_at: '2024-02-26',
-            gender: 'm',
-            birthday: '2024-02-25',
-            trainer_id: 'tsa;lk',
-            type: 'athlete',
-        }
-        fixture.detectChanges();
     });
 
     it('should create', () => {

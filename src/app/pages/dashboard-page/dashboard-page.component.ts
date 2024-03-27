@@ -17,11 +17,11 @@ import { ConfirmationModalComponent } from '../../components/confirmation-modal/
   selector: 'app-dashboard',
   standalone: true,
   imports: [SidebarComponent, ConfirmationModalComponent, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  templateUrl: './dashboard-page.component.html',
+  styleUrl: './dashboard-page.component.scss'
 })
 
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardPageComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private router: Router) { }
   athletes: Athlete[] = []
   selectedAthlete: Athlete | null = null;
@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // do deletion logic
     console.log("delete");
   }
-  
+
   getActiveFilters(){
     let counter = 0;
     for (const [key, value] of Object.entries(this.filter)){
@@ -1028,13 +1028,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.athletes = this.athletes.slice(0, 5);
     // this.athletes = [];
-    
+
     for(const athlete of this.athletes){
       athlete.number_gold_medals = customFilter(athlete.results, {medal: {filterValue: "Gold", valueFullFit: true}}).length;
       athlete.number_silver_medals = customFilter(athlete.results, {medal: {filterValue: "Silber", valueFullFit: true}}).length;
       athlete.number_bronze_medals = customFilter(athlete.results, {medal: {filterValue: "Bronze", valueFullFit: true}}).length;
     }
-    
+
     this.routeSubscription = this.route.params.subscribe(params => {
       const athleteId = params['id'];
       if(athleteId){

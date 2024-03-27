@@ -1,8 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
 import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-button.component";
-import {NgIf, NgSwitch, NgSwitchCase, NgClass} from "@angular/common";
+import {NgClass, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -31,6 +31,6 @@ export class CreateAthleteModalComponent {
   }
 
   onClickSwitchGender(value: string) {
-    this.isMale = value === "male" ? true : false;
+    this.isMale = value === "male";
   }
 }

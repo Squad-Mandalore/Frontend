@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import {NavbarBottomComponent} from "./navbar-bottom.component";
+import {DashboardPageComponent} from "./dashboard-page.component";
 
-describe('NavbarBottomComponentComponent', () => {
-  let component: NavbarBottomComponent;
-  let fixture: ComponentFixture<NavbarBottomComponent>;
+describe('DashboardPageComponent', () => {
+  let component: DashboardPageComponent;
+  let fixture: ComponentFixture<DashboardPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavbarBottomComponent],
+      imports: [DashboardPageComponent],
       providers: [
         { provide: ActivatedRoute, useValue: { snapshot: { url: '/athleten' } } },
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(NavbarBottomComponent);
+    fixture = TestBed.createComponent(DashboardPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

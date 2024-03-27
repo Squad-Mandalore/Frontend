@@ -12,7 +12,7 @@ describe('CreateTrainerModalComponent', () => {
       imports: [CreateTrainerModalComponent],
       providers: [HttpClient, HttpHandler]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CreateTrainerModalComponent);
     component = fixture.componentInstance;
