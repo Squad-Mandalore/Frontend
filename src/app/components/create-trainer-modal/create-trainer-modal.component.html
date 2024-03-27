@@ -1,41 +1,36 @@
-<div id="overlay" (click)="modals.createTrainerModal.isActive = false" [ngClass]="{'is-active': modals.createTrainerModal.isActive, 'is-inactive': !modals.createTrainerModal.isActive}"></div>
-<div id="modal" [ngClass]="{'is-active': modals.createTrainerModal.isActive, 'is-inactive': !modals.createTrainerModal.isActive}">
+<form [formGroup]="trainerForm" (ngSubmit)="onSubmit()" id="modal">
     <div id="modal-header">
         <p id="modal-headline">Neuen Trainer hinzufügen</p>
-        <app-icon (click)="modals.createTrainerModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+        <app-icon id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
     </div>
     <div id="input-wrapper">
         <label class="label">
             <p class="label-text">Benutzername</p>
-            <input class="input" type="text" name="benutzername" placeholder="Benutzername"/>
+            <input class="input" type="text" name="benutzername" placeholder="Benutzername" formControlName="username"/>
         </label>
         <div id="password-password-strength-wrapper">
             <label class="label">
                 <p class="label-text">Password</p>
-                <input class="input" type="password" name="password" placeholder="Passwort"/>
+                <app-password-box formControlName="password"></app-password-box>
             </label>
-            <div id="progress-wrapper">
-                <div id="progress-bar" [style.width]="'50%'" [style.backgroundColor]="progressBarColor"></div>
-            </div>
-            <p id="password-strength-text">Passwortstärke: {{passwordStrength}}</p>
         </div>
         <div id="name-input-wrapper">
             <label class="label">
                 <p class="label-text">Vorname</p>
-                <input class="input" type="text" name="forename" placeholder="Vorname"/>
+                <input class="input" type="text" name="forename" placeholder="Vorname" formControlName="firstname"/>
             </label>
             <label class="label">
                 <p class="label-text">Nachname</p>
-                <input class="input" type="text" name="lastname" placeholder="Nachname"/>
+                <input class="input" type="text" name="lastname" placeholder="Nachname" formControlName="lastname"/>
             </label>
         </div>
         <label class="label">
             <p class="label-text">E-Mail</p>
-            <input class="input" type="email" name="email" placeholder="E-Mail"/>
+            <input class="input" type="email" name="email" placeholder="E-Mail" formControlName="email"/>
         </label>
     </div>
     <div id="modal-footer">
-        <app-secondary-button (click)="modals.createTrainerModal.isActive = false" [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
-        <app-primary-button [text]="'Trainer anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
+        <app-secondary-button (click)="onButtonClick()" type="button" text="Abbrechen" minWidth="100%" description="Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen."></app-secondary-button>
+        <app-primary-button [disabled]="!trainerForm.valid" text="Trainer hinzufügen" minWidth="100%" description="Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen."></app-primary-button>
     </div>
-</div>
+</form>

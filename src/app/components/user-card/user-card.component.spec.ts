@@ -24,7 +24,6 @@ describe('UserCardComponent', () => {
             last_password_change: '2024-02-26',
             last_edited_at: '2024-02-26',
             gender: 'm',
-            has_disease: false,
             birthday: '2024-02-25',
             trainer_id: 'tsa;lk',
             type: 'athlete',

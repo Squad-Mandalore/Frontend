@@ -1,29 +1,25 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AthletesService, AuthService, Token } from '../../shared/generated';
+import { AthletesService, AuthService, Token } from '../shared/generated';
 import { Router } from '@angular/router';
-import { AlertComponent } from '../../components/alert/alert.component';
-import { LoggerService } from '../../shared/logger.service';
-import { LocalStorageService } from '../../shared/local-storage.service';
-import { AuthExtentionService } from '../../shared/auth-extention.service';
+import { AlertComponent } from '../alert/alert.component';
+import { LoggerService } from '../shared/logger.service';
+import { LocalStorageService } from '../shared/local-storage.service';
+import { AuthExtentionService } from '../shared/auth-extention.service';
 import { NgClass } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
+import { PrimaryButtonComponent } from '../components/buttons/primary-button/primary-button.component';
+import { AlertService } from '../shared/alert.service';
 
 @Component({
     selector: 'app-login-page',
     standalone: true,
     imports: [ReactiveFormsModule, AlertComponent, NgClass, PrimaryButtonComponent],
-    templateUrl: './login.component.html',
-    styleUrl: './login.component.scss'
+    templateUrl: './login-page.component.html',
+    styleUrl: './login-page.component.scss'
 })
-export class LoginComponent {
-    loginForm;
-    alertTitle?: string;
-    alertDescription?: string;
-    isError: boolean;
-    closeAlert;
-    timeout!: ReturnType<typeof setTimeout>;
+export class LoginPageComponent {
+    protected loginForm;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -33,6 +29,7 @@ export class LoginComponent {
         private router: Router,
         private logger: LoggerService,
         private localStorageService: LocalStorageService,
+        private alertService: AlertService
     ) {
         if (this.authExtService.isLoggedIn()) {
             this.router.navigate(['/athleten']);
@@ -41,11 +38,6 @@ export class LoginComponent {
             username: ['', Validators.required],
             password: ['', Validators.required],
         });
-        this.isError = false;
-        this.closeAlert = () => {
-            clearTimeout(this.timeout);
-            this.isError = false;
-        }
     }
 
     onSubmit() {
@@ -56,18 +48,9 @@ export class LoginComponent {
                 this.router.navigate(['/athleten']);
             },
             error: (error: HttpErrorResponse) => {
-                this.displayAlert();
+                this.alertService.show('Login fehlgeschlagen', 'Benutzername oder Passwort falsch!', "error");
             }
         });
     }
-
-    displayAlert() {
-        if (this.isError) {
-            return;
-        }
-        this.alertTitle = 'Login fehlgeschlagen';
-        this.alertDescription = 'Benutzername oder Passwort falsch!';
-        this.isError = true;
-        this.timeout = setTimeout(this.closeAlert, 4000);
-    }
 }
+

@@ -4,8 +4,8 @@
     add AlertComponent to imports property in same file
 -->
 
-<div id="alert" [ngClass]="isActive ? 'active': ''">
-    <div [ngSwitch]="alertType">
+<div id="alert" [@enterAnimation] *ngIf="alertService.IsVisible">
+    <div [ngSwitch]="alertService.Type">
         <svg *ngSwitchCase="'success'" style="transform:scale(.88)" width="20" height="20" viewBox="0 0 20 20"
             fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_225_519)">
@@ -37,8 +37,8 @@
 
     </div>
     <div id="alert-content">
-        <p id="title">{{ alertTitle }}</p>
-        <p id="description">{{ alertDescription }}</p>
+        <p id="title">{{ alertService.Title }}</p>
+        <p id="description">{{ alertService.Description }}</p>
     </div>
     <svg (click)="onClick()" id="close-button" width="16" height="16" viewBox="0 0 16 16" fill="none"
         xmlns="http://www.w3.org/2000/svg">
