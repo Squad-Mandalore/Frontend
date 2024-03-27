@@ -1,9 +1,110 @@
-.discipline-menu {
+#discipline-menu {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  position: fixed; /* Ensure it stays in the viewport */
+  top: 50%; /* Move it down by 50% of the viewport height */
+  left: 50%; /* Move it right by 50% of the viewport width */
+  transform: translate(-50%, -50%); /* Center it precisely */
+  box-shadow: 0 4px 15px #00000010;
+  width: 450px;
+  height: 580px;
+  padding: 20px;
+  background-color: var(--accent-50);
+  border-radius: 10px;
+}
+
+#discipline-menu-header {
+  width: 410px;
+  height: 24px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-family: 'Inter Medium';
+}
+
+#category-wrapper {
   width: 100%;
-  background-color: #f5f5f5;
+  height: 100%;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+#choose-discipline {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 410px;
+  height: 18px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  font-family: 'Inter Medium';
+}
+
+#button-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 410px;
+  height: 39px;
+}
+
+#Schnelligkeit, #Ausdauer, #Kraft {
+  margin-bottom: 20px;
+}
+
+#Koordination, #Kraft, #Ausdauer {
+  margin-top: 20px;
+}
+
+.category-title-wrapper {
+  border-radius: 3px;
+  font-size: 14px;
+  font-family: 'Inter Medium';
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+
+.discipline-wrapper {
+  width: 100%;
+  height: fit-content;
+}
+
+.discipline {
+  border-radius: 3px;
+  width: 363px;
+  height: 35px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.discipline-title-wrapper {
+  font-size: 12px;
+  font-family: 'Inter Medium';
+  width: 190px;
+  height: 15px;
+}
+
+.last-date {
+  font-size: 11px;
+  font-family: 'Inter Medium';
+  display: flex;
+  width: 101px;
+  height: 13px;
+  white-space: nowrap;
+}
+
+.circle{
+  border-radius: 100px;
+  height: 12px;
+  width: 12px;
+}
+#gold{
+  background-color: var(--gold);
+}
+#silver{
+  background-color: var(--silver);
+}
+#bronze{
+  background-color: var(--bronze);
 }
