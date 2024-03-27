@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { CreateTrainerModalComponent } from '../create-trainer-modal/create-trainer-modal.component';
 import { CreateAthleteModalComponent } from '../create-athlete-modal/create-athlete-modal.component';
+import {AuthService} from "../../shared/generated";
+import {AuthExtentionService} from "../../shared/auth-extention.service";
 
 
 @Component({
@@ -16,7 +18,7 @@ import { CreateAthleteModalComponent } from '../create-athlete-modal/create-athl
 export class NavbarBottomComponent {
   urlParts: any = [];
   @Input() modals!: any;
-  
+
 
   // close(modalName: string){
   //   console.log(modalName);
@@ -30,12 +32,13 @@ export class NavbarBottomComponent {
   // activateModal(modalName: string){
   //   this.modals[modalName].isActive = true;
   // }
-  
+
   // deactivateModal(modalName: string){
   //   this.modals[modalName].isActive = false;
   // }
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private authService: AuthExtentionService) {
     this.urlParts = this.route.snapshot.url.map(segment => segment.toString());
   }
 
@@ -55,4 +58,10 @@ export class NavbarBottomComponent {
     type: 'Administrator',
     username: 'KaySchulz42'
   }
+
+  onClickLogOut() {
+    this.authService.logout()
+  }
+
+
 }

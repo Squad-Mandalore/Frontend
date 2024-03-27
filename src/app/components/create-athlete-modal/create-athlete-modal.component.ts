@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import {NgClass, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
@@ -34,12 +34,7 @@ export class CreateAthleteModalComponent implements OnInit {
   createAthleteForm;
   showFirstPage: boolean = true;
   isMale: boolean = true;
-
-  alertTitle?: string;
-  alertDescription?: string;
-  isSuccess: boolean;
-  closeAlert;
-  timeout!: ReturnType<typeof setTimeout>;
+  @Input() modals!: any;
 
 
   public athleteData: AthletePostSchema = {
@@ -49,7 +44,8 @@ export class CreateAthleteModalComponent implements OnInit {
     firstname: '',
     lastname: '',
     birthday: '',
-    gender: 'm'
+    gender: 'm',
+    trainer_id: '',
   }
 
   constructor(private athleteApi: AthletesService,
@@ -68,11 +64,7 @@ export class CreateAthleteModalComponent implements OnInit {
       year: ['', Validators.required],
     })
 
-    this.isSuccess= false;
-    this.closeAlert = () => {
-      clearTimeout(this.timeout);
-      this.isSuccess = false;
-    }
+
   }
 
   ngOnInit(): void {
@@ -101,7 +93,6 @@ export class CreateAthleteModalComponent implements OnInit {
 
       this.athleteApi.createAthleteAthletesPost(this.athleteData).subscribe({
       next: (athlete: AthleteResponseSchema) => {
-        this.displayAlert(athlete.firstname);
         this.logger.info(athlete.firstname + " " + athlete.lastname + " wurde Erstellt")
       },
       error: (error: HttpErrorResponse) => {
@@ -109,17 +100,6 @@ export class CreateAthleteModalComponent implements OnInit {
       }
     })
   }
-
-  displayAlert(username: string ) {
-    if (this.isSuccess) {
-      return;
-    }
-    this.alertTitle = 'Neuer Sportler wurde erstellt';
-    this.alertDescription = `${username} wurde den Athleten hinzugefügt`;
-    this.isSuccess = true;
-    this.timeout = setTimeout(this.closeAlert, 4000);
-  }
-
 
 
   onClickSwitchPage() {

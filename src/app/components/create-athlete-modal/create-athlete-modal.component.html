@@ -1,8 +1,8 @@
-<script src="../login-page/login-page.component.ts"></script>
-<div id="modal">
+<div id="overlay" (click)="modals.createAthleteModal.isActive = false" [ngClass]="{'is-active': modals.createAthleteModal.isActive, 'is-inactive': !modals.createAthleteModal.isActive}"></div>
+<div id="modal" [ngClass]="{'is-active': modals.createAthleteModal.isActive, 'is-inactive': !modals.createAthleteModal.isActive}">
   <div id="modal-header">
     <p id="modal-headline">Neuen Sportler hinzufügen</p>
-    <app-icon id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+    <app-icon (click)="modals.createAthleteModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
   </div>
     <div id="input-wrapper">
       <ng-container *ngIf="showFirstPage">
@@ -78,7 +78,5 @@
   </div>
 </div>
 
-<app-alert (closed)="closeAlert()" [isActive]="isSuccess" [alertTitle]="alertTitle" [alertDescription]="alertDescription"
-           [alertType]="'success'"></app-alert>
 
 

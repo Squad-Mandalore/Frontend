@@ -51,7 +51,6 @@ describe('CreateAthleteModalComponent', () => {
     component.onSubmit();
     const req = httpMock.expectOne('http://localhost:8000/athletes/');
     expect(req.request.method).toEqual('POST');
-    expect(component.displayAlert).toBeTruthy();
 
     req.flush(mockAthleteResponse);
   });
