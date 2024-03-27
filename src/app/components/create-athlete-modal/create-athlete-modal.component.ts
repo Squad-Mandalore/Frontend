@@ -1,15 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {NgClass, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AlertComponent} from "../alert/alert.component";
-import {HttpErrorResponse} from "@angular/common/http";
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
 import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-button.component";
-import {AthletePostSchema, AthleteResponseSchema, AthletesService} from "../../shared/generated";
+import {AthletePostSchema, AthletesService} from "../../shared/generated";
 import {LoggerService} from "../../shared/logger.service";
+import {AlertService} from "../../shared/alert.service";
+import {UtilService} from "../../shared/service-util";
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -31,6 +32,7 @@ import {LoggerService} from "../../shared/logger.service";
   styleUrl: './create-athlete-modal.component.scss'
 })
 export class CreateAthleteModalComponent implements OnInit {
+  @Output() click = new EventEmitter<any>();
   createAthleteForm;
   showFirstPage: boolean = true;
   isMale: boolean = true;
@@ -50,12 +52,14 @@ export class CreateAthleteModalComponent implements OnInit {
 
   constructor(private athleteApi: AthletesService,
               private logger: LoggerService,
-              private formBuilder: FormBuilder
+              private formBuilder: FormBuilder,
+              private alertService: AlertService,
+              private utilService: UtilService
 
   ) {
     this.createAthleteForm = this.formBuilder.group({
       username: ['', Validators.required],
-      unhashed_password: ['', Validators.required],
+      unhashed_password: ['', [Validators.required, utilService.passwordValidator]],
       email: ['', Validators.required],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
@@ -92,12 +96,16 @@ export class CreateAthleteModalComponent implements OnInit {
 
 
       this.athleteApi.createAthleteAthletesPost(this.athleteData).subscribe({
-      next: (athlete: AthleteResponseSchema) => {
-        this.logger.info(athlete.firstname + " " + athlete.lastname + " wurde Erstellt")
-      },
-      error: (error: HttpErrorResponse) => {
-        this.logger.error(`Error ${error.message}`)
-      }
+        next: () => {
+          this.click.emit();
+        },
+        error: (error) => {
+          if(error.status == 422){
+            this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
+          }else{
+            this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen! Bitte nochmal versuchen.',"error");
+          }
+        }
     })
   }
 
