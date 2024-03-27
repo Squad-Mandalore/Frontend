@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IconComponent } from '../../icon/icon.component';
 
@@ -21,4 +21,10 @@ export class SecondaryButtonComponent {
     @Input() iconWidth: string = '15';
     @Input() iconHeight: string = '15';
     @Input() disabled: boolean = false;
+    @Input() type: string = 'submit';
+    @Output() click = new EventEmitter<any>();
+
+    onButtonClick(event: Event) {
+        this.click.emit(event);
+    }
 }

@@ -1,6 +1,7 @@
 import generator from 'generate-password-ts'
 import PassValidator from "password-validator";
 import {Injectable} from "@angular/core";
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Injectable({providedIn: 'root'})
 export class UtilService {
@@ -23,6 +24,13 @@ export class UtilService {
       lowercase: true,
       strict: true
     })
+  }
+
+  public passwordValidator(): ValidatorFn{
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valid = this.validatePass(control.value);
+      return !valid ? {invalidPassword: {value: control.value}} : null;
+    }
   }
 
   /**

@@ -180,53 +180,6 @@
         }
       }
     },
-    "/athletes/{id}/full": {
-      "get": {
-        "tags": [
-          "athletes"
-        ],
-        "summary": "Get Athlete Full",
-        "operationId": "get_athlete_full_athletes__id__full_get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AthleteFullResponseSchema"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/athletes/": {
       "post": {
         "tags": [
@@ -492,10 +445,6 @@
         "responses": {
           "200": {
             "description": "Successful Response"
-          },
-          "404": {
-            "description": "Not Found",
-            "route": "Not found"
           }
         }
       }
@@ -510,10 +459,6 @@
         "responses": {
           "200": {
             "description": "Successful Response"
-          },
-          "404": {
-            "description": "Not Found",
-            "route": "Not found"
           }
         }
       }
@@ -528,10 +473,6 @@
         "responses": {
           "200": {
             "description": "Successful Response"
-          },
-          "404": {
-            "description": "Not Found",
-            "route": "Not found"
           }
         }
       }
@@ -622,97 +563,6 @@
   },
   "components": {
     "schemas": {
-      "AthleteFullResponseSchema": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "title": "Id"
-          },
-          "username": {
-            "type": "string",
-            "title": "Username"
-          },
-          "email": {
-            "type": "string",
-            "title": "Email"
-          },
-          "firstname": {
-            "type": "string",
-            "title": "Firstname"
-          },
-          "lastname": {
-            "type": "string",
-            "title": "Lastname"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Created At"
-          },
-          "last_password_change": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Last Password Change"
-          },
-          "last_edited_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Last Edited At"
-          },
-          "type": {
-            "type": "string",
-            "title": "Type"
-          },
-          "birthday": {
-            "type": "string",
-            "format": "date",
-            "title": "Birthday"
-          },
-          "gender": {
-            "$ref": "#/components/schemas/Gender"
-          },
-          "has_disease": {
-            "type": "boolean",
-            "title": "Has Disease"
-          },
-          "trainer": {
-            "$ref": "#/components/schemas/TrainerResponseSchema"
-          },
-          "completes": {
-            "items": {
-              "$ref": "#/components/schemas/CompletesSchema"
-            },
-            "type": "array",
-            "title": "Completes"
-          },
-          "certificates": {
-            "items": {
-              "$ref": "#/components/schemas/CertificateSchema"
-            },
-            "type": "array",
-            "title": "Certificates"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "username",
-          "email",
-          "firstname",
-          "lastname",
-          "created_at",
-          "last_password_change",
-          "last_edited_at",
-          "type",
-          "birthday",
-          "gender",
-          "has_disease",
-          "trainer",
-          "completes",
-          "certificates"
-        ],
-        "title": "AthleteFullResponseSchema"
-      },
       "AthletePatchSchema": {
         "properties": {
           "username": {
@@ -781,17 +631,6 @@
               }
             ]
           },
-          "has_disease": {
-            "anyOf": [
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Has Disease"
-          },
           "trainer_id": {
             "anyOf": [
               {
@@ -837,10 +676,6 @@
           "gender": {
             "$ref": "#/components/schemas/Gender"
           },
-          "has_disease": {
-            "type": "boolean",
-            "title": "Has Disease"
-          },
           "trainer_id": {
             "type": "string",
             "title": "Trainer Id"
@@ -855,7 +690,6 @@
           "lastname",
           "birthday",
           "gender",
-          "has_disease",
           "trainer_id"
         ],
         "title": "AthletePostSchema"
@@ -909,12 +743,9 @@
           "gender": {
             "$ref": "#/components/schemas/Gender"
           },
-          "has_disease": {
-            "type": "boolean",
-            "title": "Has Disease"
-          },
-          "trainer": {
-            "$ref": "#/components/schemas/TrainerResponseSchema"
+          "trainer_id": {
+            "type": "string",
+            "title": "Trainer Id"
           }
         },
         "type": "object",
@@ -930,8 +761,7 @@
           "type",
           "birthday",
           "gender",
-          "has_disease",
-          "trainer"
+          "trainer_id"
         ],
         "title": "AthleteResponseSchema"
       },
@@ -992,146 +822,6 @@
         ],
         "title": "Body_login_for_access_token_auth_login_post"
       },
-      "CategorySchema": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "title": "Id"
-          },
-          "title": {
-            "type": "string",
-            "title": "Title"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "title"
-        ],
-        "title": "CategorySchema"
-      },
-      "CertificateSchema": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "title": "Id"
-          },
-          "athlete_id": {
-            "type": "string",
-            "title": "Athlete Id"
-          },
-          "uploaded_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Uploaded At"
-          },
-          "uploaded_by": {
-            "type": "string",
-            "title": "Uploaded By"
-          },
-          "title": {
-            "type": "string",
-            "title": "Title"
-          },
-          "blob": {
-            "type": "string",
-            "title": "Blob"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "athlete_id",
-          "uploaded_at",
-          "uploaded_by",
-          "title",
-          "blob"
-        ],
-        "title": "CertificateSchema"
-      },
-      "CompletesSchema": {
-        "properties": {
-          "athlete_id": {
-            "type": "string",
-            "title": "Athlete Id"
-          },
-          "exercise_id": {
-            "$ref": "#/components/schemas/ExerciseSchema"
-          },
-          "tracked_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Tracked At"
-          },
-          "completed_at": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Completed At"
-          },
-          "result": {
-            "type": "string",
-            "title": "Result"
-          },
-          "points": {
-            "type": "integer",
-            "title": "Points"
-          },
-          "dbs": {
-            "type": "boolean",
-            "title": "Dbs"
-          }
-        },
-        "type": "object",
-        "required": [
-          "athlete_id",
-          "exercise_id",
-          "tracked_at",
-          "completed_at",
-          "result",
-          "points",
-          "dbs"
-        ],
-        "title": "CompletesSchema"
-      },
-      "ExerciseSchema": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "title": "Id"
-          },
-          "title": {
-            "type": "string",
-            "title": "Title"
-          },
-          "category": {
-            "$ref": "#/components/schemas/CategorySchema"
-          },
-          "from_age": {
-            "type": "integer",
-            "title": "From Age"
-          },
-          "to_age": {
-            "type": "integer",
-            "title": "To Age"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "title",
-          "category",
-          "from_age",
-          "to_age"
-        ],
-        "title": "ExerciseSchema"
-      },
       "Gender": {
         "type": "string",
         "enum": [
@@ -1189,80 +879,6 @@
           "token_type"
         ],
         "title": "Token"
-      },
-      "TrainerResponseSchema": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "title": "Id"
-          },
-          "username": {
-            "type": "string",
-            "title": "Username"
-          },
-          "email": {
-            "type": "string",
-            "title": "Email"
-          },
-          "firstname": {
-            "type": "string",
-            "title": "Firstname"
-          },
-          "lastname": {
-            "type": "string",
-            "title": "Lastname"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Created At"
-          },
-          "last_password_change": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Last Password Change"
-          },
-          "last_edited_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Last Edited At"
-          },
-          "type": {
-            "type": "string",
-            "title": "Type"
-          },
-          "uses_otp": {
-            "type": "boolean",
-            "title": "Uses Otp"
-          },
-          "birthday": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Birthday"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "username",
-          "email",
-          "firstname",
-          "lastname",
-          "created_at",
-          "last_password_change",
-          "last_edited_at",
-          "type",
-          "uses_otp",
-          "birthday"
-        ],
-        "title": "TrainerResponseSchema"
       },
       "ValidationError": {
         "properties": {

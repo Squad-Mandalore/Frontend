@@ -46,17 +46,24 @@ h6 {
     margin: 0;
 }
 
-body {
-    margin: 0;
-    min-width: 100dvw;
-    min-height: 100dvh;
-    background-color: var(--accent-100);
-    overflow: hidden;
+body{
+  background-color: var(--accent-100);
+  overflow: hidden;
 }
 
 a {
     text-decoration: none;
     color: initial;
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--accent-200);
+  border-radius: 20px;
 }
 
 // Inter
