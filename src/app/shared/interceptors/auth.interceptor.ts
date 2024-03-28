@@ -4,11 +4,13 @@ import { inject } from '@angular/core';
 import { catchError, switchMap } from 'rxjs';
 import { AuthService, Token } from '../generated';
 import { AuthExtentionService } from '../auth-extention.service';
+import { AlertService } from '../alert.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
     const localStorageService = inject(LocalStorageService);
     const authService = inject(AuthService);
     const authExtService = inject(AuthExtentionService);
+    const alertService = inject(AlertService);
 
     // First case and Second case: login or refresh token request
     if (req.url.includes('auth/login') || req.url.includes('auth/refresh')) {
@@ -55,6 +57,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
                 }),
                 catchError(error => {
                     // Handle case where refresh token is also invalid
+                    alertService.show('Logout', 'Login abgelaufen', 'error');
                     authExtService.logout();
                     throw error
                 })
