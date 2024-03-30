@@ -20,13 +20,7 @@ import {NgClass} from "@angular/common";
 })
 export class CreateTrainerModalComponent {
   @Output() click = new EventEmitter<any>();
-
   @Input() modals!: any;
-
-  onButtonClick() {
-    console.log("close");
-    this.click.emit();
-  }
 
   trainerForm;
   constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService){

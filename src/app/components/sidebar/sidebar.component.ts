@@ -21,8 +21,4 @@ export class SidebarComponent {
   customFilterCall(array: any[], options: Object, selectionFullFit:boolean = false){
     return customFilter(array, options, selectionFullFit);
   }
-
-  changeSearchValue(value: string){
-    this.searchValue = value;
-  }
 }

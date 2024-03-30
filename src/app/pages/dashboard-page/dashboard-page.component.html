@@ -22,8 +22,8 @@
             <div id="results-container" [ngClass]="{'background-color-white': selectedAthlete}">
                 <div id="results-header">
                     <p class="headline-small">Erfasste Leistungen</p>
-                    <div class="margin-left-auto position-relative filter">
-                        <app-secondary-button id="filter-button" [ngClass]="{'has-filter': getActiveFilters() !== 0}" [attr.active-filters]="getActiveFilters()" *ngIf="selectedAthlete.results.length > 0" class="secondary-button" [text]="'Filter'" [iconName]="'filter-1'"></app-secondary-button>
+                    <div class="position-relative filter margin-left-auto">
+                        <app-secondary-button class="secondary-button" [ngClass]="{'has-filter': getActiveFilters() !== 0}" [attr.active-filters]="getActiveFilters()" *ngIf="selectedAthlete.results.length > 0" [text]="'Filter'" [iconName]="'filter-1'"></app-secondary-button>
                         <div class="undermenu accent-500">
                             <div class="menu-item filter cursor-pointer position-relative">
                                 <span class="accent-900">Kategorie</span>

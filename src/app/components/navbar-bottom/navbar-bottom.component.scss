@@ -42,15 +42,15 @@
     stroke: var(--brand-500);
 }
 
-.item:not(isActive)>svg {
+.item:not(.isActive)>svg {
     stroke: var(--accent-900);
 }
 
-.item:not(isActive) {
+.item:not(.isActive) {
     background-color: var(--accent-150);
 }
 
-.item:not(isActive):hover {
+.item:not(.isActive):hover {
     cursor: pointer;
     background-color: var(--accent-200);
 }

@@ -24,6 +24,7 @@ import { ConfirmationModalComponent } from '../../components/confirmation-modal/
 export class DashboardPageComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private router: Router) { }
   athletes: Athlete[] = []
+  searchValue: string = ""
   selectedAthlete: Athlete | null = null;
   routeSubscription!: Subscription;
   showDetails = false;
