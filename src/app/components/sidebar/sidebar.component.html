@@ -31,6 +31,9 @@
                         <app-athlete-card [athlete]="athlete"></app-athlete-card>
                     </a>
                 </div>
+                <div id="create-athlete-field" (click)="modals.createAthleteModal.isActive = true">
+                    <app-icon [iconName]="'plus'" [iconHeight]="'20'" [iconWidth]="'20'" [strokeWidth]="'2'" [iconColor]="'var(--accent-300)'"></app-icon>
+                </div>
             </div>
         </div>
     </ng-template>

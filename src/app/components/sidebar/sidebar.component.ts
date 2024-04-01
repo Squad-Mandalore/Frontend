@@ -5,11 +5,12 @@ import { RouterModule } from '@angular/router';
 import { QuaternaryButtonComponent } from '../buttons/quaternary-button/quaternary-button.component';
 import { PrimaryButtonComponent } from '../buttons/primary-button/primary-button.component';
 import customFilter from '../../../utils/custom-filter';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, AthleteCardComponent, RouterModule, QuaternaryButtonComponent, PrimaryButtonComponent],
+  imports: [CommonModule, AthleteCardComponent, RouterModule, QuaternaryButtonComponent, PrimaryButtonComponent, IconComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
@@ -19,6 +20,6 @@ export class SidebarComponent {
   searchValue = "";
 
   customFilterCall(array: any[], options: Object, selectionFullFit:boolean = false){
-    return customFilter(array, options, selectionFullFit);
+    return customFilter(array, options, selectionFullFit, "athlete");
   }
 }

@@ -6,15 +6,15 @@
         <div id="exercises-container" [ngClass]="exercises.length === 0 ? 'border-1px-grey' : 'background-color-white'">
             <div id="exercises-header">
                 <p class="headline-small" [ngClass]="{'paly': exercises.length === 0}">Verfügbare Übungen</p>
-                <div class="margin-left-auto position-relative filter">
-                    <div id="search-bar" *ngIf="exercises.length !== 0">
-                        <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.16667 16.3333C12.8486 16.3333 15.8333 13.3486 15.8333 9.66667C15.8333 5.98477 12.8486 3 9.16667 3C5.48477 3 2.5 5.98477 2.5 9.66667C2.5 13.3486 5.48477 16.3333 9.16667 16.3333Z" stroke="#ADB6BF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M17.5 18L13.875 14.375" stroke="#ADB6BF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <input #searchInput id="search-input" [value]="searchInput.value" (input)="searchValue = searchInput.value" placeholder="Suchen" type="text"/>
-                    </div>
-                    <!-- <app-secondary-button id="filter-button" [ngClass]="{'has-filter': getActiveFilters() !== 0}" [attr.active-filters]="getActiveFilters()" *ngIf="exercises.length > 0" class="secondary-button" [text]="'Filter'" [iconName]="'filter-1'"></app-secondary-button>
+                <div id="search-bar" class="margin-left-auto" *ngIf="exercises.length !== 0">
+                    <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.16667 16.3333C12.8486 16.3333 15.8333 13.3486 15.8333 9.66667C15.8333 5.98477 12.8486 3 9.16667 3C5.48477 3 2.5 5.98477 2.5 9.66667C2.5 13.3486 5.48477 16.3333 9.16667 16.3333Z" stroke="#ADB6BF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17.5 18L13.875 14.375" stroke="#ADB6BF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <input #searchInput id="search-input" [value]="searchInput.value" (input)="searchValue = searchInput.value" placeholder="Suchen" type="text"/>
+                </div>
+                <div class="filter position-relative">
+                    <app-secondary-button id="filter-button" [ngClass]="{'has-filter': getActiveFilters() !== 0}" [attr.active-filters]="getActiveFilters()" *ngIf="exercises.length > 0" class="secondary-button" [text]="'Filter'" [iconName]="'filter-1'"></app-secondary-button>
                     <div class="undermenu accent-500">
                         <div class="menu-item filter cursor-pointer position-relative">
                             <span class="accent-900">Kategorie</span>
@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="menu-item filter cursor-pointer position-relative">
+                        <!-- <div class="menu-item filter cursor-pointer position-relative">
                             <span class="accent-900">Medaille</span>
                             <span class="arrow-right">></span>
                             <div class="under-undermenu accent-500">
@@ -55,8 +55,8 @@
                                     <app-icon *ngIf="filter['medal'] && filter['medal'].filterValue  === 'Bronze'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                 </div>
                             </div>
-                        </div>
-                        <div class="menu-item filter cursor-pointer position-relative">
+                        </div> -->
+                        <!-- <div class="menu-item filter cursor-pointer position-relative">
                             <span class="accent-900">Trainer</span>
                             <span class="arrow-right">></span>
                             <div class="under-undermenu accent-500">
@@ -69,8 +69,8 @@
                                     <app-icon *ngIf="filter['tracked_by'] && filter['tracked_by'].filterValue === trainer" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                 </div>
                             </div>
-                        </div>
-                        <div class="menu-item filter cursor-pointer position-relative">
+                        </div> -->
+                        <!-- <div class="menu-item filter cursor-pointer position-relative">
                             <span class="accent-900">Datum</span>
                             <span class="arrow-right">></span>
                             <div class="under-undermenu accent-500">
@@ -83,8 +83,8 @@
                                     <app-icon *ngIf="filter['tracked_at'] && filter['tracked_at'].filterValue === date" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                 </div>
                             </div>
-                        </div>
-                    </div> -->
+                        </div> -->
+                    </div>
                 </div>
                 <app-primary-button *ngIf="exercises.length > 0" [text]="'Disziplin hinzufügen'" [iconName]="'plus'"></app-primary-button>
             </div>
@@ -134,7 +134,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="table-item" *ngFor="let exercise of customSortCall(customFilterCall(customFilterCall(exercises, filter, true), {title: {filterValue: searchValue, valueFullFit: false}, gold_value: {filterValue: searchValue, valueFullFit: false}, silver_value: {filterValue: searchValue, valueFullFit: false}, bronze_value: {filterValue: searchValue, valueFullFit: false}, created_at: {filterValue: searchValue, valueFullFit: false} }, false), sorting); index as i;">
+                    <div class="table-item" *ngFor="let exercise of customSortCall(customFilterCall(customFilterCall(exercises, filter, true), {title: {filterValue: searchValue, valueFullFit: false}, gold_value: {filterValue: searchValue, valueFullFit: false}, silver_value: {filterValue: searchValue, valueFullFit: false}, bronze_value: {filterValue: searchValue, valueFullFit: false}, created_at: {filterValue: searchValue, valueFullFit: false}, category: {filterValue: searchValue, valueFullFit: false} }, false), sorting); index as i;">
                         <span>{{exercise.title}}</span>
                         <span>{{exercise.gold_value}}</span>
                         <span>{{exercise.silver_value}}</span>
@@ -154,6 +154,9 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div id="create-exercise-field">
+                        <app-icon [iconName]="'plus'" [iconHeight]="'20'" [iconWidth]="'20'" [strokeWidth]="'2'" [iconColor]="'var(--accent-300)'"></app-icon>
                     </div>
                 </div>
             </ng-template>

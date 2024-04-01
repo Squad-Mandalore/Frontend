@@ -18,7 +18,7 @@
 
 #search-bar{
     position: relative;
-    width: 100%;
+    width: 300px;
     height: 39px;
     padding: 6px 12px;
     border-radius: 5px;
@@ -172,6 +172,23 @@
 
 .position-relative{
     position: relative;
+}
+
+#create-exercise-field{
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    border: 1px dashed var(--accent-300);
+    transition: all 300ms;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#create-exercise-field:hover{
+    border: 1px solid var(--accent-200);
+    background-color: var(--accent-100);
 }
 
 #filter-button.has-filter::after{

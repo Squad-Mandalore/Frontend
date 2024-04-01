@@ -3,16 +3,16 @@
     <div id="content" *ngIf="selectedAthlete; else elseBlock">
         <div id="headline-wrapper">
             <p class="headline">Sportler-Übersicht</p>
-            <p class="meta-text">registriert am {{selectedAthlete.created_at}} von {{selectedAthlete.created_by}}</p>
+            <p class="meta-text">registriert am {{selectedAthlete.created_at}} von {{selectedAthlete.trainer.firstname}} {{selectedAthlete.trainer.lastname}}</p>
         </div>
         <div id="general-information-wrapper">
             <app-user-card [user]="selectedAthlete"></app-user-card>
             <div class="chip margin-left-auto">
-                <span>{{selectedAthlete.gender}}</span>
-                <app-icon [iconName]="selectedAthlete.gender === 'männlich' ? 'male' : 'female'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
+                <span>{{selectedAthlete.gender === 'm' ? 'männlich' : 'weiblich'}}</span>
+                <app-icon [iconName]="selectedAthlete.gender === 'm' ? 'male' : 'female'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
             </div>
             <div class="chip">
-                <span>geboren am {{selectedAthlete.date_of_birth}}</span>
+                <span>geboren am {{selectedAthlete.birthday}}</span>
                 <app-icon [iconName]="'star'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
             </div>
             <app-secondary-button class="secondary-button" [text]="'Details'" [strokeWidth]="'1.5'" (click)="triggerAthleteDetails(true)"></app-secondary-button>
@@ -23,7 +23,7 @@
                 <div id="results-header">
                     <p class="headline-small">Erfasste Leistungen</p>
                     <div class="position-relative filter margin-left-auto">
-                        <app-secondary-button class="secondary-button" [ngClass]="{'has-filter': getActiveFilters() !== 0}" [attr.active-filters]="getActiveFilters()" *ngIf="selectedAthlete.results.length > 0" [text]="'Filter'" [iconName]="'filter-1'"></app-secondary-button>
+                        <app-secondary-button class="secondary-button" id="filter-button" [ngClass]="{'has-filter': getActiveFilters() !== 0}" [attr.active-filters]="getActiveFilters()" *ngIf="selectedAthlete.completes.length > 0" [text]="'Filter'" [iconName]="'filter-1'"></app-secondary-button>
                         <div class="undermenu accent-500">
                             <div class="menu-item filter cursor-pointer position-relative">
                                 <span class="accent-900">Kategorie</span>
@@ -51,17 +51,17 @@
                                 <span class="accent-900">Medaille</span>
                                 <span class="arrow-right">></span>
                                 <div class="under-undermenu accent-500">
-                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('medal', 'Gold')">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('points', 3)">
                                         <span>Gold</span>
-                                        <app-icon *ngIf="filter['medal'] && filter['medal'].filterValue  === 'Gold'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['points'] && filter['points'].filterValue  === 3" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
-                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('medal', 'Silber')">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('points', 2)">
                                         <span>Silber</span>
-                                        <app-icon *ngIf="filter['medal'] && filter['medal'].filterValue  === 'Silber'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['points'] && filter['points'].filterValue  === 2" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
-                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('medal', 'Bronze')">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('points', 1)">
                                         <span>Bronze</span>
-                                        <app-icon *ngIf="filter['medal'] && filter['medal'].filterValue  === 'Bronze'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['points'] && filter['points'].filterValue  === 1" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                                         <app-icon [iconName]="'search'" [iconColor]="'var(--accent-300)'" [strokeWidth]="'2'" [iconWidth]="'16'" [iconHeight]="'16'"></app-icon>
                                         <input class="input" placeholder="Suchen" #customTrainerFilter (input)="setFilter('tracked_by', customTrainerFilter.value, false)" [value]="customTrainerFilter.value"/>
                                     </div>
-                                    <div *ngFor="let trainer of getTrackingTrainers(selectedAthlete.results)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_by', trainer)">
+                                    <div *ngFor="let trainer of getTrackingTrainers(selectedAthlete.completes)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_by', trainer)">
                                         <span>{{trainer}}</span>
                                         <app-icon *ngIf="filter['tracked_by'] && filter['tracked_by'].filterValue === trainer" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
@@ -85,19 +85,19 @@
                                 <div class="under-undermenu accent-500">
                                     <div class="menu-item cursor-pointer accent-900">
                                         <app-icon [iconName]="'search'" [iconColor]="'var(--accent-300)'" [strokeWidth]="'2'" [iconWidth]="'16'" [iconHeight]="'16'"></app-icon>
-                                        <input class="input" placeholder="Suchen" #customDateFilter (input)="setFilter('tracked_at', customDateFilter.value, false)" [value]="customDateFilter.value"/>
+                                        <input class="input" placeholder="Suchen" #customDateFilter (input)="setFilter('completed_at', customDateFilter.value, false)" [value]="customDateFilter.value"/>
                                     </div>
-                                    <div *ngFor="let date of getTrackingDates(selectedAthlete.results)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_at', date)">
+                                    <div *ngFor="let date of getTrackingDates(selectedAthlete.completes)" class="menu-item cursor-pointer accent-900" (click)="setFilter('completed_at', date)">
                                         <span>{{date}}</span>
-                                        <app-icon *ngIf="filter['tracked_at'] && filter['tracked_at'].filterValue === date" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['completed_at'] && filter['completed_at'].filterValue === date" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <app-primary-button *ngIf="selectedAthlete.results.length > 0" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
+                    <app-primary-button *ngIf="selectedAthlete.completes.length > 0" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
                 </div>
-                <div class="empty-state" *ngIf="selectedAthlete.results.length === 0; else filledState">
+                <div class="empty-state" *ngIf="selectedAthlete.completes.length === 0; else filledState">
                     <img src="assets/img/humans-placeholder.png" alt="people-image">
                     <p class="headline-small">Noch keine Werte vorhanden</p>
                     <p class="text-small text-align-center">Starte jetzt eine Leistungserfassung in den Kategorien Kraft, Ausdauer, Schnelligkeit oder Koordination.</p>
@@ -113,15 +113,15 @@
                                 </span>
                             </div>
                             <div>
-                                <span (click)="setSorting('value')" [ngClass]="this.sorting.property === 'value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                <span (click)="setSorting('result')" [ngClass]="this.sorting.property === 'result' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                     <span>Wert</span>
-                                    <app-icon *ngIf="this.sorting.property === 'value'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                                    <app-icon *ngIf="this.sorting.property === 'result'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
                                 </span>
                             </div>
                             <div>
-                                <span (click)="setSorting('medal')" [ngClass]="this.sorting.property === 'medal' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                <span (click)="setSorting('points')" [ngClass]="this.sorting.property === 'points' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                     <span>Medaille</span>
-                                    <app-icon *ngIf="this.sorting.property === 'medal'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                                    <app-icon *ngIf="this.sorting.property === 'points'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
                                 </span>
                             </div>
                             <div>
@@ -131,9 +131,9 @@
                                 </span>
                             </div>
                             <div>
-                                <span (click)="setSorting('tracked_at')" [ngClass]="this.sorting.property === 'tracked_at' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                <span (click)="setSorting('completed_at')" [ngClass]="this.sorting.property === 'completed_at' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                     <span>Erfassungsdatum</span>
-                                    <app-icon *ngIf="this.sorting.property === 'tracked_at'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                                    <app-icon *ngIf="this.sorting.property === 'completed_at'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
                                 </span>
                             </div>
                             <div>
@@ -143,12 +143,12 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="table-item" *ngFor="let result of customSortCall(customFilterCall(selectedAthlete.results, filter, true), this.sorting); index as i;">
-                            <span>{{result.discipline}}</span>
-                            <span>{{result.score}}</span>
-                            <span>{{result.medal}}</span>
-                            <span>{{result.category}}</span>
-                            <span>{{result.tracked_at}}</span>
+                        <div class="table-item" *ngFor="let result of customSortCall(customFilterCall(selectedAthlete.completes, filter, true), this.sorting); index as i;">
+                            <span>{{result.exercise_id.title}}</span>
+                            <span>{{result.result}}</span>
+                            <span>{{result.points !== 3 ? result.points === 2 ? 'Silber' : 'Bronze' : 'Gold'}}</span>
+                            <span>{{result.exercise_id.category.title}}</span>
+                            <span>{{result.completed_at}}</span>
                             <span>{{result.tracked_by}}</span>
                             <div class="flex items-center more-icon cursor-pointer">
                                 <app-icon [iconName]="'more-vertical'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'20'" [iconWidth]="'20'"></app-icon>
@@ -188,11 +188,11 @@
                             7.56856 81.1336 0.21251 103.672 0.250144C126.21 0.287778 148.114 7.71702 166.025
                             21.3987C183.936 35.0803 196.864 54.259 202.828 75.994C208.792 97.7289 207.463
                             120.82 199.043 141.727C191.319 160.907 178.019 177.277 160.925 188.757C158.37
-                            190.473 154.94 189.594 153.365" fill="none" [style.stroke]="getColorVariable(selectedAthlete.progress_medal)" stroke-width="10" stroke-
+                            190.473 154.94 189.594 153.365" fill="none" [style.stroke]="getColorVariable(selectedAthlete.completes)" stroke-width="10" stroke-
                             linecap="round"/>
                         </svg>
                         <div id="current-points-wrapper">
-                            <p>{{selectedAthlete.progress_points}}</p>
+                            <p>{{ getProgress(selectedAthlete.completes) }}</p>
                         </div>
                         <div id="all-points-wrapper">
                             <p>/12</p>
@@ -207,21 +207,21 @@
                     </div>
                     <div id="progress-footer">
                         <div class="medal-wrapper">
-                            <span class="medal-text">{{selectedAthlete.number_gold_medals}}</span>
+                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: 3, valueFullFit: true} }, false).length}}</span>
                             <div class="medal gold"></div>
                         </div>
                         <div class="medal-wrapper">
-                            <span class="medal-text">{{selectedAthlete.number_silver_medals}}</span>
+                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: 2, valueFullFit: true} }, false).length}}</span>
                             <div class="medal silver"></div>
                         </div>
                         <div class="medal-wrapper">
-                            <span class="medal-text">{{selectedAthlete.number_bronze_medals}}</span>
+                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: 1, valueFullFit: true} }, false).length}}</span>
                             <div class="medal bronze"></div>
                         </div>
                     </div>
                 </div>
                 <div id="swimcert-container" [ngClass]="{'background-color-white': selectedAthlete}">
-                    <div id="swimcert-inset-container">
+                    <div id="swimcert-inset-container" *ngIf="selectedAthlete.certificates.length === 0; else filledBlock">
                         <img src="assets/img/humans-images.png" alt="missing swimming certificate"/>
                         <p class="headline-small text-align-center">Kein Schwimmnachweis<br/>vorhanden</p>
                         <p class="text-small text-align-center">Tippe auf "Dateien durchsuchen" oder <br/>ziehe die Datei einfach in dieses Feld.</p>
@@ -230,6 +230,9 @@
                             <input class="position-absolute hide-element" type="file" multiple="false"/>
                         </label>
                     </div>
+                    <ng-template #filledBlock>
+
+                    </ng-template>
                 </div>
             </div>
         </div>
@@ -269,11 +272,11 @@
         <div class="flex flex-col gap-10">
             <div class="flex items-center full-width justify-between inter-medium">
                 <div class="font-size-15 half-width accent-500">Geschlecht:</div>
-                <div class="font-size-15 half-width accent-500">{{selectedAthlete.gender}}</div>
+                <div class="font-size-15 half-width accent-500">{{selectedAthlete.gender === "m" ? "männlich" : "weiblich"}}</div>
             </div>
             <div class="flex items-center full-width justify-between inter-medium">
                 <div class="font-size-15 half-width accent-500">geboren am:</div>
-                <div class="font-size-15 half-width accent-500">{{selectedAthlete.date_of_birth}}</div>
+                <div class="font-size-15 half-width accent-500">{{selectedAthlete.birthday}}</div>
             </div>
         </div>
     </div>
@@ -286,17 +289,17 @@
             <p>Schnelligkeit</p>
             <div class="flex gap-10 items-center margin-left-auto">
                 <div class="flex items-center gap-10 border-right-1px border-accent-300">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Schnelligkeit", valueFullFit: true}, medal: {filterValue: "Gold", valueFullFit: true} }, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.completes, {category: {filterValue: "Schnelligkeit", valueFullFit: true}, points: {filterValue: 3, valueFullFit: true} }, true).length}}</span>
                     <div class="medal gold"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Schnelligkeit", valueFullFit: true}, medal: {filterValue: "Silber", valueFullFit: true} }, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.completes, {category: {filterValue: "Schnelligkeit", valueFullFit: true}, points: {filterValue: 2, valueFullFit: true} }, true).length}}</span>
                     <div class="medal silver"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Schnelligkeit", valueFullFit: true}, medal: {filterValue: "Bronze", valueFullFit: true} }, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.completes, {category: {filterValue: "Schnelligkeit", valueFullFit: true}, points: {filterValue: 1, valueFullFit: true} }, true).length}}</span>
                     <div class="medal bronze"></div>
                 </div>
             </div>
@@ -309,17 +312,17 @@
             <p>Koordination</p>
             <div class="flex gap-10 items-center margin-left-auto">
                 <div class="flex items-center gap-10 border-right-1px border-accent-300">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Koordination", valueFullFit: true}, medal: {filterValue: "Gold", valueFullFit: true} }, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.completes, {category: {filterValue: "Koordination", valueFullFit: true}, points: {filterValue: 3, valueFullFit: true} }, true).length}}</span>
                     <div class="medal gold"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Koordination", valueFullFit: true}, medal: {filterValue: "Silber", valueFullFit: true} }, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.completes, {category: {filterValue: "Koordination", valueFullFit: true}, points: {filterValue: 2, valueFullFit: true} }, true).length}}</span>
                     <div class="medal silver"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Koordination", valueFullFit: true}, medal: {filterValue: "Bronze", valueFullFit: true} }, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.completes, {category: {filterValue: "Koordination", valueFullFit: true}, points: {filterValue: 1, valueFullFit: true} }, true).length}}</span>
                     <div class="medal bronze"></div>
                 </div>
             </div>
@@ -332,17 +335,17 @@
             <p>Ausdauer</p>
             <div class="flex gap-10 items-center margin-left-auto">
                 <div class="flex items-center gap-10 border-right-1px border-accent-300">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Ausdauer", valueFullFit: true}, medal: {filterValue: "Gold", valueFullFit: true} }, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.completes, {category: {filterValue: "Ausdauer", valueFullFit: true}, points: {filterValue: 3, valueFullFit: true} }, true).length}}</span>
                     <div class="medal gold"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Ausdauer", valueFullFit: true}, medal: {filterValue: "Silber", valueFullFit: true} }, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.completes, {category: {filterValue: "Ausdauer", valueFullFit: true}, points: {filterValue: 2, valueFullFit: true} }, true).length}}</span>
                     <div class="medal silver"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Ausdauer", valueFullFit: true}, medal: {filterValue: "Bronze", valueFullFit: true} }, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.completes, {category: {filterValue: "Ausdauer", valueFullFit: true}, points: {filterValue: 1, valueFullFit: true} }, true).length}}</span>
                     <div class="medal bronze"></div>
                 </div>
             </div>
@@ -355,17 +358,17 @@
             <p>Kraft</p>
             <div class="flex gap-10 items-center margin-left-auto">
                 <div class="flex items-center gap-10 border-right-1px border-accent-300">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Kraft", valueFullFit: true}, medal: {filterValue: "Gold", valueFullFit: true} }, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.completes, {category: {filterValue: "Kraft", valueFullFit: true}, points: {filterValue: 3, valueFullFit: true} }, true).length}}</span>
                     <div class="medal gold"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Kraft", valueFullFit: true}, medal: {filterValue: "Silber", valueFullFit: true} }, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.completes, {category: {filterValue: "Kraft", valueFullFit: true}, points: {filterValue: 2, valueFullFit: true} }, true).length}}</span>
                     <div class="medal silver"></div>
                 </div>
                 <span class="accent-300">&middot;</span>
                 <div class="flex items-center gap-10">
-                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.results, {category: {filterValue: "Kraft", valueFullFit: true}, medal: {filterValue: "Bronze", valueFullFit: true} }, true).length}}</span>
+                    <span class="font-size-15 accent-500">{{customFilterCall(selectedAthlete.completes, {category: {filterValue: "Kraft", valueFullFit: true}, points: {filterValue: 1, valueFullFit: true} }, true).length}}</span>
                     <div class="medal bronze"></div>
                 </div>
             </div>
@@ -376,7 +379,7 @@
         </div>
     </div>
     <div class="flex flex-col gap-30 margin-top-auto">
-        <span class="margin-left-auto inter-medium accent-500 font-size-15">erstellt am {{selectedAthlete.created_at}} von {{selectedAthlete.created_by}}</span>
+        <span class="margin-left-auto inter-medium accent-500 font-size-15">erstellt am {{selectedAthlete.created_at}} von {{selectedAthlete.trainer.firstname}} {{selectedAthlete.trainer.lastname}}</span>
         <div class="flex items-center gap-10 full-width">
             <app-secondary-button class="full-width" (click)="triggerAthleteDetails(false)" [text]="'Abbrechen'" [minWidth]="'100%'"></app-secondary-button>
             <app-primary-button class="full-width" [isDeleteButton]="true" [text]="'Benutzer löschen'" [minWidth]="'100%'" [iconName]="'delete'" [strokeWidth]="'2'" (click)="modals.confirmationModal.isActive = true" id="delete-button"></app-primary-button>

@@ -53,7 +53,7 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
   }
 
   customSortCall(array: ExerciseResponseSchema[], sortSettings: {property: string, direction: string}){
-    return array.sort((a: any, b: any) => customSort(a[sortSettings.property], b[sortSettings.property], sortSettings))
+    return array.sort((a: any, b: any) => customSort(a, b, sortSettings, "exercise"))
   }
 
   getActiveFilters(){
@@ -75,7 +75,7 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
   }
 
   customFilterCall(array: any[], options: Object, selectionFullFit: boolean){
-    return customFilter(array, options, selectionFullFit);
+    return customFilter(array, options, selectionFullFit, "exercise");
   }
 
   changeSearchValue(value: string){
@@ -87,7 +87,7 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
       {
         id: "1",
         title: "Push-ups",
-        category: { id: "1", title: "Stärke" },
+        category: { id: "1", title: "Kraft" },
         from_age: 18,
         to_age: 60,
         gold_value: "30 sekunden",
@@ -115,7 +115,7 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
         gold_value: "60 minutes",
         silver_value: "45 minutes",
         bronze_value: "30 minutes",
-        created_at: "30.03.2024"
+        created_at: "10.03.2024"
       }
     ]
 
