@@ -8,6 +8,7 @@ import { PrimaryButtonComponent } from '../../components/buttons/primary-button/
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
 import customFilter from '../../../utils/custom-filter';
+import customSort from '../../../utils/custom-sort';
 import { ConfirmationModalComponent } from '../../components/confirmation-modal/confirmation-modal.component';
 
 @Component({
@@ -22,6 +23,7 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
   constructor() { }
   exercises: ExerciseResponseSchema[] = []
   filter: any = {};
+  sorting: {property: string, direction: "asc" | "desc"} = {property: 'category', direction: 'asc'};
   searchValue = "";
   
   modals = {
@@ -38,6 +40,20 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
       primaryButtonText: "Benutzer löschen",
       secondaryButtonText: "Abbrechen",
     }
+  }
+
+  setSorting(property: string){
+    if(this.sorting.property === property){
+      this.sorting.direction = this.sorting.direction === "asc" ? "desc" : "asc";
+      return
+    }
+
+    this.sorting.property = property;
+    this.sorting.direction = "desc";
+  }
+
+  customSortCall(array: ExerciseResponseSchema[], sortSettings: {property: string, direction: string}){
+    return array.sort((a: any, b: any) => customSort(a[sortSettings.property], b[sortSettings.property], sortSettings))
   }
 
   getActiveFilters(){

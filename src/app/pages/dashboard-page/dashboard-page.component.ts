@@ -12,6 +12,7 @@ import { IconComponent } from '../../components/icon/icon.component';
 import customFilter from '../../../utils/custom-filter';
 import Result from '../../models/result';
 import { ConfirmationModalComponent } from '../../components/confirmation-modal/confirmation-modal.component';
+import customSort from '../../../utils/custom-sort';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,6 +30,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   routeSubscription!: Subscription;
   showDetails = false;
   filter: any = {};
+  sorting: {property: string, direction: "asc" | "desc"} = {property: 'tracked_at', direction: 'asc'};
   dashArray: number = 525;
   modals = {
     createTrainerModal: {
@@ -44,6 +46,20 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       primaryButtonText: "Benutzer löschen",
       secondaryButtonText: "Abbrechen",
     }
+  }
+
+  setSorting(property: string){
+    if(this.sorting.property === property){
+      this.sorting.direction = this.sorting.direction === "asc" ? "desc" : "asc";
+      return
+    }
+
+    this.sorting.property = property;
+    this.sorting.direction = "desc";
+  }
+
+  customSortCall(array: Result[], sortSettings: {property: string, direction: string}){
+    return array.sort((a: any, b: any) => customSort(a[sortSettings.property], b[sortSettings.property], sortSettings))
   }
 
   deleteElement(){

@@ -200,9 +200,22 @@
     background-color: var(--accent-0);
 }
 
-#table-head > span{
+#table-head > div > span{
     font-size: 15px;
     color: var(--accent-400);
+    position: relative;
+    cursor: pointer;
+}
+
+#table-head > div:hover > span{
+    text-decoration: underline;
+}
+
+#table-head app-icon{
+    position: absolute;
+    top: 50%;
+    right: -15px;
+    transform: translateY(-50%);
 }
 
 .table-item{

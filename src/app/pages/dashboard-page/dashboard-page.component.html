@@ -106,14 +106,44 @@
                 <ng-template #filledState>
                     <div id="table-wrapper">
                         <div id="table-head">
-                            <span>Disziplin</span>
-                            <span>Wert</span>
-                            <span>Medaille</span>
-                            <span>Kategorie</span>
-                            <span>Erfassungsdatum</span>
-                            <span>erfasst von</span>
+                            <div>
+                                <span (click)="setSorting('discipline')" [ngClass]="this.sorting.property === 'discipline' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                    <span>Disziplin</span>
+                                    <app-icon *ngIf="this.sorting.property === 'discipline'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                                </span>
+                            </div>
+                            <div>
+                                <span (click)="setSorting('value')" [ngClass]="this.sorting.property === 'value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                    <span>Wert</span>
+                                    <app-icon *ngIf="this.sorting.property === 'value'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                                </span>
+                            </div>
+                            <div>
+                                <span (click)="setSorting('medal')" [ngClass]="this.sorting.property === 'medal' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                    <span>Medaille</span>
+                                    <app-icon *ngIf="this.sorting.property === 'medal'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                                </span>
+                            </div>
+                            <div>
+                                <span (click)="setSorting('category')" [ngClass]="this.sorting.property === 'category' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                    <span>Kategorie</span>
+                                    <app-icon *ngIf="this.sorting.property === 'category'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                                </span>
+                            </div>
+                            <div>
+                                <span (click)="setSorting('tracked_at')" [ngClass]="this.sorting.property === 'tracked_at' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                    <span>Erfassungsdatum</span>
+                                    <app-icon *ngIf="this.sorting.property === 'tracked_at'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                                </span>
+                            </div>
+                            <div>
+                                <span (click)="setSorting('tracked_by')" [ngClass]="this.sorting.property === 'tracked_by' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                    <span>Erfasser</span>
+                                    <app-icon *ngIf="this.sorting.property === 'tracked_by'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                                </span>
+                            </div>
                         </div>
-                        <div class="table-item" *ngFor="let result of customFilterCall(selectedAthlete.results, filter, true); index as i;">
+                        <div class="table-item" *ngFor="let result of customSortCall(customFilterCall(selectedAthlete.results, filter, true), this.sorting); index as i;">
                             <span>{{result.discipline}}</span>
                             <span>{{result.score}}</span>
                             <span>{{result.medal}}</span>

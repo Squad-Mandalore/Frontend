@@ -97,14 +97,44 @@
             <ng-template #filledState>
                 <div id="table-wrapper">
                     <div id="table-head">
-                        <span>Disziplin</span>
-                        <span>Gold</span>
-                        <span>Silber</span>
-                        <span>Bronze</span>
-                        <span>Kategorie</span>
-                        <span>Erfassungsdatum</span>
+                        <div>
+                            <span (click)="setSorting('title')" [ngClass]="this.sorting.property === 'title' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                <span>Disziplin</span>
+                                <app-icon *ngIf="this.sorting.property === 'title'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                            </span>
+                        </div>
+                        <div>
+                            <span (click)="setSorting('gold_value')" [ngClass]="this.sorting.property === 'gold_value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                <span>Gold</span>
+                                <app-icon *ngIf="this.sorting.property === 'gold_value'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                            </span>
+                        </div>
+                        <div>
+                            <span (click)="setSorting('silver_value')" [ngClass]="this.sorting.property === 'silver_value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                <span>Silber</span>
+                                <app-icon *ngIf="this.sorting.property === 'silver_value'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                            </span>
+                        </div>
+                        <div>
+                            <span (click)="setSorting('bronze_value')" [ngClass]="this.sorting.property === 'bronze_value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                <span>Bronze</span>
+                                <app-icon *ngIf="this.sorting.property === 'bronze_value'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                            </span>
+                        </div>
+                        <div>
+                            <span (click)="setSorting('category')" [ngClass]="this.sorting.property === 'category' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                <span>Kategorie</span>
+                                <app-icon *ngIf="this.sorting.property === 'category'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                            </span>
+                        </div>
+                        <div>
+                            <span (click)="setSorting('created_at')" [ngClass]="this.sorting.property === 'created_at' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                <span>Erfassungsdatum</span>
+                                <app-icon *ngIf="this.sorting.property === 'created_at'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                            </span>
+                        </div>
                     </div>
-                    <div class="table-item" *ngFor="let exercise of customFilterCall(customFilterCall(exercises, filter, true), {title: {filterValue: searchValue, valueFullFit: false}, gold_value: {filterValue: searchValue, valueFullFit: false}, silver_value: {filterValue: searchValue, valueFullFit: false}, bronze_value: {filterValue: searchValue, valueFullFit: false}, created_at: {filterValue: searchValue, valueFullFit: false} }, false); index as i;">
+                    <div class="table-item" *ngFor="let exercise of customSortCall(customFilterCall(customFilterCall(exercises, filter, true), {title: {filterValue: searchValue, valueFullFit: false}, gold_value: {filterValue: searchValue, valueFullFit: false}, silver_value: {filterValue: searchValue, valueFullFit: false}, bronze_value: {filterValue: searchValue, valueFullFit: false}, created_at: {filterValue: searchValue, valueFullFit: false} }, false), sorting); index as i;">
                         <span>{{exercise.title}}</span>
                         <span>{{exercise.gold_value}}</span>
                         <span>{{exercise.silver_value}}</span>
