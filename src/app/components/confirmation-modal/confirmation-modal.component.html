@@ -1,23 +1,24 @@
-<!-- usage: 
+<!-- usage:
     <app-confirmation-modal [modalDescription]="'This is the description for this confirmation modal This is the description for this confirmation modal This is the description for this confirmation modal'" [modalTitle]="'This represents the title for a confirmation modal This is the description for this confirmation modal'"></app-confirmation-modal>
     import { ConfirmationModalComponent } from "./confirmation-modal/confirmation-modal.component"
     add ConfirmationModalComponent to imports property in same file
 -->
-
-<div id="modal">
+<ng-container *ngIf="confirmationService.IsVisible">
+  <div id="modal">
     <div id="modal-body">
-        <div id="modal-content">
-            <p id="title">{{ modalTitle }}</p>
-            <p id="description">{{ modalDescription }}</p>
-        </div>
-        <svg (click)="delegateCloseEvent()" id="close-button" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12.6668 12.6666L3.3335 3.33325" stroke="#697A89" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12.6668 3.33325L3.3335 12.6666" stroke="#697A89" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+      <div id="modal-content">
+        <p id="title">{{ confirmationService.Title }}</p>
+        <p id="description">{{ confirmationService.Description }}</p>
+      </div>
+      <svg (click)="cancelEvent()" id="close-button" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12.6668 12.6666L3.3335 3.33325" stroke="#697A89" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12.6668 3.33325L3.3335 12.6666" stroke="#697A89" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
     </div>
-   <div id="modal-footer">
-        <app-secondary-button [text]="secondaryButtonText" (click)="delegateSecondaryEvent()"></app-secondary-button>
-        <app-primary-button [text]="primaryButtonText" [iconName]="iconName" [isDeleteButton]="isDeleteButton" (click)="delegatePrimaryEvent()"></app-primary-button>
-   </div>
-</div>
-<div id="overlay" (click)="delegateCloseEvent()"></div>
+    <div id="modal-footer">
+      <app-secondary-button [text]="confirmationService.CancelText" (click)="cancelEvent()"></app-secondary-button>
+      <app-primary-button [text]="confirmationService.ConfirmText" [iconName]="confirmationService.Icon" [isDeleteButton]="confirmationService.IsDelete" (click)="confirmEvent()"></app-primary-button>
+    </div>
+  </div>
+  <div id="overlay" (click)="cancelEvent()"></div>
+</ng-container>

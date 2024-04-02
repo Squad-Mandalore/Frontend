@@ -12,6 +12,7 @@ import { IconComponent } from '../../components/icon/icon.component';
 import customFilter from '../../../utils/custom-filter';
 import Result from '../../models/result';
 import { ConfirmationModalComponent } from '../../components/confirmation-modal/confirmation-modal.component';
+import { ConfirmationService } from '../../shared/confirmation.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +23,7 @@ import { ConfirmationModalComponent } from '../../components/confirmation-modal/
 })
 
 export class DashboardPageComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router, private confirmationService: ConfirmationService) { }
   athletes: Athlete[] = []
   selectedAthlete: Athlete | null = null;
   routeSubscription!: Subscription;
@@ -35,19 +36,14 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     },
     createAthleteModal: {
       isActive: false,
-    },
-    confirmationModal: {
-      isActive: false,
-      modalTitle: "Benutzer wirklich löschen?",
-      modalDescription: "Mit dieser Aktion wird der ausgewählte Benutzer unwiderruflich gelöscht.",
-      primaryButtonText: "Benutzer löschen",
-      secondaryButtonText: "Abbrechen",
     }
   }
 
   deleteElement(){
-    // do deletion logic
-    console.log("delete");
+    this.confirmationService.show('Benutzer wirklich löschen?', 'Mit dieser Aktion wird der ausgewählte Benutzer unwiderruflich gelöscht.', 'Benutzer löschen', 'Abbrechen', true,
+                                  () => {
+                                    console.log('hier könnte ihre werbung stehen');
+                                  });
   }
 
   getActiveFilters(){
