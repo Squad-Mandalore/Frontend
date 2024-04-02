@@ -47,16 +47,15 @@ export class CreateAthleteModalComponent implements OnInit {
     lastname: '',
     birthday: '',
     gender: 'm',
-    trainer_id: '',
   }
 
-  constructor(private athleteApi: AthletesService,
-              private logger: LoggerService,
-              private formBuilder: FormBuilder,
-              private alertService: AlertService,
-              private utilService: UtilService
-
-  ) {
+  constructor(
+    private athleteApi: AthletesService,
+    private logger: LoggerService,
+    private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private utilService: UtilService
+  ){
     this.createAthleteForm = this.formBuilder.group({
       username: ['', Validators.required],
       unhashed_password: ['', [Validators.required, utilService.passwordValidator]],
@@ -67,15 +66,11 @@ export class CreateAthleteModalComponent implements OnInit {
       month: ['', Validators.required],
       year: ['', Validators.required],
     })
-
-
   }
 
   ngOnInit(): void {
     this.logger.info("gock")
-
-
-    }
+  }
 
   onSubmit() {
     if (this.createAthleteForm.invalid){
