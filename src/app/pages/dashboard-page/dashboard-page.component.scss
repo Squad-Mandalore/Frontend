@@ -375,6 +375,7 @@
 #progress-container, #swimcert-container{
     height: 50%;
     aspect-ratio: 1/1;
+    border-radius: 5px;
 }
 
 #progress-container{
@@ -502,7 +503,7 @@
 }
 
 .border-1px-grey{
-    border: 1px solid var(--accent-200);
+    // border: 1px solid var(--accent-200);
     border-radius: 5px;
 }
 
