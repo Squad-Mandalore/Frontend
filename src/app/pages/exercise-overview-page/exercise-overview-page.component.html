@@ -104,6 +104,18 @@
                             </span>
                         </div>
                         <div>
+                            <span (click)="setSorting('from_age')" [ngClass]="this.sorting.property === 'from_age' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                <span>Anfangsalter</span>
+                                <app-icon *ngIf="this.sorting.property === 'from_age'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                            </span>
+                        </div>
+                        <div>
+                            <span (click)="setSorting('to_age')" [ngClass]="this.sorting.property === 'to_age' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                <span>Endalter</span>
+                                <app-icon *ngIf="this.sorting.property === 'to_age'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                            </span>
+                        </div>
+                        <div>
                             <span (click)="setSorting('gold_value')" [ngClass]="this.sorting.property === 'gold_value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                 <span>Gold</span>
                                 <app-icon *ngIf="this.sorting.property === 'gold_value'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
@@ -136,6 +148,8 @@
                     </div>
                     <div class="table-item" *ngFor="let exercise of customSortCall(customFilterCall(customFilterCall(exercises, filter, true), {title: {filterValue: searchValue, valueFullFit: false}, gold_value: {filterValue: searchValue, valueFullFit: false}, silver_value: {filterValue: searchValue, valueFullFit: false}, bronze_value: {filterValue: searchValue, valueFullFit: false}, created_at: {filterValue: searchValue, valueFullFit: false}, category: {filterValue: searchValue, valueFullFit: false} }, false), sorting); index as i;">
                         <span>{{exercise.title}}</span>
+                        <span>{{exercise.from_age}}</span>
+                        <span>{{exercise.to_age}}</span>
                         <span>{{exercise.gold_value}}</span>
                         <span>{{exercise.silver_value}}</span>
                         <span>{{exercise.bronze_value}}</span>
@@ -155,9 +169,9 @@
                             </div>
                         </div>
                     </div>
-                    <div id="create-exercise-field">
+                    <!-- <div id="create-exercise-field">
                         <app-icon [iconName]="'plus'" [iconHeight]="'20'" [iconWidth]="'20'" [strokeWidth]="'2'" [iconColor]="'var(--accent-300)'"></app-icon>
-                    </div>
+                    </div> -->
                 </div>
             </ng-template>
         </div>

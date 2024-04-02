@@ -117,7 +117,7 @@
     width: 100%;
     height: fit-content;
     display: grid;
-    grid-template-columns: minmax(max-content, 3fr) 1fr 1fr 1fr 1fr 1fr 30px;
+    grid-template-columns: minmax(max-content, 3fr) 100px 100px 1fr 1fr 1fr 1fr 1fr 30px;
     gap: 20px;
     grid-template-rows: 1fr;
     padding-left: 20px;
@@ -153,7 +153,7 @@
     display: grid;
     gap: 20px;
     align-items: center;
-    grid-template-columns: minmax(max-content, 3fr) 1fr 1fr 1fr 1fr 1fr 30px;
+    grid-template-columns: minmax(max-content, 3fr) 100px 100px 1fr 1fr 1fr 1fr 1fr 30px;
     grid-template-rows: 1fr;
     padding: 15px 0 15px 20px;
     font-size: 14px;
