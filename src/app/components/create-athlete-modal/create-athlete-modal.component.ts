@@ -7,7 +7,7 @@ import {AlertComponent} from "../alert/alert.component";
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
 import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-button.component";
-import {AthletePostSchema, AthletesService} from "../../shared/generated";
+import {AthletePostSchema, AthletesService, Gender} from "../../shared/generated";
 import {LoggerService} from "../../shared/logger.service";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
@@ -36,19 +36,8 @@ export class CreateAthleteModalComponent implements OnInit {
   createAthleteForm;
   showFirstPage: boolean = true;
   isMale: boolean = true;
+  isSringMale: Gender = "m";
   @Input() modals!: any;
-
-
-  public athleteData: AthletePostSchema = {
-    username: '',
-    email: '',
-    unhashed_password: '',
-    firstname: '',
-    lastname: '',
-    birthday: '',
-    gender: 'm',
-    trainer_id: '',
-  }
 
   constructor(private athleteApi: AthletesService,
               private logger: LoggerService,
@@ -67,8 +56,6 @@ export class CreateAthleteModalComponent implements OnInit {
       month: ['', Validators.required],
       year: ['', Validators.required],
     })
-
-
   }
 
   ngOnInit(): void {
@@ -82,20 +69,22 @@ export class CreateAthleteModalComponent implements OnInit {
       this.logger.error("Form invalid")
       return;
     }
-    const { username, email, unhashed_password, firstname, lastname, day, month, year } = this.createAthleteForm.value;
-
-    this.athleteData.username = username!
-    this.athleteData.email = email!;
-    this.athleteData.unhashed_password = unhashed_password!;
-    this.athleteData.firstname = firstname!;
-    this.athleteData.lastname = lastname!;
-    this.athleteData.birthday = year! + "-" + month!.toString().padStart(2,'0') + "-" + day!.toString().padStart(2,'0');
     if (!this.isMale) {
-      this.athleteData.gender = "f"
+      this.isSringMale = "f"
+    }
+
+    let body : AthletePostSchema = {
+    username: this.createAthleteForm.value.username!,
+    email: this.createAthleteForm.value.email!,
+    unhashed_password: this.createAthleteForm.value.unhashed_password!,
+    firstname: this.createAthleteForm.value.firstname!,
+    lastname: this.createAthleteForm.value.lastname!,
+    birthday: this.createAthleteForm.value.year! + "-" + this.createAthleteForm.value.month!.toString().padStart(2,'0') + "-" + this.createAthleteForm.value.day!.padStart(2,'0'),
+    gender: this.isSringMale!
     }
 
 
-      this.athleteApi.createAthleteAthletesPost(this.athleteData).subscribe({
+      this.athleteApi.createAthleteAthletesPost(body).subscribe({
         next: () => {
           this.click.emit();
         },
@@ -116,6 +105,11 @@ export class CreateAthleteModalComponent implements OnInit {
 
   onClickSwitchGender(value: string) {
     this.isMale = value === "male";
+  }
+
+  onButtonClick() {
+    console.log("close");
+    this.click.emit();
   }
 }
 
