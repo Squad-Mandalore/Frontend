@@ -76,8 +76,20 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     return array.sort((a: any, b: any) => customSort(a, b, sortSettings, "athlete"));
   }
 
-  deleteElement(){
-    console.log("delete");
+  deleteElement(athlete: AthleteFullResponseSchema | null){
+    if(!athlete) return;
+    this.athleteService.deleteAhtleteAthletesIdDelete(athlete.id).subscribe({
+      next: () => {
+        this.alertService.show('Element erfolgreich gelöscht', 'Das Element wurde erfolgreich entfernt', "success");
+      },
+      error: (error: HttpErrorResponse) => {
+        this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
+      }
+    })
+    this.modals.confirmationModal.isActive = false;
+    this.modals.showDetails.isActive = false;
+    this.athletes = this.athletes.filter(element => element.id !== athlete.id);
+    this.selectedAthlete = null;
   }
 
   getActiveFilters(){
