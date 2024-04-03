@@ -35,7 +35,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   searchValue: string = ""
   selectedAthlete: AthleteFullResponseSchema | null = null;
   routeSubscription!: Subscription;
-  showDetails = false;
+  isLoading: boolean = true;
   filter: any = {};
   sorting: {property: string, direction: "asc" | "desc"} = {property: 'completed_at', direction: 'desc'};
   dashArray: number = 525;
@@ -142,9 +142,11 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
               }
             })
           }
+          this.isLoading = false;
         },
         error: (error: HttpErrorResponse) => {
-          this.alertService.show('Login fehlgeschlagen', 'Benutzername oder Passwort falsch!', "error");
+          this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
+          this.isLoading = false;
         }
       });
     }

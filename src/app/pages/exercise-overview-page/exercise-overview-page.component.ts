@@ -27,6 +27,7 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
   filter: any = {};
   sorting: {property: string, direction: "asc" | "desc"} = {property: 'category', direction: 'asc'};
   searchValue = "";
+  isLoading: boolean = true;
   
   modals = {
     createTrainerModal: {
@@ -89,9 +90,11 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
       next: (exercises: ExerciseResponseSchema[]) => {
         this.exercises = exercises;
         console.log(exercises);
+        this.isLoading = false;
       },
       error: (error: HttpErrorResponse) => {
         this.alertService.show('Abfragen der Übungen fehlgeschlagen', 'Bitte versuche es später erneut', "error");
+        this.isLoading = false;
       }
     });
   }
