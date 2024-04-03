@@ -85,11 +85,11 @@
                                 <div class="under-undermenu accent-500">
                                     <div class="menu-item cursor-pointer accent-900">
                                         <app-icon [iconName]="'search'" [iconColor]="'var(--accent-300)'" [strokeWidth]="'2'" [iconWidth]="'16'" [iconHeight]="'16'"></app-icon>
-                                        <input class="input" placeholder="Suchen" #customDateFilter (input)="setFilter('completed_at', customDateFilter.value, false)" [value]="customDateFilter.value"/>
+                                        <input class="input" placeholder="Suchen" #customDateFilter (input)="setFilter('tracked_at', customDateFilter.value, false)" [value]="customDateFilter.value"/>
                                     </div>
-                                    <div *ngFor="let date of getTrackingDates(selectedAthlete.completes)" class="menu-item cursor-pointer accent-900" (click)="setFilter('completed_at', date)">
+                                    <div *ngFor="let date of getTrackingDates(selectedAthlete.completes)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_at', date)">
                                         <span>{{date}}</span>
-                                        <app-icon *ngIf="filter['completed_at'] && filter['completed_at'].filterValue === date" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['tracked_at'] && filter['tracked_at'].filterValue === date" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                 </div>
                             </div>
@@ -131,9 +131,9 @@
                                 </span>
                             </div>
                             <div>
-                                <span (click)="setSorting('completed_at')" [ngClass]="this.sorting.property === 'completed_at' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                <span (click)="setSorting('tracked_at')" [ngClass]="this.sorting.property === 'tracked_at' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                     <span>Erfassungsdatum</span>
-                                    <app-icon *ngIf="this.sorting.property === 'completed_at'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                                    <app-icon *ngIf="this.sorting.property === 'tracked_at'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
                                 </span>
                             </div>
                             <div>
@@ -148,7 +148,7 @@
                             <span>{{result.result}}</span>
                             <span>{{result.points !== 3 ? result.points === 2 ? 'Silber' : 'Bronze' : 'Gold'}}</span>
                             <span>{{result.exercise_id.category.title}}</span>
-                            <span>{{result.completed_at}}</span>
+                            <span>{{result.tracked_at}}</span>
                             <span>{{result.tracked_by}}</span>
                             <div class="flex items-center more-icon cursor-pointer">
                                 <app-icon [iconName]="'more-vertical'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'20'" [iconWidth]="'20'"></app-icon>

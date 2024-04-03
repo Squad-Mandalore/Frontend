@@ -103,7 +103,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   getTrackingDates(completes: CompletesResponseSchema[]){
     const trackingDates : string[] = [];
     for(const result of completes){
-      if(!trackingDates.find(date => date === result.completed_at)) trackingDates.push(result.completed_at.toString());
+      if(!trackingDates.find(date => date === result.tracked_at)) trackingDates.push(result.tracked_at.toString());
     }
     return trackingDates;
   }
