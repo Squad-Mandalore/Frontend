@@ -52,7 +52,14 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       modalDescription: "Mit dieser Aktion wird der ausgewählte Benutzer unwiderruflich gelöscht.",
       primaryButtonText: "Benutzer löschen",
       secondaryButtonText: "Abbrechen",
-    }
+    },
+    showDetails: {
+      isActive: false,
+    },
+  }
+
+  selectAthlete(value: any){
+    this.selectedAthlete = value;
   }
 
   setSorting(property: string){
@@ -106,10 +113,6 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   customFilterCall(array: any[], options: Object, selectionFullFit: boolean){
     return customFilter(array, options, selectionFullFit, "athlete");
-  }
-
-  triggerAthleteDetails(value: boolean){
-    this.showDetails = value;
   }
 
   getProgress(completes: CompletesResponseSchema[]){
