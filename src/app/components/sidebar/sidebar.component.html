@@ -15,20 +15,20 @@
             <app-quaternary-button (click)="modals.createAthleteModal.isActive = true" [iconName]="'user-plus'" [tooltipText]="'Sportler hinzufügen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"></app-quaternary-button>
         </div>
     </div>
-    <div id="sidebar-content" class="empty" *ngIf="athletes.length === 0; else hasAthletes">
+    <div id="sidebar-content" class="empty" *ngIf="athletes.length === 0 && !isLoading; else hasAthletes">
         <img src="assets/img/humans-statistics-sitting-woman.png" alt="create-athlete"/>
         <p id="information-text-big">Erstelle deinen ersten Athlet</p>
         <p id="information-text-small">
             Füge jetzt einen neuen Athlet hinzu und starte die Erfassung von Übungen
         </p>
-        <app-primary-button [iconName]="'user-plus'" [text]="'Erstellen'"></app-primary-button>
+        <app-primary-button [iconName]="'user-plus'" [text]="'Erstellen'" (click)="modals.createAthleteModal.isActive = true"></app-primary-button>
     </div>
     <ng-template #hasAthletes>
         <div id="sidebar-content-wrapper">
             <div id="sidebar-content" class="filled">
                 <div *ngFor="let athlete of customFilterCall(athletes, {firstname: {filterValue: searchValue, valueFullFit: false}, lastname: {filterValue: searchValue, valueFullFit: false} }, false)">
-                    <a [routerLink]="['/athleten', athlete.id]">
-                        <app-athlete-card [athlete]="athlete"></app-athlete-card>
+                    <a (click)="delegateSelection(athlete)">
+                        <app-athlete-card [athlete]="athlete" [isActive]="athlete.id === selectedAthlete?.id"></app-athlete-card>
                     </a>
                 </div>
                 <div id="create-athlete-field" (click)="modals.createAthleteModal.isActive = true">

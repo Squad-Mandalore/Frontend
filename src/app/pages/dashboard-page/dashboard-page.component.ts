@@ -163,7 +163,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       });
     }
 
-    // this.athletes = [
+    // this.athletes.push(
     //   {
     //     id: "1",
     //     username: 'test1',
@@ -301,24 +301,24 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     //       }
     //     ]
     //   }
-    // ];
+    // )
 
-    this.routeSubscription = this.route.params.subscribe(params => {
-      const athleteId = params['id'];
-      if(athleteId){
-        // this.selectedAthlete = this.athletes.filter(element => element.id == athleteId)[0] ?? null;
+    // this.routeSubscription = this.route.params.subscribe(params => {
+    //   const athleteId = params['id'];
+    //   if(athleteId){
+    //     // this.selectedAthlete = this.athletes.filter(element => element.id == athleteId)[0] ?? null;
 
-        this.athleteService.getAthleteFullAthletesIdFullGet(athleteId).subscribe({
-          next: (fullAthleteObject: AthleteFullResponseSchema) => {
-            this.selectedAthlete = fullAthleteObject;
-          },
-          error: (error: HttpErrorResponse) => {
-            this.alertService.show('Abfrage der Athletendetails fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
-            this.router.navigate(['/athleten']);
-          }
-        })
-      }
-    })
+    //     this.athleteService.getAthleteFullAthletesIdFullGet(athleteId).subscribe({
+    //       next: (fullAthleteObject: AthleteFullResponseSchema) => {
+    //         this.selectedAthlete = fullAthleteObject;
+    //       },
+    //       error: (error: HttpErrorResponse) => {
+    //         this.alertService.show('Abfrage der Athletendetails fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
+    //         this.router.navigate(['/athleten']);
+    //       }
+    //     })
+    //   }
+    // })
   }
 
   ngOnDestroy(): void {

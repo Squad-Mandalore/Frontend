@@ -1,5 +1,5 @@
 <div id="page">
-    <app-sidebar [athletes]="athletes" [modals]="modals"></app-sidebar>
+    <app-sidebar [selectedAthlete]="selectedAthlete" (selectElement)="selectAthlete($event)" [athletes]="athletes" [isLoading]="isLoading" [modals]="modals"></app-sidebar>
     <div id="content" *ngIf="selectedAthlete; else elseBlock">
         <div id="headline-wrapper">
             <p class="headline">Sportler-Übersicht</p>

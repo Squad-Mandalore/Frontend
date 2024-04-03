@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {UserCardComponent} from '../user-card/user-card.component';
 import {ActivatedRoute} from '@angular/router';
@@ -16,11 +16,11 @@ import { CompletesResponseSchema } from '../../shared/generated';
   styleUrl: './athlete-card.component.scss'
 })
 
-export class AthleteCardComponent implements OnInit, OnDestroy {
+export class AthleteCardComponent {
   constructor(private route: ActivatedRoute) { }
   routeSubscription!: Subscription;
 
-  isActive: boolean = false;
+  @Input() isActive: boolean = false;
   @Input() athlete!: AthleteFullResponseSchema;
 
   getProgress(completes: CompletesResponseSchema[]){
@@ -33,19 +33,6 @@ export class AthleteCardComponent implements OnInit, OnDestroy {
 
   customFilterCall(array: any[], options: Object, selectionFullFit: boolean){
     return customFilter(array, options, selectionFullFit, "athlete");
-  }
-
-  ngOnInit(): void {
-    this.routeSubscription = this.route.params.subscribe(params => {
-      const routeId = params['id'];
-      this.isActive = !!(routeId && routeId == this.athlete.id);
-    })
-  }
-
-  ngOnDestroy(): void {
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe();
-    }
   }
 }
 
