@@ -98,7 +98,7 @@ export class CreateAthleteModalComponent implements OnInit {
           if(error.status == 422){
             this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
           }else{
-            this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen! Bitte nochmal versuchen.',"error");
+            this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen',"error");
           }
         }
     })
