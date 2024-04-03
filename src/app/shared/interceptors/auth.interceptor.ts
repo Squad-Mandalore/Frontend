@@ -37,7 +37,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             const refreshToken = localStorageService.getItem('refresh_token');
             if (!refreshToken) {
                 // Handle case where there's no refresh token
-                authExtService.logout;
+                alertService.show('Logout', 'Login abgelaufen', 'error');
+                authExtService.logout();
                 throw error;
             }
 
