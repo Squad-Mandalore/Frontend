@@ -49,13 +49,13 @@ export class CreateAthleteModalComponent implements OnInit {
     gender: 'm',
   }
 
-  constructor(private athleteApi: AthletesService,
-              private logger: LoggerService,
-              private formBuilder: FormBuilder,
-              private alertService: AlertService,
-              private utilService: UtilService
-
-  ) {
+  constructor(
+    private athleteApi: AthletesService,
+    private logger: LoggerService,
+    private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private utilService: UtilService
+  ){
     this.createAthleteForm = this.formBuilder.group({
       username: ['', Validators.required],
       unhashed_password: ['', [Validators.required, utilService.passwordValidator]],
@@ -66,15 +66,11 @@ export class CreateAthleteModalComponent implements OnInit {
       month: ['', Validators.required],
       year: ['', Validators.required],
     })
-
-
   }
 
   ngOnInit(): void {
     this.logger.info("gock")
-
-
-    }
+  }
 
   onSubmit() {
     if (this.createAthleteForm.invalid){
@@ -102,7 +98,7 @@ export class CreateAthleteModalComponent implements OnInit {
           if(error.status == 422){
             this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
           }else{
-            this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen! Bitte nochmal versuchen.',"error");
+            this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen',"error");
           }
         }
     })

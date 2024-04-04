@@ -22,10 +22,6 @@ export class UserCardComponent {
     return this.circumference * (1 - progressDecimal);
   }
 
-  progressColor() : any {
-    return `var(--${this.medal})`;
-  }
-
   user_example = {
     id: 1,
     username: "KaySchulz42",
@@ -43,7 +39,7 @@ export class UserCardComponent {
 
 
 interface User {
-  id: number,
+  id: string,
   firstname: string,
   lastname: string,
   type: string,

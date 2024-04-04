@@ -20,13 +20,7 @@ import {NgClass} from "@angular/common";
 })
 export class CreateTrainerModalComponent {
   @Output() click = new EventEmitter<any>();
-
   @Input() modals!: any;
-
-  onButtonClick() {
-    console.log("close");
-    this.click.emit();
-  }
 
   trainerForm;
   constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService){
@@ -55,7 +49,7 @@ export class CreateTrainerModalComponent {
         if(error.status == 422){
           this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
         }else{
-          this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen! Bitte nochmal versuchen.',"error");
+          this.alertService.show('Erstellung fehlgeschlagen','Bitte versuche es später erneut',"error");
         }
       }
     });
