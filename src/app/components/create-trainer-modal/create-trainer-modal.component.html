@@ -1,11 +1,10 @@
 <div id="overlay" (click)="modals.createTrainerModal.isActive = false"></div>
-<div id="modal">
+<form id="modal" [formGroup]="trainerForm" (ngSubmit)="onSubmit()">
   <div id="modal-header">
     <p id="modal-headline">Neuen Trainer hinzufügen</p>
     <app-icon (click)="modals.createTrainerModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
   </div>
     <div id="input-wrapper">
-      <form [formGroup]="trainerForm" (ngSubmit)="onSubmit()">
       <label class="label">
         <p class="label-text">Benutzername</p>
         <input class="input" type="text" name="benutzername" placeholder="Benutzername" formControlName="username"/>
@@ -30,10 +29,9 @@
         <p class="label-text">E-Mail</p>
         <input class="input" type="email" name="email" placeholder="E-Mail" formControlName="email"/>
       </label>
-      </form>
     </div>
   <div id="modal-footer">
     <app-secondary-button (click)="modals.createTrainerModal.isActive = false" type="button" text="Abbrechen" minWidth="100%" description="Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen."></app-secondary-button>
     <app-primary-button [disabled]="!trainerForm.valid" text="Trainer hinzufügen" minWidth="100%" description="Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt."></app-primary-button>
   </div>
-</div>
+</form>

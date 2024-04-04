@@ -31,8 +31,7 @@ import {UtilService} from "../../shared/service-util";
   templateUrl: './create-athlete-modal.component.html',
   styleUrl: './create-athlete-modal.component.scss'
 })
-export class CreateAthleteModalComponent implements OnInit {
-  @Output() click = new EventEmitter<any>();
+export class CreateAthleteModalComponent {
   createAthleteForm;
   showFirstPage: boolean = true;
   isMale: boolean = true;
@@ -51,14 +50,13 @@ export class CreateAthleteModalComponent implements OnInit {
 
   constructor(
     private athleteApi: AthletesService,
-    private logger: LoggerService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private utilService: UtilService
   ){
     this.createAthleteForm = this.formBuilder.group({
       username: ['', Validators.required],
-      unhashed_password: ['', [Validators.required, utilService.passwordValidator]],
+      unhashed_password: ['', [Validators.required, this.utilService.passwordValidator]],
       email: ['', Validators.required],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
@@ -68,15 +66,7 @@ export class CreateAthleteModalComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-    this.logger.info("gock")
-  }
-
   onSubmit() {
-    if (this.createAthleteForm.invalid){
-      this.logger.error("Form invalid")
-      return;
-    }
     const { username, email, unhashed_password, firstname, lastname, day, month, year } = this.createAthleteForm.value;
 
     this.athleteData.username = username!
@@ -92,7 +82,8 @@ export class CreateAthleteModalComponent implements OnInit {
 
       this.athleteApi.createAthleteAthletesPost(this.athleteData).subscribe({
         next: () => {
-          this.click.emit();
+        this.alertService.show('Athlet erstellt', 'Athlet wurde erfolgreich erstellt.', 'success');
+        this.modals.createAthleteModal.isActive = false;
         },
         error: (error) => {
           if(error.status == 422){
