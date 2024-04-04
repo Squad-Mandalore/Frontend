@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { NavbarBottomComponent } from '../../components/navbar-bottom/navbar-bottom.component';
@@ -9,7 +9,7 @@ import { PrimaryButtonComponent } from '../../components/buttons/primary-button/
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
 import { AthleteResponseSchema, AthleteFullResponseSchema, AthletesService, CompletesResponseSchema, CompletesService } from '../../shared/generated';
-
+import { Subscription } from 'rxjs';
 import customSort from '../../../utils/custom-sort';
 import customFilter from '../../../utils/custom-filter';
 import { calculateProgress, calculateProgressPercent } from '../../../utils/calculate-progress';
@@ -26,13 +26,14 @@ import { ConfirmationService } from '../../shared/confirmation.service';
   styleUrl: './dashboard-page.component.scss'
 })
 
-export class DashboardPageComponent implements OnInit {
+export class DashboardPageComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private confirmationService: ConfirmationService, private router: Router, private athleteService: AthletesService, private alertService: AlertService) { }
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
   selectedAthlete: AthleteFullResponseSchema | null = null;
   isLoading: boolean = true;
   filter: any = {};
+  routeSubscription!: Subscription;
   sorting: {property: string, direction: "asc" | "desc"} = {property: 'completed_at', direction: 'desc'};
   dashArray: number = 525;
   modals = {
@@ -45,10 +46,6 @@ export class DashboardPageComponent implements OnInit {
     showDetails: {
       isActive: false,
     },
-  }
-
-  selectAthlete(value: any){
-    this.selectedAthlete = value;
   }
 
   setSorting(property: string){
@@ -292,5 +289,21 @@ export class DashboardPageComponent implements OnInit {
 //         ]
 //       }
 //     )
+
+    this.routeSubscription = this.route.queryParams.subscribe(params => {
+      const athleteId = params['id'];
+      if(athleteId){
+        this.selectedAthlete = this.athletes.filter(element => element.id == athleteId)[0] ?? null
+        if(!this.selectedAthlete){
+          this.router.navigate(['/athleten']);
+        }
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
   }
 }

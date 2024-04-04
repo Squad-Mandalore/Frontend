@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AthleteCardComponent } from '../athlete-card/athlete-card.component';
 import { RouterModule } from '@angular/router';
@@ -19,15 +19,9 @@ export class SidebarComponent {
   @Input() athletes: AthleteFullResponseSchema[] = [];
   @Input() modals: any = {};
   @Input() isLoading!: boolean;
-  @Input() selectedAthlete!: AthleteFullResponseSchema | null;
   searchValue = "";
 
   customFilterCall(array: any[], options: Object, selectionFullFit:boolean = false){
     return customFilter(array, options, selectionFullFit, "athlete");
-  }
-
-  @Output() selectElement = new EventEmitter<boolean>();
-  delegateSelection(value: boolean){
-    this.selectElement.emit(value);
   }
 }
