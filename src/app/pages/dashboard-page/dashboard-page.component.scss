@@ -655,18 +655,6 @@
     background-color: var(--danger);
 }
 
-app-confirmation-modal{
-    opacity: 0;
-    visibility: hidden;
-    position: fixed;
-}
-
-app-confirmation-modal.active{
-    opacity: 100;
-    visibility: visible;
-    z-index: 50;
-}
-
 #overlay-lower, #overlay-higher{
     opacity: 0;
     visibility: hidden;
