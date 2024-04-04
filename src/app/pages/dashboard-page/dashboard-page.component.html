@@ -226,7 +226,6 @@
     </ng-template>
 </div>
 <app-navbar-bottom [modals]="modals"></app-navbar-bottom>
-<app-confirmation-modal (secondaryButtonClick)="modals.confirmationModal.isActive = false" (closeButtonClick)="modals.confirmationModal.isActive = false" (primaryButtonClick)="deleteElement()" [ngClass]="{'active': modals.confirmationModal.isActive}" [modalTitle]="modals.confirmationModal.modalTitle" [modalDescription]="modals.confirmationModal.modalDescription" [isDeleteButton]="true" [iconName]="'delete'" [primaryButtonText]="modals.confirmationModal.primaryButtonText" [secondaryButtonText]="modals.confirmationModal.secondaryButtonText"></app-confirmation-modal>
 <div id="athlete-details" *ngIf="selectedAthlete;" [ngClass]="{'active': selectedAthlete && showDetails}">
     <div>
         <p class="headline margin-bottom-20">Sportler Details</p>
@@ -349,7 +348,7 @@
         <span class="margin-left-auto inter-medium accent-500 font-size-15">erstellt am {{selectedAthlete.created_at}} von {{selectedAthlete.created_by}}</span>
         <div class="flex items-center gap-10 full-width">
             <app-secondary-button class="full-width" (click)="triggerAthleteDetails(false)" [text]="'Abbrechen'" [minWidth]="'100%'"></app-secondary-button>
-            <app-primary-button class="full-width" [isDeleteButton]="true" [text]="'Benutzer löschen'" [minWidth]="'100%'" [iconName]="'delete'" [strokeWidth]="'2'" (click)="modals.confirmationModal.isActive = true" id="delete-button"></app-primary-button>
+            <app-primary-button class="full-width" [isDeleteButton]="true" [text]="'Benutzer löschen'" [minWidth]="'100%'" [iconName]="'delete'" [strokeWidth]="'2'" (click)="deleteElement()" id="delete-button"></app-primary-button>
         </div>
     </div>
 </div>

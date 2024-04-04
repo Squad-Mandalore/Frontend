@@ -5,8 +5,9 @@ import {authGuard} from "./shared/guard/auth.guard";
 import {DisciplineMenuComponent} from "./discipline-menu/discipline-menu.component";
 
 export const routes: Routes = [
+    {path: '', redirectTo: 'athleten', pathMatch: 'full'},
     {path: "login", component: LoginPageComponent},
     {path: "athleten", component: DashboardPageComponent, canActivate: [authGuard]},
     {path: "athleten/:id", component: DashboardPageComponent},
-  {path: "testo", component: DisciplineMenuComponent}
+    {path: "**", redirectTo: 'athleten'}
 ];
