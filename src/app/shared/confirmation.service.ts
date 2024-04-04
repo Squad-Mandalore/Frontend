@@ -73,10 +73,6 @@ export class ConfirmationService {
     this.confirm = onConfirm
   }
 
-  hide(){
-    this.isVisible = false; 
-  }
-
   Confirm(){
     this.confirm();
     this.isVisible = false;

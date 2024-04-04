@@ -65,7 +65,6 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         //   }
         // })
         // // this.modals.confirmationModal.isActive = false;
-        // this.confirmationService.hide()
         // this.athletes = this.athletes.filter(element => element.id !== athlete.id);
         // this.selectedAthlete = null;
       }
