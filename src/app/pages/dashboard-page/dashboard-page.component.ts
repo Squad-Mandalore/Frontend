@@ -13,6 +13,10 @@ import customFilter from '../../../utils/custom-filter';
 import Result from '../../models/result';
 import { ConfirmationModalComponent } from '../../components/confirmation-modal/confirmation-modal.component';
 import { ConfirmationService } from '../../shared/confirmation.service';
+import { AthleteFullResponseSchema } from '../../shared/generated';
+import { AthletesService } from '../../shared/generated';
+import { AlertService } from '../../shared/alert.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +27,7 @@ import { ConfirmationService } from '../../shared/confirmation.service';
 })
 
 export class DashboardPageComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private router: Router, private confirmationService: ConfirmationService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private confirmationService: ConfirmationService, private alertService: AlertService, private athleteService: AthletesService) { }
   athletes: Athlete[] = []
   selectedAthlete: Athlete | null = null;
   routeSubscription!: Subscription;
@@ -36,14 +40,36 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     },
     createAthleteModal: {
       isActive: false,
-    }
+    },
+    showDetails: {
+      isActive: false,
+    },
   }
 
+  // deleteElement(athlete: AthleteFullResponseSchema | null){
   deleteElement(){
-    this.confirmationService.show('Benutzer wirklich löschen?', 'Mit dieser Aktion wird der ausgewählte Benutzer unwiderruflich gelöscht.', 'Benutzer löschen', 'Abbrechen', true,
-                                  () => {
-                                    console.log('hier könnte ihre werbung stehen');
-                                  });
+    this.confirmationService.show(
+      'Benutzer wirklich löschen?', 
+      'Mit dieser Aktion wird der ausgewählte Benutzer unwiderruflich gelöscht.', 
+      'Benutzer löschen', 
+      'Abbrechen',
+      true,
+      () => {
+        // if(!athlete) return;
+        // this.athleteService.deleteAhtleteAthletesIdDelete(athlete.id).subscribe({
+        //   next: () => {
+        //     this.alertService.show('Element erfolgreich gelöscht', 'Das Element wurde erfolgreich entfernt', "success");
+        //   },
+        //   error: (error: HttpErrorResponse) => {
+        //     this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
+        //   }
+        // })
+        // // this.modals.confirmationModal.isActive = false;
+        // this.confirmationService.hide()
+        // this.athletes = this.athletes.filter(element => element.id !== athlete.id);
+        // this.selectedAthlete = null;
+      }
+    );
   }
 
   getActiveFilters(){

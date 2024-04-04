@@ -58,7 +58,7 @@ export class ConfirmationService {
 
   show(confirmTitle: string, confirmDescription: string, confirmText: string, cancelText: string, isDelete: boolean, onConfirm: () => void, onCancel: () => void = () => {}) {
     if (this.isVisible) {
-        return;
+      return;
     }
     this.title = confirmTitle;
     this.description = confirmDescription;
@@ -71,6 +71,10 @@ export class ConfirmationService {
     this.isVisible = true;
     this.cancel = onCancel;
     this.confirm = onConfirm
+  }
+
+  hide(){
+    this.isVisible = false; 
   }
 
   Confirm(){
