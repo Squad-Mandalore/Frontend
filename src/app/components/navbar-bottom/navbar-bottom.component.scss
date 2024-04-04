@@ -10,8 +10,6 @@
     display: none;
 }
 
-
-
 .item {
     position: relative;
     height: 50px;
@@ -22,6 +20,7 @@
     align-items: center;
     justify-content: center;
 }
+
 .item.isActive {
     background-color: var(--brand-100);
 }
@@ -42,15 +41,15 @@
     stroke: var(--brand-500);
 }
 
-.item:not(isActive)>svg {
+.item:not(.isActive)>svg {
     stroke: var(--accent-900);
 }
 
-.item:not(isActive) {
+.item:not(.isActive) {
     background-color: var(--accent-150);
 }
 
-.item:not(isActive):hover {
+.item:not(.isActive):hover {
     cursor: pointer;
     background-color: var(--accent-200);
 }
@@ -83,6 +82,7 @@
     transform: translate(-50%, -160%) rotate(45deg);
     background-color: var(--accent-900);
 }
+
 #navbar{
     min-width: 100dvw;
     max-width: 1920px;
@@ -91,7 +91,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 30px;
     position: fixed;
     bottom: 0;
     left: 0;

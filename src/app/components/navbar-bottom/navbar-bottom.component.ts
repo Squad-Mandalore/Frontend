@@ -65,7 +65,7 @@ export class NavbarBottomComponent {
   }
 
   user = {
-    id: 1,
+    id: "1",
     firstname: 'Kay',
     lastname: 'Schulz',
     type: 'Administrator',
@@ -75,6 +75,4 @@ export class NavbarBottomComponent {
   onClickLogOut() {
     this.authService.logout()
   }
-
-
 }

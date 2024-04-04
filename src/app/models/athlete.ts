@@ -9,7 +9,7 @@ export default interface Athlete {
     created_at: string,
     created_by: string,
     gender: string,
-    date_of_birth: string,
+    birthday: string,
     last_password_change: string,
     last_edited_at: string,
     type: string,
@@ -19,6 +19,6 @@ export default interface Athlete {
     number_bronze_medals: number,
     number_silver_medals: number,
     number_gold_medals: number,
-    has_swimming_certificate: boolean,
-    results: Result[]
+    certificates: [],
+    completes: Result[]
 }
