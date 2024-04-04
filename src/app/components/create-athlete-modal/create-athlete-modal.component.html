@@ -1,5 +1,5 @@
-<div id="overlay" (click)="modals.createAthleteModal.isActive = false" [ngClass]="{'is-active': modals.createAthleteModal.isActive, 'is-inactive': !modals.createAthleteModal.isActive}"></div>
-<div id="modal" [ngClass]="{'is-active': modals.createAthleteModal.isActive, 'is-inactive': !modals.createAthleteModal.isActive}">
+<div id="overlay" (click)="modals.createAthleteModal.isActive = false"></div>
+<form id="modal" [formGroup]="createAthleteForm" (ngSubmit)="onSubmit()">
   <div id="modal-header">
     <p id="modal-headline">Neuen Sportler hinzufügen</p>
     <app-icon (click)="modals.createAthleteModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
@@ -7,7 +7,6 @@
     <div id="input-wrapper">
       <ng-container *ngIf="showFirstPage">
 
-        <form [formGroup]="createAthleteForm" (ngSubmit)="onSubmit()">
           <label class="label">
             <p class="label-text">Benutzername</p>
             <input class="input" type="text" formControlName="username" placeholder="Benutzername">
@@ -24,11 +23,9 @@
             <p class="label-text">E-Mail</p>
             <input class="input" type="email" formControlName="email" placeholder="E-Mail">
           </label>
-        </form>
 
       </ng-container>
       <ng-container *ngIf="!showFirstPage">
-        <form [formGroup]="createAthleteForm" (ngSubmit)="onSubmit()">
           <div id="name-input-wrapper">
             <label class="label">
               <p class="label-text">Vorname</p>
@@ -63,20 +60,19 @@
               </div>
             </div>
           </div>
-        </form>
       </ng-container>
     </div>
   <div id="modal-footer">
     <ng-container *ngIf="showFirstPage">
-      <app-secondary-button [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
-      <app-primary-button (click)=onClickSwitchPage() [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
+    <app-secondary-button (click)="modals.createAthleteModal.isActive = false" type="button" text="Abbrechen" minWidth="100%" description="Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen."></app-secondary-button>
+      <app-primary-button (click)="onClickSwitchPage()" [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
     </ng-container>
     <ng-container *ngIf="!showFirstPage">
-      <app-secondary-button (click)=onClickSwitchPage() [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
-      <app-primary-button [disabled]="createAthleteForm.invalid" (click)=onSubmit() [text]="'Sportler anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
+      <app-secondary-button (click)="onClickSwitchPage()" type="button" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+      <app-primary-button [disabled]="!createAthleteForm.valid" [text]="'Sportler anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
     </ng-container>
   </div>
-</div>
+</form>
 
 
 
