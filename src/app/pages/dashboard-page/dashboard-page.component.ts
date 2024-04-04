@@ -80,7 +80,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     if(!athlete) return;
     this.athleteService.deleteAhtleteAthletesIdDelete(athlete.id).subscribe({
       next: () => {
-        this.alertService.show('Element erfolgreich gelöscht', 'Das Element wurde erfolgreich entfernt', "success");
+        this.alertService.show('Athlet erfolgreich gelöscht', 'Der Athlet wurde erfolgreich entfernt', "success");
       },
       error: (error: HttpErrorResponse) => {
         this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
