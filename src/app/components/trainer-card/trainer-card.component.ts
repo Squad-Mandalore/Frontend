@@ -3,11 +3,13 @@ import { Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { TrainerResponseSchema } from '../../shared/generated';
+import { UserCardComponent } from '../user-card/user-card.component';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-trainer-card',
   standalone: true,
-  imports: [],
+  imports: [UserCardComponent, NgClass],
   templateUrl: './trainer-card.component.html',
   styleUrl: './trainer-card.component.scss'
 })
