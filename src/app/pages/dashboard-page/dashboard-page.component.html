@@ -259,7 +259,7 @@
     </ng-template>
 </div>
 <app-navbar-bottom [modals]="modals"></app-navbar-bottom>
-<app-confirmation-modal (secondaryButtonClick)="modals.confirmationModal.isActive = false" (closeButtonClick)="modals.confirmationModal.isActive = false" (primaryButtonClick)="deleteElement(selectedAthlete)" [ngClass]="{'active': modals.confirmationModal.isActive}" [modalTitle]="modals.confirmationModal.modalTitle" [modalDescription]="modals.confirmationModal.modalDescription" [isDeleteButton]="true" [iconName]="'delete'" [primaryButtonText]="modals.confirmationModal.primaryButtonText" [secondaryButtonText]="modals.confirmationModal.secondaryButtonText"></app-confirmation-modal>
+<app-confirmation-modal (secondaryButtonClick)="modals.confirmationModal.isActive = false" (closeButtonClick)="modals.confirmationModal.isActive = false" (primaryButtonClick)="deleteAthlete(selectedAthlete)" [ngClass]="{'active': modals.confirmationModal.isActive}" [modalTitle]="modals.confirmationModal.modalTitle" [modalDescription]="modals.confirmationModal.modalDescription" [isDeleteButton]="true" [iconName]="'delete'" [primaryButtonText]="modals.confirmationModal.primaryButtonText" [secondaryButtonText]="modals.confirmationModal.secondaryButtonText"></app-confirmation-modal>
 <div id="athlete-details" *ngIf="selectedAthlete;" [ngClass]="{'active': selectedAthlete && modals.showDetails.isActive}">
     <div>
         <p class="headline margin-bottom-20">Sportler Details</p>

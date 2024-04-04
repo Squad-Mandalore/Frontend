@@ -20,6 +20,7 @@ import { calculateProgress, calculateProgressPercent } from '../../../utils/calc
 import { calculateProgressColor } from '../../../utils/calculate-progress';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AlertService } from '../../shared/alert.service';
+import { CompletesService } from '../../shared/generated';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,7 +31,7 @@ import { AlertService } from '../../shared/alert.service';
 })
 
 export class DashboardPageComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private router: Router, private athleteService: AthletesService, private alertService: AlertService) { }
+  constructor(private route: ActivatedRoute, private completesService: CompletesService, private router: Router, private athleteService: AthletesService, private alertService: AlertService) { }
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
   selectedAthlete: AthleteFullResponseSchema | null = null;
@@ -76,7 +77,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     return array.sort((a: any, b: any) => customSort(a, b, sortSettings, "athlete"));
   }
 
-  deleteElement(athlete: AthleteFullResponseSchema | null){
+  deleteAthlete(athlete: AthleteFullResponseSchema | null){
     if(!athlete) return;
     this.athleteService.deleteAhtleteAthletesIdDelete(athlete.id).subscribe({
       next: () => {
@@ -91,6 +92,20 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     this.athletes = this.athletes.filter(element => element.id !== athlete.id);
     this.selectedAthlete = null;
   }
+
+  // deleteCompletedExercise(completes: CompletesResponseSchema){
+  //   if(!completes || !this.selectedAthlete) return;
+  //   this.completesService.deleteAhtleteCompletesIdDelete(completes.exercise.id).subscribe({
+  //     next: () => {
+  //       this.alertService.show('Übung erfolgreich gelöscht', 'Der Athlet wurde erfolgreich entfernt', "success");
+  //     },
+  //     error: (error: HttpErrorResponse) => {
+  //       this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
+  //     }
+  //   })
+    
+  //   this.selectedAthlete.completes = this.selectedAthlete.completes.filter(element => element.exercise.id !== completes.exercise.id);
+  // }
 
   getActiveFilters(){
     let counter = 0;
@@ -163,125 +178,125 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       });
     }
 
-    // this.athletes.push(
-    //   {
-    //     id: "1",
-    //     username: 'test1',
-    //     email: 'test1@example.com',
-    //     firstname: 'John',
-    //     lastname: 'Doe',
-    //     created_at: '2024-02-26',
-    //     gender: "m",
-    //     last_password_change: '2024-02-26',
-    //     last_edited_at: '2024-02-26',
-    //     birthday: '2003-02-26',
-    //     type: 'Sportler',
-    //     certificates: [],
-    //     trainer: {
-    //       id: "1",
-    //       username: "john_doe",
-    //       email: "john@example.com",
-    //       firstname: "John",
-    //       lastname: "Doe",
-    //       created_at: "2023-01-01",
-    //       last_password_change: "2023-05-01",
-    //       last_edited_at: "2023-10-01",
-    //       type: "Trainer",
-    //     },
-    //     completes: [
-    //       {
-    //         athlete_id: "1",
-    //         exercise: {
-    //           id: "1",
-    //           title: "50 Meter Sprint",
-    //           category: {
-    //             id: "1",
-    //             title: "Schnelligkeit",
-    //           },
-    //           from_age: 1,
-    //           to_age: 9,
-    //           rules: [],
-    //         },
-    //         tracked_by: "Kay Schulz",
-    //         tracked_at: "12.10.2023",
-    //         result: "10s",
-    //         points: 3
-    //       },
-    //       {
-    //         athlete_id: "2",
-    //         exercise: {
-    //           id: "2",
-    //           title: "Long Jump",
-    //           category: {
-    //             id: "1",
-    //             title: "Schnelligkeit",
-    //           },
-    //           from_age: 10,
-    //           to_age: 15,
-    //           rules: []
-    //         },
-    //         tracked_by: "Lisa Müller",
-    //         tracked_at: "14.10.2023",
-    //         result: "4.2m",
-    //         points: 2,
-    //       },
-    //       {
-    //         athlete_id: "3",
-    //         exercise: {
-    //           id: "3",
-    //           title: "High Jump",
-    //           category: {
-    //             id: "2",
-    //             title: "Koordination",
-    //           },
-    //           from_age: 16,
-    //           to_age: 20,
-    //           rules: []
-    //         },
-    //         tracked_by: "Max Mustermann",
-    //         tracked_at: "16.10.2023",
-    //         result: "1.9m",
-    //         points: 1,
-    //       },
-    //       {
-    //         athlete_id: "4",
-    //         exercise: {
-    //           id: "4",
-    //           title: "100 Meter Sprint",
-    //           category: {
-    //             id: "1",
-    //             title: "Schnelligkeit",
-    //           },
-    //           from_age: 21,
-    //           to_age: 30,
-    //           rules: []
-    //         },
-    //         tracked_by: "Emma Schmidt",
-    //         tracked_at: "18.10.2023",
-    //         result: "11s",
-    //         points: 2
-    //       },
-    //       {
-    //         athlete_id: "5",
-    //         exercise: {
-    //           id: "5",
-    //           title: "Shot Put",
-    //           category: {
-    //             id: "3",
-    //             title: "Kraft",
-    //           },
-    //           from_age: 31,
-    //           to_age: 40,
-    //           rules: []
-    //         },
-    //         tracked_by: "Sophie Fischer",
-    //         tracked_at: "20.10.2023",
-    //         result: "14.5m",
-    //         points: 1,
-    //       }
-    //     ]
-    //   }
-    // )
+    this.athletes.push(
+      {
+        id: "1",
+        username: 'test1',
+        email: 'test1@example.com',
+        firstname: 'John',
+        lastname: 'Doe',
+        created_at: '2024-02-26',
+        gender: "m",
+        last_password_change: '2024-02-26',
+        last_edited_at: '2024-02-26',
+        birthday: '2003-02-26',
+        type: 'Sportler',
+        certificates: [],
+        trainer: {
+          id: "1",
+          username: "john_doe",
+          email: "john@example.com",
+          firstname: "John",
+          lastname: "Doe",
+          created_at: "2023-01-01",
+          last_password_change: "2023-05-01",
+          last_edited_at: "2023-10-01",
+          type: "Trainer",
+        },
+        completes: [
+          {
+            athlete_id: "1",
+            exercise: {
+              id: "1",
+              title: "50 Meter Sprint",
+              category: {
+                id: "1",
+                title: "Schnelligkeit",
+              },
+              from_age: 1,
+              to_age: 9,
+              rules: [],
+            },
+            tracked_by: "Kay Schulz",
+            tracked_at: "12.10.2023",
+            result: "10s",
+            points: 3
+          },
+          {
+            athlete_id: "2",
+            exercise: {
+              id: "2",
+              title: "Long Jump",
+              category: {
+                id: "1",
+                title: "Schnelligkeit",
+              },
+              from_age: 10,
+              to_age: 15,
+              rules: []
+            },
+            tracked_by: "Lisa Müller",
+            tracked_at: "14.10.2023",
+            result: "4.2m",
+            points: 2,
+          },
+          {
+            athlete_id: "3",
+            exercise: {
+              id: "3",
+              title: "High Jump",
+              category: {
+                id: "2",
+                title: "Koordination",
+              },
+              from_age: 16,
+              to_age: 20,
+              rules: []
+            },
+            tracked_by: "Max Mustermann",
+            tracked_at: "16.10.2023",
+            result: "1.9m",
+            points: 1,
+          },
+          {
+            athlete_id: "4",
+            exercise: {
+              id: "4",
+              title: "100 Meter Sprint",
+              category: {
+                id: "1",
+                title: "Schnelligkeit",
+              },
+              from_age: 21,
+              to_age: 30,
+              rules: []
+            },
+            tracked_by: "Emma Schmidt",
+            tracked_at: "18.10.2023",
+            result: "11s",
+            points: 2
+          },
+          {
+            athlete_id: "5",
+            exercise: {
+              id: "5",
+              title: "Shot Put",
+              category: {
+                id: "3",
+                title: "Kraft",
+              },
+              from_age: 31,
+              to_age: 40,
+              rules: []
+            },
+            tracked_by: "Sophie Fischer",
+            tracked_at: "20.10.2023",
+            result: "14.5m",
+            points: 1,
+          }
+        ]
+      }
+    )
 
     this.routeSubscription = this.route.params.subscribe(params => {
       const athleteId = params['id'];
