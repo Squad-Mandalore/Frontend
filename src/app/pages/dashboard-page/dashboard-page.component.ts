@@ -49,9 +49,9 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   // deleteElement(athlete: AthleteFullResponseSchema | null){
   deleteElement(){
     this.confirmationService.show(
-      'Benutzer wirklich löschen?', 
-      'Mit dieser Aktion wird der ausgewählte Benutzer unwiderruflich gelöscht.', 
-      'Benutzer löschen', 
+      'Benutzer wirklich löschen?',
+      'Mit dieser Aktion wird der ausgewählte Benutzer unwiderruflich gelöscht.',
+      'Benutzer löschen',
       'Abbrechen',
       true,
       () => {

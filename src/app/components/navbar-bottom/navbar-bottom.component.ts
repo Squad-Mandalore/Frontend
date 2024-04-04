@@ -6,6 +6,7 @@ import { CreateTrainerModalComponent } from '../create-trainer-modal/create-trai
 import { CreateAthleteModalComponent } from '../create-athlete-modal/create-athlete-modal.component';
 import {AuthService} from "../../shared/generated";
 import {AuthExtentionService} from "../../shared/auth-extention.service";
+import { animate, style, transition, trigger } from '@angular/animations';
 
 
 @Component({
@@ -13,7 +14,19 @@ import {AuthExtentionService} from "../../shared/auth-extention.service";
   standalone: true,
   imports: [UserCardComponent, CommonModule, RouterModule, CreateTrainerModalComponent, CreateAthleteModalComponent],
   templateUrl: './navbar-bottom.component.html',
-  styleUrl: './navbar-bottom.component.scss'
+  styleUrl: './navbar-bottom.component.scss',
+    animations: [
+        trigger('enterAnimation', [
+            transition(':enter', [
+                style({opacity: 0}),
+                animate('300ms', style({opacity: 1}))
+            ]),
+            transition(':leave', [
+                style({opacity: 1}),
+                animate('300ms', style({opacity: 0}))
+            ])
+        ])
+    ]
 })
 export class NavbarBottomComponent {
   urlParts: any = [];
