@@ -36,7 +36,7 @@ export class CreateAthleteModalComponent implements OnInit {
   createAthleteForm;
   showFirstPage: boolean = true;
   isMale: boolean = true;
-  isSringMale: Gender = "m";
+  isStringMale: Gender = "m";
   @Input() modals!: any;
 
   constructor(private athleteApi: AthletesService,
@@ -70,23 +70,27 @@ export class CreateAthleteModalComponent implements OnInit {
       return;
     }
     if (!this.isMale) {
-      this.isSringMale = "f"
+      this.isStringMale = "f"
     }
+    const day = this.createAthleteForm.value.day!
+    const month = this.createAthleteForm.value.month!
+    const year = this.createAthleteForm.value.year!
 
-    let body : AthletePostSchema = {
+    const body : AthletePostSchema = {
     username: this.createAthleteForm.value.username!,
     email: this.createAthleteForm.value.email!,
     unhashed_password: this.createAthleteForm.value.unhashed_password!,
     firstname: this.createAthleteForm.value.firstname!,
     lastname: this.createAthleteForm.value.lastname!,
-    birthday: this.createAthleteForm.value.year! + "-" + this.createAthleteForm.value.month!.toString().padStart(2,'0') + "-" + this.createAthleteForm.value.day!.padStart(2,'0'),
-    gender: this.isSringMale!
+    birthday: year + "-" + month.toString().padStart(2,'0') + "-" + day.toString().padStart(2,'0'),
+    gender: this.isStringMale!
     }
 
 
       this.athleteApi.createAthleteAthletesPost(body).subscribe({
         next: () => {
           this.click.emit();
+          this.createAthleteForm.reset()
         },
         error: (error) => {
           if(error.status == 422){
