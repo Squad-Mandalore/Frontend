@@ -27,7 +27,7 @@
         <div id="sidebar-content-wrapper">
             <div id="sidebar-content" class="filled">
                 <div *ngFor="let athlete of customFilterCall(athletes, {firstname: {filterValue: searchValue, valueFullFit: false}, lastname: {filterValue: searchValue, valueFullFit: false} }, false)">
-                    <a (click)="delegateSelection(athlete)">
+                    <a [routerLink]="['/athleten']" [queryParams]="{id: athlete.id}">
                         <app-athlete-card [athlete]="athlete" [isActive]="athlete.id === selectedAthlete?.id"></app-athlete-card>
                     </a>
                 </div>
