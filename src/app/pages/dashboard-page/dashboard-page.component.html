@@ -12,7 +12,7 @@
                 <app-icon [iconName]="selectedAthlete.gender === 'm' ? 'male' : 'female'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
             </div>
             <div class="chip">
-                <span>geboren am {{selectedAthlete.birthday}}</span>
+                <span>geboren am {{selectedAthlete.birthday | date:'dd.MM.yyyy'}}</span>
                 <app-icon [iconName]="'star'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
             </div>
             <app-secondary-button class="secondary-button" [text]="'Details'" [strokeWidth]="'1.5'" (click)="modals.showDetails.isActive = true"></app-secondary-button>
@@ -276,7 +276,7 @@
             </div>
             <div class="flex items-center full-width justify-between inter-medium">
                 <div class="font-size-15 half-width accent-500">geboren am:</div>
-                <div class="font-size-15 half-width accent-500">{{selectedAthlete.birthday}}</div>
+                <div class="font-size-15 half-width accent-500">{{selectedAthlete.birthday | date:'dd.MM.yyyy'}}</div>
             </div>
         </div>
     </div>
