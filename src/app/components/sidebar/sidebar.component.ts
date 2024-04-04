@@ -19,7 +19,6 @@ export class SidebarComponent {
   @Input() athletes: AthleteFullResponseSchema[] = [];
   @Input() modals: any = {};
   @Input() isLoading!: boolean;
-  @Input() selectedAthlete!: AthleteFullResponseSchema | null;
   searchValue = "";
 
   customFilterCall(array: any[], options: Object, selectionFullFit:boolean = false){

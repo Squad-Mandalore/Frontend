@@ -20,7 +20,7 @@ export class AthleteCardComponent {
   constructor(private route: ActivatedRoute) { }
   routeSubscription!: Subscription;
 
-  @Input() isActive: boolean = false;
+  isActive: boolean = false;
   @Input() athlete!: AthleteFullResponseSchema;
 
   getProgress(completes: CompletesResponseSchema[]){
@@ -33,6 +33,19 @@ export class AthleteCardComponent {
 
   customFilterCall(array: any[], options: Object, selectionFullFit: boolean){
     return customFilter(array, options, selectionFullFit, "athlete");
+  }
+
+  ngOnInit(): void {
+    this.routeSubscription = this.route.queryParams.subscribe(params => {
+      const routeId = params['id'];
+      this.isActive = !!(routeId && routeId == this.athlete.id);
+    })
+  }
+
+  ngOnDestroy(): void {
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
   }
 }
 
