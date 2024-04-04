@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { NavbarBottomComponent } from '../../components/navbar-bottom/navbar-bottom.component';
@@ -8,28 +8,25 @@ import { UserCardComponent } from '../../components/user-card/user-card.componen
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { AthleteResponseSchema, AthletesService, CompletesResponseSchema } from '../../shared/generated';
+import { AthleteResponseSchema, AthleteFullResponseSchema, AthletesService, CompletesResponseSchema, CompletesService } from '../../shared/generated';
 
 import customSort from '../../../utils/custom-sort';
 import customFilter from '../../../utils/custom-filter';
-import { AthleteFullResponseSchema } from '../../shared/generated';
 import { calculateProgress, calculateProgressPercent } from '../../../utils/calculate-progress';
 import { calculateProgressColor } from '../../../utils/calculate-progress';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AlertService } from '../../shared/alert.service';
-import { CompletesService } from '../../shared/generated';
 import { ConfirmationService } from '../../shared/confirmation.service';
-import { AthletesService } from '../../shared/generated';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponent, DatePipe, ConfirmationModalComponent, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
+  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss'
 })
 
-export class DashboardPageComponent implements OnInit, OnDestroy {
+export class DashboardPageComponent implements OnInit {
   constructor(private route: ActivatedRoute, private confirmationService: ConfirmationService, private router: Router, private athleteService: AthletesService, private alertService: AlertService) { }
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""

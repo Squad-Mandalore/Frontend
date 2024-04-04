@@ -381,7 +381,7 @@
         <span class="margin-left-auto inter-medium accent-500 font-size-15">erstellt am {{selectedAthlete.created_at | date:'dd.MM.yyyy'}} von {{selectedAthlete.trainer.firstname}} {{selectedAthlete.trainer.lastname}}</span>
         <div class="flex items-center gap-10 full-width">
             <app-secondary-button class="full-width" (click)="modals.showDetails.isActive = false" [text]="'Abbrechen'" [minWidth]="'100%'"></app-secondary-button>
-            <app-primary-button class="full-width" [isDeleteButton]="true" [text]="'Benutzer löschen'" [minWidth]="'100%'" [iconName]="'delete'" [strokeWidth]="'2'" (click)="modals.confirmationModal.isActive = true" id="delete-button"></app-primary-button>
+            <app-primary-button class="full-width" [isDeleteButton]="true" [text]="'Benutzer löschen'" [minWidth]="'100%'" [iconName]="'delete'" [strokeWidth]="'2'" (click)="deleteAthlete(selectedAthlete)" id="delete-button"></app-primary-button>
         </div>
     </div>
 </div>
