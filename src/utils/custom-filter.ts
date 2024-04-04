@@ -8,8 +8,8 @@ export default function customFilter(array: any[], filterOptions: Object, select
     for (const [key, value] of entries){
       if (!value.filterValue) counter++;
       else if (key === "category" && type === "athlete"){
-        if (value.valueFullFit && element.exercise_id.category.title === value.filterValue) counter++;
-        else if (!value.valueFullFit &&  element.exercise_id.category.title.toLowerCase().includes(value.filterValue.toLowerCase())) counter++;
+        if (value.valueFullFit && element.exercise.category.title === value.filterValue) counter++;
+        else if (!value.valueFullFit &&  element.exercise.category.title.toLowerCase().includes(value.filterValue.toLowerCase())) counter++;
       }
       else if(key === "category" && type === "exercise"){
         if (value.valueFullFit && element.category.title === value.filterValue) counter++;

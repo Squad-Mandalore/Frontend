@@ -7,16 +7,16 @@ export default function customSort(a: any, b: any, sortSettings: {property: stri
         element_b = new Date(b[sortSettings.property].split(".").reverse().join("/")).getTime();
     }
     else if(sortSettings.property === "category" && type === "athlete"){
-        element_a = a.exercise_id.category.title;
-        element_b = b.exercise_id.category.title;
+        element_a = a.exercise.category.title;
+        element_b = b.exercise.category.title;
     }
     else if(sortSettings.property === "category" && type === "exercise"){
         element_a = a.category.title;
         element_b = b.category.title;
     }
     else if(sortSettings.property === "discipline" && type === "athlete"){
-        element_a = a.exercise_id.title;
-        element_b = b.exercise_id.title;
+        element_a = a.exercise.title;
+        element_b = b.exercise.title;
     }
     else{
         element_a = a[sortSettings.property];

@@ -3,7 +3,7 @@
     <div id="content" *ngIf="selectedAthlete; else elseBlock">
         <div id="headline-wrapper">
             <p class="headline">Sportler-Übersicht</p>
-            <p class="meta-text">registriert am {{selectedAthlete.created_at}} von {{selectedAthlete.trainer.firstname}} {{selectedAthlete.trainer.lastname}}</p>
+            <p class="meta-text">registriert am {{ selectedAthlete.created_at | date:'dd.MM.yyyy'}} von {{selectedAthlete.trainer.firstname}} {{selectedAthlete.trainer.lastname}}</p>
         </div>
         <div id="general-information-wrapper">
             <app-user-card [user]="selectedAthlete"></app-user-card>
@@ -88,7 +88,7 @@
                                         <input class="input" placeholder="Suchen" #customDateFilter (input)="setFilter('tracked_at', customDateFilter.value, false)" [value]="customDateFilter.value"/>
                                     </div>
                                     <div *ngFor="let date of getTrackingDates(selectedAthlete.completes)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_at', date)">
-                                        <span>{{date}}</span>
+                                        <span>{{date | date:'dd.MM.yyyy'}}</span>
                                         <app-icon *ngIf="filter['tracked_at'] && filter['tracked_at'].filterValue === date" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                 </div>
@@ -144,11 +144,11 @@
                             </div>
                         </div>
                         <div class="table-item" *ngFor="let result of customSortCall(customFilterCall(selectedAthlete.completes, filter, true), this.sorting); index as i;">
-                            <span>{{result.exercise_id.title}}</span>
+                            <span>{{result.exercise.title}}</span>
                             <span>{{result.result}}</span>
                             <span>{{result.points !== 3 ? result.points === 2 ? 'Silber' : 'Bronze' : 'Gold'}}</span>
-                            <span>{{result.exercise_id.category.title}}</span>
-                            <span>{{result.tracked_at}}</span>
+                            <span>{{result.exercise.category.title}}</span>
+                            <span>{{result.tracked_at | date:'dd.MM.yyyy'}}</span>
                             <span>{{result.tracked_by}}</span>
                             <div class="flex items-center more-icon cursor-pointer">
                                 <app-icon [iconName]="'more-vertical'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'20'" [iconWidth]="'20'"></app-icon>
@@ -379,7 +379,7 @@
         </div>
     </div>
     <div class="flex flex-col gap-30 margin-top-auto">
-        <span class="margin-left-auto inter-medium accent-500 font-size-15">erstellt am {{selectedAthlete.created_at}} von {{selectedAthlete.trainer.firstname}} {{selectedAthlete.trainer.lastname}}</span>
+        <span class="margin-left-auto inter-medium accent-500 font-size-15">erstellt am {{selectedAthlete.created_at | date:'dd.MM.yyyy'}} von {{selectedAthlete.trainer.firstname}} {{selectedAthlete.trainer.lastname}}</span>
         <div class="flex items-center gap-10 full-width">
             <app-secondary-button class="full-width" (click)="modals.showDetails.isActive = false" [text]="'Abbrechen'" [minWidth]="'100%'"></app-secondary-button>
             <app-primary-button class="full-width" [isDeleteButton]="true" [text]="'Benutzer löschen'" [minWidth]="'100%'" [iconName]="'delete'" [strokeWidth]="'2'" (click)="modals.confirmationModal.isActive = true" id="delete-button"></app-primary-button>

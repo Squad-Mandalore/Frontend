@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { NavbarBottomComponent } from '../../components/navbar-bottom/navbar-bottom.component';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf, DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { UserCardComponent } from '../../components/user-card/user-card.component';
@@ -24,7 +24,7 @@ import { AlertService } from '../../shared/alert.service';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponent, ConfirmationModalComponent, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
+  imports: [SidebarComponent, DatePipe, ConfirmationModalComponent, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss'
 })
@@ -191,7 +191,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     //     completes: [
     //       {
     //         athlete_id: "1",
-    //         exercise_id: {
+    //         exercise: {
     //           id: "1",
     //           title: "50 Meter Sprint",
     //           category: {
@@ -200,20 +200,16 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     //           },
     //           from_age: 1,
     //           to_age: 9,
-    //           gold_value: "8s",
-    //           silver_value: "9s",
-    //           bronze_value: "10s",
-    //           created_at: "12.09.2023",
+    //           rules: [],
     //         },
     //         tracked_by: "Kay Schulz",
-    //         completed_at: "12.10.2023",
+    //         tracked_at: "12.10.2023",
     //         result: "10s",
-    //         points: 3,
-    //         dbs: false,
+    //         points: 3
     //       },
     //       {
     //         athlete_id: "2",
-    //         exercise_id: {
+    //         exercise: {
     //           id: "2",
     //           title: "Long Jump",
     //           category: {
@@ -222,20 +218,16 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     //           },
     //           from_age: 10,
     //           to_age: 15,
-    //           gold_value: "5m",
-    //           silver_value: "4.5m",
-    //           bronze_value: "4m",
-    //           created_at: "14.09.2023",
+    //           rules: []
     //         },
     //         tracked_by: "Lisa Müller",
-    //         completed_at: "14.10.2023",
+    //         tracked_at: "14.10.2023",
     //         result: "4.2m",
     //         points: 2,
-    //         dbs: false,
     //       },
     //       {
     //         athlete_id: "3",
-    //         exercise_id: {
+    //         exercise: {
     //           id: "3",
     //           title: "High Jump",
     //           category: {
@@ -244,20 +236,16 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     //           },
     //           from_age: 16,
     //           to_age: 20,
-    //           gold_value: "2m",
-    //           silver_value: "1.8m",
-    //           bronze_value: "1.6m",
-    //           created_at: "16.09.2023",
+    //           rules: []
     //         },
     //         tracked_by: "Max Mustermann",
-    //         completed_at: "16.10.2023",
+    //         tracked_at: "16.10.2023",
     //         result: "1.9m",
     //         points: 1,
-    //         dbs: false,
     //       },
     //       {
     //         athlete_id: "4",
-    //         exercise_id: {
+    //         exercise: {
     //           id: "4",
     //           title: "100 Meter Sprint",
     //           category: {
@@ -266,20 +254,16 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     //           },
     //           from_age: 21,
     //           to_age: 30,
-    //           gold_value: "10s",
-    //           silver_value: "11s",
-    //           bronze_value: "12s",
-    //           created_at: "18.09.2023",
+    //           rules: []
     //         },
     //         tracked_by: "Emma Schmidt",
-    //         completed_at: "18.10.2023",
+    //         tracked_at: "18.10.2023",
     //         result: "11s",
-    //         points: 2,
-    //         dbs: false,
+    //         points: 2
     //       },
     //       {
     //         athlete_id: "5",
-    //         exercise_id: {
+    //         exercise: {
     //           id: "5",
     //           title: "Shot Put",
     //           category: {
@@ -288,37 +272,33 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     //           },
     //           from_age: 31,
     //           to_age: 40,
-    //           gold_value: "15m",
-    //           silver_value: "14m",
-    //           bronze_value: "13m",
-    //           created_at: "20.09.2023",
+    //           rules: []
     //         },
     //         tracked_by: "Sophie Fischer",
-    //         completed_at: "20.10.2023",
+    //         tracked_at: "20.10.2023",
     //         result: "14.5m",
     //         points: 1,
-    //         dbs: false,
     //       }
     //     ]
     //   }
     // )
 
-    // this.routeSubscription = this.route.params.subscribe(params => {
-    //   const athleteId = params['id'];
-    //   if(athleteId){
-    //     // this.selectedAthlete = this.athletes.filter(element => element.id == athleteId)[0] ?? null;
+    this.routeSubscription = this.route.params.subscribe(params => {
+      const athleteId = params['id'];
+      if(athleteId){
+        // this.selectedAthlete = this.athletes.filter(element => element.id == athleteId)[0] ?? null;
 
-    //     this.athleteService.getAthleteFullAthletesIdFullGet(athleteId).subscribe({
-    //       next: (fullAthleteObject: AthleteFullResponseSchema) => {
-    //         this.selectedAthlete = fullAthleteObject;
-    //       },
-    //       error: (error: HttpErrorResponse) => {
-    //         this.alertService.show('Abfrage der Athletendetails fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
-    //         this.router.navigate(['/athleten']);
-    //       }
-    //     })
-    //   }
-    // })
+        this.athleteService.getAthleteFullAthletesIdFullGet(athleteId).subscribe({
+          next: (fullAthleteObject: AthleteFullResponseSchema) => {
+            this.selectedAthlete = fullAthleteObject;
+          },
+          error: (error: HttpErrorResponse) => {
+            this.alertService.show('Abfrage der Athletendetails fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
+            this.router.navigate(['/athleten']);
+          }
+        })
+      }
+    })
   }
 
   ngOnDestroy(): void {
