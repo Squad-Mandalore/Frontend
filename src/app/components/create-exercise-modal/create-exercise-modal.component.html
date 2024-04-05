@@ -1,0 +1,108 @@
+<div id="overlay" (click)="modals.createExerciseModal.isActive = false"></div>
+<div id="modal">
+  <div id="modal-header">
+    <p id="modal-headline">Neue Leistung erfassen</p>
+    <app-icon (click)="modals.createExerciseModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+  </div>
+  <div id="input-wrapper" [ngSwitch]="pageShow">
+
+    <!--Disziplin auswahl Menü-->
+    <div id="discipline-menu" *ngSwitchCase="1">
+      <div id="choose-discipline">Disziplin auswählen</div>
+      <div>
+        <app-primary-button (click)="this.pageShow = 2" [text]="'Anzahl'" [minWidth]="'100%'"></app-primary-button>
+        <div class="test-button-space"></div>
+        <app-primary-button (click)="this.pageShow = 3" [text]="'Zeit'" [minWidth]="'100%'"></app-primary-button>
+        <div class="test-button-space"></div>
+        <app-primary-button (click)="this.pageShow = 4" [text]="'Entfernung'" [minWidth]="'100%'"></app-primary-button>
+        <div class="test-button-space"></div>
+        <app-primary-button (click)="this.pageShow = 5" [text]="'Medaillie'" [minWidth]="'100%'"></app-primary-button>
+      </div>
+      <div id="modal-footer">
+        <app-secondary-button (click)="modals.createExerciseModal.isActive = false" [text]="'Schließen'" [minWidth]="'100%'" [description]="'Zurück zur Dashboardansicht.'"></app-secondary-button>
+        <app-primary-button [text]="'Weiter'" [minWidth]="'100%'" [description]="'Zum Disziplin Auswahlmenü.'"></app-primary-button>
+      </div>
+    </div>  
+
+    <!--Anzahl Menü-->
+    <div id="count-menu" *ngSwitchCase="2">
+      <div class="specific-discipline">##Hier Disziplin einfügen##</div>
+      <label class="count-label">
+        <input class="input" type="number" name="anzahl" placeholder="Anzahl"/>
+      </label>
+      <div id="modal-footer">
+        <app-secondary-button (click)="this.pageShow = 1" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Zurück zur Disziplinauswahl.'"></app-secondary-button>
+        <app-primary-button [text]="'Erfassen'" [minWidth]="'100%'" [description]="'speichert die Leistung'"></app-primary-button>
+      </div>
+    </div> 
+
+    <!--Zeit Menü-->
+    <div *ngSwitchCase="3">
+      <div class="specific-discipline">##Hier Disziplin einfügen##</div>
+      <div id="time-menu">
+
+          <input class="time-input" type="number" name="hours" placeholder="hh" style="display: inline-block"/>
+          :
+          <input class="time-input" type="number" name="minutes" placeholder="mm" style="display: inline-block;"/>
+          :
+          <input class="time-input" type="number" name="seconds" placeholder="ss" style="display: inline-block;"/>
+          :
+          <input class="time-input" type="number" name="milliseconds" placeholder="ms" style="display: inline-block;"/>
+
+      </div>
+      <div id="modal-footer">
+        <app-secondary-button (click)="this.pageShow = 1" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Zurück zur Disziplinauswahl.'"></app-secondary-button>
+        <app-primary-button [text]="'Erfassen'" [minWidth]="'100%'" [description]="'speichert die Leistung'"></app-primary-button>
+      </div>
+    </div> 
+
+    <!--Entfernung Menü-->
+    <div id="distance-menu" *ngSwitchCase="4">
+      <div class="specific-discipline">##Hier Disziplin einfügen##</div>
+      <div id="time-menu">
+
+        <input class="time-input" type="number" name="hours" placeholder="km" style="display: inline-block"/>
+        ,
+        <input class="time-input" type="number" name="minutes" placeholder="m" style="display: inline-block;"/>
+        ,
+        <input class="time-input" type="number" name="seconds" placeholder="cm" style="display: inline-block;"/>
+
+    </div>
+      <div id="modal-footer">
+        <app-secondary-button (click)="this.pageShow = 1" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Zurück zur Disziplinauswahl.'"></app-secondary-button>
+        <app-primary-button [text]="'Erfassen'" [minWidth]="'100%'" [description]="'speichert die Leistung'"></app-primary-button>
+      </div>
+    </div> 
+
+    <!--Medaillien Menü-->
+    <div id="medal-menu" *ngSwitchCase="5">
+      <div class="specific-discipline">##Hier Disziplin einfügen##</div>
+      <div>
+        <div class="option" onclick="highlightSelection(this)">
+          <input type="radio" id="option1" name="options" value="option1">
+          <label for="option1">Option 1</label>
+        </div>
+        <div class="option" onclick="highlightSelection(this)">
+          <input type="radio" id="option2" name="options" value="option2">
+          <label for="option2">Option 2</label>
+        </div>
+        <div class="option" onclick="highlightSelection(this)">
+          <input type="radio" id="option3" name="options" value="option3">
+          <label for="option3">Option 3</label>
+        </div>
+        <div class="option" onclick="highlightSelection(this)">
+          <input type="radio" id="option4" name="options" value="option4">
+          <label for="option4">Option 4</label>
+        </div>        
+      </div>
+      <div id="modal-footer">
+        <app-secondary-button (click)="this.pageShow = 1" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Zurück zur Disziplinauswahl.'"></app-secondary-button>
+        <app-primary-button [text]="'Erfassen'" [minWidth]="'100%'" [description]="'speichert die Leistung'"></app-primary-button>
+      </div>
+    </div> 
+
+  </div>
+</div>
+
+
+

@@ -86,7 +86,7 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.exerciseService.getAllExercisesExercisesAllGet().subscribe({
+    this.exerciseService.getAllExercisesExercisesGet().subscribe({
       next: (exercises: ExerciseResponseSchema[]) => {
         this.exercises = exercises;
         console.log(exercises);

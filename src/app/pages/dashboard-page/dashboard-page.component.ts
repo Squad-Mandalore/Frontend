@@ -8,25 +8,23 @@ import { UserCardComponent } from '../../components/user-card/user-card.componen
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { AthleteResponseSchema, AthleteFullResponseSchema, AthletesService, CompletesResponseSchema, CompletesService } from '../../shared/generated';
+import { AthleteResponseSchema, CompletesResponseSchema, CompletesService } from '../../shared/generated';
 import { Subscription } from 'rxjs';
 import customSort from '../../../utils/custom-sort';
 import customFilter from '../../../utils/custom-filter';
 import { calculateProgress, calculateProgressPercent } from '../../../utils/calculate-progress';
 import { calculateProgressColor } from '../../../utils/calculate-progress';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AlertService } from '../../shared/alert.service';
 import { ConfirmationService } from '../../shared/confirmation.service';
 import { AthleteFullResponseSchema } from '../../shared/generated';
 import { AthletesService } from '../../shared/generated';
 import { AlertService } from '../../shared/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CreateExerciseTimeComponent } from '../../components/create-exercise-time-modal/create-exercise-time-modal.component';
+import { CreateExerciseComponent } from '../../components/create-exercise-modal/create-exercise-modal.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, CreateExerciseTimeComponent],
+  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, CreateExerciseComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss'
 })
@@ -48,7 +46,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     createAthleteModal: {
       isActive: false,
     },
-    createExerciseTimeModal: {
+    createExerciseModal: {
       isActive: false,
     },
     showDetails: {
@@ -157,7 +155,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if(this.athletes.length === 0){
-      this.athleteService.getAllAthletesAthletesAllGet().subscribe({
+      this.athleteService.getAllAthletesAthletesGet().subscribe({
         next: (athletes: AthleteResponseSchema[]) => {
           for(const athlete of athletes){
             this.athleteService.getAthleteFullAthletesIdFullGet(athlete.id).subscribe({
