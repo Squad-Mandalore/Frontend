@@ -45,6 +45,7 @@ export class CreateAthleteModalComponent {
               private utilService: UtilService
 
   ) {
+    // Initialize Form and Validators for received Data
     this.createAthleteForm = this.formBuilder.group({
       username: ['', Validators.required],
       unhashed_password: ['', [Validators.required, this.utilService.passwordValidator]],
@@ -62,44 +63,51 @@ export class CreateAthleteModalComponent {
       this.logger.error("Form invalid")
       return;
     }
+    // For switch between Male / Female, because clickable div is used
     if (!this.isMale) {
       this.isStringMale = "f"
     }
+
+    // Get date values from the Form
     const day = this.createAthleteForm.value.day!
     const month = this.createAthleteForm.value.month!
     const year = this.createAthleteForm.value.year!
 
+    // Add Data for the Http-Request for the Backend
     const body : AthletePostSchema = {
     username: this.createAthleteForm.value.username!,
     email: this.createAthleteForm.value.email!,
     unhashed_password: this.createAthleteForm.value.unhashed_password!,
     firstname: this.createAthleteForm.value.firstname!,
     lastname: this.createAthleteForm.value.lastname!,
-    birthday: year + "-" + month.toString().padStart(2,'0') + "-" + day.toString().padStart(2,'0'),
+    birthday: year + "-" + month.toString().padStart(2,'0') + "-" + day.toString().padStart(2,'0'), // Format Birthday for Backend
     gender: this.isStringMale!
     }
 
-
-      this.athleteApi.createAthleteAthletesPost(body).subscribe({
-        next: () => {
-        this.alertService.show('Athlet erstellt', 'Athlet wurde erfolgreich erstellt.', 'success');
-        this.modals.createAthleteModal.isActive = false;
-        },
-        error: (error) => {
-          if(error.status == 422){
-            this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
-          }else{
-            this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen',"error");
-          }
+    // Http-Request for Post of the Athlete to the Backend
+    this.athleteApi.createAthleteAthletesPost(body).subscribe({
+      // Post Athlete if allowed
+      next: () => {
+      this.alertService.show('Athlet erstellt', 'Athlet wurde erfolgreich erstellt.', 'success');
+      this.modals.createAthleteModal.isActive = false;
+      },
+      // Deny Athlete if Backend send Http-Error
+      error: (error) => {
+        if(error.status == 422){
+          this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
+        }else{
+          this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen',"error");
         }
-    })
+      }
+  })
   }
 
-
+  // Page-Switch
   onClickSwitchPage() {
     this.showFirstPage = !this.showFirstPage;
   }
 
+  // clickable div for Gender
   onClickSwitchGender(value: string) {
     this.isMale = value === "male";
   }
