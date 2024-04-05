@@ -50,7 +50,19 @@ export class UtilService {
   public validatePass(password:string) {
     return schema.validate(password);
   }
+
+  public validateSimplePass(password:string) {
+    return simpleSchema.validate(password)
+  }
 }
+
+const simpleSchema = new PassValidator();
+
+simpleSchema
+  .has().digits()
+  .has().lowercase()
+  .has().uppercase()
+  .is().min(10)
 
 const schema = new PassValidator();
 
