@@ -68,12 +68,12 @@
     </div>
   <div id="modal-footer">
     <ng-container *ngIf="showFirstPage">
-      <app-secondary-button (click)="modals.createAthleteModal.isActive = false" [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+      <app-secondary-button (click)=onButtonClick() [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
       <app-primary-button (click)=onClickSwitchPage() [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
     </ng-container>
     <ng-container *ngIf="!showFirstPage">
       <app-secondary-button (click)=onClickSwitchPage() [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
-      <app-primary-button [disabled]="createAthleteForm.invalid" (click)=onSubmit() [text]="'Sportler anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
+      <app-primary-button [disabled]="!createAthleteForm.valid" (click)=onSubmit() [text]="'Sportler anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-primary-button>
     </ng-container>
   </div>
 </div>

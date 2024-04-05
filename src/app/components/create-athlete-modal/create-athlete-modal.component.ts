@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {NgClass, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
-import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AlertComponent} from "../alert/alert.component";
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
@@ -11,6 +10,7 @@ import {AthletePostSchema, AthletesService, Gender} from "../../shared/generated
 import {LoggerService} from "../../shared/logger.service";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
+import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -49,7 +49,7 @@ export class CreateAthleteModalComponent implements OnInit {
     this.createAthleteForm = this.formBuilder.group({
       username: ['', Validators.required],
       unhashed_password: ['', [Validators.required, utilService.passwordValidator]],
-      email: ['', Validators.required],
+      email: ['', [Validators.required, utilService.regEmailValidator]],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       day: ['', Validators.required],
@@ -113,7 +113,8 @@ export class CreateAthleteModalComponent implements OnInit {
 
   onButtonClick() {
     console.log("close");
-    this.click.emit();
+    this.modals.createAthleteModal.isActive = false
+    this.createAthleteForm.reset()
   }
 }
 

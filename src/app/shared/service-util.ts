@@ -2,12 +2,13 @@ import generator from 'generate-password-ts'
 import PassValidator from "password-validator";
 import {Injectable} from "@angular/core";
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import {LoggerService} from "./logger.service";
 
 @Injectable({providedIn: 'root'})
 export class UtilService {
 
 
-  constructor() {
+  constructor(private logger: LoggerService) {
   }
 
   /**
@@ -26,10 +27,30 @@ export class UtilService {
     })
   }
 
+  /**
+   * For Form Validator
+   * validates a password with pre-setting requirements -> schema: PassValidator
+   * @return {boolean} - true or false Value if valid / not valid
+   */
+
   public passwordValidator(): ValidatorFn{
     return (control: AbstractControl): ValidationErrors | null => {
       const valid = this.validatePass(control.value);
       return !valid ? {invalidPassword: {value: control.value}} : null;
+    }
+  }
+
+  /**
+   * For Form Validator
+   * validates a email with pre-setting requirements -> emailRegex
+   * @return {boolean} - true or false Value if valid / not valid
+   */
+
+  public regEmailValidator(): ValidatorFn{
+    return (control: AbstractControl): ValidationErrors | null => {
+      this.logger.info('Tested: ' + control.value + ' with: ' + emailRegex)
+      const valid = emailRegex.test(control.value);
+      return !valid ? {invalidEmail: {value: control.value}} : null;
     }
   }
 
@@ -42,9 +63,9 @@ export class UtilService {
   public validatePass(password:string) {
     return schema.validate(password);
   }
-
 }
 
+const emailRegex: RegExp = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$');
 const schema = new PassValidator();
 
 schema
