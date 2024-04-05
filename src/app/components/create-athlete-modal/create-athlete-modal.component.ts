@@ -10,7 +10,6 @@ import {AthletePostSchema, AthletesService, Gender} from "../../shared/generated
 import {LoggerService} from "../../shared/logger.service";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
-import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -31,8 +30,7 @@ import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angula
   templateUrl: './create-athlete-modal.component.html',
   styleUrl: './create-athlete-modal.component.scss'
 })
-export class CreateAthleteModalComponent implements OnInit {
-  @Output() click = new EventEmitter<any>();
+export class CreateAthleteModalComponent {
   createAthleteForm;
   showFirstPage: boolean = true;
   isMale: boolean = true;
@@ -48,7 +46,7 @@ export class CreateAthleteModalComponent implements OnInit {
   ) {
     this.createAthleteForm = this.formBuilder.group({
       username: ['', Validators.required],
-      unhashed_password: ['', [Validators.required, utilService.passwordValidator]],
+      unhashed_password: ['', [Validators.required, this.utilService.passwordValidator]],
       email: ['', [Validators.required, Validators.email]],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
@@ -57,12 +55,6 @@ export class CreateAthleteModalComponent implements OnInit {
       year: ['', Validators.required],
     })
   }
-
-  ngOnInit(): void {
-    this.logger.info("gock")
-
-
-    }
 
   onSubmit() {
     if (this.createAthleteForm.invalid){
@@ -89,14 +81,14 @@ export class CreateAthleteModalComponent implements OnInit {
 
       this.athleteApi.createAthleteAthletesPost(body).subscribe({
         next: () => {
-          this.click.emit();
-          this.createAthleteForm.reset()
+        this.alertService.show('Athlet erstellt', 'Athlet wurde erfolgreich erstellt.', 'success');
+        this.modals.createAthleteModal.isActive = false;
         },
         error: (error) => {
           if(error.status == 422){
             this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
           }else{
-            this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen! Bitte nochmal versuchen.',"error");
+            this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen',"error");
           }
         }
     })
