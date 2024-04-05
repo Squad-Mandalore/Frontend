@@ -95,7 +95,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   //       this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
   //     }
   //   })
-    
+
   //   this.selectedAthlete.completes = this.selectedAthlete.completes.filter(element => element.exercise.id !== completes.exercise.id);
   // }
 
@@ -149,7 +149,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if(this.athletes.length === 0){
-      this.athleteService.getAllAthletesAthletesAllGet().subscribe({
+      this.athleteService.getAllAthletesAthletesGet().subscribe({
         next: (athletes: AthleteResponseSchema[]) => {
           for(const athlete of athletes){
             this.athleteService.getAthleteFullAthletesIdFullGet(athlete.id).subscribe({
