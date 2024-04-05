@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IconComponent } from "../icon/icon.component";
+import {UtilService} from "../../shared/service-util";
 
 
 @Component({
@@ -61,7 +62,7 @@ export class PasswordBoxComponent implements ControlValueAccessor {
     strengthTextContent: string = 'Schwach';
     inputType = "password";
 
-    constructor() {
+    constructor(private utilService: UtilService) {
 
     }
 
@@ -122,7 +123,7 @@ export class PasswordBoxComponent implements ControlValueAccessor {
             this.strengthTextContent = 'Gut';
             this.strengthBarWidth = '70%';
             this.strengthBarColor = '#2ecc71'; // Green
-        } else {
+        } else if (this.utilService.validatePass(this.value)) {
             this.strengthTextContent = 'Sehr stark';
             this.strengthBarWidth = '100%';
             this.strengthBarColor = '#2ecc71'; // Green
