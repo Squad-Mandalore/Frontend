@@ -17,11 +17,16 @@ import { calculateProgressColor } from '../../../utils/calculate-progress';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AlertService } from '../../shared/alert.service';
 import { ConfirmationService } from '../../shared/confirmation.service';
+import { AthleteFullResponseSchema } from '../../shared/generated';
+import { AthletesService } from '../../shared/generated';
+import { AlertService } from '../../shared/alert.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { CreateExerciseTimeComponent } from '../../components/create-exercise-time-modal/create-exercise-time-modal.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
+  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, CreateExerciseTimeComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss'
 })
@@ -41,6 +46,9 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       isActive: false,
     },
     createAthleteModal: {
+      isActive: false,
+    },
+    createExerciseTimeModal: {
       isActive: false,
     },
     showDetails: {

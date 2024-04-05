@@ -95,13 +95,13 @@
                             </div>
                         </div>
                     </div>
-                    <app-primary-button *ngIf="selectedAthlete.completes.length > 0" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
+                    <app-primary-button (click)="modals.createExerciseTimeModal.isActive = true" *ngIf="selectedAthlete.results.length > 0" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
                 </div>
                 <div class="empty-state" *ngIf="selectedAthlete.completes.length === 0; else filledState">
                     <img src="assets/img/humans-placeholder.png" alt="people-image">
                     <p class="headline-small">Noch keine Werte vorhanden</p>
                     <p class="text-small text-align-center">Starte jetzt eine Leistungserfassung in den Kategorien Kraft, Ausdauer, Schnelligkeit oder Koordination.</p>
-                    <app-primary-button [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
+                    <app-primary-button (click)="modals.createExerciseTimeModal.isActive = true" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
                 </div>
                 <ng-template #filledState>
                     <div id="table-wrapper">
@@ -386,3 +386,5 @@
     </div>
 </div>
 <div id="overlay-lower" *ngIf="selectedAthlete;" (click)="modals.showDetails.isActive = false" [ngClass]="{'active': selectedAthlete && modals.showDetails.isActive}"></div>
+
+<app-create-exercise-time [modals]="modals"></app-create-exercise-time>
