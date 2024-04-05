@@ -86,7 +86,7 @@
                         </div> -->
                     </div>
                 </div>
-                <app-primary-button *ngIf="exercises.length > 0" [text]="'Disziplin hinzufügen'" [iconName]="'plus'"></app-primary-button>
+                <app-primary-button *ngIf="exercises.length > 0" [text]="'Disziplin hinzufügen'" [iconName]="'plus'" (click)="modals.createExerciseModal.isActive = true"></app-primary-button>
             </div>
             <div id="empty-state" *ngIf="exercises.length === 0; else filledState">
                 <img src="assets/img/humans-running.png" alt="placeholder-image">
@@ -178,3 +178,4 @@
     </div>
 </div>
 <app-navbar-bottom [modals]="modals"></app-navbar-bottom>
+<app-create-exercise-modal [@enterAnimation] *ngIf="modals.createExerciseModal.isActive" [modals]="modals"></app-create-exercise-modal>

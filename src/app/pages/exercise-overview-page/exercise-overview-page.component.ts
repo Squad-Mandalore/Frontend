@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { NavbarBottomComponent } from '../../components/navbar-bottom/navbar-bottom.component';
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { ExerciseResponseSchema, ExercisesService } from '../../shared/generated';
+import { ExercisePostSchema, ExerciseResponseSchema, ExercisesService } from '../../shared/generated';
 import { UserCardComponent } from '../../components/user-card/user-card.component';
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
@@ -13,13 +13,27 @@ import { ConfirmationModalComponent } from '../../components/confirmation-modal/
 import { AlertService } from '../../shared/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmationService } from '../../shared/confirmation.service';
+import { CreateExerciseModalComponent } from '../../components/create-exercise-modal/create-exercise-modal.component';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-exercise-overview',
   standalone: true,
-  imports: [SidebarComponent, ConfirmationModalComponent, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
+  imports: [SidebarComponent, ConfirmationModalComponent, CreateExerciseModalComponent, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
   templateUrl: './exercise-overview-page.component.html',
-  styleUrl: './exercise-overview-page.component.scss'
+  styleUrl: './exercise-overview-page.component.scss',
+  animations: [
+    trigger('enterAnimation', [
+      transition(':enter', [
+        style({opacity: 0}),
+        animate('200ms', style({opacity: 1}))
+      ]),
+      transition(':leave', [
+        style({opacity: 1}),
+        animate('200ms', style({opacity: 0}))
+      ])
+    ])
+  ]
 })
 
 export class ExerciseOverviewComponent implements OnInit, OnDestroy {
@@ -36,6 +50,9 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
     },
     createAthleteModal: {
       isActive: false,
+    },
+    createExerciseModal: {
+      isActive: false
     }
   }
 
@@ -93,8 +110,25 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
     this.searchValue = value;
   }
 
+  createExercise(title: string, category_id: string, from_age: number, to_age: number){
+    const schema: ExercisePostSchema = {
+      title: title, 
+      category_id: category_id, 
+      from_age: from_age, 
+      to_age: to_age
+    };
+    this.exerciseService.createExerciseExercisesPost(schema).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.alertService.show('Erstellen der Übung fehlgeschlagen', 'Bitte versuche es später erneut', "error");
+      }
+    });
+  }
+
   ngOnInit(): void {
-    this.exerciseService.getAllExercisesExercisesAllGet().subscribe({
+    this.exerciseService.getAllExercisesExercisesGet().subscribe({
       next: (exercises: ExerciseResponseSchema[]) => {
         this.exercises = exercises;
         console.log(exercises);
