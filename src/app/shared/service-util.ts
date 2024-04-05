@@ -40,19 +40,6 @@ export class UtilService {
     }
   }
 
-  /**
-   * For Form Validator
-   * validates a email with pre-setting requirements -> emailRegex
-   * @return {boolean} - true or false Value if valid / not valid
-   */
-
-  public regEmailValidator(): ValidatorFn{
-    return (control: AbstractControl): ValidationErrors | null => {
-      this.logger.info('Tested: ' + control.value + ' with: ' + emailRegex)
-      const valid = emailRegex.test(control.value);
-      return !valid ? {invalidEmail: {value: control.value}} : null;
-    }
-  }
 
   /**
    * validates a password with pre-setting requirements -> schema: PassValidator
@@ -65,7 +52,6 @@ export class UtilService {
   }
 }
 
-const emailRegex: RegExp = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$');
 const schema = new PassValidator();
 
 schema

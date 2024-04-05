@@ -49,7 +49,7 @@ export class CreateAthleteModalComponent implements OnInit {
     this.createAthleteForm = this.formBuilder.group({
       username: ['', Validators.required],
       unhashed_password: ['', [Validators.required, utilService.passwordValidator]],
-      email: ['', [Validators.required, utilService.regEmailValidator]],
+      email: ['', [Validators.required, Validators.email]],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       day: ['', Validators.required],
