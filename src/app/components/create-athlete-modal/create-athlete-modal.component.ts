@@ -10,6 +10,7 @@ import {AthletePostSchema, AthletesService, Gender} from "../../shared/generated
 import {LoggerService} from "../../shared/logger.service";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
+import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -103,10 +104,5 @@ export class CreateAthleteModalComponent {
     this.isMale = value === "male";
   }
 
-  onButtonClick() {
-    console.log("close");
-    this.modals.createAthleteModal.isActive = false
-    this.createAthleteForm.reset()
-  }
 }
 

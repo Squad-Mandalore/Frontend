@@ -1,13 +1,14 @@
 import {TestBed} from '@angular/core/testing';
 import {UtilService} from './service-util';
 import PassValidator from 'password-validator';
+import {provideHttpClient} from "@angular/common/http";
 
 describe('UtilService', () => {
   let service: UtilService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [UtilService, PassValidator],
+      providers: [UtilService, PassValidator, provideHttpClient()],
     });
 
     service = TestBed.inject(UtilService);

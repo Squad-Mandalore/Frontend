@@ -96,6 +96,8 @@ describe('CreateAthleteModalComponent', () => {
     });
     component.onSubmit();
 
+    expect(component.createAthleteForm.invalid).toBeTruthy();
+
     component.createAthleteForm.setValue({
       day: '3',
       month: '1',
@@ -107,6 +109,39 @@ describe('CreateAthleteModalComponent', () => {
       year: '2005'
     });
     component.onSubmit();
+
+    expect(component.createAthleteForm.valid).toBeTruthy();
+
+  });
+
+  it('should validate form fields', () => {
+    const form = component.createAthleteForm;
+    // Set invalid values for testing
+    form.setValue({
+      username: '', // empty username
+      unhashed_password: 'password123', // valid password
+      email: 'invalidemail', // invalid email
+      firstname: '', // empty firstname
+      lastname: '', // empty lastname
+      day: '32', // invalid day
+      month: '13', // invalid month
+      year: '2022' // valid year
+    });
+
+    // Trigger form submission
+    component.onSubmit();
+
+    // Expect the form to be invalid due to invalid inputs
+    expect(form.invalid).toBe(true);
+
+    // Expect appropriate error messages for each invalid field
+    expect(form.get('username')!.errors!).toBeTruthy();
+    expect(form.get('unhashed_password')!.errors).toBeNull(); // No error for password
+    expect(form.get('email')!.errors!).toBeTruthy();
+    expect(form.get('firstname')!.errors!).toBeTruthy();
+    expect(form.get('lastname')!.errors!).toBeTruthy();
+    expect(form.get('day')!.errors!).toBeFalsy(); // Invalid pattern for day
+    expect(form.get('month')!.errors!).toBeFalsy(); // Invalid pattern for month
   });
 
 });
