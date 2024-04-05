@@ -7,6 +7,7 @@ import { CreateAthleteModalComponent } from '../create-athlete-modal/create-athl
 import {AuthService} from "../../shared/generated";
 import {AuthExtentionService} from "../../shared/auth-extention.service";
 import { animate, style, transition, trigger } from '@angular/animations';
+import { enterLeaveAnimation } from '../../shared/animation';
 
 
 @Component({
@@ -15,17 +16,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
   imports: [UserCardComponent, CommonModule, RouterModule, CreateTrainerModalComponent, CreateAthleteModalComponent],
   templateUrl: './navbar-bottom.component.html',
   styleUrl: './navbar-bottom.component.scss',
-    animations: [
-        trigger('enterAnimation', [
-            transition(':enter', [
-                style({opacity: 0}),
-                animate('200ms', style({opacity: 1}))
-            ]),
-            transition(':leave', [
-                style({opacity: 1}),
-                animate('200ms', style({opacity: 0}))
-            ])
-        ])
+  animations: [
+    enterLeaveAnimation
     ]
 })
 export class NavbarBottomComponent {
