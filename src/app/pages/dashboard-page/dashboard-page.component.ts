@@ -19,12 +19,12 @@ import { AthleteFullResponseSchema } from '../../shared/generated';
 import { AthletesService } from '../../shared/generated';
 import { AlertService } from '../../shared/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CreateExerciseComponent } from '../../components/create-exercise-modal/create-exercise-modal.component';
+import { CreateCompletesComponent } from '../../components/create-completes-modal/create-completes-modal.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, CreateExerciseComponent],
+  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, CreateCompletesComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss'
 })
@@ -46,7 +46,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     createAthleteModal: {
       isActive: false,
     },
-    createExerciseModal: {
+    createCompletesModal: {
       isActive: false,
     },
     showDetails: {

@@ -1,8 +1,8 @@
-<div id="overlay" (click)="modals.createExerciseModal.isActive = false"></div>
-<form id="modal" [formGroup]="createExerciseForm" (ngSubmit)="onSubmit()">
+<div id="overlay" (click)="modals.createCompletesModal.isActive = false"></div>
+<form id="modal" [formGroup]="createCompletesForm" (ngSubmit)="onSubmit()">
   <div id="modal-header">
     <p id="modal-headline">Neue Leistung erfassen</p>
-    <app-icon (click)="modals.createExerciseModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+    <app-icon (click)="modals.createCompletesModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
   </div>
   <div id="input-wrapper" [ngSwitch]="pageShow">
 
@@ -19,7 +19,7 @@
         <app-primary-button (click)="pageShow = 5" [text]="'Medaillie'" [minWidth]="'100%'"></app-primary-button>
       </div>
       <div id="modal-footer">
-        <app-secondary-button (click)="modals.createExerciseModal.isActive = false" [text]="'Schließen'" [minWidth]="'100%'" [description]="'Zurück zur Dashboardansicht.'"></app-secondary-button>
+        <app-secondary-button (click)="modals.createCompletesModal.isActive = false" [text]="'Schließen'" [minWidth]="'100%'" [description]="'Zurück zur Dashboardansicht.'"></app-secondary-button>
         <app-primary-button [text]="'Weiter'" [minWidth]="'100%'" [description]="'Zum Disziplin Auswahlmenü.'"></app-primary-button>
       </div>
     </div>  

@@ -16,7 +16,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 
 
 @Component({
-  selector: 'app-create-exercise',
+  selector: 'app-create-completes',
   standalone: true,
   imports: [
     IconComponent,
@@ -32,12 +32,12 @@ import { HttpErrorResponse } from "@angular/common/http";
     AlertComponent,
     NgFor
   ],
-  templateUrl: './create-exercise-modal.component.html',
-  styleUrl: './create-exercise-modal.component.scss'
+  templateUrl: './create-completes-modal.component.html',
+  styleUrl: './create-completes-modal.component.scss'
 })
 
-export class CreateExerciseComponent implements OnInit{
-  createExerciseForm;
+export class CreateCompletesComponent implements OnInit{
+  createCompletesForm;
   pageShow = 1;
   completes: ResponseGetCategoriesByIdCategoriesGet = [];
   @Input() selectedAthlete!: AthleteFullResponseSchema | null;
@@ -71,7 +71,7 @@ export class CreateExerciseComponent implements OnInit{
     private categoriesService: CategoriesService
 
   ){
-    this.createExerciseForm = this.formBuilder.group({
+    this.createCompletesForm = this.formBuilder.group({
       exercise_id: ['', Validators.required],
       athlete_id: ['', Validators.required],
       tracked_at: ['0', Validators.required],
@@ -88,22 +88,22 @@ export class CreateExerciseComponent implements OnInit{
   }
 
   onSubmit() {
-    const { exercise_id, athlete_id, result } = this.createExerciseForm.value;
+    const { exercise_id, athlete_id, result } = this.createCompletesForm.value;
   
 
     //if(this.createExerciseForm.value.hours != ''){
-      const hours = +this.createExerciseForm.value.hours!;
-      const minutes = +this.createExerciseForm.value.minutes!;
-      const seconds = +this.createExerciseForm.value.seconds!;
-      const milliseconds = +this.createExerciseForm.value.milliseconds!;
+      const hours = +this.createCompletesForm.value.hours!;
+      const minutes = +this.createCompletesForm.value.minutes!;
+      const seconds = +this.createCompletesForm.value.seconds!;
+      const milliseconds = +this.createCompletesForm.value.milliseconds!;
 
       this.completesData.result = this.submitNewTime(hours, minutes, seconds, milliseconds);
     //}
 
-    if(this.createExerciseForm.value.kilometers != ''){
-      const kilometers = +this.createExerciseForm.value.kilometers!;
-      const meters = +this.createExerciseForm.value.meters!;
-      const centimeters = +this.createExerciseForm.value.centimeters!;
+    if(this.createCompletesForm.value.kilometers != ''){
+      const kilometers = +this.createCompletesForm.value.kilometers!;
+      const meters = +this.createCompletesForm.value.meters!;
+      const centimeters = +this.createCompletesForm.value.centimeters!;
 
       this.completesData.result = this.submitNewDistance(kilometers, meters, centimeters);
     }
@@ -117,7 +117,7 @@ export class CreateExerciseComponent implements OnInit{
       this.completesService.createCompletesCompletesPost(this.completesData).subscribe({
         next: () => {
         this.alertService.show('Eintrag erfasst', 'Eintrag wurde erfolgreich hinzugefügt.', 'success');
-        this.modals.createExerciseModal.isActive = false;
+        this.modals.createCompletesModal.isActive = false;
         },
         error: (error) => {
             this.alertService.show('Erfassung fehlgeschlagen','Bei der Erfassung ist etwas schief gelaufen',"error");

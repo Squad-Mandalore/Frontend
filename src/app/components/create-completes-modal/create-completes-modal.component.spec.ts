@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateExerciseComponent } from './create-exercise-modal.component';
+import { CreateExerciseComponent } from './create-completes-modal.component';
 
 describe('CreateExerciseComponent', () => {
   let component: CreateExerciseComponent;

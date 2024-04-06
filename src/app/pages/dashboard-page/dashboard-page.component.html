@@ -95,13 +95,13 @@
                             </div>
                         </div>
                     </div>
-                    <app-primary-button (click)="modals.createExerciseModal.isActive = true" *ngIf="selectedAthlete.completes.length > 0" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
+                    <app-primary-button (click)="modals.createCompletesModal.isActive = true" *ngIf="selectedAthlete.completes.length > 0" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
                 </div>
                 <div class="empty-state" *ngIf="selectedAthlete.completes.length === 0; else filledState">
                     <img src="assets/img/humans-placeholder.png" alt="people-image">
                     <p class="headline-small">Noch keine Werte vorhanden</p>
                     <p class="text-small text-align-center">Starte jetzt eine Leistungserfassung in den Kategorien Kraft, Ausdauer, Schnelligkeit oder Koordination.</p>
-                    <app-primary-button (click)="modals.createExerciseModal.isActive = true" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
+                    <app-primary-button (click)="modals.createCompletesModal.isActive = true" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
                 </div>
                 <ng-template #filledState>
                     <div id="table-wrapper">
@@ -388,4 +388,4 @@
 <div id="overlay-lower" *ngIf="selectedAthlete;" (click)="modals.showDetails.isActive = false" [ngClass]="{'active': selectedAthlete && modals.showDetails.isActive}"></div>
 
 <!--TODO: @enterAnimation hierfür machen broskys-->
-<app-create-exercise [@enterAnimation] *ngIf="modals.createExerciseModal.isActive" [modals]="modals" [selectedAthlete]="selectedAthlete"></app-create-exercise>
+<app-create-completes [@enterAnimation] *ngIf="modals.createCompletesModal.isActive" [modals]="modals" [selectedAthlete]="selectedAthlete"></app-create-completes>
