@@ -148,8 +148,6 @@
                     </div>
                     <div class="table-item" *ngFor="let exercise of customSortCall(customFilterCall(customFilterCall(exercises, filter, true), {title: {filterValue: searchValue, valueFullFit: false}, gold_value: {filterValue: searchValue, valueFullFit: false}, silver_value: {filterValue: searchValue, valueFullFit: false}, bronze_value: {filterValue: searchValue, valueFullFit: false}, created_at: {filterValue: searchValue, valueFullFit: false}, category: {filterValue: searchValue, valueFullFit: false} }, false), sorting); index as i;">
                         <span>{{exercise.title}}</span>
-                        <span>{{exercise.from_age}}</span>
-                        <span>{{exercise.to_age}}</span>
                         <!-- <span>{{exercise.gold_value}}</span>
                         <span>{{exercise.silver_value}}</span>
                         <span>{{exercise.bronze_value}}</span> -->

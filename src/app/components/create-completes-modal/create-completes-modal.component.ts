@@ -4,7 +4,7 @@ import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angula
 import {AlertComponent} from "../alert/alert.component";
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
-import {AthleteFullResponseSchema, AthletePostSchema, AthletesService, CategoriesService, CategoryVeryFullResponseSchema, ResponseGetCategoriesByIdCategoriesGet} from "../../shared/generated";
+import {AthleteFullResponseSchema, AthletePostSchema, AthletesService, CategoriesService, CategoryFullResponseSchema, CategoryVeryFullResponseSchema} from "../../shared/generated";
 import {LoggerService} from "../../shared/logger.service";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
@@ -12,6 +12,7 @@ import { SecondaryButtonComponent } from "../buttons/secondary-button/secondary-
 import { Component, Input, OnInit } from "@angular/core";
 import {CompletesPostSchema, CompletesService} from "../../shared/generated";
 import { HttpErrorResponse } from "@angular/common/http";
+import { ResponseGetCategoriesByAthleteIdCategoriesGet } from "../../shared/generated";
 
 
 
@@ -39,7 +40,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 export class CreateCompletesComponent implements OnInit{
   createCompletesForm;
   pageShow = 1;
-  completes: ResponseGetCategoriesByIdCategoriesGet = [];
+  categories: ResponseGetCategoriesByAthleteIdCategoriesGet = [];
   @Input() selectedAthlete!: AthleteFullResponseSchema | null;
   @Input() modals!: any;
 
@@ -110,9 +111,9 @@ export class CreateCompletesComponent implements OnInit{
   
 
     this.completesData.exercise_id = exercise_id!;
-    this.completesData.exercise_id = '3fba1a26-36ae-419a-9a83-1b7d826dba9e';
+    this.completesData.exercise_id = '4f51a627-6618-430c-a83e-7edc13cc435c';
     this.completesData.athlete_id = athlete_id!;
-    this.completesData.athlete_id = 'b83df1a0-f239-48a2-ae84-9abcf4d6e611';
+    this.completesData.athlete_id = 'ace95e35-9042-468c-87a0-5e26bcef782f';
 
       this.completesService.createCompletesCompletesPost(this.completesData).subscribe({
         next: () => {
@@ -218,10 +219,10 @@ export class CreateCompletesComponent implements OnInit{
     if(!this.selectedAthlete) return;
     console.log(this.selectedAthlete.id)
   
-    this.categoriesService.getCategoriesByIdCategoriesGet(this.selectedAthlete.id).subscribe({
-      next: (response: ResponseGetCategoriesByIdCategoriesGet) => {
-        this.completes = response;
-        console.log(this.completes);
+    this.categoriesService.getCategoriesByAthleteIdCategoriesGet(this.selectedAthlete.id).subscribe({
+      next: (response: ResponseGetCategoriesByAthleteIdCategoriesGet) => {
+        this.categories = response;
+        console.log(this.categories);
       },
       error: (error: HttpErrorResponse) => {
         this.alertService.show('Fetch fehlgeschlagen', 'Die Exercises des Sportlers konnten nicht erfolgreich gefetched werden.', "error");
