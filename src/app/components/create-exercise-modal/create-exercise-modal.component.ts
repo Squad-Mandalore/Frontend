@@ -1,17 +1,18 @@
-import {NgClass, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
+import {NgClass, NgFor, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AlertComponent} from "../alert/alert.component";
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
-import {AthleteFullResponseSchema, AthletePostSchema, AthletesService, CategoriesService, CategoryResponseSchema} from "../../shared/generated";
+import {AthleteFullResponseSchema, AthletePostSchema, AthletesService, CategoriesService, CategoryVeryFullResponseSchema, ResponseGetCategoriesByIdCategoriesGet} from "../../shared/generated";
 import {LoggerService} from "../../shared/logger.service";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
 import { SecondaryButtonComponent } from "../buttons/secondary-button/secondary-button.component";
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import {CompletesPostSchema, CompletesService} from "../../shared/generated";
 import { HttpErrorResponse } from "@angular/common/http";
+
 
 
 @Component({
@@ -28,15 +29,17 @@ import { HttpErrorResponse } from "@angular/common/http";
     PasswordBoxComponent,
     ReactiveFormsModule,
     FormsModule,
-    AlertComponent
+    AlertComponent,
+    NgFor
   ],
   templateUrl: './create-exercise-modal.component.html',
   styleUrl: './create-exercise-modal.component.scss'
 })
 
-export class CreateExerciseComponent {
+export class CreateExerciseComponent implements OnInit{
   createExerciseForm;
   pageShow = 1;
+  completes: ResponseGetCategoriesByIdCategoriesGet = [];
   @Input() selectedAthlete!: AthleteFullResponseSchema | null;
   @Input() modals!: any;
 
@@ -53,10 +56,9 @@ export class CreateExerciseComponent {
     centimeters: null
   }
 
-  public exerciseData: CompletesPostSchema = {
+  public completesData: CompletesPostSchema = {
     exercise_id: '',
     athlete_id: '',
-    tracked_at: '',
     result: '',
     points: 0,
   }
@@ -72,23 +74,50 @@ export class CreateExerciseComponent {
     this.createExerciseForm = this.formBuilder.group({
       exercise_id: ['', Validators.required],
       athlete_id: ['', Validators.required],
-      tracked_at: ['', Validators.required],
+      tracked_at: ['0', Validators.required],
       result: ['', Validators.required],
-      points: ['', Validators.required],
+      points: ['0', Validators.required],
+      hours: ['', Validators.required],
+      minutes: ['', Validators.required],
+      seconds: ['', Validators.required],
+      milliseconds: ['', Validators.required],
+      kilometers: ['', Validators.required],
+      meters: ['', Validators.required],
+      centimeters: ['', Validators.required],
     })
   }
 
   onSubmit() {
     const { exercise_id, athlete_id, result } = this.createExerciseForm.value;
+  
 
-    this.exerciseData.exercise_id = exercise_id!;
-    this.exerciseData.athlete_id = athlete_id!;
-    this.exerciseData.result = result!;
+    //if(this.createExerciseForm.value.hours != ''){
+      const hours = +this.createExerciseForm.value.hours!;
+      const minutes = +this.createExerciseForm.value.minutes!;
+      const seconds = +this.createExerciseForm.value.seconds!;
+      const milliseconds = +this.createExerciseForm.value.milliseconds!;
 
-      this.completesService.createCompletesCompletesPost(this.exerciseData).subscribe({
+      this.completesData.result = this.submitNewTime(hours, minutes, seconds, milliseconds);
+    //}
+
+    if(this.createExerciseForm.value.kilometers != ''){
+      const kilometers = +this.createExerciseForm.value.kilometers!;
+      const meters = +this.createExerciseForm.value.meters!;
+      const centimeters = +this.createExerciseForm.value.centimeters!;
+
+      this.completesData.result = this.submitNewDistance(kilometers, meters, centimeters);
+    }
+  
+
+    this.completesData.exercise_id = exercise_id!;
+    this.completesData.exercise_id = '3fba1a26-36ae-419a-9a83-1b7d826dba9e';
+    this.completesData.athlete_id = athlete_id!;
+    this.completesData.athlete_id = 'b83df1a0-f239-48a2-ae84-9abcf4d6e611';
+
+      this.completesService.createCompletesCompletesPost(this.completesData).subscribe({
         next: () => {
         this.alertService.show('Eintrag erfasst', 'Eintrag wurde erfolgreich hinzugefügt.', 'success');
-        this.modals.createAthleteModal.isActive = false;
+        this.modals.createExerciseModal.isActive = false;
         },
         error: (error) => {
             this.alertService.show('Erfassung fehlgeschlagen','Bei der Erfassung ist etwas schief gelaufen',"error");
@@ -96,47 +125,107 @@ export class CreateExerciseComponent {
     })
   }
 
-  submitNewDistance() {
-    var combinedCentimeters = (this.distance.kilometers! * 100000) + (this.distance.meters! * 100) + (this.distance.centimeters! * 1);
+  // Ich bin verloren.
+  // Lost and not found.
+  // null && !found //.
+
+  submitNewDistance(kilometers: number, meters: number, centimeters: number) {
+    let combinedCentimeters = (kilometers! * 100000) + (meters! * 100) + (centimeters! * 1);
     
-    var kilometersForOutput = Math.floor(combinedCentimeters / 100000);
+    let kilometersResult = '';
+    let metersResult = '';
+    let centimetersResult = '';
+
+    let kilometersForOutput = Math.floor(combinedCentimeters / 100000);
+    if(kilometersForOutput < 10) {
+      kilometersResult = '00'+kilometersForOutput.toString();
+    } else if(kilometersForOutput > 9 && kilometersForOutput < 100) {
+      kilometersResult = '0'+kilometersForOutput.toString();
+    } else {
+      kilometersResult = kilometersForOutput.toString();
+    }
     combinedCentimeters %= 100000;
 
-    var metersForOutput = Math.floor(combinedCentimeters / 100);
+    let metersForOutput = Math.floor(combinedCentimeters / 100);
+    if(metersForOutput < 10) {
+      metersResult = '00'+metersForOutput.toString();
+    } else if(metersForOutput > 9 && metersForOutput < 100) {
+      metersResult = '0'+metersForOutput.toString();
+    } else {
+      metersResult = metersForOutput.toString();
+    }
     combinedCentimeters %= 100;
 
-    var centimetersForOutput = Math.floor(combinedCentimeters / 1);
+    let centimetersForOutput = Math.floor(combinedCentimeters / 1);
+    if(centimetersForOutput < 10) {
+      centimetersResult = '0'+centimetersForOutput.toString();
+    } else {
+      centimetersResult = centimetersForOutput.toString();
+    }
+
+    return kilometersResult+':'+metersResult+':'+centimetersResult;
   }
 
-  submitNewTime(){
-    var combinedSeconds = (this.time.hours! * 3600) + (this.time.minutes! * 60) + (this.time.seconds! * 1) + (this.time.milliseconds! * 0.001);
+  submitNewTime(hours: number, minutes: number, seconds: number, milliseconds: number) {
+    let combinedSeconds = (hours! * 3600) + (minutes! * 60) + (seconds! * 1) + (milliseconds! * 0.001);
     
-    var hoursForOuput = Math.floor(combinedSeconds / 3600);
+    let hoursResult = '';
+    let minutesResult = '';
+    let secondsResult = '';
+    let millisecondsResult = '';
+
+    // Stunden
+    let hoursForOutput = Math.floor(combinedSeconds / 3600);
+    if(hoursForOutput < 10) {
+      hoursResult = '0'+hoursForOutput.toString();
+    } else {
+      hoursResult = hoursForOutput.toString();
+    }
     combinedSeconds %= 3600;
 
-    var minutesForOuput = Math.floor(combinedSeconds / 60);
+    // Minuten
+    let minutesForOutput = Math.floor(combinedSeconds / 60);
+    if(minutesForOutput < 10) {
+      minutesResult = '0'+minutesForOutput.toString();
+    } else {
+      minutesResult = minutesForOutput.toString();
+    }
     combinedSeconds %= 60;
 
-    var secondsForOutput = Math.floor(combinedSeconds / 1);
+    // Sekunden
+    let secondsForOutput = Math.floor(combinedSeconds / 1);
+    if(secondsForOutput < 10) {
+      secondsResult = '0'+secondsForOutput.toString();
+    } else {
+      secondsResult = secondsForOutput.toString();
+    }
     combinedSeconds %= 1;
 
-    var millisecondsForOutput = Math.floor(combinedSeconds * 1000);
+    // Millisekunden
+    let millisecondsForOutput = Math.floor(combinedSeconds * 1000);
+    if(millisecondsForOutput < 10) {
+      millisecondsResult = '00'+millisecondsForOutput.toString();
+    } else if(millisecondsForOutput > 9 && millisecondsForOutput < 100) {
+      millisecondsResult = '0'+millisecondsForOutput.toString();
+    } else {
+      millisecondsResult = millisecondsForOutput.toString();
+    }
+
+    return hoursResult+':'+minutesResult+':'+secondsResult+':'+millisecondsResult;
   }
 
-
-
-  fetchExercises(){
-
-    
+  ngOnInit(): void {
     if(!this.selectedAthlete) return;
     console.log(this.selectedAthlete.id)
-    this.categoriesService.getCategoryCategoriesIdGet(this.selectedAthlete.id).subscribe({
-      next: (response: CategoryResponseSchema) => {
-          console.log(response);
+  
+    this.categoriesService.getCategoriesByIdCategoriesGet(this.selectedAthlete.id).subscribe({
+      next: (response: ResponseGetCategoriesByIdCategoriesGet) => {
+        this.completes = response;
+        console.log(this.completes);
       },
       error: (error: HttpErrorResponse) => {
-          this.alertService.show('Login fehlgeschlagen', 'Benutzername oder Passwort falsch!', "error");
+        this.alertService.show('Fetch fehlgeschlagen', 'Die Exercises des Sportlers konnten nicht erfolgreich gefetched werden.', "error");
       }
-  });
-  }
+    });
+  }  
 }

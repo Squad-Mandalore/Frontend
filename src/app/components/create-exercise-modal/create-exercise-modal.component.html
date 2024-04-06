@@ -1,5 +1,5 @@
 <div id="overlay" (click)="modals.createExerciseModal.isActive = false"></div>
-<form id="modal" (ngSubmit)="onSubmit()">
+<form id="modal" [formGroup]="createExerciseForm" (ngSubmit)="onSubmit()">
   <div id="modal-header">
     <p id="modal-headline">Neue Leistung erfassen</p>
     <app-icon (click)="modals.createExerciseModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
@@ -17,8 +17,6 @@
         <app-primary-button (click)="pageShow = 4" [text]="'Entfernung'" [minWidth]="'100%'"></app-primary-button>
         <div class="test-button-space"></div>
         <app-primary-button (click)="pageShow = 5" [text]="'Medaillie'" [minWidth]="'100%'"></app-primary-button>
-        <div class="test-button-space"></div>
-        <app-primary-button (click)="fetchExercises()" [text]="'Test'" [minWidth]="'100%'"></app-primary-button>
       </div>
       <div id="modal-footer">
         <app-secondary-button (click)="modals.createExerciseModal.isActive = false" [text]="'Schließen'" [minWidth]="'100%'" [description]="'Zurück zur Dashboardansicht.'"></app-secondary-button>
@@ -43,18 +41,18 @@
       <div class="specific-discipline">##Hier Disziplin einfügen##</div>
       <div id="common-menu">
 
-          <input class="multiple-input" type="number" [(ngModel)]="time.hours" placeholder="hh" style="display: inline-block"/>
+          <input class="multiple-input" type="number" [(ngModel)]="time.hours" name="completes-time-hours" formControlName="hours" placeholder="hh" style="display: inline-block"/>
           :
-          <input class="multiple-input" type="number" [(ngModel)]="time.minutes" placeholder="mm" style="display: inline-block;"/>
+          <input class="multiple-input" type="number" [(ngModel)]="time.minutes" name="completes-time-minutes" formControlName="minutes" placeholder="mm" style="display: inline-block;"/>
           :
-          <input class="multiple-input" type="number" [(ngModel)]="time.seconds" placeholder="ss" style="display: inline-block;"/>
+          <input class="multiple-input" type="number" [(ngModel)]="time.seconds" name="completes-time-seconds" formControlName="seconds" placeholder="ss" style="display: inline-block;"/>
           :
-          <input class="multiple-input" type="number" [(ngModel)]="time.milliseconds" placeholder="ms" style="display: inline-block;"/>
+          <input class="multiple-input" type="number" [(ngModel)]="time.milliseconds" name="completes-time-milliseconds" formControlName="milliseconds" placeholder="ms" style="display: inline-block;"/>
 
       </div>
       <div id="modal-footer">
         <app-secondary-button (click)="pageShow = 1" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Zurück zur Disziplinauswahl.'"></app-secondary-button>
-        <app-primary-button (click)="submitNewTime()" [text]="'Erfassen'" [minWidth]="'100%'" [description]="'speichert die Leistung'"></app-primary-button>
+        <app-primary-button [text]="'Erfassen'" [minWidth]="'100%'" [description]="'speichert die Leistung'"></app-primary-button>
       </div>
     </div> 
 
@@ -63,16 +61,16 @@
       <div class="specific-discipline">##Hier Disziplin einfügen##</div>
       <div id="common-menu">
 
-        <input class="multiple-input" type="number" [(ngModel)]="distance.kilometers" placeholder="km" style="display: inline-block"/>
+        <input class="multiple-input" type="number" [(ngModel)]="distance.kilometers" name="completes-distance-kilometers" formControlName="kilometers" placeholder="km" style="display: inline-block"/>
         ,
-        <input class="multiple-input" type="number" [(ngModel)]="distance.meters" placeholder="m" style="display: inline-block;"/>
+        <input class="multiple-input" type="number" [(ngModel)]="distance.meters" name="completes-distance-meters" formControlName="meters" placeholder="m" style="display: inline-block;"/>
         ,
-        <input class="multiple-input" type="number" [(ngModel)]="distance.centimeters" placeholder="cm" style="display: inline-block;"/>
+        <input class="multiple-input" type="number" [(ngModel)]="distance.centimeters" name="completes-distance-centimeters" formControlName="centimeters" placeholder="cm" style="display: inline-block;"/>
 
     </div>
       <div id="modal-footer">
         <app-secondary-button (click)="pageShow = 1" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Zurück zur Disziplinauswahl.'"></app-secondary-button>
-        <app-primary-button (click)="submitNewDistance()" [text]="'Erfassen'" [minWidth]="'100%'" [description]="'speichert die Leistung'"></app-primary-button>
+        <app-primary-button [text]="'Erfassen'" [minWidth]="'100%'" [description]="'speichert die Leistung'"></app-primary-button>
       </div>
     </div> 
 
@@ -105,6 +103,3 @@
 
   </div>
 </form>
-
-
-
