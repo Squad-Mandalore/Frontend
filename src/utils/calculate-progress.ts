@@ -21,9 +21,9 @@ function calculateProgressPercent(completesArray: CompletesResponseSchema[]){
 
 function calculateProgressColor(completesArray: CompletesResponseSchema[]){
     const progress = calculateProgress(completesArray);
-    if(progress >= 4 && progress <= 7) return "var(--bronze)";
-    if(progress >= 8 && progress <= 10) return "var(--silver)";
-    if(progress >= 11 && progress <= 12) return "var(--gold)";
+    if(progress >= 11) return "var(--gold)";
+    if(progress >= 8) return "var(--silver)";
+    if(progress >= 4) return "var(--bronze)";
     return "var(--none)";
 }
 
