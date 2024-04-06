@@ -11,10 +11,14 @@ export default function customSort(a: any, b: any, sortSettings: {property: stri
         element_b = b.exercise.category.title;
     }
     else if(sortSettings.property === "category" && type === "exercise"){
-        element_a = a.category.title;
-        element_b = b.category.title;
+        element_a = a.exercise.category.title;
+        element_b = b.exercise.category.title;
     }
     else if(sortSettings.property === "discipline" && type === "athlete"){
+        element_a = a.exercise.title;
+        element_b = b.exercise.title;
+    }
+    else if(sortSettings.property === "discipline" && type === "exercise"){
         element_a = a.exercise.title;
         element_b = b.exercise.title;
     }

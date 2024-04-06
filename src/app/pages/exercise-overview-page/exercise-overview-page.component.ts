@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { NavbarBottomComponent } from '../../components/navbar-bottom/navbar-bottom.component';
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { ExercisePostSchema, ExerciseResponseSchema, ExercisesService } from '../../shared/generated';
+import { RulePostSchema, RuleResponseSchema, RulesService } from '../../shared/generated';
 import { UserCardComponent } from '../../components/user-card/user-card.component';
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
@@ -37,8 +37,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
 })
 
 export class ExerciseOverviewComponent implements OnInit, OnDestroy {
-  constructor(private alertService: AlertService, private exerciseService: ExercisesService, private confirmationService: ConfirmationService) { }
-  exercises: ExerciseResponseSchema[] = []
+  constructor(private alertService: AlertService, private rulesService: RulesService, private confirmationService: ConfirmationService) { }
+  exercises: RuleResponseSchema[] = [];
   filter: any = {};
   sorting: {property: string, direction: "asc" | "desc"} = {property: 'category', direction: 'asc'};
   searchValue = "";
@@ -56,9 +56,9 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  deleteExercise(exercise: ExerciseResponseSchema){
+  deleteExercise(exercise: RuleResponseSchema){
     this.confirmationService.show("Möchtest du die Übung wirklich löschen?", "Dieser Vorgang kann nicht rückgängig gemacht werden.", "Löschen", "Abbrechen", true, ()=>{
-      this.exerciseService.deleteAhtleteExercisesIdDelete(exercise.id).subscribe({
+      this.rulesService.deleteRuleRulesIdDelete(exercise.id).subscribe({
         next: ()=>{
           this.exercises.filter(element => element.id !== exercise.id);
           this.alertService.show("Löschen erfolgreich", "Die Übung wurde erfolgreich gelöscht", "success");
@@ -80,7 +80,7 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
     this.sorting.direction = "desc";
   }
 
-  customSortCall(array: ExerciseResponseSchema[], sortSettings: {property: string, direction: string}){
+  customSortCall(array: RuleResponseSchema[], sortSettings: {property: string, direction: string}){
     return array.sort((a: any, b: any) => customSort(a, b, sortSettings, "exercise"))
   }
 
@@ -90,6 +90,14 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
       if(this.filter[key] && this.filter[key].filterValue) counter++;
     }
     return counter;
+  }
+
+  getDisciplines(exercises: RuleResponseSchema[]){
+    const trackedDisziplines: string[] = [];
+    for(const exercise of exercises){
+      if(!trackedDisziplines.find(trainer => trainer === exercise.exercise.title)) trackedDisziplines.push(exercise.exercise.title);
+    }
+    return trackedDisziplines;
   }
 
   setFilter(key:string, value:any, valueFullFit: boolean = true){
@@ -110,26 +118,32 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
     this.searchValue = value;
   }
 
-  createExercise(title: string, category_id: string, from_age: number, to_age: number){
-    const schema: ExercisePostSchema = {
-      title: title, 
-      category_id: category_id, 
-      from_age: from_age, 
-      to_age: to_age
-    };
-    this.exerciseService.createExerciseExercisesPost(schema).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-      error: (error: HttpErrorResponse) => {
-        this.alertService.show('Erstellen der Übung fehlgeschlagen', 'Bitte versuche es später erneut', "error");
-      }
-    });
+  createExercise(title: string, category_id: string, from_age: number, to_age: number, bronze_value: string){
+    // const schema: RulePostSchema = {
+    //   title: title, 
+
+    //   gender: Gender;
+    //   from_age: from_age,
+    //   to_age: to_age,
+    //   bronze: bronze_value,
+    //   silver: string;
+    //   gold: string;
+    //   year: string;
+    //   exercise_id: string;
+    // };
+    // this.rulesService.createRuleRulesPost(schema).subscribe({
+    //   next: (response) => {
+    //     console.log(response);
+    //   },
+    //   error: (error: HttpErrorResponse) => {
+    //     this.alertService.show('Erstellen der Übung fehlgeschlagen', 'Bitte versuche es später erneut', "error");
+    //   }
+    // });
   }
 
   ngOnInit(): void {
-    this.exerciseService.getAllExercisesExercisesGet().subscribe({
-      next: (exercises: ExerciseResponseSchema[]) => {
+    this.rulesService.getAllRulesRulesGet().subscribe({
+      next: (exercises: RuleResponseSchema[]) => {
         this.exercises = exercises;
         console.log(exercises);
         this.isLoading = false;
