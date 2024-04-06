@@ -388,4 +388,4 @@
 <div id="overlay-lower" *ngIf="selectedAthlete;" (click)="modals.showDetails.isActive = false" [ngClass]="{'active': selectedAthlete && modals.showDetails.isActive}"></div>
 
 <!--TODO: @enterAnimation hierfür machen broskys-->
-<app-create-exercise [@enterAnimation] *ngIf="modals.createExerciseModal.isActive" [modals]="modals"></app-create-exercise>
+<app-create-exercise [@enterAnimation] *ngIf="modals.createExerciseModal.isActive" [modals]="modals" [selectedAthlete]="selectedAthlete"></app-create-exercise>
