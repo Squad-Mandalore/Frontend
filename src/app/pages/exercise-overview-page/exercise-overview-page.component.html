@@ -147,13 +147,13 @@
                         </div> -->
                     </div>
                     <div class="table-item" *ngFor="let exercise of customSortCall(customFilterCall(customFilterCall(exercises, filter, true), {title: {filterValue: searchValue, valueFullFit: false}, gold_value: {filterValue: searchValue, valueFullFit: false}, silver_value: {filterValue: searchValue, valueFullFit: false}, bronze_value: {filterValue: searchValue, valueFullFit: false}, created_at: {filterValue: searchValue, valueFullFit: false}, category: {filterValue: searchValue, valueFullFit: false} }, false), sorting); index as i;">
-                        <span>{{exercise.title}}</span>
+                        <!-- <span>{{exercise.title}}</span>
                         <span>{{exercise.from_age}}</span>
-                        <span>{{exercise.to_age}}</span>
+                        <span>{{exercise.to_age}}</span> -->
                         <!-- <span>{{exercise.gold_value}}</span>
                         <span>{{exercise.silver_value}}</span>
                         <span>{{exercise.bronze_value}}</span> -->
-                        <span>{{exercise.category.title}}</span>
+                        <!-- <span>{{exercise.category.title}}</span> -->
                         <!-- <span>{{exercise.created_at}}</span> -->
                         <div class="flex items-center more-icon cursor-pointer">
                             <app-icon [iconName]="'more-vertical'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'20'" [iconWidth]="'20'"></app-icon>

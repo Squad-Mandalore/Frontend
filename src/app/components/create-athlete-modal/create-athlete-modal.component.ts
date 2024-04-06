@@ -6,7 +6,7 @@ import {AlertComponent} from "../alert/alert.component";
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
 import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-button.component";
-import {AthletePostSchema, AthletesService, Gender} from "../../shared/generated";
+import {AthletePostSchema, AthleteResponseSchema, AthletesService, Gender} from "../../shared/generated";
 import {LoggerService} from "../../shared/logger.service";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
@@ -87,9 +87,12 @@ export class CreateAthleteModalComponent {
     // Http-Request for Post of the Athlete to the Backend
     this.athleteApi.createAthleteAthletesPost(body).subscribe({
       // Post Athlete if allowed
-      next: () => {
-      this.alertService.show('Athlet erstellt', 'Athlet wurde erfolgreich erstellt.', 'success');
-      this.modals.createAthleteModal.isActive = false;
+      next: (response: AthleteResponseSchema) => {
+        this.alertService.show('Athlet erstellt', 'Athlet wurde erfolgreich erstellt.', 'success');
+        this.modals.createAthleteModal.isActive = false;
+        if(response){
+          // trigger code here
+        }
       },
       // Deny Athlete if Backend send Http-Error
       error: (error) => {

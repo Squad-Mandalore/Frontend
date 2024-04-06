@@ -111,22 +111,22 @@ export class PasswordBoxComponent implements ControlValueAccessor {
         const passwordLength = this.value.length;
 
         // Evaluate password strength
-        if (passwordLength < 5) {
-            this.strengthTextContent = 'Schwach';
-            this.strengthBarWidth = '20%';
-            this.strengthBarColor = '#ff6347'; // Red
-        } else if (passwordLength < 10) {
-            this.strengthTextContent = 'Mittel';
-            this.strengthBarWidth = '50%';
-            this.strengthBarColor = '#ffa500'; // Orange
+        if (this.utilService.validatePass(this.value)) {
+            this.strengthTextContent = 'Sehr stark';
+            this.strengthBarWidth = '100%';
+            this.strengthBarColor = '#2ecc71'; // Green
         } else if (this.utilService.validateSimplePass(this.value)) {
             this.strengthTextContent = 'Gut';
             this.strengthBarWidth = '70%';
             this.strengthBarColor = '#2ecc71'; // Green
-        } else if (this.utilService.validatePass(this.value)) {
-            this.strengthTextContent = 'Sehr stark';
-            this.strengthBarWidth = '100%';
-            this.strengthBarColor = '#2ecc71'; // Green
+        } else if (passwordLength < 10 && passwordLength >= 5) {
+            this.strengthTextContent = 'Mittel';
+            this.strengthBarWidth = '50%';
+            this.strengthBarColor = '#ffa500'; // Orange
+        } else if (passwordLength < 5) {
+            this.strengthTextContent = 'Schwach';
+            this.strengthBarWidth = '20%';
+            this.strengthBarColor = '#ff6347'; // Red
         }
 
         this.onChange(this.value);
