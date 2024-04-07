@@ -4,43 +4,35 @@
     <p id="modal-headline">Neue Leistung erfassen</p>
     <app-icon (click)="modals.createCompletesModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
   </div>
-  <div id="input-wrapper" [ngSwitch]="pageShow">
-
-    <!--Disziplin auswahl Menü-->
-    <div id="discipline-menu" *ngSwitchCase="1">
-      <div id="choose-discipline">Disziplin auswählen</div>
-      <div>
-        <app-primary-button (click)="changePage(2)" [text]="'Anzahl'" [minWidth]="'100%'"></app-primary-button>
-        <div class="test-button-space"></div>
-        <app-primary-button (click)="changePage(3)" [text]="'Zeit'" [minWidth]="'100%'"></app-primary-button>
-        <div class="test-button-space"></div>
-        <app-primary-button (click)="changePage(4)" [text]="'Entfernung'" [minWidth]="'100%'"></app-primary-button>
-        <div class="test-button-space"></div>
-        <app-primary-button (click)="changePage(5)" [text]="'Medaillie'" [minWidth]="'100%'"></app-primary-button>
+  <div class="flex flex-col gap-20 height-full width-full overflow-hidden padding-bottom-60" *ngIf="showPage === 1">
+    <div class="headline-small">Disziplin auswählen</div>
+    <div class="flex flex-col height-full width-full overflow-auto gap-20">
+      <div class="flex items-center gap-10 category-wrapper" *ngFor="let category of categories; index as i;">
+        <div class="discipline-name" data-minheight="150px">
+          <div>{{category.title}}</div>
+        </div>
+        <div class="flex flex-col width-full">
+          <div (click)="selectedExercise = exercise" [ngClass]="{'active': selectedExercise?.title === exercise.title}" class="discipline-item flex items-center space-between" *ngFor="let exercise of category.exercises; index as j;">
+            <div [title]="exercise.title">{{exercise.title}}</div>
+            <div class="flex items-center gap-20" *ngIf="exercise.last_tracked_at">
+              <span>zuletzt: {{exercise.last_tracked_at}}</span>
+              <div class="medal" [ngClass]="exercise.best_result === 3 ? 'gold' : exercise.best_result === 2 ? 'silver' : 'bronze'"></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div id="modal-footer">
-        <app-secondary-button (click)="modals.createCompletesModal.isActive = false" [text]="'Schließen'" [minWidth]="'100%'" [description]="'Zurück zur Dashboardansicht.'"></app-secondary-button>
-        <app-primary-button [text]="'Weiter'" [minWidth]="'100%'" [description]="'Zum Disziplin Auswahlmenü.'"></app-primary-button>
-      </div>
-    </div>  
-
-    <!--Anzahl Menü-->
-    <div id="common-menu" *ngSwitchCase="2">
-      <div class="specific-discipline">##Hier Disziplin einfügen##</div>
+    </div>
+  </div>
+  <div class="flex flex-col gap-20 height-full width-full overflow-hidden padding-bottom-60" *ngIf="showPage === 2">
+    <div class="flex flex-col gap-10 margin-auto width-full" id="common-menu" *ngIf="subPage === 1">
+      <div class="headline-small">{{selectedExercise.title}}</div>
       <label class="count-label">
         <input class="input" type="number" name="anzahl" placeholder="Anzahl"/>
       </label>
-      <div id="modal-footer">
-        <app-secondary-button (click)="changePage(1)" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Zurück zur Disziplinauswahl.'"></app-secondary-button>
-        <app-primary-button [text]="'Erfassen'" [minWidth]="'100%'" [description]="'speichert die Leistung'"></app-primary-button>
-      </div>
-    </div> 
-
-    <!--Zeit Menü-->
-    <div *ngSwitchCase="3">
-      <div class="specific-discipline">##Hier Disziplin einfügen##</div>
+    </div>
+    <div class="flex flex-col gap-10 margin-auto width-full" *ngIf="subPage === 2">
+      <div class="headline-small">{{selectedExercise.title}}</div>
       <div id="common-menu">
-
           <input class="multiple-input" type="number" [(ngModel)]="time.hours" name="completes-time-hours" formControlName="hours" placeholder="hh" style="display: inline-block"/>
           :
           <input class="multiple-input" type="number" [(ngModel)]="time.minutes" name="completes-time-minutes" formControlName="minutes" placeholder="mm" style="display: inline-block;"/>
@@ -48,37 +40,22 @@
           <input class="multiple-input" type="number" [(ngModel)]="time.seconds" name="completes-time-seconds" formControlName="seconds" placeholder="ss" style="display: inline-block;"/>
           :
           <input class="multiple-input" type="number" [(ngModel)]="time.milliseconds" name="completes-time-milliseconds" formControlName="milliseconds" placeholder="ms" style="display: inline-block;"/>
-
-      </div>
-      <div id="modal-footer">
-        <app-secondary-button (click)="changePage(1)" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Zurück zur Disziplinauswahl.'"></app-secondary-button>
-        <app-primary-button [text]="'Erfassen'" [minWidth]="'100%'" [description]="'speichert die Leistung'"></app-primary-button>
       </div>
     </div> 
-
-    <!--Entfernung Menü-->
-    <div id="common-menu" *ngSwitchCase="4">
-      <div class="specific-discipline">##Hier Disziplin einfügen##</div>
+    <div class="flex flex-col gap-10 margin-auto width-full" id="common-menu" *ngIf="subPage === 3">
+      <div class="headline-small">{{selectedExercise.title}}</div>
       <div id="common-menu">
-
         <input class="multiple-input" type="number" [(ngModel)]="distance.kilometers" name="completes-distance-kilometers" formControlName="kilometers" placeholder="km" style="display: inline-block"/>
         ,
         <input class="multiple-input" type="number" [(ngModel)]="distance.meters" name="completes-distance-meters" formControlName="meters" placeholder="m" style="display: inline-block;"/>
         ,
         <input class="multiple-input" type="number" [(ngModel)]="distance.centimeters" name="completes-distance-centimeters" formControlName="centimeters" placeholder="cm" style="display: inline-block;"/>
-
-    </div>
-      <div id="modal-footer">
-        <app-secondary-button (click)="changePage(1)" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Zurück zur Disziplinauswahl.'"></app-secondary-button>
-        <app-primary-button [text]="'Erfassen'" [minWidth]="'100%'" [description]="'speichert die Leistung'"></app-primary-button>
       </div>
     </div> 
-
-    <!--Medaillien Menü-->
-    <div id="common-menu" *ngSwitchCase="5">
-      <div class="specific-discipline">##Hier Disziplin einfügen##</div>
+    <div class="flex flex-col gap-10 margin-auto width-full" id="common-menu" *ngIf="subPage === 4">
+      <div class="headline-small">{{selectedExercise.title}}</div>
       <div>
-        <div class="option" onclick="highlightSelection(this)">
+        <!-- <div class="option" onclick="highlightSelection(this)">
           <input type="radio" id="option1" name="options" value="option1">
           <label for="option1">Option 1</label>
         </div>
@@ -93,13 +70,28 @@
         <div class="option" onclick="highlightSelection(this)">
           <input type="radio" id="option4" name="options" value="option4">
           <label for="option4">Option 4</label>
-        </div>        
+        </div> -->
+        <div id="slider-wrapper">
+          <div class="slider-element" [ngClass]="medal === 'gold' ? 'active' : 'disabled'" (click)="medal = 'gold'">
+              <span>Gold</span>
+          </div>
+          <div class="slider-element" [ngClass]="medal === 'silver' ? 'active' : 'disabled'" (click)="medal = 'silver'">
+              <span>Silber</span>
+          </div>
+          <div class="slider-element" [ngClass]="medal === 'bronze' ? 'active' : 'disabled'" (click)="medal = 'bronze'">
+              <span>Bronze</span>
+          </div>
+          <div class="slider-element" [ngClass]="medal === 'none' ? 'active' : 'disabled'" (click)="medal = 'none'">
+              <span>Keine Medaille</span>
+          </div>
+        </div>
       </div>
-      <div id="modal-footer">
-        <app-secondary-button (click)="changePage(1)" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Zurück zur Disziplinauswahl.'"></app-secondary-button>
-        <app-primary-button [text]="'Erfassen'" [minWidth]="'100%'" [description]="'speichert die Leistung'"></app-primary-button>
-      </div>
-    </div> 
-
+    </div>
+  </div>
+  <div id="modal-footer">
+    <app-secondary-button *ngIf="showPage === 1" (click)="modals.createCompletesModal.isActive = false" [text]="'Schließen'" [minWidth]="'100%'" [description]="'Zurück zur Dashboardansicht.'"></app-secondary-button>
+    <app-secondary-button *ngIf="showPage === 2" (click)="changePage($event, 1)" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Zurück zur Disziplinauswahl.'"></app-secondary-button>
+    <app-primary-button *ngIf="showPage === 1" (click)="changePage($event, 2)" [text]="'Weiter'" [minWidth]="'100%'" [description]="'Zum Disziplin Auswahlmenü.'"></app-primary-button>
+    <app-primary-button *ngIf="showPage === 2" [text]="'Erfassen'" [minWidth]="'100%'" [description]="'speichert die Leistung'"></app-primary-button>
   </div>
 </form>

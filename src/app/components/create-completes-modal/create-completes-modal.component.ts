@@ -1,4 +1,4 @@
-import {NgClass, NgFor, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
+import {NgClass, CommonModule, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AlertComponent} from "../alert/alert.component";
@@ -13,6 +13,8 @@ import { Component, Input, OnInit } from "@angular/core";
 import {CompletesPostSchema, CompletesService} from "../../shared/generated";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ResponseGetCategoriesByAthleteIdCategoriesGet } from "../../shared/generated";
+import customFilter from "../../../utils/custom-filter";
+import customSort from "../../../utils/custom-sort";
 
 
 
@@ -31,7 +33,7 @@ import { ResponseGetCategoriesByAthleteIdCategoriesGet } from "../../shared/gene
     ReactiveFormsModule,
     FormsModule,
     AlertComponent,
-    NgFor
+    CommonModule
   ],
   templateUrl: './create-completes-modal.component.html',
   styleUrl: './create-completes-modal.component.scss'
@@ -39,8 +41,11 @@ import { ResponseGetCategoriesByAthleteIdCategoriesGet } from "../../shared/gene
 
 export class CreateCompletesComponent implements OnInit{
   createCompletesForm;
-  pageShow = 1;
-  categories: ResponseGetCategoriesByAthleteIdCategoriesGet = [];
+  showPage = 1;
+  subPage = 4;
+  medal: string = 'none';
+  categories: any[] = [];
+  selectedExercise: any = null;
   @Input() selectedAthlete!: AthleteFullResponseSchema | null;
   @Input() modals!: any;
 
@@ -88,7 +93,10 @@ export class CreateCompletesComponent implements OnInit{
     })
   }
 
-  changePage(newPage: number){
+  changePage(event: Event, newPage: number){
+    event.preventDefault();
+    if(this.showPage === 1 && newPage === 2 && !this.selectedExercise) return;
+    
     this.createCompletesForm.patchValue({
       hours: '',
       minutes: '',
@@ -98,7 +106,8 @@ export class CreateCompletesComponent implements OnInit{
       meters: '',
       centimeters: '',
     });
-    this.pageShow = newPage;
+    
+    this.showPage = newPage;
   }
 
   onSubmit() {
@@ -228,15 +237,28 @@ export class CreateCompletesComponent implements OnInit{
     return hoursResult+':'+minutesResult+':'+secondsResult+':'+millisecondsResult;
   }
 
+  customSortCall(array: AthleteCompletesResponseSchema[], sortSettings: {property: string, direction: string}){
+    return array.sort((a: any, b: any) => customSort(a, b, sortSettings, "athlete"));
+  }
+
   ngOnInit(): void {
     if(!this.selectedAthlete) return;
     console.log(this.selectedAthlete.id)
     this.completesData.athlete_id = this.selectedAthlete.id;
 
     this.categoriesService.getCategoriesByAthleteIdCategoriesGet(this.selectedAthlete.id).subscribe({
-      next: (response: ResponseGetCategoriesByAthleteIdCategoriesGet) => {
+      next: (response: any) => {
         this.categories = response;
         console.log(this.categories);
+        if(!this.selectedAthlete) return;
+        for(const category of this.categories){
+          for(const exercise of category.exercises){
+            const pastExercises = this.customSortCall(customFilter(this.selectedAthlete.completes, {discipline: {filterValue: exercise.title, valueFullFit: true} }, true, "athlete"), {property: 'completed_at', direction: 'desc'});
+            const pastExercisesPoints = pastExercises.map(element => element.points);
+            exercise.best_result = pastExercisesPoints.length !== 0 ? Math.max(...pastExercisesPoints) : 0;
+            exercise.last_tracked_at = pastExercises.length !== 0 ? pastExercises[0] : null;
+          }
+        }
       },
       error: (error: HttpErrorResponse) => {
         this.alertService.show('Fetch fehlgeschlagen', 'Die Exercises des Sportlers konnten nicht erfolgreich gefetched werden.', "error");
