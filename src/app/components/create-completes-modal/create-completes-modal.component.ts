@@ -110,6 +110,18 @@ export class CreateCompletesComponent implements OnInit{
     this.showPage = newPage;
   }
 
+  determineInputType(exampleValue: string): string {
+    if (exampleValue.match(/^\d{2}:\d{2}:\d{2}:\d{3}$/)) {
+      return 'time';
+    } else if (exampleValue.match(/^\d{3}:\d{3}:\d{2}$/)) {
+      return 'distance';
+    } else if (exampleValue.match(/^\d{4}$/)) {
+      return 'count';
+    } else {
+      return 'medal';
+    }
+  }
+
   onSubmit() {
     const { result } = this.createCompletesForm.value;
   
@@ -131,7 +143,7 @@ export class CreateCompletesComponent implements OnInit{
   
 
     // this.completesData.exercise_id = exercise_id!;
-    this.completesData.exercise_id = '239fea23-2906-4aab-a723-7c624c63f3b4';
+    this.completesData.exercise_id = '621bef13-afa9-4eea-bc8c-ae03acc466a5';
     // this.completesData.athlete_id = athlete_id!;
     // this.completesData.athlete_id = '4d175c47-bf03-4ab8-8ef4-0e4c1f12a331';
 
@@ -241,10 +253,12 @@ export class CreateCompletesComponent implements OnInit{
     return array.sort((a: any, b: any) => customSort(a, b, sortSettings, "athlete"));
   }
 
+
   ngOnInit(): void {
     if(!this.selectedAthlete) return;
     console.log(this.selectedAthlete.id)
     this.completesData.athlete_id = this.selectedAthlete.id;
+    // this.completesData.exercise_id = // hier irgendwie die route zur exercise.id
 
     this.categoriesService.getCategoriesByAthleteIdCategoriesGet(this.selectedAthlete.id).subscribe({
       next: (response: any) => {
