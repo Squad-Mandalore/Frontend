@@ -4,7 +4,7 @@ import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angula
 import {AlertComponent} from "../alert/alert.component";
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
-import {AthleteFullResponseSchema, AthletePostSchema, AthletesService, CategoriesService, CategoryFullResponseSchema, CategoryVeryFullResponseSchema} from "../../shared/generated";
+import {AthleteCompletesResponseSchema, AthleteFullResponseSchema, AthletePostSchema, AthletesService, CategoriesService, CategoryFullResponseSchema, CategoryVeryFullResponseSchema, CompletesResponseSchema} from "../../shared/generated";
 import {LoggerService} from "../../shared/logger.service";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
@@ -111,17 +111,19 @@ export class CreateCompletesComponent implements OnInit{
   
 
     this.completesData.exercise_id = exercise_id!;
-    this.completesData.exercise_id = '4f51a627-6618-430c-a83e-7edc13cc435c';
+    this.completesData.exercise_id = '0c4c0678-5e56-4170-a1cb-3eda7540f96b';
     this.completesData.athlete_id = athlete_id!;
-    this.completesData.athlete_id = 'ace95e35-9042-468c-87a0-5e26bcef782f';
+    this.completesData.athlete_id = '4d175c47-bf03-4ab8-8ef4-0e4c1f12a331';
 
       this.completesService.createCompletesCompletesPost(this.completesData).subscribe({
-        next: () => {
-        this.alertService.show('Eintrag erfasst', 'Eintrag wurde erfolgreich hinzugefügt.', 'success');
-        this.modals.createCompletesModal.isActive = false;
+        next: (response: CompletesResponseSchema) => {
+          this.alertService.show('Eintrag erfasst', 'Eintrag wurde erfolgreich hinzugefügt.', 'success');
+          this.modals.createCompletesModal.isActive = false;
+          console.log(response);
+          // if(this.selectedAthlete) this.selectedAthlete?.completes.push(response);
         },
         error: (error) => {
-            this.alertService.show('Erfassung fehlgeschlagen','Bei der Erfassung ist etwas schief gelaufen',"error");
+          this.alertService.show('Erfassung fehlgeschlagen','Bei der Erfassung ist etwas schief gelaufen',"error");
         }
     })
   }
