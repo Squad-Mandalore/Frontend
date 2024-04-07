@@ -88,20 +88,31 @@ export class CreateCompletesComponent implements OnInit{
     })
   }
 
+  changePage(newPage: number){
+    this.createCompletesForm.patchValue({
+      hours: '',
+      minutes: '',
+      seconds: '',
+      milliseconds: '',
+      kilometers: '',
+      meters: '',
+      centimeters: '',
+    });
+    this.pageShow = newPage;
+  }
+
   onSubmit() {
-    const { exercise_id, athlete_id, result } = this.createCompletesForm.value;
+    const { result } = this.createCompletesForm.value;
   
 
-    //if(this.createExerciseForm.value.hours != ''){
+    if(this.createCompletesForm.value.hours != '' ||  this.createCompletesForm.value.minutes != '' || this.createCompletesForm.value.seconds != ''|| this.createCompletesForm.value.milliseconds != ''){
       const hours = +this.createCompletesForm.value.hours!;
       const minutes = +this.createCompletesForm.value.minutes!;
       const seconds = +this.createCompletesForm.value.seconds!;
       const milliseconds = +this.createCompletesForm.value.milliseconds!;
 
       this.completesData.result = this.submitNewTime(hours, minutes, seconds, milliseconds);
-    //}
-
-    if(this.createCompletesForm.value.kilometers != ''){
+    } else if(this.createCompletesForm.value.kilometers != '' || this.createCompletesForm.value.meters != '' || this.createCompletesForm.value.centimeters != ''){
       const kilometers = +this.createCompletesForm.value.kilometers!;
       const meters = +this.createCompletesForm.value.meters!;
       const centimeters = +this.createCompletesForm.value.centimeters!;
@@ -110,10 +121,10 @@ export class CreateCompletesComponent implements OnInit{
     }
   
 
-    this.completesData.exercise_id = exercise_id!;
-    this.completesData.exercise_id = '0c4c0678-5e56-4170-a1cb-3eda7540f96b';
-    this.completesData.athlete_id = athlete_id!;
-    this.completesData.athlete_id = '4d175c47-bf03-4ab8-8ef4-0e4c1f12a331';
+    // this.completesData.exercise_id = exercise_id!;
+    this.completesData.exercise_id = '239fea23-2906-4aab-a723-7c624c63f3b4';
+    // this.completesData.athlete_id = athlete_id!;
+    // this.completesData.athlete_id = '4d175c47-bf03-4ab8-8ef4-0e4c1f12a331';
 
       this.completesService.createCompletesCompletesPost(this.completesData).subscribe({
         next: (response: CompletesResponseSchema) => {
@@ -220,7 +231,8 @@ export class CreateCompletesComponent implements OnInit{
   ngOnInit(): void {
     if(!this.selectedAthlete) return;
     console.log(this.selectedAthlete.id)
-  
+    this.completesData.athlete_id = this.selectedAthlete.id;
+
     this.categoriesService.getCategoriesByAthleteIdCategoriesGet(this.selectedAthlete.id).subscribe({
       next: (response: ResponseGetCategoriesByAthleteIdCategoriesGet) => {
         this.categories = response;
