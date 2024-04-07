@@ -1,4 +1,4 @@
-import {NgClass, CommonModule, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
+import {NgClass, CommonModule, NgIf, NgSwitch, NgSwitchCase, DatePipe} from "@angular/common";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AlertComponent} from "../alert/alert.component";
@@ -33,7 +33,8 @@ import customSort from "../../../utils/custom-sort";
     ReactiveFormsModule,
     FormsModule,
     AlertComponent,
-    CommonModule
+    CommonModule,
+    DatePipe
   ],
   templateUrl: './create-completes-modal.component.html',
   styleUrl: './create-completes-modal.component.scss'
@@ -46,6 +47,7 @@ export class CreateCompletesComponent implements OnInit{
   medal: string = 'none';
   categories: any[] = [];
   selectedExercise: any = null;
+  givenRulesValue: string = '';
   @Input() selectedAthlete!: AthleteFullResponseSchema | null;
   @Input() modals!: any;
 
@@ -90,6 +92,11 @@ export class CreateCompletesComponent implements OnInit{
       kilometers: ['', Validators.required],
       meters: ['', Validators.required],
       centimeters: ['', Validators.required],
+      quantity: ['', Validators.required],
+      goldActive: ['', Validators.required],
+      silverActive: ['', Validators.required],
+      bronzeActive: ['', Validators.required],
+      noneActive: ['', Validators.required],
     })
   }
 
@@ -105,26 +112,36 @@ export class CreateCompletesComponent implements OnInit{
       kilometers: '',
       meters: '',
       centimeters: '',
+      quantity: '',
+      goldActive: '',
+      silverActive: '',
+      bronzeActive: '',
+      noneActive: '',
     });
     
     this.showPage = newPage;
   }
-
-  determineInputType(exampleValue: string): string {
-    if (exampleValue.match(/^\d{2}:\d{2}:\d{2}:\d{3}$/)) {
-      return 'time';
-    } else if (exampleValue.match(/^\d{3}:\d{3}:\d{2}$/)) {
-      return 'distance';
-    } else if (exampleValue.match(/^\d{4}$/)) {
-      return 'count';
-    } else {
-      return 'medal';
-    }
+  
+  processSubPageToGive(){
+    this.givenRulesValue = this.selectedExercise.rules[0].bronze;
+    this.switchSubPage(this.givenRulesValue);
   }
 
+  switchSubPage(givenValue: string) {
+    if (givenValue.match(/^\d{4}$/)) {
+      this.subPage = 1;
+    } else if (givenValue.match(/^\d{2}:\d{2}:\d{2}:\d{3}$/)) {
+      this.subPage = 2;
+    } else if (givenValue.match(/^\d{3}:\d{3}:\d{2}$/)) {
+      this.subPage = 3;
+    } else {
+      this.subPage = 4;
+    }
+  }
+  
   onSubmit() {
     const { result } = this.createCompletesForm.value;
-  
+    this.completesData.exercise_id = this.selectedExercise.id;
 
     if(this.createCompletesForm.value.hours != '' ||  this.createCompletesForm.value.minutes != '' || this.createCompletesForm.value.seconds != ''|| this.createCompletesForm.value.milliseconds != ''){
       const hours = +this.createCompletesForm.value.hours!;
@@ -139,19 +156,22 @@ export class CreateCompletesComponent implements OnInit{
       const centimeters = +this.createCompletesForm.value.centimeters!;
 
       this.completesData.result = this.submitNewDistance(kilometers, meters, centimeters);
+    } else if (this.createCompletesForm.value.quantity != '') {
+      const quantity = +this.createCompletesForm.value.quantity!;
+
+      this.completesData.result = this.submitNewQuantity(quantity);
+    } else if (this.medal === 'gold'){
+      this.completesData.result = 'gold';
+    } else if (this.medal === 'silver'){
+      this.completesData.result = 'silver';
+    } else {
+      this.completesData.result = '';
     }
-  
 
-    // this.completesData.exercise_id = exercise_id!;
-    this.completesData.exercise_id = '621bef13-afa9-4eea-bc8c-ae03acc466a5';
-    // this.completesData.athlete_id = athlete_id!;
-    // this.completesData.athlete_id = '4d175c47-bf03-4ab8-8ef4-0e4c1f12a331';
-
-      this.completesService.createCompletesCompletesPost(this.completesData).subscribe({
-        next: (response: CompletesResponseSchema) => {
-          this.alertService.show('Eintrag erfasst', 'Eintrag wurde erfolgreich hinzugefügt.', 'success');
-          this.modals.createCompletesModal.isActive = false;
-          console.log(response);
+    this.completesService.createCompletesCompletesPost(this.completesData).subscribe({
+      next: (response: CompletesResponseSchema) => {
+        this.alertService.show('Eintrag erfasst', 'Eintrag wurde erfolgreich hinzugefügt.', 'success');
+        this.modals.createCompletesModal.isActive = false;
           // if(this.selectedAthlete) this.selectedAthlete?.completes.push(response);
         },
         error: (error) => {
@@ -164,7 +184,7 @@ export class CreateCompletesComponent implements OnInit{
   // Lost and not found.
   // null && !found //.
 
-  submitNewDistance(kilometers: number, meters: number, centimeters: number) {
+  submitNewDistance(kilometers: number, meters: number, centimeters: number): string {
     let combinedCentimeters = (kilometers! * 100000) + (meters! * 100) + (centimeters! * 1);
     
     let kilometersResult = '';
@@ -201,7 +221,7 @@ export class CreateCompletesComponent implements OnInit{
     return kilometersResult+':'+metersResult+':'+centimetersResult;
   }
 
-  submitNewTime(hours: number, minutes: number, seconds: number, milliseconds: number) {
+  submitNewTime(hours: number, minutes: number, seconds: number, milliseconds: number): string {
     let combinedSeconds = (hours! * 3600) + (minutes! * 60) + (seconds! * 1) + (milliseconds! * 0.001);
     
     let hoursResult = '';
@@ -249,28 +269,41 @@ export class CreateCompletesComponent implements OnInit{
     return hoursResult+':'+minutesResult+':'+secondsResult+':'+millisecondsResult;
   }
 
+  submitNewQuantity(quantity: number): string {
+    let quantityResult = '';
+
+    if (quantity < 10) {
+      quantityResult = '000'+quantity.toString();
+    } else if (quantity < 100) {
+      quantityResult = '00'+quantity.toString();
+    } else if (quantity < 1000) {
+      quantityResult = '0'+quantity.toString();
+    } else {
+      quantityResult = quantity.toString();
+    }
+
+    return quantityResult;
+  }
+
   customSortCall(array: AthleteCompletesResponseSchema[], sortSettings: {property: string, direction: string}){
     return array.sort((a: any, b: any) => customSort(a, b, sortSettings, "athlete"));
   }
 
-
   ngOnInit(): void {
     if(!this.selectedAthlete) return;
-    console.log(this.selectedAthlete.id)
     this.completesData.athlete_id = this.selectedAthlete.id;
     // this.completesData.exercise_id = // hier irgendwie die route zur exercise.id
 
     this.categoriesService.getCategoriesByAthleteIdCategoriesGet(this.selectedAthlete.id).subscribe({
       next: (response: any) => {
         this.categories = response;
-        console.log(this.categories);
         if(!this.selectedAthlete) return;
         for(const category of this.categories){
           for(const exercise of category.exercises){
             const pastExercises = this.customSortCall(customFilter(this.selectedAthlete.completes, {discipline: {filterValue: exercise.title, valueFullFit: true} }, true, "athlete"), {property: 'completed_at', direction: 'desc'});
             const pastExercisesPoints = pastExercises.map(element => element.points);
             exercise.best_result = pastExercisesPoints.length !== 0 ? Math.max(...pastExercisesPoints) : 0;
-            exercise.last_tracked_at = pastExercises.length !== 0 ? pastExercises[0] : null;
+            exercise.last_tracked_at = pastExercises.length !== 0 ? pastExercises[0].tracked_at : null;
           }
         }
       },

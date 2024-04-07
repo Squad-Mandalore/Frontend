@@ -132,14 +132,23 @@
 .gap-10{
   gap: 10px;
 }
+.gap-15{
+  gap: 15px;
+}
 .gap-20{
   gap: 20px;
+}
+.font-size-13{
+  font-size: 13px;
 }
 .height-full{
   height: 100%;
 }
 .width-full{
   width: 100%;
+}
+.width-half{
+  width: 50%;
 }
 .overflow-auto{
   overflow: auto;
@@ -152,6 +161,15 @@
 }
 .margin-auto{
   margin: auto;
+}
+.margin-left-auto{
+  margin-left: auto;
+}
+.margin-top-30{
+  margin-top: 30px;
+}
+.text-accent-500{
+  color: var(--accent-500);
 }
 
 .label{
@@ -208,7 +226,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-.input:focus, .input:hover{
+.input:focus, .input:hover, .multiple-input:focus, .multiple-input:hover{
   outline: 0;
   border: 1px solid var(--brand-500);
 }
