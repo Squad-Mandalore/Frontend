@@ -83,6 +83,14 @@
   width: 100%;
 }
 
+.discipline-item-empty-state{
+  font-family: "Inter Medium";
+  font-size: 14px;
+  padding: 10px;
+  color: var(--accent-600);
+  width: 100%;
+}
+
 .discipline-item>div:first-child{
   width: 150px;
   white-space: nowrap;

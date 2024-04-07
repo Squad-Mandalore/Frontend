@@ -11,7 +11,7 @@
         <div class="discipline-name" data-minheight="150px">
           <div>{{category.title}}</div>
         </div>
-        <div class="flex flex-col width-full">
+        <div class="flex flex-col width-full" *ngIf="category.exercises.length !== 0; else filledState">
           <div (click)="selectedExercise = exercise" [ngClass]="{'active': selectedExercise?.title === exercise.title}" class="discipline-item flex items-center space-between" *ngFor="let exercise of category.exercises; index as j;">
             <div [title]="exercise.title">{{exercise.title}}</div>
             <div class="flex items-center gap-20" *ngIf="exercise.last_tracked_at">
@@ -20,6 +20,12 @@
             </div>
           </div>
         </div>
+        <ng-template #filledState>
+          <div class="flex flex-col width-full">
+            <p class="discipline-item-empty-state">Keine Disziplinen verfügbar</p>
+            <p class="discipline-item-empty-state">Bitte ändere die Altersklasse des Sportlers</p>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>
