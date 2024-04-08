@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertService } from '../../shared/alert.service';
 import { UtilService } from '../../shared/service-util';
-import { ExercisePostSchema, ExercisesService } from '../../shared/generated';
+import { ExercisePostSchema, ExercisesService, RulePostSchema } from '../../shared/generated';
 import { PrimaryButtonComponent } from '../buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../buttons/secondary-button/secondary-button.component';
 import { NgClass } from '@angular/common';
@@ -29,11 +29,13 @@ export class CreateExerciseModalComponent {
   }
 
   onSubmit(){
-    let body: ExercisePostSchema = {
+    let body: ExercisePostSchema | RulePostSchema = {
       title: this.exerciseForm.value.title!,
       from_age: this.exerciseForm.value.fromAge!,
       to_age: this.exerciseForm.value.toAge!,
       category_id: this.category
+
+       // create exercise and then use exercise id in response to create rule
     };
     console.log(body);
     // this.exerciseService.createExerciseExercisesPost(body).subscribe({
