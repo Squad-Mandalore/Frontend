@@ -169,10 +169,10 @@ export class CreateCompletesComponent implements OnInit{
     }
 
     this.completesService.createCompletesCompletesPost(this.completesData).subscribe({
-      next: (response: CompletesResponseSchema) => {
+      next: (response: AthleteCompletesResponseSchema) => {
         this.alertService.show('Eintrag erfasst', 'Eintrag wurde erfolgreich hinzugefügt.', 'success');
         this.modals.createCompletesModal.isActive = false;
-          // if(this.selectedAthlete) this.selectedAthlete?.completes.push(response);
+          if(this.selectedAthlete) this.selectedAthlete?.completes.push(response);
         },
         error: (error) => {
           this.alertService.show('Erfassung fehlgeschlagen','Bei der Erfassung ist etwas schief gelaufen',"error");
