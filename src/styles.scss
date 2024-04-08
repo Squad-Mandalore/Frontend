@@ -1,94 +1,189 @@
 /* You can add global styles to this file, and also import other style files */
 
-:root{
-  --brand-900: #000D1A;
-  --brand-800: #002A53;
-  --brand-700: #00478C;
-  --brand-600: #0064C5;
-  --brand-500: #0082FF;
-  --brand-400: #399EFF;
-  --brand-300: #72BAFF;
-  --brand-200: #ABD6FF;
-  --brand-100: #E5F3FF;
+:root {
+    --brand-900: #000D1A;
+    --brand-800: #002A53;
+    --brand-700: #00478C;
+    --brand-600: #0064C5;
+    --brand-500: #0082FF;
+    --brand-400: #399EFF;
+    --brand-300: #72BAFF;
+    --brand-200: #ABD6FF;
+    --brand-100: #E5F3FF;
 
-  --accent-900: #0B0D0E;
-  --accent-800: #23282D;
-  --accent-700: #3B434C;
-  --accent-600: #535E6B;
-  --accent-500: #697A89;
-  --accent-400: #8B98A4;
-  --accent-300: #ADB6BF;
-  --accent-200: #CFD4DA;
-  --accent-100: #F1F2F4;
+    --accent-900: #0B0D0E;
+    --accent-800: #23282D;
+    --accent-700: #3B434C;
+    --accent-600: #535E6B;
+    --accent-500: #697A89;
+    --accent-400: #8B98A4;
+    --accent-300: #ADB6BF;
+    --accent-200: #CFD4DA;
+    --accent-150: #EEEEEE;
+    --accent-100: #F1F2F2;
+    --accent-50: #F9F9F9;
+    --accent-0: #FFFFFF;
+
+    --gold: #FFD700;
+    --silver: #C0C0C0;
+    --bronze: #CD7F32;
+    --none: #399EFF;
+    --danger: #FF0000;
+    --accept: #00FF47;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+body{
+  background-color: var(--accent-100);
+  overflow: hidden;
+  margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: initial;
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--accent-200);
+  border-radius: 20px;
+}
+
+// Inter
+
+@font-face {
+    font-family: 'Inter Thin';
+    src: url('assets/fonts/Inter/Inter-Thin.woff2') format('woff2'),
 }
 
 @font-face {
-  font-family: 'TeleNeo Thin';
-  src: url('assets/fonts/TeleNeoWeb-Thin.woff2') format('woff2'),
-    url('assets/fonts/TeleNeoWeb-Thin.woff') format('woff');
+    font-family: 'Inter ExtraLight';
+    src: url('assets/fonts/Inter/Inter-ExtraLight.woff2') format('woff2');
 }
+
 @font-face {
-  font-family: 'TeleNeo Thin Italic';
-  src: url('assets/fonts/TeleNeoWeb-ThinItalic.woff2') format('woff2'),
-    url('assets/fonts/TeleNeoWeb-ThinItalic.woff') format('woff');
+    font-family: 'Inter Light';
+    src: url('assets/fonts/Inter/Inter-Light.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter Regular';
+    src: url('assets/fonts/Inter/Inter-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter Medium';
+    src: url('assets/fonts/Inter/Inter-Medium.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter SemiBold';
+    src: url('assets/fonts/Inter/Inter-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter Bold';
+    src: url('assets/fonts/Inter/Inter-Bold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter ExtraBold';
+    src: url('assets/fonts/Inter/Inter-ExtraBold.woff2') format('woff2');
+}
+
+// TeleNeo
+
+@font-face {
+    font-family: 'TeleNeo Thin';
+    src: url('assets/fonts/TeleNeo/TeleNeoWeb-Thin.woff2') format('woff2'),
+        url('assets/fonts/TeleNeo/TeleNeoWeb-Thin.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'TeleNeo Thin Italic';
+    src: url('assets/fonts/TeleNeo/TeleNeoWeb-ThinItalic.woff2') format('woff2'),
+        url('assets/fonts/TeleNeo/TeleNeoWeb-ThinItalic.woff') format('woff');
 }
 
 
 @font-face {
-  font-family: 'TeleNeo Regular';
-  src: url('assets/fonts/TeleNeoWeb-Regular.woff2') format('woff2'),
-    url('assets/fonts/TeleNeoWeb-Regular.woff') format('woff');
+    font-family: 'TeleNeo Regular';
+    src: url('assets/fonts/TeleNeo/TeleNeoWeb-Regular.woff2') format('woff2'),
+        url('assets/fonts/TeleNeo/TeleNeoWeb-Regular.woff') format('woff');
 }
+
 @font-face {
-  font-family: 'TeleNeo Regular Italic';
-  src: url('assets/fonts/TeleNeoWeb-RegularItalic.woff2') format('woff2'),
-    url('assets/fonts/TeleNeoWeb-RegularItalic.woff') format('woff');
+    font-family: 'TeleNeo Regular Italic';
+    src: url('assets/fonts/TeleNeo/TeleNeoWeb-RegularItalic.woff2') format('woff2'),
+        url('assets/fonts/TeleNeo/TeleNeoWeb-RegularItalic.woff') format('woff');
 }
 
 
 @font-face {
-  font-family: 'TeleNeo Medium';
-  src: url('assets/fonts/TeleNeoWeb-Medium.woff2') format('woff2'),
-    url('assets/fonts/TeleNeoWeb-Medium.woff') format('woff');
+    font-family: 'TeleNeo Medium';
+    src: url('assets/fonts/TeleNeo/TeleNeoWeb-Medium.woff2') format('woff2'),
+        url('assets/fonts/TeleNeo/TeleNeoWeb-Medium.woff') format('woff');
 }
+
 @font-face {
-  font-family: 'TeleNeo Medium Italic';
-  src: url('assets/fonts/TeleNeoWeb-MediumItalic.woff2') format('woff2'),
-    url('assets/fonts/TeleNeoWeb-MediumItalic.woff') format('woff');
+    font-family: 'TeleNeo Medium Italic';
+    src: url('assets/fonts/TeleNeo/TeleNeoWeb-MediumItalic.woff2') format('woff2'),
+        url('assets/fonts/TeleNeo/TeleNeoWeb-MediumItalic.woff') format('woff');
 }
 
 
 @font-face {
-  font-family: 'TeleNeo Bold';
-  src: url('assets/fonts/TeleNeoWeb-Bold.woff2') format('woff2'),
-    url('assets/fonts/TeleNeoWeb-Bold.woff') format('woff');
+    font-family: 'TeleNeo Bold';
+    src: url('assets/fonts/TeleNeo/TeleNeoWeb-Bold.woff2') format('woff2'),
+        url('assets/fonts/TeleNeo/TeleNeoWeb-Bold.woff') format('woff');
 }
+
 @font-face {
-  font-family: 'TeleNeo Bold Italic';
-  src: url('assets/fonts/TeleNeoWeb-BoldItalic.woff2') format('woff2'),
-    url('assets/fonts/TeleNeoWeb-BoldItalic.woff') format('woff');
+    font-family: 'TeleNeo Bold Italic';
+    src: url('assets/fonts/TeleNeo/TeleNeoWeb-BoldItalic.woff2') format('woff2'),
+        url('assets/fonts/TeleNeo/TeleNeoWeb-BoldItalic.woff') format('woff');
 }
 
 
 @font-face {
-  font-family: 'TeleNeo ExtraBold';
-  src: url('assets/fonts/TeleNeoWeb-ExtraBold.woff2') format('woff2'),
-    url('assets/fonts/TeleNeoWeb-ExtraBold.woff') format('woff');
+    font-family: 'TeleNeo ExtraBold';
+    src: url('assets/fonts/TeleNeo/TeleNeoWeb-ExtraBold.woff2') format('woff2'),
+        url('assets/fonts/TeleNeo/TeleNeoWeb-ExtraBold.woff') format('woff');
 }
+
 @font-face {
-  font-family: 'TeleNeo ExtraBold Italic';
-  src: url('assets/fonts/TeleNeoWeb-ExtraBoldItalic.woff2') format('woff2'),
-    url('assets/fonts/TeleNeoWeb-ExtraBoldItalic.woff') format('woff');
+    font-family: 'TeleNeo ExtraBold Italic';
+    src: url('assets/fonts/TeleNeo/TeleNeoWeb-ExtraBoldItalic.woff2') format('woff2'),
+        url('assets/fonts/TeleNeo/TeleNeoWeb-ExtraBoldItalic.woff') format('woff');
 }
 
 
 @font-face {
-  font-family: 'TeleNeo Ultra';
-  src: url('assets/fonts/TeleNeoWeb-Ultra.woff2') format('woff2'),
-    url('assets/fonts/TeleNeoWeb-Ultra.woff') format('woff');
+    font-family: 'TeleNeo Ultra';
+    src: url('assets/fonts/TeleNeo/TeleNeoWeb-Ultra.woff2') format('woff2'),
+        url('assets/fonts/TeleNeo/TeleNeoWeb-Ultra.woff') format('woff');
 }
+
 @font-face {
-  font-family: 'TeleNeo Ultra Italic';
-  src: url('assets/fonts/TeleNeoWeb-UltraItalic.woff2') format('woff2'),
-    url('assets/fonts/TeleNeoWeb-UltraItalic.woff') format('woff');
+    font-family: 'TeleNeo Ultra Italic';
+    src: url('assets/fonts/TeleNeo/TeleNeoWeb-UltraItalic.woff2') format('woff2'),
+        url('assets/fonts/TeleNeo/TeleNeoWeb-UltraItalic.woff') format('woff');
 }

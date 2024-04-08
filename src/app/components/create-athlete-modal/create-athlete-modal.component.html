@@ -1,0 +1,78 @@
+<div id="overlay" (click)="modals.createAthleteModal.isActive = false"></div>
+<form id="modal" [formGroup]="createAthleteForm" (ngSubmit)="onSubmit()">
+  <div id="modal-header">
+    <p id="modal-headline">Neuen Sportler hinzufügen</p>
+    <app-icon (click)="modals.createAthleteModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+  </div>
+    <div id="input-wrapper">
+      <ng-container *ngIf="showFirstPage">
+
+          <label class="label">
+            <p class="label-text">Benutzername</p>
+            <input class="input" type="text" formControlName="username" placeholder="Benutzername">
+          </label>
+
+          <div id="password-password-strength-wrapper">
+            <label class="label">
+              <p class="label-text">Passwort</p>
+              <app-password-box formControlName="unhashed_password"/>
+            </label>
+          </div>
+
+          <label class="label">
+            <p class="label-text">E-Mail</p>
+            <input class="input" type="email" formControlName="email" placeholder="E-Mail">
+          </label>
+
+      </ng-container>
+      <ng-container *ngIf="!showFirstPage">
+          <div id="name-input-wrapper">
+            <label class="label">
+              <p class="label-text">Vorname</p>
+              <input class="input" type="text" formControlName="firstname" placeholder="Vorname">
+            </label>
+
+            <label class="label">
+              <p class="label-text">Nachname</p>
+              <input class="input" type="text" formControlName="lastname" placeholder="Nachname">
+            </label>
+          </div>
+
+          <div id="birth-input-wrapper">
+            <label for="day" class="label">
+              <p class="label-text">Geburtsdatum</p>
+              <p class="multi-input">
+                <input id="day" class="input" type="number" min=1 max=31 formControlName="day" placeholder="Tag"/>
+                <input class="input" type="number" min=1 max=12 formControlName="month" placeholder="Monat"/>
+                <input class="input" type="number" min=1945 formControlName="year" placeholder="Jahr"/>
+              </p>
+            </label>
+          </div>
+
+          <div class="label">
+            <p class="label-text"> Geschlecht </p>
+            <div id="slider-wrapper">
+              <div class="slider-element" [ngClass]="{'active': isMale, 'disabled': !isMale}" (click)="onClickSwitchGender('male')">
+                <span>Männlich</span>
+              </div>
+              <div class="slider-element" [ngClass]="{'active': !isMale, 'disabled': isMale}" (click)="onClickSwitchGender('female')">
+                <span>Weiblich</span>
+              </div>
+            </div>
+          </div>
+      </ng-container>
+    </div>
+  <div id="modal-footer">
+    <ng-container *ngIf="showFirstPage">
+    <app-secondary-button (click)="modals.createAthleteModal.isActive = false" type="button" text="Abbrechen" minWidth="100%" description="Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen."></app-secondary-button>
+      <app-primary-button (click)="onClickSwitchPage()" [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
+    </ng-container>
+    <ng-container *ngIf="!showFirstPage">
+      <app-secondary-button (click)="onClickSwitchPage()" type="button" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+      <app-primary-button [disabled]="!createAthleteForm.valid" [text]="'Sportler anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
+    </ng-container>
+  </div>
+</form>
+
+
+

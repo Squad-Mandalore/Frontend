@@ -1,0 +1,72 @@
+:host {
+    display: grid;
+    height: 100dvb;
+    width: 100dvi;
+    place-items: center;
+    background-color: var(--accent-100);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px;
+    min-width: 480px;
+    width: min-content;
+    min-height: 525px;
+    height: min-content;
+    background-color: var(--accent-0);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px #00000010;
+}
+
+#input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: "TeleNeo Medium";
+    font-size: 1rem;
+}
+
+input {
+    padding: 5px 20px;
+    height: 50px;
+    border: 1px solid var(--accent-300);
+    color: var(--accent-500);
+    transition: all 150ms;
+    border-radius: 5px;
+}
+
+input:focus,
+input:hover {
+    outline: 0;
+    border: 1px solid var(--brand-500);
+}
+
+p {
+    font-family: "TeleNeo Bold";
+    font-size: 1.7rem;
+}
+
+a {
+    font-size: 14px;
+    color: var(--accent-400);
+    margin-left: auto;
+    text-decoration: none;
+}
+
+/* app-alert {
+    position: fixed;
+    top: 70px;
+    right: 70px;
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: right;
+    margin: 20px;
+} */

@@ -1,0 +1,16 @@
+<ng-container *ngIf="confirmationService.IsVisible">
+  <div id="modal">
+    <div id="modal-body">
+      <div id="modal-content">
+        <p id="title">{{ confirmationService.Title }}</p>
+        <p id="description">{{ confirmationService.Description }}</p>
+      </div>
+      <app-icon (click)="confirmationService.Cancel()" id="close-button" [iconName]="'cross'" [strokeWidth]="'3'" [iconHeight]="'16'" [iconWidth]="'16'" [iconColor]="'var(--accent-500)'"></app-icon>
+    </div>
+    <div id="modal-footer">
+      <app-secondary-button [text]="confirmationService.CancelText" (click)="confirmationService.Cancel()"></app-secondary-button>
+      <app-primary-button [text]="confirmationService.ConfirmText" [iconName]="confirmationService.Icon" [isDeleteButton]="confirmationService.IsDelete" (click)="confirmationService.Confirm()"></app-primary-button>
+    </div>
+  </div>
+  <div id="overlay" (click)="confirmationService.Cancel()"></div>
+</ng-container>
