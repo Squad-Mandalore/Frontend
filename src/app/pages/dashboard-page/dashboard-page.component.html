@@ -74,8 +74,8 @@
                                         <input class="input" placeholder="Suchen" #customTrainerFilter (input)="setFilter('tracked_by', customTrainerFilter.value, false)" [value]="customTrainerFilter.value"/>
                                     </div>
                                     <div *ngFor="let trainer of getTrackingTrainers(selectedAthlete.completes)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_by', trainer)">
-                                        <span>{{trainer.firstname}} {{trainer.lastname}}</span>
-                                        <app-icon *ngIf="filter['tracked_by'] && filter['tracked_by'].filterValue.firstname === trainer.firstname && filter['tracked_by'].filterValue.lastname === trainer.lastname" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <span>{{trainer}}</span>
+                                        <app-icon *ngIf="filter['tracked_by'] && filter['tracked_by'].filterValue === trainer" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                 </div>
                             </div>

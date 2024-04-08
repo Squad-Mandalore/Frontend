@@ -123,9 +123,9 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   getTrackingTrainers(completes: AthleteCompletesResponseSchema[]){
-    const trackingTrainers: {firstname: string, lastname: string}[] = [];
+    const trackingTrainers: string[] = [];
     for(const result of completes){
-      if(!trackingTrainers.find(trainer => trainer.firstname === result.trainer.firstname && trainer.lastname === result.trainer.lastname)) trackingTrainers.push({firstname: result.trainer.firstname, lastname: result.trainer.lastname});
+      if(!trackingTrainers.find(trainer => trainer === result.trainer.firstname + ' ' + result.trainer.lastname)) trackingTrainers.push(result.trainer.firstname + ' ' + result.trainer.lastname);
     }
     return trackingTrainers;
   }

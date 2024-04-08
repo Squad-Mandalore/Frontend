@@ -16,8 +16,8 @@ export default function customFilter(array: any[], filterOptions: Object, select
         else if (!value.valueFullFit &&  element.exercise.category.title.toLowerCase().includes(value.filterValue.toLowerCase())) counter++;
       }
       else if (key === "tracked_by" && type === "athlete"){
-        if (value.valueFullFit && element.trainer.firstname === value.filterValue.firstname && element.trainer.lastname === value.filterValue.lastname) counter++;
-        else if (!value.valueFullFit && element.trainer.firstname + ' ' + element.trainer.lastname.toLowerCase().includes(value.filterValue.firstname.toLowerCase() + ' ' + value.filterValue.lastname.toLowerCase())) counter++;
+        if (value.valueFullFit && element.trainer.firstname + ' ' + element.trainer.lastname === value.filterValue) counter++;
+        else if (!value.valueFullFit && element.trainer.firstname + ' ' + element.trainer.lastname.toLowerCase().includes(value.filterValue.toLowerCase())) counter++;
       }
       else if(key === "category" && type === "exercise"){
         if (value.valueFullFit && element.category.title === value.filterValue) counter++;

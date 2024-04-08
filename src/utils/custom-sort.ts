@@ -18,6 +18,10 @@ export default function customSort(a: any, b: any, sortSettings: {property: stri
         element_a = a.exercise.title;
         element_b = b.exercise.title;
     }
+    else if(sortSettings.property === "tracked_by" && type === "athlete"){
+        element_a = a.trainer.firstname + a.trainer.lastname;
+        element_b = b.trainer.firstname + b.trainer.lastname;
+    }
     else{
         element_a = a[sortSettings.property];
         element_b = b[sortSettings.property];
