@@ -33,7 +33,7 @@
     <div class="flex flex-col gap-10 margin-auto width-full" id="common-menu" *ngIf="subPage === 1">
       <div class="headline-small">{{selectedExercise.title}}</div>
       <label class="count-label">
-        <input class="input" type="number" name="anzahl" placeholder="Anzahl"/>
+        <input class="input" type="number" name="anzahl" formControlName="quantity" placeholder="Anzahl"/>
       </label>
       <div class="flex flex-col gap-15 margin-top-30">
         <p class="text-accent-500 font-family-inter-medium font-size-13">Medaillewerte:</p>
