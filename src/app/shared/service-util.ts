@@ -59,10 +59,10 @@ export class UtilService {
 const simpleSchema = new PassValidator();
 
 simpleSchema
-  .has().digits()
-  .has().lowercase()
-  .has().uppercase()
   .is().min(10)
+  .has().uppercase()
+  .has().lowercase()
+  .has().digits()
 
 const schema = new PassValidator();
 
