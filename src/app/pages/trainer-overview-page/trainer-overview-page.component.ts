@@ -61,7 +61,7 @@ export class TrainerOverviewPageComponent {
 
   ngOnInit(): void {
     if(this.trainer.length === 0){
-      this.trainerService.getAllTrainersTrainersAllGet().subscribe({
+      this.trainerService.getAllTrainersTrainersGet().subscribe({
         next: (trainers: TrainerResponseSchema[]) => {
           this.trainer = trainers;
           this.isLoading = false;
