@@ -44,7 +44,6 @@ export class CreateCompletesComponent implements OnInit{
   createCompletesForm;
   showPage = 1;
   subPage = 4;
-  medal: string = 'none';
   categories: any[] = [];
   selectedExercise: any = null;
   givenRulesValue: string = '';
@@ -68,7 +67,6 @@ export class CreateCompletesComponent implements OnInit{
     exercise_id: '',
     athlete_id: '',
     result: '',
-    points: 0,
   }
 
   constructor(
@@ -93,6 +91,7 @@ export class CreateCompletesComponent implements OnInit{
       meters: ['', Validators.required],
       centimeters: ['', Validators.required],
       quantity: ['', Validators.required],
+      medal: ['-', Validators.required],
       goldActive: ['', Validators.required],
       silverActive: ['', Validators.required],
       bronzeActive: ['', Validators.required],
@@ -103,25 +102,11 @@ export class CreateCompletesComponent implements OnInit{
   changePage(event: Event, newPage: number){
     event.preventDefault();
     if(this.showPage === 1 && newPage === 2 && !this.selectedExercise) return;
-    
-    this.createCompletesForm.patchValue({
-      hours: '',
-      minutes: '',
-      seconds: '',
-      milliseconds: '',
-      kilometers: '',
-      meters: '',
-      centimeters: '',
-      quantity: '',
-      goldActive: '',
-      silverActive: '',
-      bronzeActive: '',
-      noneActive: '',
-    });
-    
+
+
     this.showPage = newPage;
   }
-  
+
   processSubPageToGive(){
     this.givenRulesValue = this.selectedExercise.rules[0].bronze;
     this.switchSubPage(this.givenRulesValue);
@@ -138,7 +123,7 @@ export class CreateCompletesComponent implements OnInit{
       this.subPage = 4;
     }
   }
-  
+
   onSubmit() {
     const { result } = this.createCompletesForm.value;
     this.completesData.exercise_id = this.selectedExercise.id;
@@ -160,12 +145,8 @@ export class CreateCompletesComponent implements OnInit{
       const quantity = +this.createCompletesForm.value.quantity!;
 
       this.completesData.result = this.submitNewQuantity(quantity);
-    } else if (this.medal === 'gold'){
-      this.completesData.result = 'gold';
-    } else if (this.medal === 'silver'){
-      this.completesData.result = 'silver';
     } else {
-      this.completesData.result = '';
+      this.completesData.result = this.createCompletesForm.value.medal!;
     }
 
     this.completesService.createCompletesCompletesPost(this.completesData).subscribe({
@@ -186,7 +167,7 @@ export class CreateCompletesComponent implements OnInit{
 
   submitNewDistance(kilometers: number, meters: number, centimeters: number): string {
     let combinedCentimeters = (kilometers! * 100000) + (meters! * 100) + (centimeters! * 1);
-    
+
     let kilometersResult = '';
     let metersResult = '';
     let centimetersResult = '';
@@ -223,7 +204,7 @@ export class CreateCompletesComponent implements OnInit{
 
   submitNewTime(hours: number, minutes: number, seconds: number, milliseconds: number): string {
     let combinedSeconds = (hours! * 3600) + (minutes! * 60) + (seconds! * 1) + (milliseconds! * 0.001);
-    
+
     let hoursResult = '';
     let minutesResult = '';
     let secondsResult = '';
@@ -311,5 +292,5 @@ export class CreateCompletesComponent implements OnInit{
         this.alertService.show('Fetch fehlgeschlagen', 'Die Exercises des Sportlers konnten nicht erfolgreich gefetched werden.', "error");
       }
     });
-  }  
+  }
 }

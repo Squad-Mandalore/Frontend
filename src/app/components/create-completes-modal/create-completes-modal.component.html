@@ -57,13 +57,13 @@
     <div class="flex flex-col gap-10 margin-auto width-full" *ngIf="subPage === 2">
       <div class="headline-small">{{selectedExercise.title}}</div>
       <div id="common-menu">
-          <input class="multiple-input" type="number" [(ngModel)]="time.hours" name="completes-time-hours" formControlName="hours" placeholder="hh" style="display: inline-block"/>
+          <input class="multiple-input" type="number" name="completes-time-hours" formControlName="hours" placeholder="hh" style="display: inline-block"/>
           :
-          <input class="multiple-input" type="number" [(ngModel)]="time.minutes" name="completes-time-minutes" formControlName="minutes" placeholder="mm" style="display: inline-block;"/>
+          <input class="multiple-input" type="number" name="completes-time-minutes" formControlName="minutes" placeholder="mm" style="display: inline-block;"/>
           :
-          <input class="multiple-input" type="number" [(ngModel)]="time.seconds" name="completes-time-seconds" formControlName="seconds" placeholder="ss" style="display: inline-block;"/>
+          <input class="multiple-input" type="number" name="completes-time-seconds" formControlName="seconds" placeholder="ss" style="display: inline-block;"/>
           :
-          <input class="multiple-input" type="number" [(ngModel)]="time.milliseconds" name="completes-time-milliseconds" formControlName="milliseconds" placeholder="ms" style="display: inline-block;"/>
+          <input class="multiple-input" type="number" name="completes-time-milliseconds" formControlName="milliseconds" placeholder="ms" style="display: inline-block;"/>
       </div>
       <div class="flex flex-col gap-15 margin-top-30">
         <p class="text-accent-500 font-family-inter-medium font-size-13">Medaillewerte:</p>
@@ -83,15 +83,15 @@
           <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].bronze }}</div>
         </div>
       </div>
-    </div> 
+    </div>
     <div class="flex flex-col gap-10 margin-auto width-full" id="common-menu" *ngIf="subPage === 3">
       <div class="headline-small">{{selectedExercise.title}}</div>
       <div id="common-menu">
-        <input class="multiple-input" type="number" [(ngModel)]="distance.kilometers" name="completes-distance-kilometers" formControlName="kilometers" placeholder="km" style="display: inline-block"/>
+        <input class="multiple-input" type="number" name="completes-distance-kilometers" formControlName="kilometers" placeholder="km" style="display: inline-block"/>
         ,
-        <input class="multiple-input" type="number" [(ngModel)]="distance.meters" name="completes-distance-meters" formControlName="meters" placeholder="m" style="display: inline-block;"/>
+        <input class="multiple-input" type="number" name="completes-distance-meters" formControlName="meters" placeholder="m" style="display: inline-block;"/>
         ,
-        <input class="multiple-input" type="number" [(ngModel)]="distance.centimeters" name="completes-distance-centimeters" formControlName="centimeters" placeholder="cm" style="display: inline-block;"/>
+        <input class="multiple-input" type="number" name="completes-distance-centimeters" formControlName="centimeters" placeholder="cm" style="display: inline-block;"/>
       </div>
       <div class="flex flex-col gap-15 margin-top-30">
         <p class="text-accent-500 font-family-inter-medium font-size-13">Medaillewerte:</p>
@@ -111,21 +111,21 @@
           <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].bronze }}</div>
         </div>
       </div>
-    </div> 
+    </div>
     <div class="flex flex-col gap-10 margin-auto width-full" id="common-menu" *ngIf="subPage === 4">
       <div class="headline-small">{{selectedExercise.title}}</div>
       <div>
         <div id="slider-wrapper">
-          <div class="slider-element" [ngClass]="medal === 'gold' ? 'active' : 'disabled'" (click)="medal = 'gold'">
+          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === 'Gold' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = 'Gold'">
               <span>Gold</span>
           </div>
-          <div class="slider-element" [ngClass]="medal === 'silver' ? 'active' : 'disabled'" (click)="medal = 'silver'">
+          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === 'Silber' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = 'Silber'">
               <span>Silber</span>
           </div>
-          <div class="slider-element" [ngClass]="medal === 'bronze' ? 'active' : 'disabled'" (click)="medal = 'bronze'">
+          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === 'Bronze' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = 'Bronze'">
               <span>Bronze</span>
           </div>
-          <div class="slider-element" [ngClass]="medal === 'none' ? 'active' : 'disabled'" (click)="medal = 'none'">
+          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === '-' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = '-'">
               <span>Keine Medaille</span>
           </div>
         </div>
