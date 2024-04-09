@@ -132,8 +132,13 @@ export class PasswordBoxComponent implements ControlValueAccessor {
         this.onChange(this.value);
     }
 
+    onTriggerCopy() {
+      navigator.clipboard.writeText(this.value)
+    }
+
     OnClickGenerate():void {
       this.value = this.utilService.genPass()
+      this.onInput(this.value)
     }
 
 }
