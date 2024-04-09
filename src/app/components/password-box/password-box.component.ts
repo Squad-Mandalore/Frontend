@@ -115,11 +115,11 @@ export class PasswordBoxComponent implements ControlValueAccessor {
             this.strengthTextContent = 'Sehr stark';
             this.strengthBarWidth = '100%';
             this.strengthBarColor = '#2ecc71'; // Green
-        } else if (this.utilService.validateSimplePass(this.value)) {
+        } else if (this.utilService.validateGoodPass(this.value)) {
             this.strengthTextContent = 'Gut';
             this.strengthBarWidth = '70%';
             this.strengthBarColor = '#2ecc71'; // Green
-        } else if (passwordLength < 10 && passwordLength >= 5) {
+        } else if (this.utilService.validateMiddlePass(this.value)){
             this.strengthTextContent = 'Mittel';
             this.strengthBarWidth = '50%';
             this.strengthBarColor = '#ffa500'; // Orange

@@ -51,18 +51,14 @@ export class UtilService {
     return schema.validate(password);
   }
 
-  public validateSimplePass(password:string) {
-    return simpleSchema.validate(password)
+  public validateGoodPass(password:string) {
+    return goodSchema.validate(password)
+  }
+
+  public validateMiddlePass(password:string) {
+    return middleSchema.validate(password)
   }
 }
-
-const simpleSchema = new PassValidator();
-
-simpleSchema
-  .is().min(10)
-  .has().uppercase()
-  .has().lowercase()
-  .has().digits()
 
 const schema = new PassValidator();
 
@@ -74,4 +70,20 @@ schema
   .has().lowercase()
   .has().digits()
   .has().not().spaces()
+
+const goodSchema = new PassValidator();
+
+goodSchema
+  .is().min(10)
+  .has().uppercase()
+  .has().lowercase()
+  .has().digits()
+
+const middleSchema = new PassValidator();
+
+middleSchema
+  .is().min(5)
+
+
+
 
