@@ -8,26 +8,29 @@ import { UserCardComponent } from '../../components/user-card/user-card.componen
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { AthleteResponseSchema, AthleteFullResponseSchema, AthletesService, CompletesResponseSchema, CompletesService } from '../../shared/generated';
+import { AthleteCompletesResponseSchema, AthleteResponseSchema, CompletesResponseSchema, CompletesService, TrainersService } from '../../shared/generated';
 import { Subscription } from 'rxjs';
 import customSort from '../../../utils/custom-sort';
 import customFilter from '../../../utils/custom-filter';
 import { calculateProgress, calculateProgressPercent } from '../../../utils/calculate-progress';
 import { calculateProgressColor } from '../../../utils/calculate-progress';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AlertService } from '../../shared/alert.service';
 import { ConfirmationService } from '../../shared/confirmation.service';
+import { AthleteFullResponseSchema } from '../../shared/generated';
+import { AthletesService } from '../../shared/generated';
+import { AlertService } from '../../shared/alert.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { CreateCompletesComponent } from '../../components/create-completes-modal/create-completes-modal.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
+  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, CreateCompletesComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss'
 })
 
 export class DashboardPageComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private confirmationService: ConfirmationService, private router: Router, private athleteService: AthletesService, private alertService: AlertService) { }
+  constructor(private route: ActivatedRoute, private confirmationService: ConfirmationService, private router: Router, private athleteService: AthletesService, private alertService: AlertService, private trainerService: TrainersService) { }
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
   selectedAthlete: AthleteFullResponseSchema | null = null;
@@ -43,10 +46,14 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     createAthleteModal: {
       isActive: false,
     },
+    createCompletesModal: {
+      isActive: false,
+    },
     showDetails: {
       isActive: false,
     },
   }
+
 
   setSorting(property: string){
     if(this.sorting.property === property){
@@ -58,7 +65,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     this.sorting.direction = "desc";
   }
 
-  customSortCall(array: CompletesResponseSchema[], sortSettings: {property: string, direction: string}){
+  customSortCall(array: AthleteCompletesResponseSchema[], sortSettings: {property: string, direction: string}){
     return array.sort((a: any, b: any) => customSort(a, b, sortSettings, "athlete"));
   }
 
@@ -95,7 +102,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   //       this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
   //     }
   //   })
-    
+
   //   this.selectedAthlete.completes = this.selectedAthlete.completes.filter(element => element.exercise.id !== completes.exercise.id);
   // }
 
@@ -107,7 +114,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     return counter;
   }
 
-  getTrackingDates(completes: CompletesResponseSchema[]){
+  getTrackingDates(completes: AthleteCompletesResponseSchema[]){
     const trackingDates : string[] = [];
     for(const result of completes){
       if(!trackingDates.find(date => date === result.tracked_at)) trackingDates.push(result.tracked_at.toString());
@@ -115,10 +122,10 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     return trackingDates;
   }
 
-  getTrackingTrainers(completes: CompletesResponseSchema[]){
+  getTrackingTrainers(completes: AthleteCompletesResponseSchema[]){
     const trackingTrainers: string[] = [];
     for(const result of completes){
-      if(!trackingTrainers.find(trainer => trainer === result.tracked_by)) trackingTrainers.push(result.tracked_by);
+      if(!trackingTrainers.find(trainer => trainer === result.trainer.firstname + ' ' + result.trainer.lastname)) trackingTrainers.push(result.trainer.firstname + ' ' + result.trainer.lastname);
     }
     return trackingTrainers;
   }
@@ -134,11 +141,11 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     return customFilter(array, options, selectionFullFit, "athlete");
   }
 
-  getProgress(completes: CompletesResponseSchema[]){
+  getProgress(completes: AthleteCompletesResponseSchema[]){
     return calculateProgress(completes);
   }
 
-  getColorVariable(completes: CompletesResponseSchema[]){
+  getColorVariable(completes: AthleteCompletesResponseSchema[]){
     return calculateProgressColor(completes)
   }
 
@@ -149,12 +156,13 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if(this.athletes.length === 0){
-      this.athleteService.getAllAthletesAthletesAllGet().subscribe({
+      this.athleteService.getAllAthletesAthletesGet().subscribe({
         next: (athletes: AthleteResponseSchema[]) => {
           for(const athlete of athletes){
             this.athleteService.getAthleteFullAthletesIdFullGet(athlete.id).subscribe({
               next: (fullAthleteObject: AthleteFullResponseSchema) => {
                 this.athletes.push(fullAthleteObject);
+                console.log(fullAthleteObject);
               },
               error: (error: HttpErrorResponse) => {
                 this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");

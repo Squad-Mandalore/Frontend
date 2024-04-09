@@ -1,12 +1,12 @@
-import { CompletesResponseSchema } from "../app/shared/generated";
+import { AthleteCompletesResponseSchema, CompletesResponseSchema } from "../app/shared/generated";
 import customFilter from "./custom-filter";
 
-function getMaxValue(completesArray: CompletesResponseSchema[], category: string){
+function getMaxValue(completesArray: AthleteCompletesResponseSchema[], category: string){
     const strengthElements = customFilter(completesArray, {category: {filterValue: category, valueFullFit: true} }, true, "athlete").map(element => element.points)
     return strengthElements.length !== 0 ? Math.max(...strengthElements) : 0;
 }
 
-function calculateProgress(completesArray: CompletesResponseSchema[]){
+function calculateProgress(completesArray: AthleteCompletesResponseSchema[]){
     const strenth = getMaxValue(completesArray, "Kraft");
     const stamina = getMaxValue(completesArray, "Ausdauer");
     const speed = getMaxValue(completesArray, "Schnelligkeit");
@@ -15,11 +15,11 @@ function calculateProgress(completesArray: CompletesResponseSchema[]){
     return speed + coordination + strenth + stamina;
 }
 
-function calculateProgressPercent(completesArray: CompletesResponseSchema[]){
+function calculateProgressPercent(completesArray: AthleteCompletesResponseSchema[]){
     return calculateProgress(completesArray) / 12 * 100;
 }
 
-function calculateProgressColor(completesArray: CompletesResponseSchema[]){
+function calculateProgressColor(completesArray: AthleteCompletesResponseSchema[]){
     const progress = calculateProgress(completesArray);
     if(progress >= 11) return "var(--gold)";
     if(progress >= 8) return "var(--silver)";

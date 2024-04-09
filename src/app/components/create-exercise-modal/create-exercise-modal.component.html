@@ -1,0 +1,50 @@
+<div id="overlay" (click)="modals.createExerciseModal.isActive = false"></div>
+<form id="modal" [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
+  <div id="modal-header">
+    <p id="modal-headline">Neue Übung hinzufügen</p>
+    <app-icon (click)="modals.createExerciseModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+  </div>
+    <div id="input-wrapper">
+        <label class="label">
+            <p class="label-text">Titel</p>
+            <input class="input" type="text" formControlName="title" placeholder="100 Meter Sprint">
+        </label>
+        <div id="age-wrapper">
+            <p class="label-text">Alter</p>
+            <div id="age-input-wrapper">
+                <label class="label">
+                    <p class="label-text">von</p>
+                    <input class="input" type="number" min="1" max="999" formControlName="fromAge" placeholder="1">
+                </label>
+                <label class="label">
+                    <p class="label-text">bis</p>
+                    <input class="input" type="number" min="fromAge" max="999" formControlName="toAge" placeholder="99">
+                </label>
+            </div>
+        </div>
+        <div class="label">
+            <p class="label-text"> Kategorie </p>
+            <div id="slider-wrapper">
+                <div class="slider-element" [ngClass]="category === 'Kraft' ? 'active' : 'disabled'" (click)="category = 'Kraft'">
+                    <span>Kraft</span>
+                </div>
+                <div class="slider-element" [ngClass]="category === 'Ausdauer' ? 'active' : 'disabled'" (click)="category = 'Ausdauer'">
+                    <span>Ausdauer</span>
+                </div>
+                <div class="slider-element" [ngClass]="category === 'Koordination' ? 'active' : 'disabled'" (click)="category = 'Koordination'">
+                    <span>Koordination</span>
+                </div>
+                <div class="slider-element" [ngClass]="category === 'Schnelligkeit' ? 'active' : 'disabled'" (click)="category = 'Schnelligkeit'">
+                    <span>Schnelligkeit</span>
+                </div>
+            </div>
+        </div>
+    </div>
+  <div id="modal-footer">
+    <app-secondary-button (click)="modals.createExerciseModal.isActive = false" type="button" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+    <app-primary-button [disabled]="!exerciseForm.valid" [text]="'Übung anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
+  </div>
+</form>
+
+
+

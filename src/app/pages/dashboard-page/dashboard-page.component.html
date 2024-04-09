@@ -1,5 +1,5 @@
 <div id="page">
-    <app-sidebar [athletes]="athletes" [isLoading]="isLoading" [modals]="modals"></app-sidebar>
+    <app-sidebar [type]="'athlete'" [athletes]="athletes" [isLoading]="isLoading" [modals]="modals"></app-sidebar>
     <div id="content" *ngIf="selectedAthlete; else elseBlock">
         <div id="headline-wrapper">
             <p class="headline">Sportler-Übersicht</p>
@@ -93,15 +93,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <p class="menu-item cursor-pointer" (click)="filter = {}">Filter zurücksetzen</p>
                         </div>
                     </div>
-                    <app-primary-button *ngIf="selectedAthlete.completes.length > 0" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
+                    <app-primary-button (click)="modals.createCompletesModal.isActive = true" *ngIf="selectedAthlete.completes.length > 0" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
                 </div>
                 <div class="empty-state" *ngIf="selectedAthlete.completes.length === 0; else filledState">
                     <img src="assets/img/humans-placeholder.png" alt="people-image">
                     <p class="headline-small">Noch keine Werte vorhanden</p>
                     <p class="text-small text-align-center">Starte jetzt eine Leistungserfassung in den Kategorien Kraft, Ausdauer, Schnelligkeit oder Koordination.</p>
-                    <app-primary-button [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
+                    <app-primary-button (click)="modals.createCompletesModal.isActive = true" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
                 </div>
                 <ng-template #filledState>
                     <div id="table-wrapper">
@@ -146,10 +147,10 @@
                         <div class="table-item" *ngFor="let result of customSortCall(customFilterCall(selectedAthlete.completes, filter, true), this.sorting); index as i;">
                             <span>{{result.exercise.title}}</span>
                             <span>{{result.result}}</span>
-                            <span>{{result.points !== 3 ? result.points === 2 ? 'Silber' : 'Bronze' : 'Gold'}}</span>
+                            <span>{{result.points === 3 ? 'Gold' : result.points === 2 ? 'Silber' : result.points === 1 ? 'Bronze' : '-'}}</span>
                             <span>{{result.exercise.category.title}}</span>
                             <span>{{result.tracked_at | date:'dd.MM.yyyy'}}</span>
-                            <span>{{result.tracked_by}}</span>
+                            <span>{{result.trainer.firstname}} {{result.trainer.lastname}}</span>
                             <div class="flex items-center more-icon cursor-pointer">
                                 <app-icon [iconName]="'more-vertical'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'20'" [iconWidth]="'20'"></app-icon>
                                 <div class="undermenu">
@@ -386,3 +387,6 @@
     </div>
 </div>
 <div id="overlay-lower" *ngIf="selectedAthlete;" (click)="modals.showDetails.isActive = false" [ngClass]="{'active': selectedAthlete && modals.showDetails.isActive}"></div>
+
+<!--TODO: @enterAnimation hierfür machen broskys-->
+<app-create-completes [@enterAnimation] *ngIf="modals.createCompletesModal.isActive" [modals]="modals" [selectedAthlete]="selectedAthlete"></app-create-completes>

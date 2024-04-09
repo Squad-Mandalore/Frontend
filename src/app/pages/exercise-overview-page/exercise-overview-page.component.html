@@ -38,6 +38,31 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="menu-item filter cursor-pointer position-relative">
+                            <span class="accent-900">Disziplin</span>
+                            <span class="arrow-right">></span>
+                            <div class="under-undermenu accent-500">
+                                <div *ngFor="let discipline of getDisciplines(exercises)" class="menu-item cursor-pointer accent-900" (click)="setFilter('discipline', discipline)">
+                                    <span>{{discipline}}</span>
+                                    <app-icon *ngIf="filter['discipline'] && filter['discipline'].filterValue === discipline" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="menu-item filter cursor-pointer position-relative">
+                            <span class="accent-900">Geschlecht</span>
+                            <span class="arrow-right">></span>
+                            <div class="under-undermenu accent-500">
+                                <div class="menu-item cursor-pointer accent-900" (click)="setFilter('gender', 'm')">
+                                    <span>männlich</span>
+                                    <app-icon *ngIf="filter['gender'] && filter['gender'].filterValue === 'm'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                </div>
+                                <div class="menu-item cursor-pointer accent-900" (click)="setFilter('gender', 'f')">
+                                    <span>weiblich</span>
+                                    <app-icon *ngIf="filter['gender'] && filter['gender'].filterValue === 'f'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="menu-item cursor-pointer" (click)="filter = {}">Filter zurücksetzen</p>
                         <!-- <div class="menu-item filter cursor-pointer position-relative">
                             <span class="accent-900">Medaille</span>
                             <span class="arrow-right">></span>
@@ -86,7 +111,7 @@
                         </div> -->
                     </div>
                 </div>
-                <app-primary-button *ngIf="exercises.length > 0" [text]="'Disziplin hinzufügen'" [iconName]="'plus'"></app-primary-button>
+                <app-primary-button *ngIf="exercises.length > 0" [text]="'Disziplin hinzufügen'" [iconName]="'plus'" (click)="modals.createExerciseModal.isActive = true"></app-primary-button>
             </div>
             <div id="empty-state" *ngIf="exercises.length === 0; else filledState">
                 <img src="assets/img/humans-running.png" alt="placeholder-image">
@@ -98,9 +123,15 @@
                 <div id="table-wrapper">
                     <div id="table-head">
                         <div>
-                            <span (click)="setSorting('title')" [ngClass]="this.sorting.property === 'title' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                            <span (click)="setSorting('discipline')" [ngClass]="this.sorting.property === 'discipline' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                 <span>Disziplin</span>
-                                <app-icon *ngIf="this.sorting.property === 'title'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                                <app-icon *ngIf="this.sorting.property === 'discipline'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                            </span>
+                        </div>
+                        <div>
+                            <span (click)="setSorting('gender')" [ngClass]="this.sorting.property === 'gender' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                <span>Geschlecht</span>
+                                <app-icon *ngIf="this.sorting.property === 'gender'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
                             </span>
                         </div>
                         <div>
@@ -109,30 +140,33 @@
                                 <app-icon *ngIf="this.sorting.property === 'from_age'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
                             </span>
                         </div>
-                        <div>
+                        <div> 
                             <span (click)="setSorting('to_age')" [ngClass]="this.sorting.property === 'to_age' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                 <span>Endalter</span>
                                 <app-icon *ngIf="this.sorting.property === 'to_age'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
                             </span>
                         </div>
-                        <!-- <div>
-                            <span (click)="setSorting('gold_value')" [ngClass]="this.sorting.property === 'gold_value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                        <div class="disabled">
+                            <span>Gold</span>
+                            <!-- <span (click)="setSorting('gold_value')" [ngClass]="this.sorting.property === 'gold_value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                 <span>Gold</span>
                                 <app-icon *ngIf="this.sorting.property === 'gold_value'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
-                            </span>
+                            </span> -->
                         </div>
-                        <div>
-                            <span (click)="setSorting('silver_value')" [ngClass]="this.sorting.property === 'silver_value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                        <div class="disabled">
+                            <span>Silber</span>
+                            <!-- <span (click)="setSorting('silver_value')" [ngClass]="this.sorting.property === 'silver_value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                 <span>Silber</span>
                                 <app-icon *ngIf="this.sorting.property === 'silver_value'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
-                            </span>
+                            </span> -->
                         </div>
-                        <div>
-                            <span (click)="setSorting('bronze_value')" [ngClass]="this.sorting.property === 'bronze_value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                        <div class="disabled">
+                            <span>Bronze</span>
+                            <!-- <span (click)="setSorting('bronze_value')" [ngClass]="this.sorting.property === 'bronze_value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                 <span>Bronze</span>
                                 <app-icon *ngIf="this.sorting.property === 'bronze_value'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
-                            </span>
-                        </div> -->
+                            </span> -->
+                        </div>
                         <div>
                             <span (click)="setSorting('category')" [ngClass]="this.sorting.property === 'category' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                 <span>Kategorie</span>
@@ -146,15 +180,15 @@
                             </span>
                         </div> -->
                     </div>
-                    <div class="table-item" *ngFor="let exercise of customSortCall(customFilterCall(customFilterCall(exercises, filter, true), {title: {filterValue: searchValue, valueFullFit: false}, gold_value: {filterValue: searchValue, valueFullFit: false}, silver_value: {filterValue: searchValue, valueFullFit: false}, bronze_value: {filterValue: searchValue, valueFullFit: false}, created_at: {filterValue: searchValue, valueFullFit: false}, category: {filterValue: searchValue, valueFullFit: false} }, false), sorting); index as i;">
-                        <span>{{exercise.title}}</span>
+                    <div class="table-item" *ngFor="let exercise of customSortCall(customFilterCall(customFilterCall(exercises, filter, true), {discipline: {filterValue: searchValue, valueFullFit: false}, gold: {filterValue: searchValue, valueFullFit: false}, silver: {filterValue: searchValue, valueFullFit: false}, bronze: {filterValue: searchValue, valueFullFit: false}, gender: {filterValue: searchValue, valueFullFit: false}, category: {filterValue: searchValue, valueFullFit: false}, from_age: {filterValue: searchValue, valueFullFit: false}, to_age: {filterValue: searchValue, valueFullFit: false} }, false), sorting); index as i;">
+                        <span [title]="exercise.exercise.title">{{exercise.exercise.title}}</span>
+                        <span>{{exercise.gender === 'm' ? 'm': 'w'}}</span>
                         <span>{{exercise.from_age}}</span>
                         <span>{{exercise.to_age}}</span>
-                        <!-- <span>{{exercise.gold_value}}</span>
-                        <span>{{exercise.silver_value}}</span>
-                        <span>{{exercise.bronze_value}}</span> -->
-                        <span>{{exercise.category.title}}</span>
-                        <!-- <span>{{exercise.created_at}}</span> -->
+                        <span>{{exercise.gold}}</span>
+                        <span>{{exercise.silver}}</span>
+                        <span>{{exercise.bronze}}</span>
+                        <span>{{exercise.exercise.category.title}}</span>
                         <div class="flex items-center more-icon cursor-pointer">
                             <app-icon [iconName]="'more-vertical'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'20'" [iconWidth]="'20'"></app-icon>
                             <div class="undermenu">
@@ -162,7 +196,7 @@
                                     <span class="font-size-15 accent-900">Bearbeiten</span>
                                     <app-icon [iconName]="'edit-1'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
                                 </div>
-                                <div class="menu-item">
+                                <div class="menu-item" (click)="deleteExercise(exercise)">
                                     <span class="font-size-15 accent-900">Löschen</span>
                                     <app-icon [iconName]="'delete'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
                                 </div>
@@ -178,3 +212,4 @@
     </div>
 </div>
 <app-navbar-bottom [modals]="modals"></app-navbar-bottom>
+<app-create-exercise-modal [@enterAnimation] *ngIf="modals.createExerciseModal.isActive" [modals]="modals"></app-create-exercise-modal>
