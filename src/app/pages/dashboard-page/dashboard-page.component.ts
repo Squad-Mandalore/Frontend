@@ -41,7 +41,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   filter: any = {};
   routeSubscription!: Subscription;
-  sorting: {property: string, direction: "asc" | "desc"} = {property: 'completed_at', direction: 'desc'};
+  sorting: {property: string, direction: "asc" | "desc"} = {property: 'tracked_at', direction: 'desc'};
   dashArray: number = 525;
   modals = {
     createTrainerModal: {

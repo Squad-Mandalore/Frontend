@@ -101,9 +101,8 @@ export class CreateCompletesComponent implements OnInit{
 
   changePage(event: Event, newPage: number){
     event.preventDefault();
+    if(newPage === 0) this.modals.createCompletesModal.isActive = false;
     if(this.showPage === 1 && newPage === 2 && !this.selectedExercise) return;
-
-
     this.showPage = newPage;
   }
 
@@ -125,7 +124,6 @@ export class CreateCompletesComponent implements OnInit{
   }
 
   onSubmit() {
-    const { result } = this.createCompletesForm.value;
     this.completesData.exercise_id = this.selectedExercise.id;
 
     if(this.createCompletesForm.value.hours != '' ||  this.createCompletesForm.value.minutes != '' || this.createCompletesForm.value.seconds != ''|| this.createCompletesForm.value.milliseconds != ''){
@@ -273,7 +271,6 @@ export class CreateCompletesComponent implements OnInit{
   ngOnInit(): void {
     if(!this.selectedAthlete) return;
     this.completesData.athlete_id = this.selectedAthlete.id;
-    // this.completesData.exercise_id = // hier irgendwie die route zur exercise.id
 
     this.categoriesService.getCategoriesByAthleteIdCategoriesGet(this.selectedAthlete.id).subscribe({
       next: (response: any) => {
