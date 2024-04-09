@@ -93,6 +93,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <p class="menu-item cursor-pointer" (click)="filter = {}">Filter zurücksetzen</p>
                         </div>
                     </div>
                     <app-primary-button (click)="modals.createCompletesModal.isActive = true" *ngIf="selectedAthlete.completes.length > 0" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
