@@ -16,7 +16,10 @@
             <div [title]="exercise.title">{{exercise.title}}</div>
             <div class="flex items-center gap-20" *ngIf="exercise.last_tracked_at">
               <span>zuletzt: {{exercise.last_tracked_at | date: 'dd.MM.YYYY'}}</span>
-              <div class="medal" [ngClass]="exercise.best_result === 3 ? 'gold' : exercise.best_result === 2 ? 'silver' : 'bronze'"></div>
+              <div class="medal gold" *ngIf="exercise.best_result === 3" title="Bestergebnis: gold"></div>
+              <div class="medal silver" *ngIf="exercise.best_result === 2" title="Bestergebnis: silber"></div>
+              <div class="medal bronze" *ngIf="exercise.best_result === 1" title="Bestergebnis: bronze"></div>
+              <div class="medal none" *ngIf="exercise.best_result !== 3 && exercise.best_result !== 2 && exercise.best_result !== 1" title="Bestergebnis: keine Medaille"></div>
             </div>
           </div>
         </div>

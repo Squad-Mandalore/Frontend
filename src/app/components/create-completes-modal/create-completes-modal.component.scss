@@ -326,6 +326,10 @@ form{
   height: 12px;
   border-radius: 100px;
 }
+.none{
+  background-color: transparent;
+  border: 1px solid var(--accent-500);
+}
 .gold{
   background-color: var(--gold);
 }
