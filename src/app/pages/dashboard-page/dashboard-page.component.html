@@ -264,7 +264,7 @@
         </div>
     </ng-template>
 </div>
-<app-navbar-bottom [modals]="modals" [athletes]="athletes"></app-navbar-bottom>
+<app-navbar-bottom></app-navbar-bottom>
 <div id="athlete-details" *ngIf="selectedAthlete;" [ngClass]="{'active': selectedAthlete && modals.showDetails.isActive}">
     <div>
         <p class="headline margin-bottom-20">Sportler Details</p>
@@ -393,5 +393,5 @@
 </div>
 <div id="overlay-lower" *ngIf="selectedAthlete;" (click)="modals.showDetails.isActive = false" [ngClass]="{'active': selectedAthlete && modals.showDetails.isActive}"></div>
 
-<!--TODO: @enterAnimation hierfür machen broskys-->
 <app-create-completes [@enterAnimation] *ngIf="modals.createCompletesModal.isActive" [modals]="modals" [selectedAthlete]="selectedAthlete"></app-create-completes>
+<app-create-athlete-modal [@enterAnimation] *ngIf="modals.createAthleteModal.isActive" [modals]="modals" [athletes]="athletes"></app-create-athlete-modal>

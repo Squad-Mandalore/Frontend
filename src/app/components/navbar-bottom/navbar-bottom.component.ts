@@ -21,19 +21,18 @@ import { enterLeaveAnimation } from '../../shared/animation';
 })
 export class NavbarBottomComponent implements OnInit {
   urlParts: any = [];
-  @Input() modals!: any;
-  @Input() athletes: AthleteFullResponseSchema[] = [];
   user!: UserResponseSchema;
 
-  constructor(private route: ActivatedRoute,
-              private authExtService: AuthExtentionService, 
-              private authService: AuthService
-  ) {
+  constructor(
+    private route: ActivatedRoute,
+    private authExtService: AuthExtentionService, 
+    private authService: AuthService
+  ){
     this.urlParts = this.route.snapshot.url.map(segment => segment.toString());
   }
 
   ngOnInit(): void {
-     this.getUser();
+    this.getUser();
   }
 
   checkIfIsActive(routeParameter : string){
