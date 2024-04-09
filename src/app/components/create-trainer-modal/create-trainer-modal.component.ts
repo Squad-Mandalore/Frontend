@@ -7,19 +7,19 @@ import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AlertComponent} from "../alert/alert.component";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
-import {TrainerPostSchema, TrainersService} from "../../shared/generated";
+import {TrainerPostSchema, TrainerResponseSchema, TrainersService} from "../../shared/generated";
 import {NgClass} from "@angular/common";
-
 
 @Component({
   selector: 'app-create-trainer-modal',
   standalone: true,
   imports: [PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, PasswordBoxComponent, ReactiveFormsModule, AlertComponent, NgClass],
   templateUrl: './create-trainer-modal.component.html',
-  styleUrl: './create-trainer-modal.component.scss'
+  styleUrl: './create-trainer-modal.component.scss',
 })
 export class CreateTrainerModalComponent {
   @Input() modals!: any;
+  @Input() trainer!: TrainerResponseSchema[];
 
   trainerForm;
   constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService){
@@ -41,9 +41,10 @@ export class CreateTrainerModalComponent {
       email: this.trainerForm.value.email!,
     };
     this.trainerService.createTrainerTrainersPost(body).subscribe({
-      next: () => {
+      next: (reponse: TrainerResponseSchema) => {
         this.alertService.show('Trainer erstellt', 'Trainer wurde erfolgreich erstellt.', 'success');
         this.modals.createTrainerModal.isActive = false;
+        this.trainer.push(reponse);
       },
       error: (error) => {
         if(error.status == 422){

@@ -241,11 +241,6 @@
 
 .table-item > span:first-child{
     color: var(--accent-900);
-    display: block;
-    max-width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .position-relative{
@@ -285,7 +280,7 @@
 }
 
 .menu-item{
-    width: 200px;
+    width: 150px;
     padding: 10px;
     display: flex;
     justify-content: space-between;

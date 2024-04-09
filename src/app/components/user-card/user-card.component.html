@@ -1,4 +1,4 @@
-<div id="card">
+<div class="card" *ngIf="user; else filledState">
     <div id="progress">
         <div class="grid-item" id="icon">
             <p>{{ user.firstname[0]}}{{ user.lastname[0] }}</p>
@@ -17,11 +17,48 @@
     </div>
     <div *ngIf="!showIconOnly" id="text-wrapper">
         <p id="name">{{ user.firstname }}&nbsp;{{ user.lastname }}</p>
-        <p id="role">{{ user.type === 'athlete' ? 'Sportler' : user.type }}</p>
+        <p id="role">{{ user.type === 'athlete' ? 'Sportler' : user.type === 'trainer' ? 'Trainer' : 'Administrator' }}</p>
     </div>
 </div>
+<ng-template #filledState>
+    <div class="card">
+        <div id="progress">
+            <div class="grid-item" id="icon">
+                <p class="skeleton"></p>
+            </div>
+        </div>
+        <div *ngIf="!showIconOnly" id="text-wrapper">
+            <p class="width-95 height-12 skeleton border-radius-full"></p>
+            <p class="width-95 height-10 skeleton border-radius-full"></p>
+        </div>
+    </div>
+</ng-template>
 
 <style>
+    .skeleton {
+        background-color: var(--accent-150);
+    }
+
+    .width-95{
+        width: 95px;
+    }
+    
+    .width-200{
+        width: 200px;
+    }
+
+    .border-radius-full{
+        border-radius: 100px;
+    }
+
+    .height-12{
+        height: 12px;
+    }
+
+    .height-10{
+        height: 10px;
+    }
+
     @keyframes progress-bar {
         from {stroke-dashoffset: 150;}
         to {stroke-dashoffset: attr(dashoffset);}
@@ -70,12 +107,13 @@
         text-wrap: nowrap;
         text-overflow: ellipsis;
     }
-    #card{
+    .card{
         display: flex;
         gap: 20px;
         width: fit-content;
         align-items: center;
         height: 40px;
+        min-width: 200px;
     }
     #icon{
         background-color: var(--accent-150);

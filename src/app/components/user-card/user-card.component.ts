@@ -21,20 +21,6 @@ export class UserCardComponent {
     const progressDecimal = this.progress / 100;
     return this.circumference * (1 - progressDecimal);
   }
-
-  user_example = {
-    id: 1,
-    username: "KaySchulz42",
-    email: "kay@schulz.de",
-    hashed_password: 'aöjsdlföajsdfu980asputt2098qouhZozpfaöeödfj-ma.rä2ojtqpdozf8asoidghfnööajisädfp0q###adf1iu89r173!',
-    firstname: 'Kay',
-    lastname: 'Schulz',
-    created_at: '2024-02-25',
-    last_password_change: '2024-02-25',
-    last_edited_at: '2024-02-25',
-    type: "Sportler",
-    salt: ""
-  }
 }
 
 

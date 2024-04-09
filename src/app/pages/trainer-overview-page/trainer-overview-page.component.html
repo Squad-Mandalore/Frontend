@@ -1,0 +1,38 @@
+<div id="page">
+    <app-sidebar [type]="'trainer'" [trainer]="trainer" [isLoading]="isLoading" [modals]="modals"></app-sidebar>
+    <div id="content" *ngIf="selectedTrainer; else elseBlock">
+        <div id="headline-wrapper">
+            <p class="headline">Trainer-Übersicht</p>
+            <p class="meta-text">registriert am {{ selectedTrainer.created_at | date:'dd.MM.yyyy'}}</p>
+        </div>
+        <div id="general-information-wrapper">
+            <app-user-card [user]="selectedTrainer"></app-user-card>
+            <app-primary-button *ngIf="selectedTrainer.type !== 'administrator'" class="margin-left-auto" [text]="'Bearbeiten'" [iconName]="'edit-1'"></app-primary-button>
+            <app-primary-button *ngIf="selectedTrainer.type !== 'administrator'" [isDeleteButton]="true" [text]="'Benutzer löschen'" [minWidth]="'100%'" [iconName]="'delete'" [strokeWidth]="'2'" (click)="deleteTrainer(selectedTrainer)" id="delete-button"></app-primary-button>
+        </div>
+        <div id="container-wrapper">
+
+        </div>
+    </div>
+    <ng-template #elseBlock>
+        <div id="content">            
+            <!-- <div class="border-1px-grey" id="header-container"></div>
+            <div id="container-wrapper">
+                <div class="border-1px-grey" id="results-container"></div>
+                <div id="container-wrapper-vertical">
+                    <div class="border-1px-grey" id="progress-container"></div>
+                    <div class="border-1px-grey" id="swimcert-container"></div>
+                </div>
+            </div> -->
+            <div id="modal">
+                <img src="assets/img/statistics-image.png" alt="statistics"/>
+                <div id="text-wrapper">
+                    <p class="large-text">Wähle einen Trainer aus</p>
+                    <p class="small-text text-align-center">Tippe auf einen Trainer in der Navigation links</p>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
+<app-navbar-bottom [modals]="modals"></app-navbar-bottom>
+<app-create-trainer-modal [@enterAnimation] *ngIf="modals.createTrainerModal.isActive" [modals]="modals" [trainer]="trainer"></app-create-trainer-modal>

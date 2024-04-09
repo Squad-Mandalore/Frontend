@@ -6,7 +6,7 @@ import {CreateTrainerModalComponent} from '../create-trainer-modal/create-traine
 import {CreateAthleteModalComponent} from '../create-athlete-modal/create-athlete-modal.component';
 import {AthleteFullResponseSchema} from "../../shared/generated";
 import {AuthExtentionService} from "../../shared/auth-extention.service";
-import {animate, style, transition, trigger} from '@angular/animations';
+import { enterLeaveAnimation } from '../../shared/animation';
 
 
 @Component({
@@ -15,45 +15,25 @@ import {animate, style, transition, trigger} from '@angular/animations';
   imports: [UserCardComponent, CommonModule, RouterModule, CreateTrainerModalComponent, CreateAthleteModalComponent],
   templateUrl: './navbar-bottom.component.html',
   styleUrl: './navbar-bottom.component.scss',
-    animations: [
-        trigger('enterAnimation', [
-            transition(':enter', [
-                style({opacity: 0}),
-                animate('200ms', style({opacity: 1}))
-            ]),
-            transition(':leave', [
-                style({opacity: 1}),
-                animate('200ms', style({opacity: 0}))
-            ])
-        ])
-    ]
+  animations: [
+    enterLeaveAnimation
+  ]
 })
-export class NavbarBottomComponent {
+export class NavbarBottomComponent implements OnInit {
   urlParts: any = [];
   @Input() modals!: any;
   @Input() athletes: AthleteFullResponseSchema[] = [];
-
-
-  // close(modalName: string){
-  //   console.log(modalName);
-  //   this.deactivateModal(modalName);
-  // }
-
-  // triggerModal(modalName: string){
-  //   this.modals[modalName].isActive = !this.modals[modalName].isActive;
-  // }
-
-  // activateModal(modalName: string){
-  //   this.modals[modalName].isActive = true;
-  // }
-
-  // deactivateModal(modalName: string){
-  //   this.modals[modalName].isActive = false;
-  // }
+  user!: UserResponseSchema;
 
   constructor(private route: ActivatedRoute,
-              private authService: AuthExtentionService) {
+              private authExtService: AuthExtentionService, 
+              private authService: AuthService
+  ) {
     this.urlParts = this.route.snapshot.url.map(segment => segment.toString());
+  }
+
+  ngOnInit(): void {
+     this.getUser();
   }
 
   checkIfIsActive(routeParameter : string){
@@ -65,16 +45,16 @@ export class NavbarBottomComponent {
     this.triggerModalClick.emit(value);
   }
 
-  user = {
-    id: "1",
-    firstname: 'Kay',
-    lastname: 'Schulz',
-    type: 'Administrator',
-    username: 'KaySchulz42'
+  getUser(){
+    this.authService.whoAmIAuthWhoamiGet().subscribe({
+      next: (user: UserResponseSchema) => {
+        this.user = user;
+      },
+    });
   }
 
   onClickLogOut() {
-    this.authService.logout()
+    this.authExtService.logout()
   }
 
 

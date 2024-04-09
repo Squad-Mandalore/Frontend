@@ -1,0 +1,162 @@
+<div id="overlay" (click)="modals.createCompletesModal.isActive = false"></div>
+<form id="modal" [formGroup]="createCompletesForm" (ngSubmit)="onSubmit()">
+  <div id="modal-header">
+    <p id="modal-headline">Neue Leistung erfassen</p>
+    <app-icon (click)="modals.createCompletesModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+  </div>
+  <div class="flex flex-col gap-20 height-full width-full overflow-hidden padding-bottom-60" *ngIf="showPage === 1">
+    <div class="headline-small">Disziplin auswählen</div>
+    <div class="flex flex-col height-full width-full overflow-auto gap-20">
+      <div class="flex items-center gap-10 category-wrapper" *ngFor="let category of categories; index as i;">
+        <div class="discipline-name" data-minheight="150px">
+          <div>{{category.title}}</div>
+        </div>
+        <div class="flex flex-col width-full" *ngIf="category.exercises.length !== 0; else filledState">
+          <div (click)="selectedExercise = exercise; processSubPageToGive()" [ngClass]="{'active': selectedExercise?.title === exercise.title}" class="discipline-item flex items-center space-between" *ngFor="let exercise of category.exercises; index as j;">
+            <div [title]="exercise.title">{{exercise.title}}</div>
+            <div class="flex items-center gap-20" *ngIf="exercise.last_tracked_at">
+              <span>zuletzt: {{exercise.last_tracked_at | date: 'dd.MM.YYYY'}}</span>
+              <div class="medal gold" *ngIf="exercise.best_result === 3" title="Bestergebnis: gold"></div>
+              <div class="medal silver" *ngIf="exercise.best_result === 2" title="Bestergebnis: silber"></div>
+              <div class="medal bronze" *ngIf="exercise.best_result === 1" title="Bestergebnis: bronze"></div>
+              <div class="medal none" *ngIf="exercise.best_result !== 3 && exercise.best_result !== 2 && exercise.best_result !== 1" title="Bestergebnis: keine Medaille"></div>
+            </div>
+          </div>
+        </div>
+        <ng-template #filledState>
+          <div class="flex flex-col width-full">
+            <p class="discipline-item-empty-state">Keine Disziplinen verfügbar</p>
+            <p class="discipline-item-empty-state">Bitte ändere die Altersklasse des Sportlers</p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col gap-20 height-full width-full overflow-hidden padding-bottom-60 font-family-inter-medium" *ngIf="showPage === 2">
+    <div class="flex flex-col gap-10 margin-auto width-full" id="common-menu" *ngIf="subPage === 1">
+      <div class="headline-small">{{selectedExercise.title}}</div>
+      <label class="count-label">
+        <input class="input" type="number" name="anzahl" formControlName="quantity" placeholder="Anzahl"/>
+      </label>
+      <div class="flex flex-col gap-15 margin-top-30">
+        <p class="text-accent-500 font-family-inter-medium font-size-13">Medaillewerte:</p>
+        <div class="flex items-center gap-20">
+          <div class="medal gold"></div>
+          <span class="text-accent-500 font-family-inter-medium font-size-13">Gold</span>
+          <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].gold }}</div>
+        </div>
+        <div class="flex items-center gap-20">
+          <div class="medal silver"></div>
+          <span class="text-accent-500 font-family-inter-medium font-size-13">Silber</span>
+          <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].silver }}</div>
+        </div>
+        <div class="flex items-center gap-20">
+          <div class="medal bronze"></div>
+          <span class="text-accent-500 font-family-inter-medium font-size-13">Bronze</span>
+          <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].bronze }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-10 margin-auto width-full" *ngIf="subPage === 2">
+      <div class="headline-small">{{selectedExercise.title}}</div>
+      <div id="common-menu">
+          <input class="multiple-input" type="number" name="completes-time-hours" formControlName="hours" placeholder="hh" style="display: inline-block"/>
+          :
+          <input class="multiple-input" type="number" name="completes-time-minutes" formControlName="minutes" placeholder="mm" style="display: inline-block;"/>
+          :
+          <input class="multiple-input" type="number" name="completes-time-seconds" formControlName="seconds" placeholder="ss" style="display: inline-block;"/>
+          :
+          <input class="multiple-input" type="number" name="completes-time-milliseconds" formControlName="milliseconds" placeholder="ms" style="display: inline-block;"/>
+      </div>
+      <div class="flex flex-col gap-15 margin-top-30">
+        <p class="text-accent-500 font-family-inter-medium font-size-13">Medaillewerte:</p>
+        <div class="flex items-center gap-20">
+          <div class="medal gold"></div>
+          <span class="text-accent-500 font-family-inter-medium font-size-13">Gold</span>
+          <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].gold }}</div>
+        </div>
+        <div class="flex items-center gap-20">
+          <div class="medal silver"></div>
+          <span class="text-accent-500 font-family-inter-medium font-size-13">Silber</span>
+          <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].silver }}</div>
+        </div>
+        <div class="flex items-center gap-20">
+          <div class="medal bronze"></div>
+          <span class="text-accent-500 font-family-inter-medium font-size-13">Bronze</span>
+          <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].bronze }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-10 margin-auto width-full" id="common-menu" *ngIf="subPage === 3">
+      <div class="headline-small">{{selectedExercise.title}}</div>
+      <div id="common-menu">
+        <input class="multiple-input" type="number" name="completes-distance-kilometers" formControlName="kilometers" placeholder="km" style="display: inline-block"/>
+        ,
+        <input class="multiple-input" type="number" name="completes-distance-meters" formControlName="meters" placeholder="m" style="display: inline-block;"/>
+        ,
+        <input class="multiple-input" type="number" name="completes-distance-centimeters" formControlName="centimeters" placeholder="cm" style="display: inline-block;"/>
+      </div>
+      <div class="flex flex-col gap-15 margin-top-30">
+        <p class="text-accent-500 font-family-inter-medium font-size-13">Medaillewerte:</p>
+        <div class="flex items-center gap-20">
+          <div class="medal gold"></div>
+          <span class="text-accent-500 font-family-inter-medium font-size-13">Gold</span>
+          <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].gold }}</div>
+        </div>
+        <div class="flex items-center gap-20">
+          <div class="medal silver"></div>
+          <span class="text-accent-500 font-family-inter-medium font-size-13">Silber</span>
+          <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].silver }}</div>
+        </div>
+        <div class="flex items-center gap-20">
+          <div class="medal bronze"></div>
+          <span class="text-accent-500 font-family-inter-medium font-size-13">Bronze</span>
+          <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].bronze }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-10 margin-auto width-full" id="common-menu" *ngIf="subPage === 4">
+      <div class="headline-small">{{selectedExercise.title}}</div>
+      <div>
+        <div id="slider-wrapper">
+          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === 'Gold' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = 'Gold'">
+              <span>Gold</span>
+          </div>
+          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === 'Silber' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = 'Silber'">
+              <span>Silber</span>
+          </div>
+          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === 'Bronze' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = 'Bronze'">
+              <span>Bronze</span>
+          </div>
+          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === '-' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = '-'">
+              <span>Keine Medaille</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-15 margin-top-30">
+        <p class="text-accent-500 font-family-inter-medium font-size-13">Medaillewerte:</p>
+        <div class="flex items-center gap-20">
+          <div class="medal gold"></div>
+          <span class="text-accent-500 font-family-inter-medium font-size-13">Gold</span>
+          <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].gold }}</div>
+        </div>
+        <div class="flex items-center gap-20">
+          <div class="medal silver"></div>
+          <span class="text-accent-500 font-family-inter-medium font-size-13">Silber</span>
+          <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].silver }}</div>
+        </div>
+        <div class="flex items-center gap-20">
+          <div class="medal bronze"></div>
+          <span class="text-accent-500 font-family-inter-medium font-size-13">Bronze</span>
+          <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].bronze }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="modal-footer">
+    <app-secondary-button *ngIf="showPage === 1" (click)="modals.createCompletesModal.isActive = false" [text]="'Schließen'" [minWidth]="'100%'" [description]="'Zurück zur Dashboardansicht.'"></app-secondary-button>
+    <app-secondary-button *ngIf="showPage === 2" (click)="changePage($event, 1)" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Zurück zur Disziplinauswahl.'"></app-secondary-button>
+    <app-primary-button *ngIf="showPage === 1" (click)="changePage($event, 2)" [text]="'Weiter'" [minWidth]="'100%'" [description]="'Zum Disziplin Auswahlmenü.'"></app-primary-button>
+    <app-primary-button *ngIf="showPage === 2" [text]="'Erfassen'" [minWidth]="'100%'" [description]="'speichert die Leistung'"></app-primary-button>
+  </div>
+</form>

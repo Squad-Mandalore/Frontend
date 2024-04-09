@@ -6,7 +6,7 @@ import {Subscription} from 'rxjs';
 import { AthleteFullResponseSchema } from '../../shared/generated';
 import customFilter from '../../../utils/custom-filter';
 import { calculateProgressPercent, calculateProgressColor } from '../../../utils/calculate-progress';
-import { CompletesResponseSchema } from '../../shared/generated';
+import { AthleteCompletesResponseSchema } from '../../shared/generated';
 
 @Component({
   selector: 'app-athlete-card',
@@ -23,11 +23,11 @@ export class AthleteCardComponent {
   isActive: boolean = false;
   @Input() athlete!: AthleteFullResponseSchema;
 
-  getProgress(completes: CompletesResponseSchema[]){
+  getProgress(completes: AthleteCompletesResponseSchema[]){
     return calculateProgressPercent(completes);
   }
 
-  getColorVariable(completes: CompletesResponseSchema[]){
+  getColorVariable(completes: AthleteCompletesResponseSchema[]){
     return calculateProgressColor(completes)
   }
 
