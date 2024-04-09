@@ -10,14 +10,20 @@ import { NavbarBottomComponent } from '../../components/navbar-bottom/navbar-bot
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { UserCardComponent } from '../../components/user-card/user-card.component';
 import { DatePipe, NgIf } from '@angular/common';
+import { CreateTrainerModalComponent } from '../../components/create-trainer-modal/create-trainer-modal.component';
+import { enterLeaveAnimation } from '../../shared/animation';
 
 @Component({
   selector: 'app-trainer-overview-page',
   standalone: true,
-  imports: [PrimaryButtonComponent, NavbarBottomComponent, SidebarComponent, UserCardComponent, DatePipe, NgIf],
+  imports: [PrimaryButtonComponent, NavbarBottomComponent, SidebarComponent, UserCardComponent, DatePipe, NgIf, CreateTrainerModalComponent],
   templateUrl: './trainer-overview-page.component.html',
-  styleUrl: './trainer-overview-page.component.scss'
+  styleUrl: './trainer-overview-page.component.scss',
+  animations: [
+    enterLeaveAnimation
+  ]
 })
+
 export class TrainerOverviewPageComponent {
   constructor(private route: ActivatedRoute, private confirmationService: ConfirmationService, private router: Router, private trainerService: TrainersService, private alertService: AlertService) { }
   trainer: TrainerResponseSchema[] = []

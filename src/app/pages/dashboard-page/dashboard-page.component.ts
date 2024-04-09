@@ -20,13 +20,17 @@ import { AthletesService } from '../../shared/generated';
 import { AlertService } from '../../shared/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CreateCompletesComponent } from '../../components/create-completes-modal/create-completes-modal.component';
+import { enterLeaveAnimation } from '../../shared/animation';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, CreateCompletesComponent],
   templateUrl: './dashboard-page.component.html',
-  styleUrl: './dashboard-page.component.scss'
+  styleUrl: './dashboard-page.component.scss',
+  animations: [
+    enterLeaveAnimation
+  ]
 })
 
 export class DashboardPageComponent implements OnInit, OnDestroy {

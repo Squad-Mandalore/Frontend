@@ -51,17 +51,17 @@
                                 <span class="accent-900">Medaille</span>
                                 <span class="arrow-right">></span>
                                 <div class="under-undermenu accent-500">
-                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('points', 3)">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('points', '3')">
                                         <span>Gold</span>
-                                        <app-icon *ngIf="filter['points'] && filter['points'].filterValue  === 3" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['points'] && filter['points'].filterValue  === '3'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
-                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('points', 2)">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('points', '2')">
                                         <span>Silber</span>
-                                        <app-icon *ngIf="filter['points'] && filter['points'].filterValue  === 2" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['points'] && filter['points'].filterValue  === '2'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
-                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('points', 1)">
+                                    <div class="menu-item cursor-pointer accent-900" (click)="setFilter('points', '1')">
                                         <span>Bronze</span>
-                                        <app-icon *ngIf="filter['points'] && filter['points'].filterValue  === 1" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+                                        <app-icon *ngIf="filter['points'] && filter['points'].filterValue  === '1'" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
                                     </div>
                                 </div>
                             </div>
@@ -83,10 +83,10 @@
                                 <span class="accent-900">Datum</span>
                                 <span class="arrow-right">></span>
                                 <div class="under-undermenu accent-500">
-                                    <div class="menu-item cursor-pointer accent-900">
+                                    <!-- <div class="menu-item cursor-pointer accent-900">
                                         <app-icon [iconName]="'search'" [iconColor]="'var(--accent-300)'" [strokeWidth]="'2'" [iconWidth]="'16'" [iconHeight]="'16'"></app-icon>
                                         <input class="input" placeholder="Suchen" #customDateFilter (input)="setFilter('tracked_at', customDateFilter.value, false)" [value]="customDateFilter.value"/>
-                                    </div>
+                                    </div> -->
                                     <div *ngFor="let date of getTrackingDates(selectedAthlete.completes)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_at', date)">
                                         <span>{{date | date:'dd.MM.yyyy'}}</span>
                                         <app-icon *ngIf="filter['tracked_at'] && filter['tracked_at'].filterValue === date" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>

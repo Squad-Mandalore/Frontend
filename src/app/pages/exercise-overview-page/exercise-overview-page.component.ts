@@ -56,11 +56,11 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  deleteExercise(exercise: RuleResponseSchema){
+  deleteExercise(rule: RuleResponseSchema){
     this.confirmationService.show("Möchtest du die Übung wirklich löschen?", "Dieser Vorgang kann nicht rückgängig gemacht werden.", "Löschen", "Abbrechen", true, ()=>{
-      this.rulesService.deleteRuleRulesIdDelete(exercise.id).subscribe({
+      this.rulesService.deleteRuleRulesIdDelete(rule.id).subscribe({
         next: ()=>{
-          this.exercises.filter(element => element.id !== exercise.id);
+          this.exercises = this.exercises.filter(element => element.id !== rule.id);
           this.alertService.show("Löschen erfolgreich", "Die Übung wurde erfolgreich gelöscht", "success");
         },
         error: (error: HttpErrorResponse) => {
@@ -145,7 +145,6 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
     this.rulesService.getAllRulesRulesGet().subscribe({
       next: (exercises: RuleResponseSchema[]) => {
         this.exercises = exercises;
-        console.log(exercises);
         this.isLoading = false;
       },
       error: (error: HttpErrorResponse) => {
