@@ -16,7 +16,7 @@
 
 or
 
-```npm run apigen-f``` *(this may uses an older version of the Backend-API)*
+```npm run apigen-f``` *(this may use an older version of the Backend-API)*
 
 4. You`re good to go!
 
@@ -31,7 +31,7 @@ Already installed dependencies are:
 # Angular Introduction
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.9.
 >[!NOTE]
->To use the local installed Angular CLI **all** `ng` commands have to be prefixed with `npx`
+>To use the locally installed Angular CLI **all** `ng` commands have to be prefixed with `npx`
 <details>
   <summary>Example</summary>
 
