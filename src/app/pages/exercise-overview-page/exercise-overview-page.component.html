@@ -140,27 +140,27 @@
                                 <app-icon *ngIf="this.sorting.property === 'from_age'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
                             </span>
                         </div>
-                        <div>
+                        <div> 
                             <span (click)="setSorting('to_age')" [ngClass]="this.sorting.property === 'to_age' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                 <span>Endalter</span>
                                 <app-icon *ngIf="this.sorting.property === 'to_age'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
                             </span>
                         </div>
-                        <div>
+                        <div class="disabled">
                             <span>Gold</span>
                             <!-- <span (click)="setSorting('gold_value')" [ngClass]="this.sorting.property === 'gold_value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                 <span>Gold</span>
                                 <app-icon *ngIf="this.sorting.property === 'gold_value'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
                             </span> -->
                         </div>
-                        <div>
+                        <div class="disabled">
                             <span>Silber</span>
                             <!-- <span (click)="setSorting('silver_value')" [ngClass]="this.sorting.property === 'silver_value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                 <span>Silber</span>
                                 <app-icon *ngIf="this.sorting.property === 'silver_value'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
                             </span> -->
                         </div>
-                        <div>
+                        <div class="disabled">
                             <span>Bronze</span>
                             <!-- <span (click)="setSorting('bronze_value')" [ngClass]="this.sorting.property === 'bronze_value' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                 <span>Bronze</span>

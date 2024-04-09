@@ -131,11 +131,11 @@
     font-size: 15px;
     color: var(--accent-400);
     position: relative;
-    cursor: pointer;
 }
 
-#table-head > div:hover > span{
+#table-head > div:hover > span:not(#table-head > div.disabled:hover > span){
     text-decoration: underline;
+    cursor: pointer;
 }
 
 #table-head app-icon{
