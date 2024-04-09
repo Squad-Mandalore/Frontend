@@ -72,4 +72,5 @@
 </div>
 
 <app-create-trainer-modal [@enterAnimation] *ngIf="modals.createTrainerModal.isActive" [modals]="modals"></app-create-trainer-modal>
-<app-create-athlete-modal [@enterAnimation] *ngIf="modals.createAthleteModal.isActive" [modals]="modals"></app-create-athlete-modal>
+<app-create-athlete-modal [@enterAnimation] *ngIf="modals.createAthleteModal.isActive" [modals]="modals" [athletes]="athletes"></app-create-athlete-modal>
+

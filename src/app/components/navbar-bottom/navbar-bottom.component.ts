@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
-import { UserCardComponent } from '../user-card/user-card.component';
-import { CommonModule } from '@angular/common';
-import { RouterModule, ActivatedRoute } from '@angular/router';
-import { CreateTrainerModalComponent } from '../create-trainer-modal/create-trainer-modal.component';
-import { CreateAthleteModalComponent } from '../create-athlete-modal/create-athlete-modal.component';
-import {AuthService} from "../../shared/generated";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {UserCardComponent} from '../user-card/user-card.component';
+import {CommonModule} from '@angular/common';
+import {ActivatedRoute, RouterModule} from '@angular/router';
+import {CreateTrainerModalComponent} from '../create-trainer-modal/create-trainer-modal.component';
+import {CreateAthleteModalComponent} from '../create-athlete-modal/create-athlete-modal.component';
+import {AthleteFullResponseSchema} from "../../shared/generated";
 import {AuthExtentionService} from "../../shared/auth-extention.service";
-import { animate, style, transition, trigger } from '@angular/animations';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 
 @Component({
@@ -31,6 +31,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 export class NavbarBottomComponent {
   urlParts: any = [];
   @Input() modals!: any;
+  @Input() athletes: AthleteFullResponseSchema[] = [];
 
 
   // close(modalName: string){
@@ -75,4 +76,6 @@ export class NavbarBottomComponent {
   onClickLogOut() {
     this.authService.logout()
   }
+
+
 }

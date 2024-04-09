@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, NgZone} from '@angular/core';
 
 import {NgClass, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
@@ -6,7 +6,13 @@ import {AlertComponent} from "../alert/alert.component";
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
 import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-button.component";
-import {AthletePostSchema, AthleteResponseSchema, AthletesService, Gender} from "../../shared/generated";
+import {
+  AthleteFullResponseSchema,
+  AthletePostSchema,
+  AthleteResponseSchema,
+  AthletesService,
+  Gender
+} from "../../shared/generated";
 import {LoggerService} from "../../shared/logger.service";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
@@ -37,12 +43,13 @@ export class CreateAthleteModalComponent {
   isMale: boolean = true;
   isStringMale: Gender = "m";
   @Input() modals!: any;
+  @Input() athletes: AthleteFullResponseSchema[] = [];
 
   constructor(private athleteApi: AthletesService,
               private logger: LoggerService,
               private formBuilder: FormBuilder,
               private alertService: AlertService,
-              private utilService: UtilService
+              private utilService: UtilService,
 
   ) {
     // Initialize Form and Validators for received Data
@@ -90,8 +97,25 @@ export class CreateAthleteModalComponent {
       next: (response: AthleteResponseSchema) => {
         this.alertService.show('Athlet erstellt', 'Athlet wurde erfolgreich erstellt.', 'success');
         this.modals.createAthleteModal.isActive = false;
-        if(response){
-          // trigger code here
+        console.log(response)
+        if(response && response.id){
+          this.athleteApi.getAthleteFullAthletesIdFullGet(response.id).subscribe({
+            // Post Athlete if allowed
+            next: (response: AthleteFullResponseSchema) => {
+              if(response){
+                this.athletes.push(response)
+                console.log(this.athletes)
+              }
+            },
+            // Deny Athlete if Backend send Http-Error
+            error: (error) => {
+              if(error.status == 422){
+                this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
+              }else{
+                this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen',"error");
+              }
+            }
+          })
         }
       },
       // Deny Athlete if Backend send Http-Error
@@ -103,6 +127,7 @@ export class CreateAthleteModalComponent {
         }
       }
   })
+
   }
 
   // Page-Switch
