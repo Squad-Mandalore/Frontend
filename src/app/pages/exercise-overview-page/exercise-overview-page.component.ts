@@ -43,7 +43,7 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
   sorting: {property: string, direction: "asc" | "desc"} = {property: 'category', direction: 'asc'};
   searchValue = "";
   isLoading: boolean = true;
-  
+
   modals = {
     createTrainerModal: {
       isActive: false,

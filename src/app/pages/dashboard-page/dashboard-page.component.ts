@@ -95,7 +95,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   //       this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
   //     }
   //   })
-    
+
   //   this.selectedAthlete.completes = this.selectedAthlete.completes.filter(element => element.exercise.id !== completes.exercise.id);
   // }
 
