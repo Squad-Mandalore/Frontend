@@ -12,19 +12,23 @@ export default function customFilter(array: any[], filterOptions: Object, select
         else if (!value.valueFullFit &&  element.exercise.title.toLowerCase().includes(value.filterValue.toLowerCase())) counter++;
       }
       else if (key === "category" && type === "athlete"){
-        if (value.valueFullFit && element.exercise.category.title === value.filterValue) counter++;
-        else if (!value.valueFullFit &&  element.exercise.category.title.toLowerCase().includes(value.filterValue.toLowerCase())) counter++;
+        if (value.valueFullFit && element.exercise.category.title.toString() === value.filterValue) counter++;
+        else if (!value.valueFullFit &&  element.exercise.category.title.toString().toLowerCase().includes(value.filterValue.toLowerCase())) counter++;
+      }
+      else if(key === "discipline" && type === "exercise"){
+        if (value.valueFullFit && element.exercise.title.toString() === value.filterValue) counter++;
+        else if (!value.valueFullFit &&  element.exercise.title.toString().toLowerCase().includes(value.filterValue.toLowerCase())) counter++;
       }
       else if (key === "tracked_by" && type === "athlete"){
         if (value.valueFullFit && element.trainer.firstname + ' ' + element.trainer.lastname === value.filterValue) counter++;
         else if (!value.valueFullFit && element.trainer.firstname + ' ' + element.trainer.lastname.toLowerCase().includes(value.filterValue.toLowerCase())) counter++;
       }
       else if(key === "category" && type === "exercise"){
-        if (value.valueFullFit && element.category.title === value.filterValue) counter++;
-        else if (!value.valueFullFit &&  element.category.title.toLowerCase().includes(value.filterValue.toLowerCase())) counter++;
+        if (value.valueFullFit && element.exercise.category.title.toString() === value.filterValue) counter++;
+        else if (!value.valueFullFit &&  element.exercise.category.title.toString().toLowerCase().includes(value.filterValue.toLowerCase())) counter++;
       }
-      else if (value.valueFullFit && element[key] === value.filterValue) counter++;
-      else if (!value.valueFullFit && element[key].toLowerCase().includes(value.filterValue.toLowerCase())) counter++;
+      else if (value.valueFullFit && element[key].toString() === value.filterValue) counter++;
+      else if (!value.valueFullFit && element[key].toString().toLowerCase().includes(value.filterValue.toLowerCase())) counter++;
     }
     
     if (selectionFullFit && counter === entries.length || !selectionFullFit && counter >=1) return element;

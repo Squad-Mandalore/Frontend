@@ -6,22 +6,29 @@ import { QuaternaryButtonComponent } from '../buttons/quaternary-button/quaterna
 import { PrimaryButtonComponent } from '../buttons/primary-button/primary-button.component';
 import customFilter from '../../../utils/custom-filter';
 import { IconComponent } from '../icon/icon.component';
-import { AthleteFullResponseSchema } from '../../shared/generated';
+import { AthleteFullResponseSchema, TrainerResponseSchema } from '../../shared/generated';
+import { TrainerCardComponent } from '../trainer-card/trainer-card.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, AthleteCardComponent, RouterModule, QuaternaryButtonComponent, PrimaryButtonComponent, IconComponent],
+  imports: [CommonModule, AthleteCardComponent, RouterModule, TrainerCardComponent, QuaternaryButtonComponent, PrimaryButtonComponent, IconComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
   @Input() athletes: AthleteFullResponseSchema[] = [];
+  @Input() trainer: TrainerResponseSchema[] = [];
+  @Input() type!: "athlete" | "trainer";
   @Input() modals: any = {};
   @Input() isLoading!: boolean;
   searchValue = "";
 
-  customFilterCall(array: any[], options: Object, selectionFullFit:boolean = false){
+  customFilterCallAthletes(array: any[], options: Object, selectionFullFit:boolean = false){
+    return customFilter(array, options, selectionFullFit, "athlete");
+  }
+
+  customFilterCallTrainer(array: any[], options: Object, selectionFullFit:boolean = false){
     return customFilter(array, options, selectionFullFit, "athlete");
   }
 }
