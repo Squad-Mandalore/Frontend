@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserCardComponent} from '../user-card/user-card.component';
 import {CommonModule} from '@angular/common';
 import {ActivatedRoute, RouterModule} from '@angular/router';
 import {CreateTrainerModalComponent} from '../create-trainer-modal/create-trainer-modal.component';
 import {CreateAthleteModalComponent} from '../create-athlete-modal/create-athlete-modal.component';
-import {AthleteFullResponseSchema} from "../../shared/generated";
+import {AthleteFullResponseSchema, AuthService, UserResponseSchema} from "../../shared/generated";
 import {AuthExtentionService} from "../../shared/auth-extention.service";
 import { enterLeaveAnimation } from '../../shared/animation';
 
