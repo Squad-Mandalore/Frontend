@@ -104,7 +104,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       next: () => {
         this.alertService.show('Übung erfolgreich gelöscht', 'Der Athlet wurde erfolgreich entfernt', "success");
         if(this.selectedAthlete?.completes){
-          this.selectedAthlete.completes = this.selectedAthlete?.completes.filter(element => element.exercise.id !== completes.exercise.id);
+          this.selectedAthlete.completes = this.selectedAthlete?.completes.filter(element => !(element.exercise.id === completes.exercise.id && element.tracked_at === completes.tracked_at));
         }
       },
       error: (error: HttpErrorResponse) => {
