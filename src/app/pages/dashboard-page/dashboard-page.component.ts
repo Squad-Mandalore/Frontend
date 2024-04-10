@@ -86,13 +86,14 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         this.athleteService.deleteAhtleteAthletesIdDelete(athlete.id).subscribe({
           next: () => {
            this.alertService.show('Athlet erfolgreich gelöscht', 'Der Athlet wurde erfolgreich entfernt', "success");
+           this.athletes = this.athletes.filter(element => element.id !== athlete.id);
+           this.selectedAthlete = null;
+           this.modals.showDetails.isActive = false;
           },
           error: (error: HttpErrorResponse) => {
             this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
           }
         })
-        this.athletes = this.athletes.filter(element => element.id !== athlete.id);
-        this.selectedAthlete = null;
       }
     );
   }

@@ -54,13 +54,14 @@ export class TrainerOverviewPageComponent {
         this.trainerService.deleteTrainerTrainersIdDelete(trainer.id).subscribe({
           next: () => {
            this.alertService.show('Trainer erfolgreich gelöscht', 'Der Trainer wurde erfolgreich entfernt', "success");
+           this.trainer = this.trainer.filter(element => element.id !== trainer.id);
+           this.selectedTrainer = null;
+           this.modals.showDetails.isActive = false;
           },
           error: (error: HttpErrorResponse) => {
             this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
           }
         })
-        this.trainer = this.trainer.filter(element => element.id !== trainer.id);
-        this.selectedTrainer = null;
       }
     );
   }
