@@ -158,7 +158,7 @@
                                         <span class="font-size-15 accent-900">Bearbeiten</span>
                                         <app-icon [iconName]="'edit-1'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
                                     </div>
-                                    <div class="menu-item">
+                                    <div class="menu-item" (click)="deleteCompletedExercise(result)">
                                         <span class="font-size-15 accent-900">Löschen</span>
                                         <app-icon [iconName]="'delete'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
                                     </div>

@@ -35,7 +35,7 @@ import { CreateAthleteModalComponent } from '../../components/create-athlete-mod
 })
 
 export class DashboardPageComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private confirmationService: ConfirmationService, private router: Router, private athleteService: AthletesService, private alertService: AlertService, private trainerService: TrainersService) { }
+  constructor(private route: ActivatedRoute, private completesService: CompletesService, private confirmationService: ConfirmationService, private router: Router, private athleteService: AthletesService, private alertService: AlertService, private trainerService: TrainersService) { }
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
   selectedAthlete: AthleteFullResponseSchema | null = null;
@@ -98,19 +98,20 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  // deleteCompletedExercise(completes: CompletesResponseSchema){
-  //   if(!completes || !this.selectedAthlete) return;
-  //   this.completesService.deleteAhtleteCompletesIdDelete(completes.exercise.id).subscribe({
-  //     next: () => {
-  //       this.alertService.show('Übung erfolgreich gelöscht', 'Der Athlet wurde erfolgreich entfernt', "success");
-  //     },
-  //     error: (error: HttpErrorResponse) => {
-  //       this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
-  //     }
-  //   })
-
-  //   this.selectedAthlete.completes = this.selectedAthlete.completes.filter(element => element.exercise.id !== completes.exercise.id);
-  // }
+  deleteCompletedExercise(completes: CompletesResponseSchema){
+    if(!completes || !this.selectedAthlete) return;
+    this.completesService.deleteAhtleteCompletesDelete(completes.exercise.id, this.selectedAthlete.id, completes.tracked_at).subscribe({
+      next: () => {
+        this.alertService.show('Übung erfolgreich gelöscht', 'Der Athlet wurde erfolgreich entfernt', "success");
+        if(this.selectedAthlete?.completes){
+          this.selectedAthlete.completes = this.selectedAthlete?.completes.filter(element => element.exercise.id !== completes.exercise.id);
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
+      }
+    })
+  }
 
   getActiveFilters(){
     let counter = 0;
