@@ -32,29 +32,29 @@ export class HelpPageComponent implements AfterViewInit {
   @ViewChildren('.headline') headlineElements: QueryList<ElementRef> | undefined;
   @ViewChildren('.sub-headline') subHeadlineElements: QueryList<ElementRef> | undefined;
 
-  constructor(private headlinesService: HeadlinesService, private logger: LoggerService, private el: ElementRef, private renderer: Renderer2) {}
+  constructor(private headlinesService: HeadlinesService, private logger: LoggerService, private el: ElementRef, private renderer: Renderer2) { }
 
   ngAfterViewInit() {
-  // Create a map to store the subheadline elements for each headline
-this.subHeadlinesMap = new Map<number, HTMLElement[]>();
+    // Create a map to store the subheadline elements for each headline
+    this.subHeadlinesMap = new Map<number, HTMLElement[]>();
 
-const sectionElements = Array.from(this.el.nativeElement.querySelectorAll('#content > div'));
+    const sectionElements = Array.from(this.el.nativeElement.querySelectorAll('#content > div'));
 
-this.headlines = sectionElements.map((sectionElement: unknown, index: number) => {
-  const element = sectionElement as HTMLElement;
-  const title = element.querySelector('.headline')?.innerHTML || '';
-  const subHeadlineElements = Array.from(element.querySelectorAll('.sub-headline')) as HTMLElement[];
+    this.headlines = sectionElements.map((sectionElement: unknown, index: number) => {
+      const element = sectionElement as HTMLElement;
+      const title = element.querySelector('.headline')?.innerHTML || '';
+      const subHeadlineElements = Array.from(element.querySelectorAll('.sub-headline')) as HTMLElement[];
 
-  // Store the subheadline elements in the map
-  this.subHeadlinesMap.set(index, subHeadlineElements);
+      // Store the subheadline elements in the map
+      this.subHeadlinesMap.set(index, subHeadlineElements);
 
-  const subtitles = subHeadlineElements.map((subHeadlineElement: HTMLElement) => subHeadlineElement.textContent || '');
+      const subtitles = subHeadlineElements.map((subHeadlineElement: HTMLElement) => subHeadlineElement.textContent || '');
 
-  return { title, subtitles };
-});
+      return { title, subtitles };
+    });
 
     this.headlineElementsArray = Array.from(this.el.nativeElement.querySelectorAll('.headline'));
-    this.subHeadlineElementsArray = Array.from(this.el.nativeElement.querySelectorAll('.sub-headline'));    
+    this.subHeadlineElementsArray = Array.from(this.el.nativeElement.querySelectorAll('.sub-headline'));
 
     setTimeout(() => {
       this.headlinesService.setHeadlines(this.headlines);
@@ -65,7 +65,7 @@ this.headlines = sectionElements.map((sectionElement: unknown, index: number) =>
   }
 
   onContentScroll(_event: Event) {
-    const {headlineIndex, subHeadlineIndex} = this.calculateHeadlineInViewAndSubHeadlineInView();
+    const { headlineIndex, subHeadlineIndex } = this.calculateHeadlineInViewAndSubHeadlineInView();
     this.headlineInView.emit(headlineIndex);
     this.currentHeadline = headlineIndex;
     this.subHeadlineInView.emit(subHeadlineIndex);
@@ -82,6 +82,8 @@ this.headlines = sectionElements.map((sectionElement: unknown, index: number) =>
     }
 
     const contentScrollTop = this.content.nativeElement.scrollTop;
+    const contentScrollHeight = this.content.nativeElement.scrollHeight;
+    const contentClientHeight = this.content.nativeElement.clientHeight;
 
     // Determine the main headline in view
     for (let i = 0; i < this.headlineElementsArray.length; i++) {
@@ -93,6 +95,10 @@ this.headlines = sectionElements.map((sectionElement: unknown, index: number) =>
       } else {
         break;
       }
+    }
+    // If scrolled to the bottom, set headlineIndex to the last index
+    if (contentScrollTop + contentClientHeight >= contentScrollHeight) {
+      headlineIndex = this.headlineElementsArray.length - 2;
     }
     const currentSubHeadlineElements = this.subHeadlinesMap.get(headlineIndex) || [];
 
@@ -114,16 +120,16 @@ this.headlines = sectionElements.map((sectionElement: unknown, index: number) =>
 
   scrollToHeadline(index: number) {
     if (this.headlineElementsArray.length > index) {
-      this.headlineElementsArray[index].scrollIntoView({ behavior: 'smooth', block: "start", inline: "nearest"});
+      this.headlineElementsArray[index].scrollIntoView({ behavior: 'smooth', block: "start", inline: "nearest" });
     }
   }
 
-  scrollToSubHeadline({headlineIndex, subHeadlineIndex}: {headlineIndex: number, subHeadlineIndex: number}) {
+  scrollToSubHeadline({ headlineIndex, subHeadlineIndex }: { headlineIndex: number, subHeadlineIndex: number }) {
     if (this.headlines.length > headlineIndex) {
       const headline = this.headlines[headlineIndex];
       if (headline.subtitles.length > subHeadlineIndex) {
         const subHeadline = this.subHeadlineElementsArray.find((subHeadlineElement: HTMLElement) => subHeadlineElement.textContent === headline.subtitles[subHeadlineIndex]);
-        subHeadline?.scrollIntoView({ behavior: 'smooth', block: "start", inline: "nearest"});
+        subHeadline?.scrollIntoView({ behavior: 'smooth', block: "start", inline: "nearest" });
       }
     }
   }
