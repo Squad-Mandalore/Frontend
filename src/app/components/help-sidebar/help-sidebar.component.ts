@@ -1,7 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeadlinesService } from '../../shared/headlines.service';
-import { LoggerService } from '../../shared/logger.service';
 
 @Component({
   standalone: true,
@@ -17,11 +16,11 @@ export class HelpSidebarComponent {
   @Output() subHeadlineClicked = new EventEmitter<{headlineIndex: number, subHeadlineIndex: number}>();
   headlines: { title: string, subtitles: string[] }[] = [];
   selectedHeadline: number | null = 0;
+  selectedSubHeadline: number | null = null;
 
-  constructor(private headlinesService: HeadlinesService, private logger: LoggerService) {
+  constructor(private headlinesService: HeadlinesService) {
     this.headlinesService.headlines.subscribe((headlines: { title: string; subtitles: string[]; }[]) => {
       this.headlines = headlines;
-      logger.info(`Headlines updated ${JSON.stringify(this.headlines)}`);
     });
   }
 
@@ -32,5 +31,6 @@ export class HelpSidebarComponent {
 
   onSubHeadlineClick(headlineIndex: number, subHeadlineIndex: number) {
     this.subHeadlineClicked.emit({headlineIndex, subHeadlineIndex});
+    this.selectedSubHeadline = subHeadlineIndex;
   }
 }

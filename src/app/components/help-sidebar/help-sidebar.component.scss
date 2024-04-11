@@ -121,6 +121,7 @@
     margin-bottom: 15px;
 }
 
+
 .description {
     font-size: 13px;
     font-family: "Inter Medium";
@@ -138,6 +139,10 @@
 
 }
 
+.click-headline.active {
+    color: var(--brand-500);
+}
+
 .click-subheadline {
     margin-bottom: 20px;
     cursor: pointer;
@@ -147,11 +152,15 @@
     color: var(--accent-600);
 }
 
+.click-subheadline.active {
+    color: var(--brand-500);
+}
+
 #breakline {
     width: 90%;
-    height: 2px;
+    height: 1px;
     align-self: center;
-    background-color: var(--accent-300);
+    background-color: var(--accent-200);
     margin: 20px 0;
 }
 
