@@ -1,7 +1,7 @@
 <div id="page">
     <app-help-sidebar (headlineClicked)="scrollToHeadline($event)"
-        (subHeadlineClicked)="scrollToSubHeadline($event)"></app-help-sidebar>
-    <div id="content">
+        (subHeadlineClicked)="scrollToSubHeadline($event)" [selectedHeadline]="currentHeadline" [selectedSubHeadline]="currentSubHeadline"></app-help-sidebar>
+    <div id="content" #content>
         <div>
             <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
             <div id="headline-wrapper">
