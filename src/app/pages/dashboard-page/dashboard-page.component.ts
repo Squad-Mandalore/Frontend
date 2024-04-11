@@ -100,17 +100,37 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   deleteCompletedExercise(completes: CompletesResponseSchema){
     if(!completes || !this.selectedAthlete) return;
-    this.completesService.deleteAhtleteCompletesDelete(completes.exercise.id, this.selectedAthlete.id, completes.tracked_at).subscribe({
-      next: () => {
-        this.alertService.show('Übung erfolgreich gelöscht', 'Der Athlet wurde erfolgreich entfernt', "success");
-        if(this.selectedAthlete?.completes){
-          this.selectedAthlete.completes = this.selectedAthlete?.completes.filter(element => !(element.exercise.id === completes.exercise.id && element.tracked_at === completes.tracked_at));
-        }
-      },
-      error: (error: HttpErrorResponse) => {
-        this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
+    this.confirmationService.show(
+      'Leistung wirklich löschen?',
+      'Mit dieser Aktion wird die ausgewählte Leistung unwiderruflich gelöscht.',
+      'Leistung löschen',
+      'Abbrechen',
+      true,
+      () => {
+        this.completesService.deleteAhtleteCompletesDelete(completes.exercise.id, this.selectedAthlete!.id, completes.tracked_at).subscribe({
+          next: () => {
+            this.alertService.show('Übung erfolgreich gelöscht', 'Die Übung wurde erfolgreich entfernt', "success");
+            if(this.selectedAthlete?.completes){
+              this.selectedAthlete.completes = this.selectedAthlete?.completes.filter(element => !(element.exercise.id === completes.exercise.id && element.tracked_at === completes.tracked_at));
+            }
+          },
+          error: (error: HttpErrorResponse) => {
+            this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
+          }
+        })
       }
-    })
+    )
+  }
+  
+  calculateCategoryMedal(category: string, completes: CompletesResponseSchema[]){
+    if(completes.length === 0) return 'none';
+    const numberGoldMedals = this.customFilterCall(completes, {category: {filterValue: category, valueFullFit: true}, points: {filterValue: '3', valueFullFit: true} }, true).length;
+    const numberSilverMedals = this.customFilterCall(completes, {category: {filterValue: category, valueFullFit: true}, points: {filterValue: '2', valueFullFit: true} }, true).length;
+    const numberBronzeMedals = this.customFilterCall(completes, {category: {filterValue: category, valueFullFit: true}, points: {filterValue: '1', valueFullFit: true} }, true).length;
+    if(numberGoldMedals) return 'gold';
+    if(numberSilverMedals) return 'silver';
+    if(numberBronzeMedals) return 'bronze';
+    return 'none';
   }
 
   getActiveFilters(){
