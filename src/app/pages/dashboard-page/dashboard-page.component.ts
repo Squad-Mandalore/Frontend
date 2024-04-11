@@ -35,7 +35,7 @@ import { CreateAthleteModalComponent } from '../../components/create-athlete-mod
 })
 
 export class DashboardPageComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private confirmationService: ConfirmationService, private router: Router, private athleteService: AthletesService, private alertService: AlertService, private trainerService: TrainersService) { }
+  constructor(private route: ActivatedRoute, private completesService: CompletesService, private confirmationService: ConfirmationService, private router: Router, private athleteService: AthletesService, private alertService: AlertService, private trainerService: TrainersService) { }
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
   selectedAthlete: AthleteFullResponseSchema | null = null;
@@ -86,30 +86,52 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         this.athleteService.deleteAhtleteAthletesIdDelete(athlete.id).subscribe({
           next: () => {
            this.alertService.show('Athlet erfolgreich gelöscht', 'Der Athlet wurde erfolgreich entfernt', "success");
+           this.athletes = this.athletes.filter(element => element.id !== athlete.id);
+           this.selectedAthlete = null;
+           this.modals.showDetails.isActive = false;
           },
           error: (error: HttpErrorResponse) => {
             this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
           }
         })
-        this.athletes = this.athletes.filter(element => element.id !== athlete.id);
-        this.selectedAthlete = null;
       }
     );
   }
 
-  // deleteCompletedExercise(completes: CompletesResponseSchema){
-  //   if(!completes || !this.selectedAthlete) return;
-  //   this.completesService.deleteAhtleteCompletesIdDelete(completes.exercise.id).subscribe({
-  //     next: () => {
-  //       this.alertService.show('Übung erfolgreich gelöscht', 'Der Athlet wurde erfolgreich entfernt', "success");
-  //     },
-  //     error: (error: HttpErrorResponse) => {
-  //       this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
-  //     }
-  //   })
-
-  //   this.selectedAthlete.completes = this.selectedAthlete.completes.filter(element => element.exercise.id !== completes.exercise.id);
-  // }
+  deleteCompletedExercise(completes: CompletesResponseSchema){
+    if(!completes || !this.selectedAthlete) return;
+    this.confirmationService.show(
+      'Leistung wirklich löschen?',
+      'Mit dieser Aktion wird die ausgewählte Leistung unwiderruflich gelöscht.',
+      'Leistung löschen',
+      'Abbrechen',
+      true,
+      () => {
+        this.completesService.deleteAhtleteCompletesDelete(completes.exercise.id, this.selectedAthlete!.id, completes.tracked_at).subscribe({
+          next: () => {
+            this.alertService.show('Übung erfolgreich gelöscht', 'Die Übung wurde erfolgreich entfernt', "success");
+            if(this.selectedAthlete?.completes){
+              this.selectedAthlete.completes = this.selectedAthlete?.completes.filter(element => !(element.exercise.id === completes.exercise.id && element.tracked_at === completes.tracked_at));
+            }
+          },
+          error: (error: HttpErrorResponse) => {
+            this.alertService.show('Löschen fehlgeschlagen', 'Bitte probiere es später erneut', "error");
+          }
+        })
+      }
+    )
+  }
+  
+  calculateCategoryMedal(category: string, completes: CompletesResponseSchema[]){
+    if(completes.length === 0) return 'none';
+    const numberGoldMedals = this.customFilterCall(completes, {category: {filterValue: category, valueFullFit: true}, points: {filterValue: '3', valueFullFit: true} }, true).length;
+    const numberSilverMedals = this.customFilterCall(completes, {category: {filterValue: category, valueFullFit: true}, points: {filterValue: '2', valueFullFit: true} }, true).length;
+    const numberBronzeMedals = this.customFilterCall(completes, {category: {filterValue: category, valueFullFit: true}, points: {filterValue: '1', valueFullFit: true} }, true).length;
+    if(numberGoldMedals) return 'gold';
+    if(numberSilverMedals) return 'silver';
+    if(numberBronzeMedals) return 'bronze';
+    return 'none';
+  }
 
   getActiveFilters(){
     let counter = 0;

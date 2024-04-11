@@ -158,7 +158,7 @@
                                         <span class="font-size-15 accent-900">Bearbeiten</span>
                                         <app-icon [iconName]="'edit-1'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
                                     </div>
-                                    <div class="menu-item">
+                                    <div class="menu-item" (click)="deleteCompletedExercise(result)">
                                         <span class="font-size-15 accent-900">Löschen</span>
                                         <app-icon [iconName]="'delete'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
                                     </div>
@@ -310,7 +310,7 @@
             </div>
             <div class="flex items-center gap-10 margin-left-40">
                 <p class="font-size-15 accent-500 inter-regular">gesamt</p>
-                <div class="medal" [ngClass]="{'gold': true, 'silver': false, 'bronze': false}"></div>
+                <div class="medal" [ngClass]="calculateCategoryMedal('Schnelligkeit', selectedAthlete.completes)"></div>
             </div>
         </div>
         <div class="flex items-center">
@@ -333,7 +333,7 @@
             </div>
             <div class="flex items-center gap-10 margin-left-40">
                 <p class="font-size-15 accent-500 inter-regular">gesamt</p>
-                <div class="medal" [ngClass]="{'gold': true, 'silver': false, 'bronze': false}"></div>
+                <div class="medal" [ngClass]="calculateCategoryMedal('Koordination', selectedAthlete.completes)"></div>
             </div>
         </div>
         <div class="flex items-center">
@@ -356,7 +356,7 @@
             </div>
             <div class="flex items-center gap-10 margin-left-40">
                 <p class="font-size-15 accent-500 inter-regular">gesamt</p>
-                <div class="medal" [ngClass]="{'gold': true, 'silver': false, 'bronze': false}"></div>
+                <div class="medal" [ngClass]="calculateCategoryMedal('Ausdauer', selectedAthlete.completes)"></div>
             </div>
         </div>
         <div class="flex items-center">
@@ -379,7 +379,7 @@
             </div>
             <div class="flex items-center gap-10 margin-left-40">
                 <p class="font-size-15 accent-500 inter-regular">gesamt</p>
-                <div class="medal" [ngClass]="{'gold': true, 'silver': false, 'bronze': false}"></div>
+                <div class="medal" [ngClass]="calculateCategoryMedal('Kraft', selectedAthlete.completes)"></div>
             </div>
         </div>
     </div>

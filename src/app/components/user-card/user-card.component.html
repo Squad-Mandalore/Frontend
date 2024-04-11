@@ -1,7 +1,7 @@
 <div class="card" *ngIf="user; else filledState">
     <div id="progress">
         <div class="grid-item" id="icon">
-            <p>{{ user.firstname[0]}}{{ user.lastname[0] }}</p>
+            <p>{{ user.firstname[0].toUpperCase()}}{{ user.lastname[0].toUpperCase() }}</p>
         </div>
         <svg *ngIf="progress" id="progress-bar" class="grid-item" width="40" height="40" viewBox="0 0 50 50" fill="none" stroke-width="3" xmlns="http://www.w3.org/2000/svg">
             <path

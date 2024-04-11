@@ -448,6 +448,11 @@
     color: var(--accent-500)
 }
 
+.none{
+    border: 1px solid var(--accent-500);
+    background-color: transparent;
+}
+
 .gold{
     background-color: var(--gold);
 }

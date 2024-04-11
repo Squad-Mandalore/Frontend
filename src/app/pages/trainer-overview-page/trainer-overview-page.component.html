@@ -7,7 +7,7 @@
         </div>
         <div id="general-information-wrapper">
             <app-user-card [user]="selectedTrainer"></app-user-card>
-            <app-primary-button *ngIf="selectedTrainer.type !== 'administrator'" class="margin-left-auto" [text]="'Bearbeiten'" [iconName]="'edit-1'"></app-primary-button>
+            <app-primary-button class="margin-left-auto" [text]="'Bearbeiten'" [iconName]="'edit-1'"></app-primary-button>
             <app-primary-button *ngIf="selectedTrainer.type !== 'administrator'" [isDeleteButton]="true" [text]="'Benutzer löschen'" [minWidth]="'100%'" [iconName]="'delete'" [strokeWidth]="'2'" (click)="deleteTrainer(selectedTrainer)" id="delete-button"></app-primary-button>
         </div>
         <div id="container-wrapper">
