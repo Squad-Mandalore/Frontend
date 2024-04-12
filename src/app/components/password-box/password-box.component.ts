@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IconComponent } from "../icon/icon.component";
 import {UtilService} from "../../shared/service-util";
-
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-password-box',
     standalone: true,
-    imports: [IconComponent],
+    imports: [IconComponent, NgIf],
     templateUrl: './password-box.component.html',
     styleUrl: './password-box.component.scss',
     providers: [
@@ -20,6 +20,10 @@ import {UtilService} from "../../shared/service-util";
 
 })
 export class PasswordBoxComponent implements ControlValueAccessor {
+    @Input() showPasswordGenerator: boolean = true;
+    @Input() showCopyOption: boolean = true;
+    @Input() showPasswordStrength: boolean = true;
+    @Input() placeholderText: string = "Passwort";
 
     /**
       * Whether the input is disabled or not.
@@ -29,7 +33,7 @@ export class PasswordBoxComponent implements ControlValueAccessor {
     /**
      * The value of the input.
      */
-    value!: string;
+    value: string = "";
 
     /**
      * Callback function to be called when the value changes.
