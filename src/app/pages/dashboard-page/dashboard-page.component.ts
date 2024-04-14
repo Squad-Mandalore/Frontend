@@ -8,7 +8,14 @@ import { UserCardComponent } from '../../components/user-card/user-card.componen
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { AthleteCompletesResponseSchema, AthleteResponseSchema, CompletesResponseSchema, CompletesService, TrainersService } from '../../shared/generated';
+import {
+  AthleteCompletesResponseSchema,
+  AthleteResponseSchema, CertificatePostSchema, CertificateResponseSchema,
+  CertificatesService,
+  CompletesResponseSchema,
+  CompletesService, TrainerResponseSchema,
+  TrainersService
+} from '../../shared/generated';
 import { Subscription } from 'rxjs';
 import customSort from '../../../utils/custom-sort';
 import customFilter from '../../../utils/custom-filter';
@@ -35,10 +42,17 @@ import { CreateAthleteModalComponent } from '../../components/create-athlete-mod
 })
 
 export class DashboardPageComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private completesService: CompletesService, private confirmationService: ConfirmationService, private router: Router, private athleteService: AthletesService, private alertService: AlertService, private trainerService: TrainersService) { }
+  constructor(private route: ActivatedRoute,
+              private completesService: CompletesService,
+              private confirmationService: ConfirmationService,
+              private router: Router, private athleteService: AthletesService,
+              private alertService: AlertService,
+              private trainerService: TrainersService,
+              private certificateService: CertificatesService) { }
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
   selectedAthlete: AthleteFullResponseSchema | null = null;
+  selectedFile: File | null = null;
   isLoading: boolean = true;
   filter: any = {};
   routeSubscription!: Subscription;
@@ -121,7 +135,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       }
     )
   }
-  
+
   calculateCategoryMedal(category: string, completes: CompletesResponseSchema[]){
     if(completes.length === 0) return 'none';
     const numberGoldMedals = this.customFilterCall(completes, {category: {filterValue: category, valueFullFit: true}, points: {filterValue: '3', valueFullFit: true} }, true).length;
@@ -334,6 +348,51 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         }
       }
     })
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+    console.log('Uploaded file:', this.selectedFile);
+    if (!this.selectedFile == null) {
+      const fileContent = this.readFileContent(this.selectedFile!);
+
+      // this is still error because not pushed changes on backend
+      body : CertificatePostSchema {
+        athleteid: this.selectedAthlete?.id
+        title: this.selectedAthlete?.username + this.selectedAthlete?.lastname
+        blob: fileContent
+      }
+
+      this.certificateService.createCertificateCertificatesPost().subscribe({
+        next: (reponse: CertificateResponseSchema) => {
+          this.alertService.show('Zertifikat hochgeladen', 'Zertifikat wurde erfolgreich erstellt.', 'success');
+          this.selectedAthlete?.certificates
+
+        },
+        error: (error) => {
+          if (error.status == 422) {
+            this.alertService.show('Erstellung fehlgeschlagen', 'Zertifikat nicht erlaubt', "error");
+          } else {
+            this.alertService.show('Erstellung fehlgeschlagen', 'Bitte versuche es später erneut', "error");
+          }
+        }
+      })
+    }
+  }
+
+  private async readFileContent(file: File): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const arrayBuffer = reader.result as ArrayBuffer;
+        const blob = new Blob([new Uint8Array(arrayBuffer)], { type: file.type });
+        resolve(blob);
+      };
+      reader.onerror = () => {
+        reject(reader.error);
+      };
+      reader.readAsArrayBuffer(file);
+    });
   }
 
   ngOnDestroy(): void {
