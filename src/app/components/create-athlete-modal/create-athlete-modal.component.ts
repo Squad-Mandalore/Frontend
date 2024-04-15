@@ -66,7 +66,7 @@ export class CreateAthleteModalComponent {
   }
 
   onSubmit() {
-    if (this.createAthleteForm.invalid){
+    if (!this.createAthleteForm.valid){
       this.logger.error("Form invalid")
       return;
     }
