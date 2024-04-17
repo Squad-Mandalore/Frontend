@@ -1,5 +1,5 @@
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from "@angular/core";
 import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-button.component";
 import {IconComponent} from "../icon/icon.component";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
@@ -7,8 +7,9 @@ import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AlertComponent} from "../alert/alert.component";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
-import {TrainerPostSchema, TrainerResponseSchema, TrainersService} from "../../shared/generated";
+import {CsvService, ResponseParseCsvFileCsvParsePost, TrainerPostSchema, TrainerResponseSchema, TrainersService} from "../../shared/generated";
 import {NgClass} from "@angular/common";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: 'app-create-trainer-modal',
@@ -20,9 +21,12 @@ import {NgClass} from "@angular/common";
 export class CreateTrainerModalComponent {
   @Input() modals!: any;
   @Input() trainer!: TrainerResponseSchema[];
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+  selectedFile: File | null = null;
 
   trainerForm;
-  constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService){
+  constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService, private csvService: CsvService){
     this.trainerForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, utilService.passwordValidator()]],
@@ -54,5 +58,39 @@ export class CreateTrainerModalComponent {
         }
       }
     });
+  }
+
+  triggerFileInput(): void {
+    this.fileInput.nativeElement.click(); // This will open the file dialog
+  }
+
+  onFileChange(event: any): void {
+    this.selectedFile = event.target.files[0];
+    this.onCSVSubmit();
+  }
+
+  onCSVSubmit(){
+    if (!this.selectedFile) {
+      return;
+    }
+
+    this.csvService.parseCsvFileCsvParsePost(this.selectedFile).subscribe({
+      next: (response: ResponseParseCsvFileCsvParsePost) => {
+        let arr: string[] = [];
+        Object.keys(response).forEach((key) => {
+          const value = (response as any)[key];
+          arr.push(`Key: ${key}, Value: ${value}`);
+        });
+        let str: string = '';
+        for (const strt of arr) {
+          str += strt + '\n';
+        }
+        this.alertService.show('ERFOLG!', str, 'success');
+        this.modals.createTrainerModal.isActive = false;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.alertService.show('FEHLSCHLAG!', error.error.detail, 'error');
+      },
+    })
   }
 }

@@ -2,6 +2,8 @@
 <form id="modal" [formGroup]="trainerForm" (ngSubmit)="onSubmit()">
   <div id="modal-header">
     <p id="modal-headline">Neuen Trainer hinzufügen</p>
+    <img src="assets/img/upload.svg" alt="Upload Icon" (click)="triggerFileInput()" id="upload">
+    <input type="file" #fileInput (change)="onFileChange($event)" accept=".csv" style="display: none;">
     <app-icon (click)="modals.createTrainerModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
   </div>
     <div id="input-wrapper">

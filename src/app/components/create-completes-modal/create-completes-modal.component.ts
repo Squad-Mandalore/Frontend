@@ -4,12 +4,12 @@ import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angula
 import {AlertComponent} from "../alert/alert.component";
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
-import {AthleteCompletesResponseSchema, AthleteFullResponseSchema, AthletePostSchema, AthletesService, CategoriesService, CategoryFullResponseSchema, CategoryVeryFullResponseSchema, CompletesResponseSchema} from "../../shared/generated";
+import {AthleteCompletesResponseSchema, AthleteFullResponseSchema, AthletePostSchema, AthletesService, CategoriesService, CategoryFullResponseSchema, CategoryVeryFullResponseSchema, CompletesResponseSchema, CsvService, ResponseParseCsvFileCsvParsePost} from "../../shared/generated";
 import {LoggerService} from "../../shared/logger.service";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
 import { SecondaryButtonComponent } from "../buttons/secondary-button/secondary-button.component";
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import {CompletesPostSchema, CompletesService} from "../../shared/generated";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ResponseGetCategoriesByAthleteIdCategoriesGet } from "../../shared/generated";
@@ -49,6 +49,9 @@ export class CreateCompletesComponent implements OnInit{
   givenRulesValue: string = '';
   @Input() selectedAthlete!: AthleteFullResponseSchema | null;
   @Input() modals!: any;
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+  selectedFile: File | null = null;
 
   time = {
     hours: null,
@@ -74,7 +77,8 @@ export class CreateCompletesComponent implements OnInit{
     private alertService: AlertService,
     private utilService: UtilService,
     private completesService: CompletesService,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private csvService: CsvService,
 
   ){
     this.createCompletesForm = this.formBuilder.group({
@@ -289,5 +293,39 @@ export class CreateCompletesComponent implements OnInit{
         this.alertService.show('Fetch fehlgeschlagen', 'Die Exercises des Sportlers konnten nicht erfolgreich gefetched werden.', "error");
       }
     });
+  }
+
+  triggerFileInput(): void {
+    this.fileInput.nativeElement.click(); // This will open the file dialog
+  }
+
+  onFileChange(event: any): void {
+    this.selectedFile = event.target.files[0];
+    this.onCSVSubmit();
+  }
+
+  onCSVSubmit(){
+    if (!this.selectedFile) {
+      return;
+    }
+
+    this.csvService.parseCsvFileCsvParsePost(this.selectedFile).subscribe({
+      next: (response: ResponseParseCsvFileCsvParsePost) => {
+        let arr: string[] = [];
+        Object.keys(response).forEach((key) => {
+          const value = (response as any)[key];
+          arr.push(`Key: ${key}, Value: ${value}`);
+        });
+        let str: string = '';
+        for (const strt of arr) {
+          str += strt + '\n';
+        }
+        this.alertService.show('ERFOLG!', str, 'success');
+        this.modals.createCompletesModal.isActive = false;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.alertService.show('FEHLSCHLAG!', error.error.detail, 'error');
+      },
+    })
   }
 }

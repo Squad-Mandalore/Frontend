@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 
 import {NgClass, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
@@ -11,12 +11,15 @@ import {
   AthletePostSchema,
   AthleteResponseSchema,
   AthletesService,
-  Gender
+  CsvService,
+  Gender,
+  ResponseParseCsvFileCsvParsePost
 } from "../../shared/generated";
 import {LoggerService} from "../../shared/logger.service";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -44,12 +47,16 @@ export class CreateAthleteModalComponent {
   isStringMale: Gender = "m";
   @Input() modals!: any;
   @Input() athletes: AthleteFullResponseSchema[] = [];
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private athleteApi: AthletesService,
+  selectedFile: File | null = null;
+
+  constructor(private athleteService: AthletesService,
               private logger: LoggerService,
               private formBuilder: FormBuilder,
               private alertService: AlertService,
               private utilService: UtilService,
+              private csvService: CsvService,
 
   ) {
     // Initialize Form and Validators for received Data
@@ -92,14 +99,14 @@ export class CreateAthleteModalComponent {
     }
 
     // Http-Request for Post of the Athlete to the Backend
-    this.athleteApi.createAthleteAthletesPost(body).subscribe({
+    this.athleteService.createAthleteAthletesPost(body).subscribe({
       // Post Athlete if allowed
       next: (response: AthleteResponseSchema) => {
         this.alertService.show('Athlet erstellt', 'Athlet wurde erfolgreich erstellt.', 'success');
         this.modals.createAthleteModal.isActive = false;
         console.log(response)
         if(response && response.id){
-          this.athleteApi.getAthleteFullAthletesIdFullGet(response.id).subscribe({
+          this.athleteService.getAthleteFullAthletesIdFullGet(response.id).subscribe({
             // Post Athlete if allowed
             next: (response: AthleteFullResponseSchema) => {
               if(response){
@@ -138,6 +145,52 @@ export class CreateAthleteModalComponent {
   // clickable div for Gender
   onClickSwitchGender(value: string) {
     this.isMale = value === "male";
+  }
+
+  triggerFileInput(): void {
+    this.fileInput.nativeElement.click();
+  }
+
+  onFileChange(event: any): void {
+    this.selectedFile = event.target.files[0];
+    this.onCSVSubmit();
+  }
+
+  onCSVSubmit(){
+    if (!this.selectedFile) {
+      return;
+    }
+
+    this.csvService.parseCsvFileCsvParsePost(this.selectedFile).subscribe({
+      next: (response: ResponseParseCsvFileCsvParsePost) => {
+        let arr: string[] = [];
+        Object.keys(response).forEach((key) => {
+          const value = (response as any)[key];
+          arr.push(`${key}: ${value}`);
+        });
+        let str: string = '';
+        for (const strt of arr) {
+          str += strt + '\n';
+        }
+        this.alertService.show('ERFOLG!', str, 'success');
+        this.modals.createAthleteModal.isActive = false;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.alertService.show('FEHLSCHLAG!', error.error.detail, 'error');
+      },
+    })
+    // this.athletes = []
+    // this.athleteService.getAllAthletesAthletesGet().subscribe({
+    //   next: (athletes: AthleteResponseSchema[]) => {
+    //     for(const athlete of athletes){
+    //       this.athleteService.getAthleteFullAthletesIdFullGet(athlete.id).subscribe({
+    //         next: (fullAthleteObject: AthleteFullResponseSchema) => {
+    //           this.athletes.push(fullAthleteObject);
+    //         },
+    //       })
+    //     }
+    //   }
+    // })
   }
 
 }
