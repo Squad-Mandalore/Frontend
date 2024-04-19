@@ -46,17 +46,18 @@ export class CreateAthleteModalComponent {
   isMale: boolean = true;
   isStringMale: Gender = "m";
   @Input() modals!: any;
+  @Input() selectedAthlete!: AthleteFullResponseSchema | null;
   @Input() athletes: AthleteFullResponseSchema[] = [];
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   selectedFile: File | null = null;
 
   constructor(private athleteService: AthletesService,
-              private logger: LoggerService,
-              private formBuilder: FormBuilder,
-              private alertService: AlertService,
-              private utilService: UtilService,
-              private csvService: CsvService,
+    private logger: LoggerService,
+    private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private utilService: UtilService,
+    private csvService: CsvService,
 
   ) {
     // Initialize Form and Validators for received Data
@@ -172,26 +173,37 @@ export class CreateAthleteModalComponent {
         for (const strt of arr) {
           str += strt + '\n';
         }
-        this.alertService.show('ERFOLG!', str, 'success');
+
+        this.athleteService.getAllAthletesAthletesGet().subscribe({
+          next: (athletes: AthleteResponseSchema[]) => {
+            for(const athlete of athletes){ 
+              this.athleteService.getAthleteFullAthletesIdFullGet(athlete.id).subscribe({
+                next: (fullAthleteObject: AthleteFullResponseSchema) => {
+                  const elementIndex = this.athletes.findIndex(element => element.id === athlete.id);
+                  if(elementIndex === -1){
+                    this.athletes.push(fullAthleteObject);
+                  }else{
+                    this.athletes[elementIndex] = fullAthleteObject;
+                  }
+                },
+                error: (error: HttpErrorResponse) => {
+                  this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
+                }
+              })
+            }
+          },
+          error: (error: HttpErrorResponse) => {
+            this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
+          }
+        });    
+
+        this.alertService.show('CSV-Daten erfolgreich hinzugefügt', str, 'success');
         this.modals.createAthleteModal.isActive = false;
       },
       error: (error: HttpErrorResponse) => {
-        this.alertService.show('FEHLSCHLAG!', error.error.detail, 'error');
+        this.alertService.show('Hochladen der CSV-Datei fehlgeschlagen', error.error.detail, 'error');
       },
     })
-    // this.athletes = []
-    // this.athleteService.getAllAthletesAthletesGet().subscribe({
-    //   next: (athletes: AthleteResponseSchema[]) => {
-    //     for(const athlete of athletes){
-    //       this.athleteService.getAthleteFullAthletesIdFullGet(athlete.id).subscribe({
-    //         next: (fullAthleteObject: AthleteFullResponseSchema) => {
-    //           this.athletes.push(fullAthleteObject);
-    //         },
-    //       })
-    //     }
-    //   }
-    // })
   }
-
 }
 

@@ -4,19 +4,14 @@ import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angula
 import {AlertComponent} from "../alert/alert.component";
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
-import {AthleteCompletesResponseSchema, AthleteFullResponseSchema, AthletePostSchema, AthleteResponseSchema, AthletesService, CategoriesService, CategoryFullResponseSchema, CategoryVeryFullResponseSchema, CompletesResponseSchema, CsvService, ResponseParseCsvFileCsvParsePost} from "../../shared/generated";
-import {LoggerService} from "../../shared/logger.service";
+import {AthleteCompletesResponseSchema, AthleteFullResponseSchema, AthleteResponseSchema, AthletesService, CategoriesService, CategoryFullResponseSchema, CategoryVeryFullResponseSchema, CompletesResponseSchema, CsvService, ResponseParseCsvFileCsvParsePost} from "../../shared/generated";
 import {AlertService} from "../../shared/alert.service";
-import {UtilService} from "../../shared/service-util";
 import { SecondaryButtonComponent } from "../buttons/secondary-button/secondary-button.component";
 import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import {CompletesPostSchema, CompletesService} from "../../shared/generated";
 import { HttpErrorResponse } from "@angular/common/http";
-import { ResponseGetCategoriesByAthleteIdCategoriesGet } from "../../shared/generated";
 import customFilter from "../../../utils/custom-filter";
 import customSort from "../../../utils/custom-sort";
-
-
 
 @Component({
   selector: 'app-create-completes',
@@ -76,7 +71,6 @@ export class CreateCompletesComponent implements OnInit{
   constructor(
     private formBuilder: FormBuilder,
     private alertService: AlertService,
-    private utilService: UtilService,
     private completesService: CompletesService,
     private categoriesService: CategoriesService,
     private csvService: CsvService,
@@ -322,18 +316,18 @@ export class CreateCompletesComponent implements OnInit{
         for (const strt of arr) {
           str += strt + '\n';
         }
-        this.alertService.show('ERFOLG!', str, 'success');
-        this.modals.createCompletesModal.isActive = false;
-        // hier
-        console.log("Meow")
-        this.athletes = [];
+        
         this.athleteService.getAllAthletesAthletesGet().subscribe({
           next: (athletes: AthleteResponseSchema[]) => {
-            for(const athlete of athletes){
+            for(const athlete of athletes){ 
               this.athleteService.getAthleteFullAthletesIdFullGet(athlete.id).subscribe({
                 next: (fullAthleteObject: AthleteFullResponseSchema) => {
-                  this.athletes.push(fullAthleteObject);
-                  console.log(fullAthleteObject);
+                  const elementIndex = this.athletes.findIndex(element => element.id === athlete.id);
+                  if(elementIndex === -1){
+                    this.athletes.push(fullAthleteObject);
+                  }else{
+                    this.athletes[elementIndex] = fullAthleteObject;
+                  }
                 },
                 error: (error: HttpErrorResponse) => {
                   this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
@@ -345,9 +339,12 @@ export class CreateCompletesComponent implements OnInit{
             this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
           }
         });
+
+        this.alertService.show('CSV-Daten erfolgreich hinzugefügt', str, 'success');
+        this.modals.createCompletesModal.isActive = false;
       },
       error: (error: HttpErrorResponse) => {
-        this.alertService.show('FEHLSCHLAG!', error.error.detail, 'error');
+        this.alertService.show('Hochladen der CSV-Datei fehlgeschlagen', error.error.detail, 'error');
       },
     })
   }
