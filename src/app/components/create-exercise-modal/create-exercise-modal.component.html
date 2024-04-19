@@ -1,48 +1,114 @@
 <div id="overlay" (click)="modals.createExerciseModal.isActive = false"></div>
 <form id="modal" [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
-  <div id="modal-header">
-    <p id="modal-headline">Neue Übung hinzufügen</p>
-    <app-icon (click)="modals.createExerciseModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
-  </div>
-    <div id="input-wrapper">
-        <label class="label">
-            <p class="label-text">Titel</p>
-            <input class="input" type="text" formControlName="title" placeholder="100 Meter Sprint">
-        </label>
-        <div id="age-wrapper">
-            <p class="label-text">Alter</p>
-            <div id="age-input-wrapper">
+    <div id="modal-header">
+        <p id="modal-headline">Neue Übung hinzufügen</p>
+        <app-icon (click)="modals.createExerciseModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+     </div>
+    <div id="input-wrapper" class="height-80-percent">
+        <div *ngIf="page == 1" class="flex flex-col gap-20 height-full">
+            <label class="label">
+                <p class="label-text">hinzufügen zu:</p>
+                <div id="slider-wrapper-horizontal">
+                    <div class="slider-element" [ngClass]="useExistingExercise === false ? 'active' : 'disabled'" (click)="useExistingExercise = false">
+                        <span>neuer Disziplin</span>
+                    </div>
+                    <div class="slider-element" [ngClass]="useExistingExercise === true ? 'active' : 'disabled'" (click)="useExistingExercise = true">
+                        <span>bestehender Disziplin</span>
+                    </div>
+                </div>
+            </label>
+            <div *ngIf="useExistingExercise == false" class="flex flex-col gap-20">
                 <label class="label">
-                    <p class="label-text">von</p>
-                    <input class="input" type="number" min="1" max="999" formControlName="fromAge" placeholder="1">
+                    <p class="label-text">Titel</p>
+                    <input class="input" type="text" formControlName="title" placeholder="100 Meter Sprint">
                 </label>
-                <label class="label">
-                    <p class="label-text">bis</p>
-                    <input class="input" type="number" min="fromAge" max="999" formControlName="toAge" placeholder="99">
-                </label>
+                <div class="label">
+                    <p class="label-text">Kategorie</p>
+                    <div id="slider-wrapper-horizontal">
+                        <div class="slider-element" *ngFor="let category of categories; index as i;" [ngClass]="exerciseForm.value.category === category.id ? 'active' : 'disabled'" (click)="exerciseForm.value.category = category.id">
+                            <span>{{ category.title }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="label">
+                    <p class="label-text">Eingabemaske</p>
+                    <div id="slider-wrapper-horizontal">
+                        <div class="slider-element" *ngFor="let mask of masks; index as i;" [ngClass]="exerciseForm.value.mask === mask ? 'active' : 'disabled'" (click)="exerciseForm.value.mask = mask">
+                            <span>{{ mask }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col height-full width-full overflow-auto gap-20" *ngIf="useExistingExercise == true">
+                <div class="flex items-center gap-10 category-wrapper" *ngFor="let category of categories; index as i;">
+                    <div class="discipline-name" data-minheight="150px">
+                        <div>{{category.title}}</div>
+                    </div>
+                    <div class="flex flex-col width-full" *ngIf="category.exercises.length !== 0; else filledState">
+                        <div (click)="selectedExercise = exercise" [ngClass]="{'active': selectedExercise?.title === exercise.title}" class="discipline-item flex items-center space-between" *ngFor="let exercise of category.exercises; index as j;">
+                            <div [title]="exercise.title">{{exercise.title}}</div>
+                        </div>
+                    </div>
+                    <ng-template #filledState>
+                        <div class="flex flex-col width-full">
+                            <p class="discipline-item-empty-state">Keine Disziplinen verfügbar</p>
+                            <p class="discipline-item-empty-state">Bitte füge zuerst eine in dieser Kategorie hinzu</p>
+                        </div>
+                    </ng-template>
+                </div>
             </div>
         </div>
-        <div class="label">
-            <p class="label-text"> Kategorie </p>
-            <div id="slider-wrapper">
-                <div class="slider-element" [ngClass]="category === 'Kraft' ? 'active' : 'disabled'" (click)="category = 'Kraft'">
-                    <span>Kraft</span>
+        <div *ngIf="page == 2" class="flex flex-col gap-20">
+            <div id="age-wrapper">
+                <p class="label-text">Alter</p>
+                <div id="age-input-wrapper">
+                    <label class="label">
+                        <p class="label-text">von</p>
+                        <input class="input" type="number" min="1" max="999" formControlName="fromAge" placeholder="1">
+                    </label>
+                    <label class="label">
+                        <p class="label-text">bis</p>
+                        <input class="input" type="number" min="fromAge" max="999" formControlName="toAge" placeholder="99">
+                    </label>
                 </div>
-                <div class="slider-element" [ngClass]="category === 'Ausdauer' ? 'active' : 'disabled'" (click)="category = 'Ausdauer'">
-                    <span>Ausdauer</span>
+            </div>
+            <label class="label">
+                <p class="label-text">Jahr</p>
+                <input class="input" type="text" formControlName="year" placeholder="2024">
+            </label>
+            <div class="label">
+                <p class="label-text">Geschlecht</p>
+                <div id="slider-wrapper-horizontal">
+                    <div class="slider-element" [ngClass]="exerciseForm.value.gender === 'm' ? 'active' : 'disabled'" (click)="exerciseForm.value.gender = 'm'">
+                        <span>männlich</span>
+                    </div>
+                    <div class="slider-element" [ngClass]="exerciseForm.value.gender === 'f' ? 'active' : 'disabled'" (click)="exerciseForm.value.gender = 'f'">
+                        <span>weiblich</span>
+                    </div>
                 </div>
-                <div class="slider-element" [ngClass]="category === 'Koordination' ? 'active' : 'disabled'" (click)="category = 'Koordination'">
-                    <span>Koordination</span>
-                </div>
-                <div class="slider-element" [ngClass]="category === 'Schnelligkeit' ? 'active' : 'disabled'" (click)="category = 'Schnelligkeit'">
-                    <span>Schnelligkeit</span>
+            </div>
+        </div>
+        <div *ngIf="page == 3" class="flex flex-col gap-20">
+            <div id="age-wrapper">
+                <p class="label-text">Gold</p>
+                <div id="age-input-wrapper">
+                    <label class="label">
+                        <p class="label-text">von</p>
+                        <input class="input" type="number" min="1" max="999" formControlName="fromAge" placeholder="1">
+                    </label>
+                    <label class="label">
+                        <p class="label-text">bis</p>
+                        <input class="input" type="number" min="fromAge" max="999" formControlName="toAge" placeholder="99">
+                    </label>
                 </div>
             </div>
         </div>
     </div>
   <div id="modal-footer">
-    <app-secondary-button (click)="modals.createExerciseModal.isActive = false" type="button" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
-    <app-primary-button [disabled]="!exerciseForm.valid" [text]="'Übung anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
+    <app-secondary-button *ngIf="page === 1" (click)="modals.createExerciseModal.isActive = false" type="button" [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+    <app-primary-button *ngIf="page === 1" (click)="page = 2" [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
+    <app-secondary-button *ngIf="page === 2" (click)="page = 1" type="button" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+    <app-primary-button *ngIf="page === 2" [disabled]="!exerciseForm.valid" [text]="'Übung anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
   </div>
 </form>
 
