@@ -13,4 +13,4 @@
     </div>
     <app-primary-button [iconName]="'arrow-right'" [text]="'Login'" [disabled]="!loginForm.valid"></app-primary-button>
 </form>
-<app-initial-password-change-modal [@enterAnimation] *ngIf="modals.changePasswordModal.isActive"></app-initial-password-change-modal>
+<app-initial-password-change-modal [@enterAnimation] [user]="user" *ngIf="modals.changePasswordModal.isActive"></app-initial-password-change-modal>

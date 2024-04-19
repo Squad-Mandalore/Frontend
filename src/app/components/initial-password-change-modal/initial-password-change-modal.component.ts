@@ -3,9 +3,10 @@ import { PasswordBoxComponent } from '../password-box/password-box.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertService } from '../../shared/alert.service';
 import { UtilService } from '../../shared/service-util';
-import { AdminPatchSchema, AdminsService, AthletePatchSchema, AthletesService, TrainerPatchSchema, TrainersService, UserResponseSchema } from '../../shared/generated';
+import { AdminPatchSchema, AdminResponseSchema, AdminsService, AthletePatchSchema, AthletesService, TrainerPatchSchema, TrainersService, UserResponseSchema } from '../../shared/generated';
 import { PrimaryButtonComponent } from '../buttons/primary-button/primary-button.component';
 import { NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-initial-password-change-modal',
@@ -16,13 +17,13 @@ import { NgIf } from '@angular/common';
 })
 
 export class InitialPasswordChangeModalComponent {
-  user: UserResponseSchema | null = null;
+  @Input() user!: UserResponseSchema | null;
   
   formValidation: formValidation = {
     passwordDifference: false
   }
   passwordForm : FormGroup;
-  constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService, private athleteService: AthletesService, private adminService: AdminsService){
+  constructor(private formBuilder: FormBuilder, private router: Router, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService, private athleteService: AthletesService, private adminService: AdminsService){
     this.passwordForm = this.formBuilder.group({
       password: ['', Validators.required],
       passwordRepeat: ['', [Validators.required, utilService.passwordValidator()]]
@@ -30,12 +31,10 @@ export class InitialPasswordChangeModalComponent {
   }
 
   resetValidation(value: keyof formValidation){
-    console.log("reset");
     if(this.formValidation && this.formValidation[value]) this.formValidation[value] = false;
   }
 
   validateValues() {
-    console.log("trigger");
     const password = this.passwordForm.value.password;
     const passwordRepeat = this.passwordForm.value.passwordRepeat;
     console.log(this.passwordForm)
@@ -47,14 +46,30 @@ export class InitialPasswordChangeModalComponent {
     const password = this.passwordForm.value.password;
     const passwordRepeat = this.passwordForm.value.passwordRepeat;
     if(!this.user || password.length === 0 || passwordRepeat.length === 0 || password !== passwordRepeat) return;
-
     let body: TrainerPatchSchema | AthletePatchSchema | AdminPatchSchema= {
-      unhashed_password: this.passwordForm.value.password
+      unhashed_password: password
     }
 
+    let updateFunction;
     if(this.user.type === "administrator"){
-      
+      updateFunction = this.adminService.updateAdminAdminsIdPatch(this.user.id, body);
     }
+    if(this.user.type === "trainer"){
+      updateFunction = this.trainerService.updateTrainerTrainersIdPatch(this.user.id, body);
+    }
+    if(this.user.type === "athlete"){
+      updateFunction = this.athleteService.updateAthleteAthletesIdPatch(this.user.id, body);
+    }
+
+    updateFunction && updateFunction.subscribe({
+      next: (response) => {
+        this.alertService.show('Passwort erfolgreich geändert', 'Du kannst dich absofort mit dem neuen Passwort anmelden', 'success');
+        this.router.navigate(['/athleten']);
+      },
+      error: (error) => {
+        this.alertService.show('Passwort ändern fehlgeschlagen','Bitte versuche es später erneut',"error");
+      }
+    });
   }
 }
 

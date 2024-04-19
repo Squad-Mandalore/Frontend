@@ -69,11 +69,11 @@ export class LoginPageComponent {
                 this.localStorageService.setItem('refresh_token', token.refresh_token);
                 this.authService.whoAmIAuthWhoamiGet().subscribe({
                     next: (user: UserResponseSchema) => {
-                        console.log(user)
-                        if(user.last_edited_at !== user.last_password_change){
-                            console.log('yess')
+                        if(user.created_at !== user.last_password_change){
                             this.router.navigate(['/athleten']);
+                            return
                         }
+                        this.user = user;
                         this.modals.changePasswordModal.isActive = true;
                     },
                     error: () => {
