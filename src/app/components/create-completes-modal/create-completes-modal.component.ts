@@ -4,7 +4,7 @@ import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angula
 import {AlertComponent} from "../alert/alert.component";
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
-import {AthleteCompletesResponseSchema, AthleteFullResponseSchema, AthletePostSchema, AthletesService, CategoriesService, CategoryFullResponseSchema, CategoryVeryFullResponseSchema, CompletesResponseSchema, CsvService, ResponseParseCsvFileCsvParsePost} from "../../shared/generated";
+import {AthleteCompletesResponseSchema, AthleteFullResponseSchema, AthletePostSchema, AthleteResponseSchema, AthletesService, CategoriesService, CategoryFullResponseSchema, CategoryVeryFullResponseSchema, CompletesResponseSchema, CsvService, ResponseParseCsvFileCsvParsePost} from "../../shared/generated";
 import {LoggerService} from "../../shared/logger.service";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
@@ -49,6 +49,7 @@ export class CreateCompletesComponent implements OnInit{
   givenRulesValue: string = '';
   @Input() selectedAthlete!: AthleteFullResponseSchema | null;
   @Input() modals!: any;
+  @Input() athletes!: AthleteFullResponseSchema[];
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   selectedFile: File | null = null;
@@ -79,6 +80,7 @@ export class CreateCompletesComponent implements OnInit{
     private completesService: CompletesService,
     private categoriesService: CategoriesService,
     private csvService: CsvService,
+    private athleteService: AthletesService,
 
   ){
     this.createCompletesForm = this.formBuilder.group({
@@ -322,6 +324,27 @@ export class CreateCompletesComponent implements OnInit{
         }
         this.alertService.show('ERFOLG!', str, 'success');
         this.modals.createCompletesModal.isActive = false;
+        // hier
+        console.log("Meow")
+        this.athletes = [];
+        this.athleteService.getAllAthletesAthletesGet().subscribe({
+          next: (athletes: AthleteResponseSchema[]) => {
+            for(const athlete of athletes){
+              this.athleteService.getAthleteFullAthletesIdFullGet(athlete.id).subscribe({
+                next: (fullAthleteObject: AthleteFullResponseSchema) => {
+                  this.athletes.push(fullAthleteObject);
+                  console.log(fullAthleteObject);
+                },
+                error: (error: HttpErrorResponse) => {
+                  this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
+                }
+              })
+            }
+          },
+          error: (error: HttpErrorResponse) => {
+            this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
+          }
+        });
       },
       error: (error: HttpErrorResponse) => {
         this.alertService.show('FEHLSCHLAG!', error.error.detail, 'error');
