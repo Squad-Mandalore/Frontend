@@ -28,6 +28,7 @@ import { enterLeaveAnimation } from '../../shared/animation';
 export class LoginPageComponent {
     protected loginForm;
     user: UserResponseSchema | null = null;
+    oldPassword: string | null = null;
     modals = {
         changePasswordModal: {
             isActive: false,
@@ -74,6 +75,7 @@ export class LoginPageComponent {
                             return
                         }
                         this.user = user;
+                        this.oldPassword = this.loginForm.value.password!;
                         this.modals.changePasswordModal.isActive = true;
                     },
                     error: () => {

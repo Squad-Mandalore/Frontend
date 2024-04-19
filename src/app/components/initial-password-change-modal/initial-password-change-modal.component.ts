@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 
 export class InitialPasswordChangeModalComponent {
   @Input() user!: UserResponseSchema | null;
+  @Input() oldPassword!: string | null;
   
   formValidation: formValidation = {
     passwordDifference: false
@@ -46,6 +47,12 @@ export class InitialPasswordChangeModalComponent {
     const password = this.passwordForm.value.password;
     const passwordRepeat = this.passwordForm.value.passwordRepeat;
     if(!this.user || password.length === 0 || passwordRepeat.length === 0 || password !== passwordRepeat) return;
+
+    if(!this.oldPassword || this.oldPassword === password){
+      this.alertService.show('Bitte anderes Password verwenden', 'Du kannst das alte Passwort nicht nochmal verwenden', 'error');
+      return;
+    }
+
     let body: TrainerPatchSchema | AthletePatchSchema | AdminPatchSchema= {
       unhashed_password: password
     }

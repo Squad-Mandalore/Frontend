@@ -3,22 +3,14 @@ import { CanActivateFn } from '@angular/router';
 import { AuthExtentionService } from '../auth-extention.service';
 import { AuthService, UserResponseSchema } from '../generated';
 
-export const authGuard: CanActivateFn = () => {
+export const authGuard: CanActivateFn = async () => {
     const authExtService = inject(AuthExtentionService);
     const authService = inject(AuthService);
-    let returnBool: true | false = false;
-
-    if (!authExtService.isLoggedIn()){
+    const user = await authService.whoAmIAuthWhoamiGet().toPromise();
+    const hasInitialPassword = user && user.created_at === user.last_password_change ? true : false;
+    if (!authExtService.isLoggedIn() || hasInitialPassword){
         authExtService.logout();
         return false;
     }
-    
-    authService.whoAmIAuthWhoamiGet().subscribe({
-        next: (user: UserResponseSchema) => {
-            if(user.last_edited_at !== user.last_password_change){
-                returnBool = true;
-            }
-        }
-    });
-    return returnBool;
+    return true;
 };
