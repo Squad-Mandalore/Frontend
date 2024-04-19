@@ -3,7 +3,7 @@ import { PasswordBoxComponent } from '../password-box/password-box.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertService } from '../../shared/alert.service';
 import { UtilService } from '../../shared/service-util';
-import { AdminPatchSchema, AthletePatchSchema, TrainerPatchSchema, TrainersService, UserResponseSchema } from '../../shared/generated';
+import { AdminPatchSchema, AdminsService, AthletePatchSchema, AthletesService, TrainerPatchSchema, TrainersService, UserResponseSchema } from '../../shared/generated';
 import { PrimaryButtonComponent } from '../buttons/primary-button/primary-button.component';
 import { NgIf } from '@angular/common';
 
@@ -22,7 +22,7 @@ export class InitialPasswordChangeModalComponent {
     passwordDifference: false
   }
   passwordForm : FormGroup;
-  constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService){
+  constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService, private athleteService: AthletesService, private adminService: AdminsService){
     this.passwordForm = this.formBuilder.group({
       password: ['', Validators.required],
       passwordRepeat: ['', [Validators.required, utilService.passwordValidator()]]
@@ -49,7 +49,7 @@ export class InitialPasswordChangeModalComponent {
     if(!this.user || password.length === 0 || passwordRepeat.length === 0 || password !== passwordRepeat) return;
 
     let body: TrainerPatchSchema | AthletePatchSchema | AdminPatchSchema= {
-      // password: this.passwordForm.value.password
+      unhashed_password: this.passwordForm.value.password
     }
 
     if(this.user.type === "administrator"){
