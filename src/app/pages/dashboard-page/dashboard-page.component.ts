@@ -8,7 +8,7 @@ import { UserCardComponent } from '../../components/user-card/user-card.componen
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { AthleteCompletesResponseSchema, AthleteResponseSchema, CompletesResponseSchema, CompletesService, TrainersService } from '../../shared/generated';
+import { AthleteCompletesResponseSchema, AthletePatchSchema, AthletePostSchema, AthleteResponseSchema, CompletesResponseSchema, CompletesService, TrainersService } from '../../shared/generated';
 import { Subscription } from 'rxjs';
 import customSort from '../../../utils/custom-sort';
 import customFilter from '../../../utils/custom-filter';
@@ -22,6 +22,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CreateCompletesComponent } from '../../components/create-completes-modal/create-completes-modal.component';
 import { enterLeaveAnimation } from '../../shared/animation';
 import { CreateAthleteModalComponent } from '../../components/create-athlete-modal/create-athlete-modal.component';
+import { FormGroup } from '@angular/forms';
+import { LoggerService } from '../../shared/logger.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,10 +37,10 @@ import { CreateAthleteModalComponent } from '../../components/create-athlete-mod
 })
 
 export class DashboardPageComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private completesService: CompletesService, private confirmationService: ConfirmationService, private router: Router, private athleteService: AthletesService, private alertService: AlertService, private trainerService: TrainersService) { }
+  constructor(private route: ActivatedRoute, private completesService: CompletesService, private confirmationService: ConfirmationService, private router: Router, private athleteService: AthletesService, private alertService: AlertService, private trainerService: TrainersService, private logger: LoggerService) { }
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
-  selectedAthlete: AthleteFullResponseSchema | null = null;
+  selectedAthlete?: AthleteFullResponseSchema;
   isLoading: boolean = true;
   filter: any = {};
   routeSubscription!: Subscription;
@@ -57,8 +59,123 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     showDetails: {
       isActive: false,
     },
+    patchAthleteModal: {
+      isActive: false,
+    },
   }
 
+  patchAthlete(createAthleteForm: FormGroup) {
+    // Get date values from the Form
+    const day = createAthleteForm.value.day ?? this.selectedAthlete?.birthday?.split('-')[2];
+    const month = createAthleteForm.value.month ?? this.selectedAthlete?.birthday?.split('-')[1];
+    const year = createAthleteForm.value.year ?? this.selectedAthlete?.birthday?.split('-')[0];
+
+    // Add Data for the Http-Request for the Backend
+    let body: AthletePatchSchema = {
+      birthday: year + "-" + month.toString().padStart(2,'0') + "-" + day.toString().padStart(2,'0'), // Format Birthday for Backend
+      ...createAthleteForm.value
+    };
+    Object.keys(body).forEach(key => {
+      if(body[key as keyof AthletePatchSchema] === "") {
+        delete body[key as keyof AthletePatchSchema];
+      }
+    });
+
+    // Http-Request for Post of the Athlete to the Backend
+    this.athleteService.updateAthleteAthletesIdPatch(this.selectedAthlete!.id , body).subscribe({
+      // Post Athlete if allowed
+      next: (response: AthleteResponseSchema) => {
+        this.alertService.show('Athlet aktualisiert', 'Athlet wurde erfolgreich bearbeitet.', 'success');
+        this.modals.patchAthleteModal.isActive = false;
+        if(response && response.id){
+          this.athleteService.getAthleteFullAthletesIdFullGet(response.id).subscribe({
+            // Post Athlete if allowed
+            next: (response: AthleteFullResponseSchema) => {
+              if(response){
+                this.selectedAthlete = response;
+                this.athletes = this.athletes.map(element => element.id === response.id ? response : element);
+
+                //console.log(this.athletes)
+              }
+            },
+            // Deny Athlete if Backend send Http-Error
+            error: (error) => {
+              if(error.status == 422){
+                this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
+              }else{
+                this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen',"error");
+              }
+            }
+          })
+        }
+      },
+      // Deny Athlete if Backend send Http-Error
+      error: (error) => {
+        if(error.status == 422){
+          this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
+        }else{
+          this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen',"error");
+        }
+      }
+  })
+  }
+  createAthlete(createAthleteForm: FormGroup) {
+    if (createAthleteForm.invalid){
+      this.logger.error("Form invalid");
+      return;
+    }
+    // Get date values from the Form
+    const day = createAthleteForm.value.day!;
+    const month = createAthleteForm.value.month!;
+    const year = createAthleteForm.value.year!;
+
+    // Add Data for the Http-Request for the Backend
+    const body : AthletePostSchema = {
+      username: createAthleteForm.value.username!,
+      email: createAthleteForm.value.email!,
+      unhashed_password: createAthleteForm.value.unhashed_password!,
+      firstname: createAthleteForm.value.firstname!,
+      lastname: createAthleteForm.value.lastname!,
+      birthday: year + "-" + month.toString().padStart(2,'0') + "-" + day.toString().padStart(2,'0'), // Format Birthday for Backend
+      gender: createAthleteForm.value.gender!,
+    };
+
+    // Http-Request for Post of the Athlete to the Backend
+    this.athleteService.createAthleteAthletesPost(body).subscribe({
+      // Post Athlete if allowed
+      next: (response: AthleteResponseSchema) => {
+        this.alertService.show('Athlet erstellt', 'Athlet wurde erfolgreich erstellt.', 'success');
+        this.modals.createAthleteModal.isActive = false;
+        if(response && response.id){
+          this.athleteService.getAthleteFullAthletesIdFullGet(response.id).subscribe({
+            // Post Athlete if allowed
+            next: (response: AthleteFullResponseSchema) => {
+              if(response){
+                this.athletes.push(response)
+                //console.log(this.athletes)
+              }
+            },
+            // Deny Athlete if Backend send Http-Error
+            error: (error) => {
+              if(error.status == 422){
+                this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
+              }else{
+                this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen',"error");
+              }
+            }
+          })
+        }
+      },
+      // Deny Athlete if Backend send Http-Error
+      error: (error) => {
+        if(error.status == 422){
+          this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
+        }else{
+          this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen',"error");
+        }
+      }
+  })
+  }
 
   setSorting(property: string){
     if(this.sorting.property === property){
@@ -87,7 +204,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
           next: () => {
            this.alertService.show('Athlet erfolgreich gelöscht', 'Der Athlet wurde erfolgreich entfernt', "success");
            this.athletes = this.athletes.filter(element => element.id !== athlete.id);
-           this.selectedAthlete = null;
+           this.selectedAthlete = undefined;
            this.modals.showDetails.isActive = false;
           },
           error: (error: HttpErrorResponse) => {
@@ -121,7 +238,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       }
     )
   }
-  
+
   calculateCategoryMedal(category: string, completes: CompletesResponseSchema[]){
     if(completes.length === 0) return 'none';
     const numberGoldMedals = this.customFilterCall(completes, {category: {filterValue: category, valueFullFit: true}, points: {filterValue: '3', valueFullFit: true} }, true).length;
@@ -189,7 +306,6 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
             this.athleteService.getAthleteFullAthletesIdFullGet(athlete.id).subscribe({
               next: (fullAthleteObject: AthleteFullResponseSchema) => {
                 this.athletes.push(fullAthleteObject);
-                console.log(fullAthleteObject);
               },
               error: (error: HttpErrorResponse) => {
                 this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
@@ -328,7 +444,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     this.routeSubscription = this.route.queryParams.subscribe(params => {
       const athleteId = params['id'];
       if(athleteId){
-        this.selectedAthlete = this.athletes.filter(element => element.id == athleteId)[0] ?? null
+        this.selectedAthlete = this.athletes.filter(element => element.id == athleteId)[0];
         if(!this.selectedAthlete){
           this.router.navigate(['/athleten']);
         }
