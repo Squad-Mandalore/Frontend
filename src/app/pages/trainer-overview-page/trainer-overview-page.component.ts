@@ -127,23 +127,26 @@ export class TrainerOverviewPageComponent {
         next: (trainers: TrainerResponseSchema[]) => {
           this.trainer = trainers;
           this.isLoading = false;
+          console.log("here");
         },
         error: (error: HttpErrorResponse) => {
           this.alertService.show('Abfragen der Trainer fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
           this.isLoading = false;
+        },
+        complete: () => {
+          this.routeSubscription = this.route.queryParams.subscribe(params => {
+            const trainerId = params['id'];
+            console.log('there');
+            if(trainerId){
+              this.selectedTrainer = this.trainer.filter(element => element.id == trainerId)[0];
+                if(!this.selectedTrainer){
+                  this.router.navigate(['/trainer']);
+                }
+            }
+          });
         }
       });
     }
-
-    this.routeSubscription = this.route.queryParams.subscribe(params => {
-      const trainerId = params['id'];
-      if(trainerId){
-        this.selectedTrainer = this.trainer.filter(element => element.id == trainerId)[0] ?? null
-        if(!this.selectedTrainer){
-          this.router.navigate(['/trainer']);
-        }
-      }
-    })
   }
 
   ngOnDestroy(): void {
