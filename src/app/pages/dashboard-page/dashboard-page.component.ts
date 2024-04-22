@@ -75,6 +75,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       birthday: year + "-" + month.toString().padStart(2,'0') + "-" + day.toString().padStart(2,'0'), // Format Birthday for Backend
       ...createAthleteForm.value
     };
+    //delete empty fields, so they wont be overwritten
     Object.keys(body).forEach(key => {
       if(body[key as keyof AthletePatchSchema] === "") {
         delete body[key as keyof AthletePatchSchema];
@@ -131,13 +132,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
     // Add Data for the Http-Request for the Backend
     const body : AthletePostSchema = {
-      username: createAthleteForm.value.username!,
-      email: createAthleteForm.value.email!,
-      unhashed_password: createAthleteForm.value.unhashed_password!,
-      firstname: createAthleteForm.value.firstname!,
-      lastname: createAthleteForm.value.lastname!,
       birthday: year + "-" + month.toString().padStart(2,'0') + "-" + day.toString().padStart(2,'0'), // Format Birthday for Backend
-      gender: createAthleteForm.value.gender!,
+      ...createAthleteForm.value
     };
 
     // Http-Request for Post of the Athlete to the Backend
