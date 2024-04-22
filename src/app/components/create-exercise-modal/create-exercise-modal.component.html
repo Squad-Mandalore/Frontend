@@ -20,12 +20,12 @@
             <div *ngIf="useExistingExercise == false" class="flex flex-col gap-20">
                 <label class="label">
                     <p class="label-text">Titel</p>
-                    <input class="input" type="text" formControlName="title" placeholder="100 Meter Sprint">
+                    <input class="input width-full" type="text" formControlName="title" placeholder="100 Meter Sprint">
                 </label>
                 <div class="label">
                     <p class="label-text">Kategorie</p>
                     <div id="slider-wrapper-horizontal">
-                        <div class="slider-element" *ngFor="let category of categories; index as i;" [ngClass]="exerciseForm.value.category === category.id ? 'active' : 'disabled'" (click)="exerciseForm.value.category = category.id">
+                        <div class="slider-element" *ngFor="let category of categories; index as i;" [ngClass]="exerciseForm.value.category === category.title ? 'active' : 'disabled'" (click)="exerciseForm.value.category = category.title">
                             <span>{{ category.title }}</span>
                         </div>
                     </div>
@@ -64,17 +64,17 @@
                 <div id="age-input-wrapper">
                     <label class="label">
                         <p class="label-text">von</p>
-                        <input class="input" type="number" min="1" max="999" formControlName="fromAge" placeholder="1">
+                        <input class="input width-full" type="number" min="1" max="999" formControlName="fromAge" placeholder="1">
                     </label>
                     <label class="label">
                         <p class="label-text">bis</p>
-                        <input class="input" type="number" min="fromAge" max="999" formControlName="toAge" placeholder="99">
+                        <input class="input width-full" type="number" min="fromAge" max="999" formControlName="toAge" placeholder="99">
                     </label>
                 </div>
             </div>
             <label class="label">
                 <p class="label-text">Jahr</p>
-                <input class="input" type="text" formControlName="year" placeholder="2024">
+                <input class="input width-full" type="text" formControlName="year" placeholder="2024">
             </label>
             <div class="label">
                 <p class="label-text">Geschlecht</p>
@@ -89,27 +89,85 @@
             </div>
         </div>
         <div *ngIf="page == 3" class="flex flex-col gap-20">
-            <div id="age-wrapper">
+            <div class="flex flex-col gap-10 margin-auto width-full" id="common-menu" *ngIf="subPage === 1">
+                <label class="count-label">
+                    <input class="input width-full" type="number" name="anzahl" formControlName="goldQuantity" placeholder="Anzahl"/>
+                </label>
+                <label class="count-label">
+                    <input class="input width-full" type="number" name="anzahl" formControlName="silverQuantity" placeholder="Anzahl"/>
+                </label>
+                <label class="count-label">
+                    <input class="input width-full" type="number" name="anzahl" formControlName="bronzeQuantity" placeholder="Anzahl"/>
+                </label>
+            </div>
+            <div class="flex flex-col gap-10 margin-auto width-full" *ngIf="subPage === 2">
                 <p class="label-text">Gold</p>
-                <div id="age-input-wrapper">
-                    <label class="label">
-                        <p class="label-text">von</p>
-                        <input class="input" type="number" min="1" max="999" formControlName="fromAge" placeholder="1">
-                    </label>
-                    <label class="label">
-                        <p class="label-text">bis</p>
-                        <input class="input" type="number" min="fromAge" max="999" formControlName="toAge" placeholder="99">
-                    </label>
+                <div>
+                    <input class="input width-20-percent" type="number" formControlName="goldHours" placeholder="hh" style="display: inline-block"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="goldMinutes" placeholder="mm" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="goldSeconds" placeholder="ss" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="goldMilliseconds" placeholder="ms" style="display: inline-block;"/>
+                </div>
+                <hr/>
+                <p class="label-text">Silber</p>
+                <div>
+                    <input class="input width-20-percent" type="number" formControlName="silverHours" placeholder="hh" style="display: inline-block"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="silverMinutes" placeholder="mm" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="silverSeconds" placeholder="ss" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="silverMilliseconds" placeholder="ms" style="display: inline-block;"/>
+                </div>
+                <hr/>
+                <p class="label-text">Bronze</p>
+                <div>
+                    <input class="input width-20-percent" type="number" formControlName="bronzeHours" placeholder="hh" style="display: inline-block"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="bronzeMinutes" placeholder="mm" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="bronzeSeconds" placeholder="ss" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="bronzeMilliseconds" placeholder="ms" style="display: inline-block;"/>
+                </div>
+            </div>
+            <div class="flex flex-col gap-10 margin-auto width-full" id="common-menu" *ngIf="subPage === 3">
+                <div class="headline-small">{{selectedExercise.title}}</div>
+                <div>
+                    <input class="input width-20-percent" type="number" name="completes-distance-kilometers" formControlName="goldKilometers" placeholder="km" style="display: inline-block"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-meters" formControlName="goldMeters" placeholder="m" style="display: inline-block;"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-centimeters" formControlName="goldCentimeters" placeholder="cm" style="display: inline-block;"/>
+                </div>
+                <div>
+                    <input class="input width-20-percent" type="number" name="completes-distance-kilometers" formControlName="silverKilometers" placeholder="km" style="display: inline-block"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-meters" formControlName="silverMeters" placeholder="m" style="display: inline-block;"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-centimeters" formControlName="silverCentimeters" placeholder="cm" style="display: inline-block;"/>
+                </div>
+                <div>
+                    <input class="input width-20-percent" type="number" name="completes-distance-kilometers" formControlName="bronzeKilometers" placeholder="km" style="display: inline-block"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-meters" formControlName="bronzeMeters" placeholder="m" style="display: inline-block;"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-centimeters" formControlName="bronzeCentimeters" placeholder="cm" style="display: inline-block;"/>
                 </div>
             </div>
         </div>
     </div>
-  <div id="modal-footer">
-    <app-secondary-button *ngIf="page === 1" (click)="modals.createExerciseModal.isActive = false" type="button" [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
-    <app-primary-button *ngIf="page === 1" (click)="page = 2" [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
-    <app-secondary-button *ngIf="page === 2" (click)="page = 1" type="button" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
-    <app-primary-button *ngIf="page === 2" [disabled]="!exerciseForm.valid" [text]="'Übung anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
-  </div>
+    <div id="modal-footer">
+        <app-secondary-button *ngIf="page === 1" (click)="modals.createExerciseModal.isActive = false" type="button" [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+        <app-primary-button *ngIf="page === 1" (click)="changePage($event, 2)" [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
+        <app-secondary-button *ngIf="page === 2" (click)="changePage($event, 1)" type="button" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+        <app-primary-button *ngIf="page === 2 && exerciseForm.value.mask !== 'Medaille'" (click)="changePage($event, 3)" [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
+        <app-secondary-button *ngIf="page === 3" (click)="changePage($event, 2)" type="button" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+        <app-primary-button *ngIf="page === 3 || page === 2 && exerciseForm.value.mask === 'Medaille'" [text]="'Übung anlegen'" [minWidth]="'100%'" type="submit" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
+    </div>
 </form>
 
 

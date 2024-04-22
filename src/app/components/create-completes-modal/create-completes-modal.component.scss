@@ -196,9 +196,10 @@
 }
 
 .label-text{
-  font-family: "TeleNeo Medium";
-  font-size: 1rem;
+  font-family: "Inter Medium";
+  font-size: 14px;
 }
+
 .input{
   display: flex;
   padding: 5px 20px;
@@ -226,12 +227,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-.input:focus, .input:hover, .multiple-input:focus, .multiple-input:hover{
-  outline: 0;
-  border: 1px solid var(--brand-500);
-}
-
-.time-input:focus, .time-input:hover{
+.input:focus, .input:hover, .multiple-input:focus, .multiple-input:hover, .time-input:focus, .time-input:hover{
   outline: 0;
   border: 1px solid var(--brand-500);
 }
