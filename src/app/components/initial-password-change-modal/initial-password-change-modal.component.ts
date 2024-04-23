@@ -21,12 +21,15 @@ export class InitialPasswordChangeModalComponent {
   @Input() oldPassword!: string | null;
   
   formValidation: formValidation = {
-    passwordDifference: false
+    passwordDifference: false,
+    oldPassword: false,
+    weakPassword: false,
   }
+
   passwordForm : FormGroup;
   constructor(private formBuilder: FormBuilder, private router: Router, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService, private athleteService: AthletesService, private adminService: AdminsService){
     this.passwordForm = this.formBuilder.group({
-      password: ['', Validators.required],
+      password: ['', [Validators.required, utilService.passwordValidator()]],
       passwordRepeat: ['', [Validators.required, utilService.passwordValidator()]]
     });
   }
@@ -35,10 +38,23 @@ export class InitialPasswordChangeModalComponent {
     if(this.formValidation && this.formValidation[value]) this.formValidation[value] = false;
   }
 
-  validateValues() {
+  validateValues(){
     const password = this.passwordForm.value.password;
     const passwordRepeat = this.passwordForm.value.passwordRepeat;
-    if(password.length !== 0 && passwordRepeat.length === 0) return;
+    
+    if(this.oldPassword === password){
+      this.formValidation.oldPassword = true;
+    }else{
+      this.resetValidation('oldPassword');
+    }
+
+    if(!this.utilService.validatePass(password)){
+      this.formValidation.weakPassword = true;
+    }else{
+      this.resetValidation('weakPassword');
+    }
+    
+    if(password.length === 0 || passwordRepeat.length === 0) return;
     if(password !== passwordRepeat) this.formValidation.passwordDifference = true;
   }
 
@@ -48,7 +64,7 @@ export class InitialPasswordChangeModalComponent {
     if(!this.user || password.length === 0 || passwordRepeat.length === 0 || password !== passwordRepeat) return;
 
     if(!this.oldPassword || this.oldPassword === password){
-      this.alertService.show('Bitte anderes Password verwenden', 'Du kannst das alte Passwort nicht nochmal verwenden', 'error');
+      this.formValidation.oldPassword = true;
       return;
     }
 
@@ -80,5 +96,7 @@ export class InitialPasswordChangeModalComponent {
 }
 
 interface formValidation {
-  passwordDifference: boolean
+  passwordDifference: boolean,
+  oldPassword: boolean,
+  weakPassword: boolean,
 }
