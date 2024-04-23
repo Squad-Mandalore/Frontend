@@ -20,7 +20,10 @@
             <div *ngIf="useExistingExercise == false" class="flex flex-col gap-20">
                 <label class="label">
                     <p class="label-text">Titel</p>
-                    <input class="input width-full" type="text" formControlName="title" placeholder="100 Meter Sprint">
+                    <input class="input width-full" (focusin)="validateInput('title', 'deactivate')" (focusout)="validateInput('title', 'activate')" [ngClass]="{'invalid' : validation.invalidTitle}" type="text" formControlName="title" placeholder="100 Meter Sprint">
+                    <div class="error-text">
+                        <p *ngIf="validation.invalidTitle">Eingabe ist erforderlich</p>
+                    </div>
                 </label>
                 <div class="label">
                     <p class="label-text">Kategorie</p>
@@ -74,7 +77,7 @@
             </div>
             <label class="label">
                 <p class="label-text">Jahr</p>
-                <input class="input width-full" type="text" formControlName="year" placeholder="2024">
+                <input class="input width-full" type="number" min="1945" formControlName="year" placeholder="2024">
             </label>
             <div class="label">
                 <p class="label-text">Geschlecht</p>

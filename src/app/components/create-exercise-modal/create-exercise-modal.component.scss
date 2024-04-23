@@ -154,6 +154,13 @@ input[type="number"]::-webkit-outer-spin-button {
     color: var(--accent-500);
 }
 
+.error-text{
+    color: var(--danger);
+    font-family: "Inter Medium";
+    font-size: 12px;
+    height: 15px;
+}
+
 .discipline-name{
     font-family: "Inter Medium";
     font-size: 14px;
@@ -182,7 +189,7 @@ input[type="number"]::-webkit-outer-spin-button {
     transition: all 200ms;
     border: 1px solid transparent;
     border-radius: 3px;
-    width: 100%;
+    width: 350px;
 }
   
 .discipline-item-empty-state{
@@ -354,3 +361,6 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 }
 
+.input.invalid{
+    border-color: red;
+}

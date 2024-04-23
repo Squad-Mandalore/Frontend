@@ -26,6 +26,9 @@ export class CreateExerciseModalComponent implements OnInit {
   page = 1;
   subPage = 1;
   selectedExercise: any = null;
+  validation = {
+    invalidTitle: false,
+  }
 
   constructor(private categoriesService: CategoriesService, private rulesService: RulesService, private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private exerciseService: ExercisesService){
     this.exerciseForm = this.formBuilder.group({
@@ -76,6 +79,18 @@ export class CreateExerciseModalComponent implements OnInit {
     });
   }
 
+  validateInput(inputType: string, mode: 'activate' | 'deactivate'){
+    if(inputType = 'title'){
+      if(this.exerciseForm.value.title?.length === 0){
+        if(mode === 'activate'){
+          this.validation.invalidTitle = true;
+        } else {
+          this.validation.invalidTitle = false;
+        }
+      } 
+    }
+  }
+
   switchSubPage(givenValue: string) {
     if (givenValue.match(/^\d{4}$/)) {
       this.subPage = 1;
@@ -95,9 +110,13 @@ export class CreateExerciseModalComponent implements OnInit {
 
   changePage(event: Event, targetPage: number){
     event.preventDefault();
+
     if(targetPage === 0) this.modals.createCompletesModal.isActive = false;
     if(this.page === 1 && targetPage === 2){
-      if(this.useExistingExercise && !this.selectedExercise || !this.useExistingExercise && !this.exerciseForm.value.title) return;
+      if(this.useExistingExercise && !this.selectedExercise || !this.useExistingExercise && !this.exerciseForm.value.title){
+        this.validateInput('title', 'activate');
+        return;
+      }
       this.switchSubPage(this.selectedExercise?.rules[0]?.bronze ?? this.returnMask(this.exerciseForm.value.mask));
     }
     this.page = targetPage;
