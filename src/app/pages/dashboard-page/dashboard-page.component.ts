@@ -350,24 +350,28 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     })
   }
 
-  onFileSelected(event: any) {
+  async onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
     console.log('Uploaded file:', this.selectedFile);
-    if (!this.selectedFile == null) {
-      const fileContent = this.readFileContent(this.selectedFile!);
 
-      // this is still error because not pushed changes on backend
-      body : CertificatePostSchema {
-        athleteid: this.selectedAthlete?.id
-        title: this.selectedAthlete?.username + this.selectedAthlete?.lastname
+    // Read file content
+    const fileContent = await this.readFileContent(this.selectedFile!);
+
+    if (fileContent instanceof Blob) {
+      // Create the body object
+      const body: CertificatePostSchema = {
+        athlete_id: this.selectedAthlete?.id!,
+        title: this.selectedAthlete?.username!,
         blob: fileContent
-      }
+      };
 
-      this.certificateService.createCertificateCertificatesPost().subscribe({
-        next: (reponse: CertificateResponseSchema) => {
+      console.log(body);
+
+      // Send the body object to the backend
+      this.certificateService.createCertificateCertificatesPost(body).subscribe({
+        next: (response: CertificateResponseSchema) => {
           this.alertService.show('Zertifikat hochgeladen', 'Zertifikat wurde erfolgreich erstellt.', 'success');
-          this.selectedAthlete?.certificates
-
+          console.log(response);
         },
         error: (error) => {
           if (error.status == 422) {
@@ -376,17 +380,27 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
             this.alertService.show('Erstellung fehlgeschlagen', 'Bitte versuche es später erneut', "error");
           }
         }
-      })
+      });
+    } else {
+      console.error('Error reading file content');
+      // Handle error - file content couldn't be read
     }
   }
 
-  private async readFileContent(file: File): Promise<Blob> {
+// Function to read file content and return as Blob
+  async readFileContent(file: File): Promise<Blob | ArrayBuffer | null> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => {
-        const arrayBuffer = reader.result as ArrayBuffer;
-        const blob = new Blob([new Uint8Array(arrayBuffer)], { type: file.type });
-        resolve(blob);
+        const arrayBuffer = reader.result;
+        if (arrayBuffer instanceof ArrayBuffer) {
+          // Successfully read file content
+          const blob = new Blob([new Uint8Array(arrayBuffer)], { type: file.type });
+          resolve(blob);
+        } else {
+          // Failed to read file content
+          resolve(null);
+        }
       };
       reader.onerror = () => {
         reject(reader.error);
@@ -394,6 +408,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       reader.readAsArrayBuffer(file);
     });
   }
+
 
   ngOnDestroy(): void {
     if (this.routeSubscription) {
