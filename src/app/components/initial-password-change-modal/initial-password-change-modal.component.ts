@@ -38,7 +38,6 @@ export class InitialPasswordChangeModalComponent {
   validateValues() {
     const password = this.passwordForm.value.password;
     const passwordRepeat = this.passwordForm.value.passwordRepeat;
-    console.log(this.passwordForm)
     if(password.length !== 0 && passwordRepeat.length === 0) return;
     if(password !== passwordRepeat) this.formValidation.passwordDifference = true;
   }
@@ -70,7 +69,7 @@ export class InitialPasswordChangeModalComponent {
 
     updateFunction && updateFunction.subscribe({
       next: (response) => {
-        this.alertService.show('Passwort erfolgreich geändert', 'Du kannst dich absofort mit dem neuen Passwort anmelden', 'success');
+        this.alertService.show('Passwort erfolgreich geändert', 'Du kannst dich ab sofort mit dem neuen Passwort anmelden', 'success');
         this.router.navigate(['/athleten']);
       },
       error: (error) => {
