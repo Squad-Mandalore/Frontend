@@ -8,6 +8,7 @@ import { SecondaryButtonComponent } from '../buttons/secondary-button/secondary-
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { IconComponent } from '../icon/icon.component'
 import { HttpErrorResponse } from '@angular/common/http';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-create-exercise-modal',
@@ -29,9 +30,12 @@ export class CreateExerciseModalComponent implements OnInit {
   page = 1;
   subPage = 1;
   selectedExercise: any = null;
-  validation = {
+  validation: ValidationSchema = {
     invalidTitle: false,
-    titleAlreadyExists: false
+    titleAlreadyExists: false,
+    ruleAlreadyExists: false,
+    nonsenseAge: false,
+    emptyAge: false
   };
   alreadySubmittedOnce: boolean =false;
 
@@ -79,25 +83,55 @@ export class CreateExerciseModalComponent implements OnInit {
       bronzeQuantity: ['', Validators.required],
     });
   }
+  
+  activateValidation(key: keyof ValidationSchema){
+    this.validation[key] = true;
+  }
 
-  validateInput(inputType: string, mode: 'activate' | 'deactivate'){
-    if(inputType = 'title'){
+  deactivateValidation(key: keyof ValidationSchema){
+    this.validation[key] = false;
+  }
+
+  validateInput(inputType: string){
+    if(inputType === 'title'){
       if(this.exerciseForm.value.title?.length === 0){
-        if(mode === 'activate'){
-          this.validation.invalidTitle = true;
-        } else {
-          this.validation.invalidTitle = false;
-        }
-      } else {
-        if(mode === 'activate'){
-          const equallyNamedExercises = this.checkIfExerciseAlreadyExists();
-          if(equallyNamedExercises.length !== 0){
-            this.validation.titleAlreadyExists = true;
-            return;
-          }
-        } else {
-          this.validation.titleAlreadyExists = false;
-        }
+        this.activateValidation('invalidTitle');
+        return;
+      }else{
+        this.deactivateValidation('titleAlreadyExists');
+      }
+
+      if(this.checkIfExerciseAlreadyExists().length !== 0){
+        this.activateValidation('titleAlreadyExists');
+        return;
+      }else{
+        this.deactivateValidation('titleAlreadyExists');
+      }
+    }
+
+    if(inputType === 'age'){
+
+      if(!this.exerciseForm.value.toAge || !this.exerciseForm.value.fromAge){
+        this.activateValidation('emptyAge');
+        return;
+      }else{
+        this.deactivateValidation('emptyAge');
+      }
+
+      if(this.exerciseForm.value.toAge < this.exerciseForm.value.fromAge){
+        this.activateValidation('nonsenseAge');
+        return;
+      }else{
+        this.deactivateValidation('nonsenseAge');
+      }
+    }
+
+    if(inputType === 'rule'){
+      if(this.doesRuleAlreadyExist()){
+        this.activateValidation('ruleAlreadyExists');
+        return;
+      }else{
+        this.deactivateValidation('ruleAlreadyExists');
       }
     }
   }
@@ -131,24 +165,68 @@ export class CreateExerciseModalComponent implements OnInit {
     })
   }
 
+  doesRuleAlreadyExist(){
+    const fromAge = this.exerciseForm.value.fromAge ?? 0;
+    const toAge = this.exerciseForm.value.toAge ?? 99;
+    const gender = this.selectedGender;
+    const matchedExerciseTitle = this.useExistingExercise && this.selectedExercise ? this.selectedExercise.title : this.exerciseForm.value.title; 
+
+    const result = this.exercises.filter(rule => {
+      if(
+        rule.exercise.category.title === this.selectedCategory &&
+        rule.exercise.title === matchedExerciseTitle &&
+        rule.gender === gender && (
+          rule.to_age >= fromAge && rule.to_age <= toAge ||
+          rule.from_age >= fromAge && rule.from_age <= toAge ||
+          rule.from_age <= fromAge && rule.to_age >= toAge ||
+          rule.from_age >= fromAge && rule.to_age <= toAge ||
+          rule.from_age === fromAge && rule.to_age === toAge
+        )
+      ) return rule;
+      return;
+    })
+
+    console.log(result);
+    if(result.length > 0) return true;
+    return false;
+  }
+
   changePage(event: Event, targetPage: number){
     event.preventDefault();
 
     if(targetPage === 0) this.modals.createCompletesModal.isActive = false;
     if(this.page === 1 && targetPage === 2){
       if(this.useExistingExercise && !this.selectedExercise || !this.useExistingExercise && !this.exerciseForm.value.title){
-        this.validateInput('title', 'activate');
+        this.validateInput('title');
         return;
       }
 
-      const equallyNamedExercises = this.checkIfExerciseAlreadyExists();
-      if(equallyNamedExercises.length !== 0){
-        this.validateInput('titleAlreadyExists', 'activate');
-        return;
+      if(!this.useExistingExercise){
+        const equallyNamedExercises = this.checkIfExerciseAlreadyExists();
+        if(equallyNamedExercises.length !== 0){
+          this.validateInput('title');
+          return;
+        }
       }
-
+      
       this.switchSubPage(this.selectedExercise?.rules[0]?.bronze ?? this.returnMask(this.selectedMask));
     }
+
+    if(this.page === 2 && targetPage === 3){
+      if(!this.exerciseForm.value.fromAge || !this.exerciseForm.value.toAge){
+        this.activateValidation('nonsenseAge')
+        return
+      }
+      if(this.exerciseForm.value.fromAge! > this.exerciseForm.value.toAge!){
+        this.activateValidation('nonsenseAge')
+        return
+      }
+      if(this.doesRuleAlreadyExist()){
+        this.activateValidation('ruleAlreadyExists')
+        return;
+      }
+    }
+
     this.page = targetPage;
   }
 
@@ -310,4 +388,13 @@ export class CreateExerciseModalComponent implements OnInit {
       }
     });
   }
+}
+
+
+interface ValidationSchema {
+  invalidTitle: boolean,
+  titleAlreadyExists: boolean,
+  ruleAlreadyExists: boolean,
+  nonsenseAge: boolean,
+  emptyAge: boolean
 }

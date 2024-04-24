@@ -20,7 +20,7 @@
             <div *ngIf="useExistingExercise == false" class="flex flex-col gap-20">
                 <label class="label">
                     <p class="label-text">Titel</p>
-                    <input class="input width-full" (focusin)="validateInput('title', 'deactivate'); validateInput('titleAlreadyExists', 'deactivate')" (focusout)="validateInput('title', 'activate'); validateInput('titleAlreadyExists', 'activate')" [ngClass]="{'invalid' : validation.invalidTitle || validation.titleAlreadyExists}" type="text" formControlName="title" placeholder="100 Meter Sprint">
+                    <input class="input width-full" (focusin)="deactivateValidation('invalidTitle'); deactivateValidation('titleAlreadyExists')" (focusout)="validateInput('title')" [ngClass]="{'invalid' : validation.invalidTitle || validation.titleAlreadyExists}" type="text" formControlName="title" placeholder="100 Meter Sprint">
                     <div class="error-text">
                         <p *ngIf="validation.invalidTitle">Eingabe ist erforderlich</p>
                         <p *ngIf="validation.titleAlreadyExists">Übung existiert bereits in dieser Kategorie</p>
@@ -29,7 +29,7 @@
                 <div class="label">
                     <p class="label-text">Kategorie</p>
                     <div id="slider-wrapper-horizontal">
-                        <div class="slider-element" *ngFor="let category of categories; index as i;" [ngClass]="selectedCategory === category.title ? 'active' : 'disabled'" (click)="selectedCategory = category.title">
+                        <div class="slider-element" *ngFor="let category of categories; index as i;" [ngClass]="selectedCategory === category.title ? 'active' : 'disabled'" (click)="selectedCategory = category.title; validateInput('title')">
                             <span>{{ category.title }}</span>
                         </div>
                     </div>
@@ -68,12 +68,16 @@
                 <div id="age-input-wrapper">
                     <label class="label">
                         <p class="label-text">von</p>
-                        <input class="input width-full" type="number" min="1" max="999" formControlName="fromAge" placeholder="1">
+                        <input class="input width-full" (focusout)="validateInput('age'); validateInput('rule');" (focusin)="deactivateValidation('nonsenseAge'); deactivateValidation('emptyAge')" type="number" min="1" max="999" formControlName="fromAge" placeholder="1">
                     </label>
                     <label class="label">
                         <p class="label-text">bis</p>
-                        <input class="input width-full" type="number" min="fromAge" max="999" formControlName="toAge" placeholder="99">
+                        <input class="input width-full" (focusout)="validateInput('age'); validateInput('rule');" (focusin)="deactivateValidation('nonsenseAge'); deactivateValidation('emptyAge')" type="number" min="fromAge" max="999" formControlName="toAge" placeholder="99">
                     </label>
+                </div>
+                <div class="error-text">
+                    <p *ngIf="validation.emptyAge">Beide Felder müssen befüllt sein</p>
+                    <p *ngIf="validation.nonsenseAge">Anfangsalter muss mindestens so hoch sein wie Endalter</p>
                 </div>
             </div>
             <label class="label">
@@ -83,13 +87,16 @@
             <div class="label">
                 <p class="label-text">Geschlecht</p>
                 <div id="slider-wrapper-horizontal">
-                    <div class="slider-element" [ngClass]="selectedGender === 'm' ? 'active' : 'disabled'" (click)="selectedGender = 'm'">
+                    <div class="slider-element" [ngClass]="selectedGender === 'm' ? 'active' : 'disabled'" (click)="selectedGender = 'm'; validateInput('rule');">
                         <span>männlich</span>
                     </div>
-                    <div class="slider-element" [ngClass]="selectedGender === 'f' ? 'active' : 'disabled'" (click)="selectedGender = 'f'">
+                    <div class="slider-element" [ngClass]="selectedGender === 'f' ? 'active' : 'disabled'" (click)="selectedGender = 'f'; validateInput('rule');">
                         <span>weiblich</span>
                     </div>
                 </div>
+            </div>
+            <div class="error-text">
+                <p *ngIf="validation.ruleAlreadyExists">Regel überschneidet sich mit anderer Regel in Altersgruppe und Geschlecht</p>
             </div>
         </div>
         <div *ngIf="page == 3" class="flex flex-col gap-20">
