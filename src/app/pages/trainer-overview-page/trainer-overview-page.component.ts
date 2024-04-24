@@ -35,9 +35,13 @@ export class TrainerOverviewPageComponent {
   modals = {
     createTrainerModal: {
       isActive: false,
+      title: 'Neuen Trainer hinzufügen',
+      primeButtonText: 'Trainer anlegen',
     },
     patchTrainerModal: {
       isActive: false,
+      title: 'Trainer bearbeiten',
+      primeButtonText: 'Speichern',
     },
     showDetails: {
       isActive: false,
@@ -99,9 +103,9 @@ export class TrainerOverviewPageComponent {
   }
   deleteTrainer(trainer: TrainerResponseSchema | null){
     this.confirmationService.show(
-      'Benutzer wirklich löschen?', 
-      'Mit dieser Aktion wird der ausgewählte Benutzer unwiderruflich gelöscht.', 
-      'Benutzer löschen', 
+      'Benutzer wirklich löschen?',
+      'Mit dieser Aktion wird der ausgewählte Benutzer unwiderruflich gelöscht.',
+      'Benutzer löschen',
       'Abbrechen',
       true,
       () => {

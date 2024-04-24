@@ -47,11 +47,10 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   sorting: {property: string, direction: "asc" | "desc"} = {property: 'tracked_at', direction: 'desc'};
   dashArray: number = 525;
   modals = {
-    createTrainerModal: {
-      isActive: false,
-    },
     createAthleteModal: {
       isActive: false,
+      title: "Neuen Sportler hinzufügen",
+      primeButtonText: "Sportler anlegen",
     },
     createCompletesModal: {
       isActive: false,
@@ -61,6 +60,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     },
     patchAthleteModal: {
       isActive: false,
+      title: "Sportler bearbeiten",
+      primeButtonText: "Speichern",
     },
   }
 
