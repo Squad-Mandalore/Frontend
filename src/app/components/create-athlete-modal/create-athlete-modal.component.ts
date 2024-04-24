@@ -56,7 +56,7 @@ export class CreateAthleteModalComponent implements OnInit {
     // Initialize Form and Validators for received Data
     this.createAthleteForm = this.formBuilder.group({
       username: ['', Validators.required],
-      unhashed_password: ['', [Validators.required, this.utilService.passwordValidator]],
+      unhashed_password: ['', [Validators.required, this.utilService.passwordValidator()]],
       email: ['', [Validators.required, Validators.email]],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
@@ -64,11 +64,15 @@ export class CreateAthleteModalComponent implements OnInit {
       day: ['', Validators.required],
       month: ['', Validators.required],
       year: ['', Validators.required],
-    })
+    });
   }
 
   ngOnInit() {
     if(this.selectedAthlete){
+      Object.keys(this.createAthleteForm.controls).forEach(key => {
+        this.createAthleteForm.get(key)!.removeValidators(Validators.required);
+        this.createAthleteForm.get(key)!.updateValueAndValidity();
+      });
       this.createAthleteForm.patchValue({
         username: this.selectedAthlete.username,
         email: this.selectedAthlete.email,

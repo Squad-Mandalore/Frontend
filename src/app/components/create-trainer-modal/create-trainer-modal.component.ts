@@ -27,7 +27,7 @@ export class CreateTrainerModalComponent implements OnInit{
   constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService, private logger: LoggerService){
     this.trainerForm = this.formBuilder.group({
       username: ['', Validators.required],
-      unhashed_password: ['', [Validators.required, utilService.passwordValidator()]],
+      unhashed_password: ['', [Validators.required, this.utilService.passwordValidator()]],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -36,6 +36,10 @@ export class CreateTrainerModalComponent implements OnInit{
 
   ngOnInit() {
     if(this.selectedTrainer){
+      Object.keys(this.trainerForm.controls).forEach(key => {
+        this.trainerForm.get(key)!.removeValidators(Validators.required);
+        this.trainerForm.get(key)!.updateValueAndValidity();
+      });
       this.trainerForm.patchValue({
         username: this.selectedTrainer.username,
         email: this.selectedTrainer.email,
