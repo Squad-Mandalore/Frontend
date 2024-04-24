@@ -23,7 +23,7 @@ export class CreateExerciseModalComponent {
   constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private exerciseService: ExercisesService){
     this.exerciseForm = this.formBuilder.group({
       title: ['', Validators.required],
-      fromAge: [1, [Validators.required, utilService.passwordValidator()]],
+      fromAge: [1, Validators.required],
       toAge: [99, Validators.required]
     });
   }

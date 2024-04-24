@@ -12,7 +12,10 @@
       <div id="password-password-strength-wrapper">
         <label class="label">
           <p class="label-text">Password</p>
-          <app-password-box formControlName="password"></app-password-box>
+          <app-password-box formControlName="password" (focusout)="validateValues()" (input)="resetValidation()"></app-password-box>
+          <div class="error-text">
+            <p *ngIf="formValidation.illegalPassword">Benötigt mindestens 12 Zeichen</p>
+          </div>
         </label>
       </div>
       <div id="name-input-wrapper">

@@ -45,6 +45,10 @@ export class CreateAthleteModalComponent {
   @Input() modals!: any;
   @Input() athletes: AthleteFullResponseSchema[] = [];
 
+  formValidation: formValidation = {
+    illegalPassword: false,
+  }
+
   constructor(private athleteApi: AthletesService,
               private logger: LoggerService,
               private formBuilder: FormBuilder,
@@ -55,7 +59,7 @@ export class CreateAthleteModalComponent {
     // Initialize Form and Validators for received Data
     this.createAthleteForm = this.formBuilder.group({
       username: ['', Validators.required],
-      unhashed_password: ['', [Validators.required, this.utilService.passwordValidator]],
+      unhashed_password: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
@@ -65,11 +69,34 @@ export class CreateAthleteModalComponent {
     })
   }
 
+  resetValidation(){
+    this.formValidation.illegalPassword = false;
+  }
+
+  validateValues(){
+    const password = this.createAthleteForm.value.unhashed_password;
+
+    this.utilService.validatePass(password!);
+
+    if(this.utilService.validatePass(password!) === 'Illegal'){
+      this.formValidation.illegalPassword = true;
+    }else{
+      this.resetValidation();
+    }
+    
+    if(password!.length === 0) return;
+  }
+
   onSubmit() {
     if (this.createAthleteForm.invalid){
       this.logger.error("Form invalid")
       return;
     }
+
+    this.validateValues();
+    if(this.formValidation.illegalPassword === true) return;
+
+
     // For switch between Male / Female, because clickable div is used
     if (!this.isMale) {
       this.isStringMale = "f"
@@ -142,3 +169,6 @@ export class CreateAthleteModalComponent {
 
 }
 
+interface formValidation {
+  illegalPassword: boolean,
+}

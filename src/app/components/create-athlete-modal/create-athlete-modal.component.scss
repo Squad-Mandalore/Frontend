@@ -38,6 +38,13 @@
   cursor: pointer;
 }
 
+.error-text{
+  color: var(--danger);
+  font-family: "Inter Medium";
+  font-size: 12px;
+  height: 15px;
+}
+
 .label{
   display: flex;
   flex-direction: column;

@@ -8,12 +8,12 @@ import {AlertComponent} from "../alert/alert.component";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
 import {TrainerPostSchema, TrainerResponseSchema, TrainersService} from "../../shared/generated";
-import {NgClass} from "@angular/common";
+import {NgClass, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 
 @Component({
   selector: 'app-create-trainer-modal',
   standalone: true,
-  imports: [PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, PasswordBoxComponent, ReactiveFormsModule, AlertComponent, NgClass],
+  imports: [PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, PasswordBoxComponent, ReactiveFormsModule, AlertComponent, NgClass, NgIf],
   templateUrl: './create-trainer-modal.component.html',
   styleUrl: './create-trainer-modal.component.scss',
 })
@@ -21,15 +21,35 @@ export class CreateTrainerModalComponent {
   @Input() modals!: any;
   @Input() trainer!: TrainerResponseSchema[];
 
+  formValidation: formValidation = {
+    illegalPassword: false,
+  }
+
   trainerForm;
   constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService){
     this.trainerForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', [Validators.required, utilService.passwordValidator()]],
+      password: ['', Validators.required],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
     });
+  }
+
+  resetValidation(){
+    this.formValidation.illegalPassword = false;
+  }
+
+  validateValues(){
+    const password = this.trainerForm.value.password;
+
+    if(this.utilService.validatePass(password!) === 'Illegal'){
+      this.formValidation.illegalPassword = true;
+    }else{
+      this.resetValidation();
+    }
+    
+    if(password!.length === 0) return;
   }
 
   onSubmit(){
@@ -40,6 +60,10 @@ export class CreateTrainerModalComponent {
       lastname: this.trainerForm.value.lastname!,
       email: this.trainerForm.value.email!,
     };
+
+    this.validateValues();
+    if(this.formValidation.illegalPassword === true) return;
+
     this.trainerService.createTrainerTrainersPost(body).subscribe({
       next: (reponse: TrainerResponseSchema) => {
         this.alertService.show('Trainer erstellt', 'Trainer wurde erfolgreich erstellt.', 'success');
@@ -55,4 +79,8 @@ export class CreateTrainerModalComponent {
       }
     });
   }
+}
+
+interface formValidation {
+  illegalPassword: boolean,
 }

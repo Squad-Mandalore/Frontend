@@ -23,14 +23,14 @@ export class InitialPasswordChangeModalComponent {
   formValidation: formValidation = {
     passwordDifference: false,
     oldPassword: false,
-    weakPassword: false,
+    illegalPassword: false,
   }
 
   passwordForm : FormGroup;
   constructor(private formBuilder: FormBuilder, private router: Router, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService, private athleteService: AthletesService, private adminService: AdminsService){
     this.passwordForm = this.formBuilder.group({
-      password: ['', [Validators.required, utilService.passwordValidator()]],
-      passwordRepeat: ['', [Validators.required, utilService.passwordValidator()]]
+      password: ['', [Validators.required]],
+      passwordRepeat: ['', [Validators.required]]
     });
   }
 
@@ -48,10 +48,10 @@ export class InitialPasswordChangeModalComponent {
       this.resetValidation('oldPassword');
     }
 
-    if(!this.utilService.validatePass(password)){
-      this.formValidation.weakPassword = true;
+    if(this.utilService.validatePass(password) === 'Illegal'){
+      this.formValidation.illegalPassword = true;
     }else{
-      this.resetValidation('weakPassword');
+      this.resetValidation('illegalPassword');
     }
     
     if(password.length === 0 || passwordRepeat.length === 0) return;
@@ -61,6 +61,7 @@ export class InitialPasswordChangeModalComponent {
   onSubmit(){
     const password = this.passwordForm.value.password;
     const passwordRepeat = this.passwordForm.value.passwordRepeat;
+
     if(!this.user || password.length === 0 || passwordRepeat.length === 0 || password !== passwordRepeat) return;
 
     if(!this.oldPassword || this.oldPassword === password){
@@ -85,7 +86,7 @@ export class InitialPasswordChangeModalComponent {
 
     updateFunction && updateFunction.subscribe({
       next: (response) => {
-        this.alertService.show('Passwort erfolgreich geändert', 'Du kannst dich ab sofort mit dem neuen Passwort anmelden', 'success');
+        this.alertService.show('Passwort erfolgreich geändert', 'Sie können sich nun mit dem neuen Passwort anmelden', 'success');
         this.router.navigate(['/athleten']);
       },
       error: (error) => {
@@ -98,5 +99,5 @@ export class InitialPasswordChangeModalComponent {
 interface formValidation {
   passwordDifference: boolean,
   oldPassword: boolean,
-  weakPassword: boolean,
+  illegalPassword: boolean,
 }
