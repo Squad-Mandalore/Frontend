@@ -46,7 +46,7 @@
 }
 
 .category-wrapper{
-  height: 100%;
+  height: fit-content;
   width: calc(100% - 15px);
   padding-bottom: 10px;
   border-bottom: 1px solid var(--accent-150);
