@@ -1,19 +1,19 @@
 <div [ngSwitch]="iconName" id="icon-wrapper">
 
-    <svg *ngSwitchCase="'user-plus'" class = "icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'user-plus'" class = "icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M8.5 11C10.7091 11 12.5 9.20914 12.5 7C12.5 4.79086 10.7091 3 8.5 3C6.29086 3 4.5 4.79086 4.5 7C4.5 9.20914 6.29086 11 8.5 11Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M20 8V14" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M23 11H17" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'user-minus'" class = "icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'user-minus'" class = "icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M8.5 11C10.7091 11 12.5 9.20914 12.5 7C12.5 4.79086 10.7091 3 8.5 3C6.29086 3 4.5 4.79086 4.5 7C4.5 9.20914 6.29086 11 8.5 11Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M23 11H17" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'loader'" class="icon animate-rotate" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'loader'" class="icon animate-rotate" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 2V6" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M12 18V22" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M4.92999 4.92993L7.75999 7.75993" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
@@ -24,40 +24,40 @@
         <path d="M16.24 7.75993L19.07 4.92993" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'users'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'users'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M23 20.9999V18.9999C22.9993 18.1136 22.7044 17.2527 22.1614 16.5522C21.6184 15.8517 20.8581 15.3515 20 15.1299" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M16 3.12988C16.8604 3.35018 17.623 3.85058 18.1676 4.55219C18.7122 5.2538 19.0078 6.11671 19.0078 7.00488C19.0078 7.89305 18.7122 8.75596 18.1676 9.45757C17.623 10.1592 16.8604 10.6596 16 10.8799" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'logout'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'logout'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M15 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H15" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M10 17L15 12L10 7" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M15 12H3" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'home'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'home'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M9 22V12H15V22" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'check'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" data-style="line" icon_origin_id="4603" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="check" class="icon line" width="24" height="24"><polyline style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;" points="5 12 10 17 19 8" id="primary-stroke"></polyline>
+    <svg *ngSwitchCase="'check'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" data-style="line" icon_origin_id="4603" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="check" class="icon line" width="24" height="24"><polyline style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;" points="5 12 10 17 19 8" id="primary-stroke"></polyline>
     </svg>
 
-    <svg *ngSwitchCase="'more-horizontal'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'more-horizontal'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'more-vertical'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'more-vertical'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'settings'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'settings'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clip-path="url(#clip0_69_316)">
         <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M19.4 15C19.2669 15.3016 19.2272 15.6362 19.286 15.9606C19.3448 16.285 19.4995 16.5843 19.73 16.82L19.79 16.88C19.976 17.0657 20.1235 17.2863 20.2241 17.5291C20.3248 17.7719 20.3766 18.0322 20.3766 18.295C20.3766 18.5578 20.3248 18.8181 20.2241 19.0609C20.1235 19.3037 19.976 19.5243 19.79 19.71C19.6043 19.896 19.3837 20.0435 19.1409 20.1441C18.8981 20.2448 18.6378 20.2966 18.375 20.2966C18.1122 20.2966 17.8519 20.2448 17.6091 20.1441C17.3663 20.0435 17.1457 19.896 16.96 19.71L16.9 19.65C16.6643 19.4195 16.365 19.2648 16.0406 19.206C15.7162 19.1472 15.3816 19.1869 15.08 19.32C14.7842 19.4468 14.532 19.6572 14.3543 19.9255C14.1766 20.1938 14.0813 20.5082 14.08 20.83V21C14.08 21.5304 13.8693 22.0391 13.4942 22.4142C13.1191 22.7893 12.6104 23 12.08 23C11.5496 23 11.0409 22.7893 10.6658 22.4142C10.2907 22.0391 10.08 21.5304 10.08 21V20.91C10.0723 20.579 9.96512 20.258 9.77251 19.9887C9.5799 19.7194 9.31074 19.5143 9 19.4C8.69838 19.2669 8.36381 19.2272 8.03941 19.286C7.71502 19.3448 7.41568 19.4995 7.18 19.73L7.12 19.79C6.93425 19.976 6.71368 20.1235 6.47088 20.2241C6.22808 20.3248 5.96783 20.3766 5.705 20.3766C5.44217 20.3766 5.18192 20.3248 4.93912 20.2241C4.69632 20.1235 4.47575 19.976 4.29 19.79C4.10405 19.6043 3.95653 19.3837 3.85588 19.1409C3.75523 18.8981 3.70343 18.6378 3.70343 18.375C3.70343 18.1122 3.75523 17.8519 3.85588 17.6091C3.95653 17.3663 4.10405 17.1457 4.29 16.96L4.35 16.9C4.58054 16.6643 4.73519 16.365 4.794 16.0406C4.85282 15.7162 4.81312 15.3816 4.68 15.08C4.55324 14.7842 4.34276 14.532 4.07447 14.3543C3.80618 14.1766 3.49179 14.0813 3.17 14.08H3C2.46957 14.08 1.96086 13.8693 1.58579 13.4942C1.21071 13.1191 1 12.6104 1 12.08C1 11.5496 1.21071 11.0409 1.58579 10.6658C1.96086 10.2907 2.46957 10.08 3 10.08H3.09C3.42099 10.0723 3.742 9.96512 4.0113 9.77251C4.28059 9.5799 4.48572 9.31074 4.6 9C4.73312 8.69838 4.77282 8.36381 4.714 8.03941C4.65519 7.71502 4.50054 7.41568 4.27 7.18L4.21 7.12C4.02405 6.93425 3.87653 6.71368 3.77588 6.47088C3.67523 6.22808 3.62343 5.96783 3.62343 5.705C3.62343 5.44217 3.67523 5.18192 3.77588 4.93912C3.87653 4.69632 4.02405 4.47575 4.21 4.29C4.39575 4.10405 4.61632 3.95653 4.85912 3.85588C5.10192 3.75523 5.36217 3.70343 5.625 3.70343C5.88783 3.70343 6.14808 3.75523 6.39088 3.85588C6.63368 3.95653 6.85425 4.10405 7.04 4.29L7.1 4.35C7.33568 4.58054 7.63502 4.73519 7.95941 4.794C8.28381 4.85282 8.61838 4.81312 8.92 4.68H9C9.29577 4.55324 9.54802 4.34276 9.72569 4.07447C9.90337 3.80618 9.99872 3.49179 10 3.17V3C10 2.46957 10.2107 1.96086 10.5858 1.58579C10.9609 1.21071 11.4696 1 12 1C12.5304 1 13.0391 1.21071 13.4142 1.58579C13.7893 1.96086 14 2.46957 14 3V3.09C14.0013 3.41179 14.0966 3.72618 14.2743 3.99447C14.452 4.26276 14.7042 4.47324 15 4.6C15.3016 4.73312 15.6362 4.77282 15.9606 4.714C16.285 4.65519 16.5843 4.50054 16.82 4.27L16.88 4.21C17.0657 4.02405 17.2863 3.87653 17.5291 3.77588C17.7719 3.67523 18.0322 3.62343 18.295 3.62343C18.5578 3.62343 18.8181 3.67523 19.0609 3.77588C19.3037 3.87653 19.5243 4.02405 19.71 4.21C19.896 4.39575 20.0435 4.61632 20.1441 4.85912C20.2448 5.10192 20.2966 5.36217 20.2966 5.625C20.2966 5.88783 20.2448 6.14808 20.1441 6.39088C20.0435 6.63368 19.896 6.85425 19.71 7.04L19.65 7.1C19.4195 7.33568 19.2648 7.63502 19.206 7.95941C19.1472 8.28381 19.1869 8.61838 19.32 8.92V9C19.4468 9.29577 19.6572 9.54802 19.9255 9.72569C20.1938 9.90337 20.5082 9.99872 20.83 10H21C21.5304 10 22.0391 10.2107 22.4142 10.5858C22.7893 10.9609 23 11.4696 23 12C23 12.5304 22.7893 13.0391 22.4142 13.4142C22.0391 13.7893 21.5304 14 21 14H20.91C20.5882 14.0013 20.2738 14.0966 20.0055 14.2743C19.7372 14.452 19.5268 14.7042 19.4 15Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
@@ -69,43 +69,43 @@
       </defs>
     </svg>
 
-    <svg *ngSwitchCase="'bar-chart'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'bar-chart'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M18 20V10" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M12 20V4" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M6 20V14" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'edit-1'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'edit-1'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M18.5 2.49998C18.8978 2.10216 19.4374 1.87866 20 1.87866C20.5626 1.87866 21.1022 2.10216 21.5 2.49998C21.8978 2.89781 22.1213 3.43737 22.1213 3.99998C22.1213 4.56259 21.8978 5.10216 21.5 5.49998L12 15L8 16L9 12L18.5 2.49998Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'edit-2'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'edit-2'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 20H21" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M16.5 3.49998C16.8978 3.10216 17.4374 2.87866 18 2.87866C18.2786 2.87866 18.5544 2.93353 18.8118 3.04014C19.0692 3.14674 19.303 3.303 19.5 3.49998C19.697 3.69697 19.8532 3.93082 19.9598 4.18819C20.0665 4.44556 20.1213 4.72141 20.1213 4.99998C20.1213 5.27856 20.0665 5.55441 19.9598 5.81178C19.8532 6.06915 19.697 6.303 19.5 6.49998L7 19L3 20L4 16L16.5 3.49998Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'arrow-right'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'arrow-right'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M5 12H19" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M12 5L19 12L12 19" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'arrow-left'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'arrow-left'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M19 12H5" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M12 19L5 12L12 5" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'alert-circle'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'alert-circle'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M12 8V12" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M12 16H12.01" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'star'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'star'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'sliders'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'sliders'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M4 21V14" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M4 10V3" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M12 21V12" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
@@ -117,26 +117,26 @@
       <path d="M17 16H23" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'filter-1'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'filter-1'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M4 4.94444V7.43778C3.99951 7.65845 4.0867 7.87231 4.24643 8.04222L9.11072 13.18C9.27045 13.3499 9.35763 13.5638 9.35714 13.7844V21L13.6429 19.1111V13.7844C13.6424 13.5638 13.7296 13.3499 13.8893 13.18L18.7536 8.04222C18.9133 7.87231 19.0005 7.65845 19 7.43778V4.94444C19 4.69396 18.8871 4.45374 18.6862 4.27662C18.4853 4.0995 18.2127 4 17.9286 4H5.07143C4.78727 4 4.51475 4.0995 4.31382 4.27662C4.11288 4.45374 4 4.69396 4 4.94444Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
     
-    <svg *ngSwitchCase="'filter-2'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'filter-2'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M3 7H21M5 12H19M7 17H17" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'delete'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'delete'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M3 6H5H21" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M10 11V17" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M14 11V17" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'paperclip'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'paperclip'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M21.44 11.0499L12.25 20.2399C11.1242 21.3658 9.59723 21.9983 8.00505 21.9983C6.41286 21.9983 4.88589 21.3658 3.76005 20.2399C2.6342 19.1141 2.00171 17.5871 2.00171 15.9949C2.00171 14.4027 2.6342 12.8758 3.76005 11.7499L12.95 2.55992C13.7006 1.80936 14.7186 1.3877 15.78 1.3877C16.8415 1.3877 17.8595 1.80936 18.61 2.55992C19.3606 3.31048 19.7823 4.32846 19.7823 5.38992C19.7823 6.45138 19.3606 7.46936 18.61 8.21992L9.41005 17.4099C9.03476 17.7852 8.52577 17.996 7.99505 17.996C7.46432 17.996 6.95533 17.7852 6.58005 17.4099C6.20476 17.0346 5.99393 16.5256 5.99393 15.9949C5.99393 15.4642 6.20476 14.9552 6.58005 14.5799L15.07 6.09992" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'list'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'list'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M8 6H21" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M8 12H21" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M8 18H21" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
@@ -145,7 +145,7 @@
       <path d="M3 18H3.01" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'clipboard'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'clipboard'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M16 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V20C20 20.5304 19.7893 21.0391 19.4142 21.4142C19.0391 21.7893 18.5304 22 18 22H6C5.46957 22 4.96086 21.7893 4.58579 21.4142C4.21071 21.0391 4 20.5304 4 20V6C4 5.46957 4.21071 4.96086 4.58579 4.58579C4.96086 4.21071 5.46957 4 6 4H8" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M15 2H9C8.44772 2 8 2.44772 8 3V5C8 5.55228 8.44772 6 9 6H15C15.5523 6 16 5.55228 16 5V3C16 2.44772 15.5523 2 15 2Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -153,47 +153,47 @@
     <!-- TODO: Can't copy medal-one for some reason? -->
     <!-- medal one is not needed currently -->
 
-    <svg *ngSwitchCase="'medal-two'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'medal-two'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M16.83 8.95L19 3H13.86L12.34 7.02" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M11.66 7.02L10.14 3H5L7.17 8.95" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M12 21C15.866 21 19 17.866 19 14C19 10.134 15.866 7 12 7C8.13401 7 5 10.134 5 14C5 17.866 8.13401 21 12 21Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M10 14L11.33 15.5L14 12.5" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'award-1'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'award-1'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M20 3H4C3.73478 3 3.48043 3.10536 3.29289 3.29289C3.10536 3.48043 3 3.73478 3 4V13C3 13.2652 3.10536 13.5196 3.29289 13.7071C3.48043 13.8946 3.73478 14 4 14H20C20.2652 14 20.5196 13.8946 20.7071 13.7071C20.8946 13.5196 21 13.2652 21 13V4C21 3.73478 20.8946 3.48043 20.7071 3.29289C20.5196 3.10536 20.2652 3 20 3ZM12 10C11.7033 10 11.4133 9.91203 11.1666 9.7472C10.92 9.58238 10.7277 9.34811 10.6142 9.07403C10.5006 8.79994 10.4709 8.49834 10.5288 8.20736C10.5867 7.91639 10.7296 7.64912 10.9393 7.43934C11.1491 7.22956 11.4164 7.0867 11.7074 7.02882C11.9983 6.97094 12.2999 7.00065 12.574 7.11418C12.8481 7.22771 13.0824 7.41997 13.2472 7.66664C13.412 7.91332 13.5 8.20333 13.5 8.5C13.5 8.89782 13.342 9.27936 13.0607 9.56066C12.7794 9.84196 12.3978 10 12 10Z" [attr.stroke-width]="strokeWidth"/>
       <path d="M16 21L12 20L8 21V14H16V21Z" [attr.stroke-width]="strokeWidth"/>
       <path d="M12 20L16 21V14H8V21L12 20ZM12 20V18M20 3H4C3.73478 3 3.48043 3.10536 3.29289 3.29289C3.10536 3.48043 3 3.73478 3 4V13C3 13.2652 3.10536 13.5196 3.29289 13.7071C3.48043 13.8946 3.73478 14 4 14H20C20.2652 14 20.5196 13.8946 20.7071 13.7071C20.8946 13.5196 21 13.2652 21 13V4C21 3.73478 20.8946 3.48043 20.7071 3.29289C20.5196 3.10536 20.2652 3 20 3ZM12 10C11.7033 10 11.4133 9.91203 11.1666 9.7472C10.92 9.58238 10.7277 9.34811 10.6142 9.07403C10.5006 8.79994 10.4709 8.49834 10.5288 8.20736C10.5867 7.91639 10.7296 7.64912 10.9393 7.43934C11.1491 7.22956 11.4164 7.0867 11.7074 7.02882C11.9983 6.97094 12.2999 7.00065 12.574 7.11418C12.8481 7.22771 13.0824 7.41997 13.2472 7.66664C13.412 7.91332 13.5 8.20333 13.5 8.5C13.5 8.89782 13.342 9.27936 13.0607 9.56066C12.7794 9.84196 12.3978 10 12 10Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'award-2'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'award-2'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 15C15.866 15 19 11.866 19 8C19 4.13401 15.866 1 12 1C8.13401 1 5 4.13401 5 8C5 11.866 8.13401 15 12 15Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M8.21 13.89L7 23L12 20L17 23L15.79 13.88" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'trainer-plus'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'trainer-plus'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M20.48 15C20.0368 16.2661 19.3119 17.4149 18.36 18.36C17.1894 19.5317 15.7182 20.3576 14.1084 20.7468C12.4986 21.1361 10.8126 21.0735 9.23601 20.5662C7.65944 20.0588 6.25344 19.1262 5.17283 17.8711C4.09222 16.6159 3.37889 15.087 3.11139 13.4525C2.84389 11.8181 3.03259 10.1415 3.65672 8.60736C4.28084 7.07324 5.31618 5.7411 6.64876 4.75759C7.98133 3.77408 9.55945 3.17736 11.2094 3.03311C12.8593 2.88886 14.517 3.20268 16 3.94003" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M13 7.13002C12.6743 7.04076 12.3377 6.99701 12 7.00002C11.2977 6.9993 10.6076 7.18351 9.99902 7.53413C9.39048 7.88474 8.88498 8.3894 8.53335 8.99736C8.18172 9.60532 7.99636 10.2951 7.99591 10.9975C7.99546 11.6998 8.17994 12.3898 8.53078 12.9982C8.88163 13.6067 9.38649 14.112 9.99458 14.4634C10.6027 14.8147 11.2926 14.9998 11.9949 15C12.6972 15.0002 13.3872 14.8155 13.9955 14.4644C14.6037 14.1133 15.1089 13.6083 15.46 13" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M17 9H21M19 7V11M12 15C10.7562 14.9938 9.55467 15.4514 8.63012 16.2835C7.70557 17.1156 7.12437 18.2624 7 19.5C8.47373 20.4762 10.2023 20.9967 11.97 20.9967C13.7377 20.9967 15.4663 20.4762 16.94 19.5C16.8167 18.2727 16.244 17.1342 15.3321 16.3036C14.4202 15.4729 13.2335 15.0086 12 15Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'search'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'search'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M21 21L16.65 16.65" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'cross'" class="icon" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'cross'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M19 19L5 5" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M19 5L5 19" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
-    <svg *ngSwitchCase="'cross-filled'" class="icon" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'cross-filled'" class="icon" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="#FF0000"/>
       <path d="M13.41 11.9999L15.71 9.70994C15.8983 9.52164 16.0041 9.26624 16.0041 8.99994C16.0041 8.73364 15.8983 8.47825 15.71 8.28994C15.5217 8.10164 15.2663 7.99585 15 7.99585C14.7337 7.99585 14.4783 8.10164 14.29 8.28994L12 10.5899L9.71 8.28994C9.5217 8.10164 9.2663 7.99585 9 7.99585C8.7337 7.99585 8.4783 8.10164 8.29 8.28994C8.1017 8.47825 7.99591 8.73364 7.99591 8.99994C7.99591 9.26624 8.1017 9.52164 8.29 9.70994L10.59 11.9999L8.29 14.2899C8.19627 14.3829 8.12188 14.4935 8.07111 14.6154C8.02034 14.7372 7.9942 14.8679 7.9942 14.9999C7.9942 15.132 8.02034 15.2627 8.07111 15.3845C8.12188 15.5064 8.19627 15.617 8.29 15.7099C8.38296 15.8037 8.49356 15.8781 8.61542 15.9288C8.73728 15.9796 8.86799 16.0057 9 16.0057C9.13201 16.0057 9.26272 15.9796 9.38458 15.9288C9.50644 15.8781 9.61704 15.8037 9.71 15.7099L12 13.4099L14.29 15.7099C14.383 15.8037 14.4936 15.8781 14.6154 15.9288C14.7373 15.9796 14.868 16.0057 15 16.0057C15.132 16.0057 15.2627 15.9796 15.3846 15.9288C15.5064 15.8781 15.617 15.8037 15.71 15.7099C15.8037 15.617 15.8781 15.5064 15.9289 15.3845C15.9797 15.2627 16.0058 15.132 16.0058 14.9999C16.0058 14.8679 15.9797 14.7372 15.9289 14.6154C15.8781 14.4935 15.8037 14.3829 15.71 14.2899L13.41 11.9999Z" fill="white"/>
     </svg>
 
     
-    <svg *ngSwitchCase="'check-filled'" class="icon" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'check-filled'" class="icon" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clip-path="url(#clip0_226_541)">
         <path d="M12.5 20.76C16.6421 20.76 20 16.7843 20 11.88C20 6.97571 16.6421 3 12.5 3C8.35786 3 5 6.97571 5 11.88C5 16.7843 8.35786 20.76 12.5 20.76Z" fill="#80FF00"/>
         <path d="M23 12C23 14.1756 22.3549 16.3023 21.1462 18.1113C19.9375 19.9202 18.2195 21.3301 16.2095 22.1627C14.1995 22.9952 11.9878 23.2131 9.85401 22.7886C7.72022 22.3642 5.76021 21.3165 4.22183 19.7782C2.68345 18.2398 1.6358 16.2798 1.21137 14.146C0.78693 12.0122 1.00477 9.80047 1.83733 7.79048C2.66989 5.78049 4.07979 4.06253 5.88873 2.85383C7.69767 1.64514 9.82441 1 12 1C14.9174 1 17.7153 2.15892 19.7782 4.22182C21.8411 6.28472 23 9.08262 23 12ZM7.11111 12L10.7778 15.6667L16.8889 9.55555" fill="#80FF00"/>
@@ -208,7 +208,7 @@
 
     <!--TODO: How do i change the values of the female and male icon dynamically?-->
     <!--I cheated with this icon, because it is a png image instead of an svg. Figma exports this png as svg and therefore there are no stroke properties to be changed dynamically-->
-    <svg *ngSwitchCase="'female'" class="icon" [style.width]="iconWidth" [style.height]="iconHeight" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <svg *ngSwitchCase="'female'" class="icon" [style.width.px]="iconWidth" [style.height.px]="iconHeight" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <rect width="15" height="15" fill="url(#pattern0)"/>
       <defs>
       <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -218,7 +218,7 @@
       </defs>
     </svg>
 
-    <svg *ngSwitchCase="'male'" class="icon" [style.strokeWidth]="'0'" [style.width]="iconWidth" [style.height]="iconHeight" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <svg *ngSwitchCase="'male'" class="icon" [style.strokeWidth]="'0'" [style.width.px]="iconWidth" [style.height.px]="iconHeight" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <rect width="15" height="15" fill="url(#pattern0)"/>
       <defs>
       <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -229,18 +229,18 @@
     </svg>
 
     
-    <svg *ngSwitchCase="'eye-open'" class="icon" [style.strokeWidth]="strokeWidth" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+    <svg *ngSwitchCase="'eye-open'" class="icon" [style.strokeWidth]="strokeWidth" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
 
-    <svg *ngSwitchCase="'eye-closed'" class="icon" [style.strokeWidth]="strokeWidth" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+    <svg *ngSwitchCase="'eye-closed'" class="icon" [style.strokeWidth]="strokeWidth" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
 
-    <svg *ngSwitchCase="'copy'" class="icon" [style.strokeWidth]="strokeWidth" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" data-style="line" icon_origin_id="18143" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path style="fill: none; stroke-linecap: round; stroke-linejoin: round;" d="M9,16V4a1,1,0,0,1,1-1h8a1,1,0,0,1,1,1V16a1,1,0,0,1-1,1H10A1,1,0,0,1,9,16ZM5,6V20a1,1,0,0,0,1,1h9" id="primary"></path></svg>
+    <svg *ngSwitchCase="'copy'" class="icon" [style.strokeWidth]="strokeWidth" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" data-style="line" icon_origin_id="18143" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path style="fill: none; stroke-linecap: round; stroke-linejoin: round;" d="M9,16V4a1,1,0,0,1,1-1h8a1,1,0,0,1,1,1V16a1,1,0,0,1-1,1H10A1,1,0,0,1,9,16ZM5,6V20a1,1,0,0,0,1,1h9" id="primary"></path></svg>
 
-    <svg *ngSwitchCase="'plus'" class="icon" [style.strokeWidth]="strokeWidth" [style.fill]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngSwitchCase="'plus'" class="icon" [style.strokeWidth]="strokeWidth" [style.fill]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M19 11H13V5C13 4.73478 12.8946 4.48043 12.7071 4.29289C12.5196 4.10536 12.2652 4 12 4C11.7348 4 11.4804 4.10536 11.2929 4.29289C11.1054 4.48043 11 4.73478 11 5V11H5C4.73478 11 4.48043 11.1054 4.29289 11.2929C4.10536 11.4804 4 11.7348 4 12C4 12.2652 4.10536 12.5196 4.29289 12.7071C4.48043 12.8946 4.73478 13 5 13H11V19C11 19.2652 11.1054 19.5196 11.2929 19.7071C11.4804 19.8946 11.7348 20 12 20C12.2652 20 12.5196 19.8946 12.7071 19.7071C12.8946 19.5196 13 19.2652 13 19V13H19C19.2652 13 19.5196 12.8946 19.7071 12.7071C19.8946 12.5196 20 12.2652 20 12C20 11.7348 19.8946 11.4804 19.7071 11.2929C19.5196 11.1054 19.2652 11 19 11Z"/>
     </svg>
 
-    <svg *ngSwitchCase="'arrow-up'" class="icon" [style.strokeWidth]="strokeWidth" [style.stroke]="iconColor" [style.width]="iconWidth" 
-    [style.height]="iconHeight" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline style="fill: none; stroke-linecap: round; stroke-linejoin: round;" points="15 6 12 3 9 6"></polyline><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="3" x2="12" y1="21" x1="12"></line></svg>
+    <svg *ngSwitchCase="'arrow-up'" class="icon" [style.strokeWidth]="strokeWidth" [style.stroke]="iconColor" [style.width.px]="iconWidth" 
+    [style.height.px]="iconHeight" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline style="fill: none; stroke-linecap: round; stroke-linejoin: round;" points="15 6 12 3 9 6"></polyline><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="3" x2="12" y1="21" x1="12"></line></svg>
 
-    <svg *ngSwitchCase="'arrow-down'" class="icon" [style.strokeWidth]="strokeWidth" [style.stroke]="iconColor" [style.width]="iconWidth" [style.height]="iconHeight" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path style="fill: none; stroke-linecap: round; stroke-linejoin: round;" d="M12,3V21M9,18l3,3,3-3"></path></svg>
+    <svg *ngSwitchCase="'arrow-down'" class="icon" [style.strokeWidth]="strokeWidth" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path style="fill: none; stroke-linecap: round; stroke-linejoin: round;" d="M12,3V21M9,18l3,3,3-3"></path></svg>
 </div>

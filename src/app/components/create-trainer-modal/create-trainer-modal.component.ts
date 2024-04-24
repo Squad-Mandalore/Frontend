@@ -9,6 +9,7 @@ import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
 import {TrainerPostSchema, TrainerResponseSchema, TrainersService} from "../../shared/generated";
 import {NgClass} from "@angular/common";
+import { LoggerService } from "../../shared/logger.service";
 
 @Component({
   selector: 'app-create-trainer-modal',
@@ -23,7 +24,7 @@ export class CreateTrainerModalComponent implements OnInit{
   @Output() trainerCallback = new EventEmitter<FormGroup>();
 
   trainerForm;
-  constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService){
+  constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService, private logger: LoggerService){
     this.trainerForm = this.formBuilder.group({
       username: ['', Validators.required],
       unhashed_password: ['', [Validators.required, utilService.passwordValidator()]],
