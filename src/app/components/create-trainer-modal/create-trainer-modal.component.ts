@@ -9,6 +9,7 @@ import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
 import {TrainerPostSchema, TrainerResponseSchema, TrainersService} from "../../shared/generated";
 import {NgClass} from "@angular/common";
+import { LoggerService } from "../../shared/logger.service";
 
 @Component({
   selector: 'app-create-trainer-modal',
@@ -22,7 +23,7 @@ export class CreateTrainerModalComponent {
   @Input() trainer!: TrainerResponseSchema[];
 
   trainerForm;
-  constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService){
+  constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService, private logger: LoggerService){
     this.trainerForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, utilService.passwordValidator()]],
@@ -33,6 +34,10 @@ export class CreateTrainerModalComponent {
   }
 
   onSubmit(){
+    if (!this.trainerForm.valid){
+      this.logger.error("Form invalid")
+      return;
+    }
     let body: TrainerPostSchema = {
       username: this.trainerForm.value.username!,
       unhashed_password: this.trainerForm.value.password!,
