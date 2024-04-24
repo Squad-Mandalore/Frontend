@@ -168,22 +168,42 @@ export class CreateExerciseModalComponent implements OnInit {
   }
 
   submitNewDistance(kilometers: number, meters: number, centimeters: number): string {
-    let combinedCentimeters = (kilometers * 100000) + (meters * 100) + centimeters;
+    let combinedCentimeters = (kilometers! * 100000) + (meters! * 100) + (centimeters! * 1);
 
-    const kilometersResult = Math.floor(combinedCentimeters / 100000);
+    let kilometersResult = '';
+    let metersResult = '';
+    let centimetersResult = '';
+
+    let kilometersForOutput = Math.floor(combinedCentimeters / 100000);
+    if(kilometersForOutput < 10) {
+      kilometersResult = '00'+kilometersForOutput.toString();
+    } else if(kilometersForOutput > 9 && kilometersForOutput < 100) {
+      kilometersResult = '0'+kilometersForOutput.toString();
+    } else {
+      kilometersResult = kilometersForOutput.toString();
+    }
     combinedCentimeters %= 100000;
 
-    const metersResult = Math.floor(combinedCentimeters / 100);
+    let metersForOutput = Math.floor(combinedCentimeters / 100);
+    if(metersForOutput < 10) {
+      metersResult = '00'+metersForOutput.toString();
+    } else if(metersForOutput > 9 && metersForOutput < 100) {
+      metersResult = '0'+metersForOutput.toString();
+    } else {
+      metersResult = metersForOutput.toString();
+    }
     combinedCentimeters %= 100;
 
-    const centimetersResult = Math.floor(combinedCentimeters);
+    let centimetersForOutput = Math.floor(combinedCentimeters / 1);
+    if(centimetersForOutput < 10) {
+      centimetersResult = '0'+centimetersForOutput.toString();
+    } else {
+      centimetersResult = centimetersForOutput.toString();
+    }
 
-    const formatWithLeadingZero = (value: number): string => {
-      return value < 10 ? '0' + value : value.toString();
-    };
-
-    return `${formatWithLeadingZero(kilometersResult)}:${formatWithLeadingZero(metersResult)}:${formatWithLeadingZero(centimetersResult)}`;
+    return kilometersResult+':'+metersResult+':'+centimetersResult;
   }
+
 
 
   submitNewQuantity(quantity: number): string {
