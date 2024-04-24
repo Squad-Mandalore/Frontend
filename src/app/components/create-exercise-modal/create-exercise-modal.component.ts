@@ -2,12 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertService } from '../../shared/alert.service';
 import { UtilService } from '../../shared/service-util';
-import { CategoriesService, CategoryResponseSchema, ExercisePostSchema, ExerciseResponseSchema, ExercisesService, RulePostSchema, RuleResponseSchema, RulesService } from '../../shared/generated';
+import { CategoriesService, ExercisePostSchema, ExerciseResponseSchema, ExercisesService, RulePostSchema, RuleResponseSchema, RulesService } from '../../shared/generated';
 import { PrimaryButtonComponent } from '../buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../buttons/secondary-button/secondary-button.component';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { IconComponent } from '../icon/icon.component'
-import { HttpErrorResponse, HttpResponseBase } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-exercise-modal',
@@ -23,23 +23,24 @@ export class CreateExerciseModalComponent implements OnInit {
   exerciseForm;
   useExistingExercise: boolean = false;
   masks = ['Anzahl', 'Zeit', 'Distanz', 'Medaille'];
+  selectedGender: 'm'|'f' = "m";
+  selectedMask = 'Anzahl';
+  selectedCategory = "Ausdauer";
   page = 1;
   subPage = 1;
   selectedExercise: any = null;
   validation = {
     invalidTitle: false,
-  }
+    titleAlreadyExists: false
+  };
+  alreadySubmittedOnce: boolean =false;
 
   constructor(private categoriesService: CategoriesService, private rulesService: RulesService, private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private exerciseService: ExercisesService){
     this.exerciseForm = this.formBuilder.group({
       title: ['', Validators.required],
-      category: ['Ausdauer', Validators.required],
       fromAge: [1, [Validators.required, utilService.passwordValidator()]],
       toAge: [99, Validators.required],
-      gender: ['m', Validators.required],
       year: [new Date().getFullYear(), Validators.required],
-      mask: ['Anzahl', Validators.required],
-
 
       goldPoints: ['0', Validators.required],
       silverPoints: ['0', Validators.required],
@@ -87,7 +88,17 @@ export class CreateExerciseModalComponent implements OnInit {
         } else {
           this.validation.invalidTitle = false;
         }
-      } 
+      } else {
+        if(mode === 'activate'){
+          const equallyNamedExercises = this.checkIfExerciseAlreadyExists();
+          if(equallyNamedExercises.length !== 0){
+            this.validation.titleAlreadyExists = true;
+            return;
+          }
+        } else {
+          this.validation.titleAlreadyExists = false;
+        }
+      }
     }
   }
 
@@ -108,6 +119,18 @@ export class CreateExerciseModalComponent implements OnInit {
     return "";
   }
 
+  checkIfExerciseAlreadyExists(){
+    return this.categories.filter(category => {
+      if(category.title === this.selectedCategory){
+        for(const exercise of category.exercises){
+          if(exercise.title === this.exerciseForm.value.title){
+            return exercise;
+          }
+        }
+      }
+    })
+  }
+
   changePage(event: Event, targetPage: number){
     event.preventDefault();
 
@@ -117,22 +140,17 @@ export class CreateExerciseModalComponent implements OnInit {
         this.validateInput('title', 'activate');
         return;
       }
-      this.switchSubPage(this.selectedExercise?.rules[0]?.bronze ?? this.returnMask(this.exerciseForm.value.mask));
+
+      const equallyNamedExercises = this.checkIfExerciseAlreadyExists();
+      if(equallyNamedExercises.length !== 0){
+        this.validateInput('titleAlreadyExists', 'activate');
+        return;
+      }
+
+      this.switchSubPage(this.selectedExercise?.rules[0]?.bronze ?? this.returnMask(this.selectedMask));
     }
     this.page = targetPage;
   }
-
-  // gender: Gender;
-  // from_age: number;
-  // to_age: number;
-  // bronze: string;
-  // silver: string;
-  // gold: string;
-  // year: string;
-  // exercise_id: string;
-
-  // title: string;
-  // category_id: string;
 
   submitNewTime(hours: number, minutes: number, seconds: number, milliseconds: number): string {
     let totalSeconds = (hours * 3600) + (minutes * 60) + seconds + (milliseconds * 0.001);
@@ -175,8 +193,8 @@ export class CreateExerciseModalComponent implements OnInit {
   onSubmit(){
   
     const exerciseBody: ExercisePostSchema = {
-      title: this.exerciseForm.value.title!,
-      category_id: this.categories[this.categories.findIndex(element => element.title === this.exerciseForm.value.category)].id,
+      title: this.useExistingExercise ? this.selectedExercise.title : this.exerciseForm.value.title!,
+      category_id: this.categories[this.categories.findIndex(element => element.title === this.selectedCategory)].id,
     }
 
     const ruleBody: RulePostSchema = {
@@ -186,56 +204,103 @@ export class CreateExerciseModalComponent implements OnInit {
       gold: '',
       silver: '',
       bronze: '',
-      gender: this.exerciseForm.value.gender! === "m" ? 'm' : 'f',
-      year: this.exerciseForm.value.year!.toString(),
+      gender: this.selectedGender! === "m" ? 'm' : 'f',
+      year: this.exerciseForm.value.year!.toString()+"-01-01",
     };
 
-    console.log(ruleBody, exerciseBody);
+    let promise = new Promise((resolve, reject)=>{
 
-    if(this.useExistingExercise){
-      ruleBody.exercise_id = this.selectedExercise.id;
-    }else{
-      this.exerciseService.createExerciseExercisesPost(exerciseBody).subscribe({
-        next: (exercise: ExerciseResponseSchema) => {
-          ruleBody.exercise_id = exercise.id;
+      if(this.useExistingExercise){
+        ruleBody.exercise_id = this.selectedExercise.id;
+        resolve("fullFilled");
+      }else{
+        const equallyNamedExercises = this.checkIfExerciseAlreadyExists();
+        if (equallyNamedExercises.length !== 0){
+          ruleBody.exercise_id = equallyNamedExercises[0].id;
+          resolve("fullFilled");
+        }else{
+          this.exerciseService.createExerciseExercisesPost(exerciseBody).subscribe({
+            next: (exercise: ExerciseResponseSchema) => {
+              ruleBody.exercise_id = exercise.id;
+              resolve("fullFilled");
+            },
+            error: (error) => {
+              this.alertService.show('Exercise Erstellung fehlgeschlagen','Bitte versuche es später erneut',"error");
+              reject();
+            }
+          });
+        }
+      }
+    })
+
+    promise.then(()=>{
+      const mask = this.selectedExercise?.rules[0]?.bronze ?? this.returnMask(this.selectedMask);
+      if(mask.match(/^\d{2}:\d{2}:\d{2}:\d{3}$/)){
+
+        const goldHours = this.exerciseForm.value.goldHours ? +this.exerciseForm.value.goldHours : 0;
+        const goldMinutes = this.exerciseForm.value.goldMinutes ? +this.exerciseForm.value.goldMinutes : 0;
+        const goldSeconds = this.exerciseForm.value.goldSeconds ? +this.exerciseForm.value.goldSeconds : 0;
+        const goldMilliseconds = this.exerciseForm.value.goldMilliseconds ? +this.exerciseForm.value.goldMilliseconds : 0;
+
+        const silverHours = this.exerciseForm.value.silverHours ? +this.exerciseForm.value.silverHours : 0;
+        const silverMinutes = this.exerciseForm.value.silverMinutes ? +this.exerciseForm.value.silverMinutes : 0;
+        const silverSeconds = this.exerciseForm.value.silverSeconds ? +this.exerciseForm.value.silverSeconds : 0;
+        const silverMilliseconds = this.exerciseForm.value.silverMilliseconds ? +this.exerciseForm.value.silverMilliseconds : 0;
+
+        const bronzeHours = this.exerciseForm.value.bronzeHours ? +this.exerciseForm.value.bronzeHours : 0;
+        const bronzeMinutes = this.exerciseForm.value.bronzeMinutes ? +this.exerciseForm.value.bronzeMinutes : 0;
+        const bronzeSeconds = this.exerciseForm.value.bronzeSeconds ? +this.exerciseForm.value.bronzeSeconds : 0;
+        const bronzeMilliseconds = this.exerciseForm.value.bronzeMilliseconds ? +this.exerciseForm.value.bronzeMilliseconds : 0;
+        
+        ruleBody.gold = this.submitNewTime(goldHours, goldMinutes, goldSeconds, goldMilliseconds);
+        ruleBody.silver = this.submitNewTime(silverHours, silverMinutes, silverSeconds, silverMilliseconds);
+        ruleBody.bronze = this.submitNewTime(bronzeHours, bronzeMinutes, bronzeSeconds, bronzeMilliseconds);
+      
+      } else if(mask.match(/^\d{3}:\d{3}:\d{2}$/)){
+        
+        const goldKilometers = this.exerciseForm.value.goldKilometers ? +this.exerciseForm.value.goldKilometers : 0;
+        const goldMeters = this.exerciseForm.value.goldMeters ? +this.exerciseForm.value.goldMeters : 0;
+        const goldCentimeters = this.exerciseForm.value.goldCentimeters ? +this.exerciseForm.value.goldCentimeters : 0;
+
+        const silverKilometers = this.exerciseForm.value.silverKilometers ? +this.exerciseForm.value.silverKilometers : 0;
+        const silverMeters = this.exerciseForm.value.silverMeters ? +this.exerciseForm.value.silverMeters : 0;
+        const silverCentimeters = this.exerciseForm.value.silverCentimeters ? +this.exerciseForm.value.silverCentimeters : 0;
+
+        const bronzeKilometers = this.exerciseForm.value.bronzeKilometers ? +this.exerciseForm.value.bronzeKilometers : 0;
+        const bronzeMeters = this.exerciseForm.value.bronzeMeters ? +this.exerciseForm.value.bronzeMeters : 0;
+        const bronzeCentimeters = this.exerciseForm.value.bronzeCentimeters ? +this.exerciseForm.value.bronzeCentimeters : 0;
+
+        ruleBody.gold =  this.submitNewDistance(goldKilometers, goldMeters, goldCentimeters);
+        ruleBody.silver = this.submitNewDistance(silverKilometers, silverMeters, silverCentimeters);
+        ruleBody.bronze = this.submitNewDistance(bronzeKilometers, bronzeMeters, bronzeCentimeters);
+      
+      } else if (mask.match(/^\d{4}$/)) {
+        
+        const goldQuantity = this.exerciseForm.value.goldQuantity ? +this.exerciseForm.value.goldQuantity : 0;
+        const silverQuantity = this.exerciseForm.value.silverQuantity ? +this.exerciseForm.value.silverQuantity : 0;
+        const bronzeQuantity = this.exerciseForm.value.bronzeQuantity ? +this.exerciseForm.value.bronzeQuantity : 0;
+
+        ruleBody.gold = this.submitNewQuantity(goldQuantity);
+        ruleBody.silver = this.submitNewQuantity(silverQuantity);
+        ruleBody.bronze = this.submitNewQuantity(bronzeQuantity);
+
+      } else {
+        ruleBody.gold = 'Gold';
+        ruleBody.silver = 'Silber';
+        ruleBody.bronze = 'Bronze';
+      }
+
+      this.rulesService.createRuleRulesPost(ruleBody).subscribe({
+        next: (rule: RuleResponseSchema) => {
+          this.alertService.show('Erstellung erfolgreich','Du kannst die neue Übung jetzt verwenden',"success");
+          this.exercises.push(rule);
+          this.modals.createExerciseModal.isActive = false;
         },
         error: (error) => {
-          this.alertService.show('Exercise Erstellung fehlgeschlagen','Bitte versuche es später erneut',"error");
+          this.alertService.show('Rule Erstellung fehlgeschlagen','Bitte versuche es später erneut',"error");
         }
       });
-    }
-
-    if(this.exerciseForm.value.goldHours && this.exerciseForm.value.silverHours && this.exerciseForm.value.bronzeHours &&  this.exerciseForm.value.goldMinutes && this.exerciseForm.value.silverMinutes && this.exerciseForm.value.bronzeMinutes && this.exerciseForm.value.goldSeconds && this.exerciseForm.value.silverSeconds && this.exerciseForm.value.bronzeSeconds && this.exerciseForm.value.goldMilliseconds && this.exerciseForm.value.silverMilliseconds && this.exerciseForm.value.bronzeMilliseconds){
-      
-      ruleBody.gold = this.submitNewTime(parseInt(this.exerciseForm.value.goldHours), parseInt(this.exerciseForm.value.goldMinutes), parseInt(this.exerciseForm.value.goldSeconds), parseInt(this.exerciseForm.value.goldMilliseconds));
-      ruleBody.silver = this.submitNewTime(parseInt(this.exerciseForm.value.silverHours), parseInt(this.exerciseForm.value.silverMinutes), parseInt(this.exerciseForm.value.silverSeconds), parseInt(this.exerciseForm.value.silverMilliseconds));
-      ruleBody.bronze = this.submitNewTime(parseInt(this.exerciseForm.value.bronzeHours), parseInt(this.exerciseForm.value.bronzeMinutes), parseInt(this.exerciseForm.value.bronzeSeconds), parseInt(this.exerciseForm.value.bronzeMilliseconds));
-    
-    } else if(this.exerciseForm.value.goldKilometers && this.exerciseForm.value.silverKilometers && this.exerciseForm.value.bronzeKilometers && this.exerciseForm.value.goldMeters && this.exerciseForm.value.silverMeters && this.exerciseForm.value.bronzeMeters && this.exerciseForm.value.goldCentimeters && this.exerciseForm.value.silverCentimeters && this.exerciseForm.value.bronzeCentimeters){
-
-      ruleBody.gold = this.submitNewDistance(parseInt(this.exerciseForm.value.goldKilometers), parseInt(this.exerciseForm.value.goldMeters), parseInt(this.exerciseForm.value.goldCentimeters));
-      ruleBody.silver = this.submitNewDistance(parseInt(this.exerciseForm.value.silverKilometers), parseInt(this.exerciseForm.value.silverMeters), parseInt(this.exerciseForm.value.silverCentimeters));
-      ruleBody.bronze = this.submitNewDistance(parseInt(this.exerciseForm.value.bronzeKilometers), parseInt(this.exerciseForm.value.bronzeMeters), parseInt(this.exerciseForm.value.bronzeCentimeters));
-    
-    } else if (this.exerciseForm.value.goldQuantity && this.exerciseForm.value.silverQuantity && this.exerciseForm.value.bronzeQuantity) {
-      
-      ruleBody.gold = this.submitNewQuantity(parseInt(this.exerciseForm.value.goldQuantity));
-      ruleBody.silver = this.submitNewQuantity(parseInt(this.exerciseForm.value.silverQuantity));
-      ruleBody.bronze = this.submitNewQuantity(parseInt(this.exerciseForm.value.bronzeQuantity));
-
-    }
-
-    this.rulesService.createRuleRulesPost(ruleBody).subscribe({
-      next: (rule: RuleResponseSchema) => {
-        console.log(rule);
-        this.alertService.show('Erstellung erfolgreich','Du kannst die neue Übung jetzt verwenden',"error");
-        this.exercises.push(rule);
-        this.modals.createExerciseModal.isActive = false;
-      },
-      error: (error) => {
-        this.alertService.show('Rule Erstellung fehlgeschlagen','Bitte versuche es später erneut',"error");
-      }
-    });
+    })
   }
 
   ngOnInit(): void {
