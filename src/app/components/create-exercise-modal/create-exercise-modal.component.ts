@@ -170,41 +170,16 @@ export class CreateExerciseModalComponent implements OnInit {
   submitNewDistance(kilometers: number, meters: number, centimeters: number): string {
     let combinedCentimeters = (kilometers! * 100000) + (meters! * 100) + (centimeters! * 1);
 
-    let kilometersResult = '';
-    let metersResult = '';
-    let centimetersResult = '';
-
-    let kilometersForOutput = Math.floor(combinedCentimeters / 100000);
-    if(kilometersForOutput < 10) {
-      kilometersResult = '00'+kilometersForOutput.toString();
-    } else if(kilometersForOutput > 9 && kilometersForOutput < 100) {
-      kilometersResult = '0'+kilometersForOutput.toString();
-    } else {
-      kilometersResult = kilometersForOutput.toString();
-    }
+    let kilometersResult = Math.floor(combinedCentimeters / 100000).toString().padStart(3, '0');
     combinedCentimeters %= 100000;
 
-    let metersForOutput = Math.floor(combinedCentimeters / 100);
-    if(metersForOutput < 10) {
-      metersResult = '00'+metersForOutput.toString();
-    } else if(metersForOutput > 9 && metersForOutput < 100) {
-      metersResult = '0'+metersForOutput.toString();
-    } else {
-      metersResult = metersForOutput.toString();
-    }
+    let metersResult = Math.floor(combinedCentimeters / 100).toString().padStart(3, '0');
     combinedCentimeters %= 100;
 
-    let centimetersForOutput = Math.floor(combinedCentimeters / 1);
-    if(centimetersForOutput < 10) {
-      centimetersResult = '0'+centimetersForOutput.toString();
-    } else {
-      centimetersResult = centimetersForOutput.toString();
-    }
+    let centimetersResult = Math.floor(combinedCentimeters / 1).toString().padStart(2, '0');
 
     return kilometersResult+':'+metersResult+':'+centimetersResult;
   }
-
-
 
   submitNewQuantity(quantity: number): string {
     return quantity.toString().padStart(4, '0');
