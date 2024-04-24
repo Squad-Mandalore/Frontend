@@ -186,7 +186,6 @@ export class CreateExerciseModalComponent implements OnInit {
       return;
     })
 
-    console.log(result);
     if(result.length > 0) return true;
     return false;
   }
