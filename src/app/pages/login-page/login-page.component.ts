@@ -70,6 +70,11 @@ export class LoginPageComponent {
                 this.localStorageService.setItem('refresh_token', token.refresh_token);
                 this.authService.whoAmIAuthWhoamiGet().subscribe({
                     next: (user: UserResponseSchema) => {
+                        if(user.type === "athlete"){
+                            this.alertService.show("Login deaktiviert", "Der Login für Athleten wurde leider deaktiviert.", "error");
+                            return;
+                        }
+
                         if(user.created_at !== user.last_password_change){
                             this.router.navigate(['/athleten']);
                             return
