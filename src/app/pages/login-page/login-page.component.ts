@@ -27,8 +27,8 @@ import { enterLeaveAnimation } from '../../shared/animation';
 })
 export class LoginPageComponent {
     protected loginForm;
-    user: UserResponseSchema | null = null;
-    oldPassword: string | null = null;
+    user?: UserResponseSchema;
+    oldPassword?: string;
     modals = {
         changePasswordModal: {
             isActive: false,
@@ -48,9 +48,7 @@ export class LoginPageComponent {
         if (this.authExtService.isLoggedIn()) {
             this.authService.whoAmIAuthWhoamiGet().subscribe({
                 next: (user: UserResponseSchema) => {
-                    if(user.last_edited_at !== user.last_password_change){
-                        this.router.navigate(['/athleten']);
-                    }
+                    this.router.navigate(['/athleten']);
                 },
                 error: () => {
                     this.alertService.show("Abfragen des Benutzers fehlgeschlagen", "Bitte probiere es später erneut.", "error");
@@ -77,7 +75,7 @@ export class LoginPageComponent {
 
                         if(user.created_at !== user.last_password_change){
                             this.router.navigate(['/athleten']);
-                            return
+                            return;
                         }
                         this.user = user;
                         this.oldPassword = this.loginForm.value.password!;

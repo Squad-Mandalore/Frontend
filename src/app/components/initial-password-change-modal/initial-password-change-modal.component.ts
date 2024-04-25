@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
 })
 
 export class InitialPasswordChangeModalComponent {
-  @Input() user!: UserResponseSchema | null;
-  @Input() oldPassword!: string | null;
+  @Input() user?: UserResponseSchema;
+  @Input() oldPassword?: string;
   
   formValidation: formValidation = {
     passwordDifference: false,
@@ -54,6 +54,7 @@ export class InitialPasswordChangeModalComponent {
       this.resetValidation('illegalPassword');
     }
     
+    //ich finds kinda useless aber idk/idc; LG BB223
     if(password.length === 0 || passwordRepeat.length === 0) return;
     if(password !== passwordRepeat) this.formValidation.passwordDifference = true;
   }
@@ -62,7 +63,7 @@ export class InitialPasswordChangeModalComponent {
     const password = this.passwordForm.value.password;
     const passwordRepeat = this.passwordForm.value.passwordRepeat;
 
-    if(!this.user || password.length === 0 || passwordRepeat.length === 0 || password !== passwordRepeat) return;
+    if(!this.user || password !== passwordRepeat) return;
 
     if(!this.oldPassword || this.oldPassword === password){
       this.formValidation.oldPassword = true;
@@ -71,20 +72,25 @@ export class InitialPasswordChangeModalComponent {
 
     let body: TrainerPatchSchema | AthletePatchSchema | AdminPatchSchema= {
       unhashed_password: password
-    }
+    };
 
     let updateFunction;
-    if(this.user.type === "administrator"){
-      updateFunction = this.adminService.updateAdminAdminsIdPatch(this.user.id, body);
-    }
-    if(this.user.type === "trainer"){
-      updateFunction = this.trainerService.updateTrainerTrainersIdPatch(this.user.id, body);
-    }
-    if(this.user.type === "athlete"){
-      updateFunction = this.athleteService.updateAthleteAthletesIdPatch(this.user.id, body);
+    switch (this.user.type) {
+      case 'administrator':
+        updateFunction = this.adminService.updateAdminAdminsIdPatch(this.user.id, body);
+        break;
+      case 'trainer':
+        updateFunction = this.trainerService.updateTrainerTrainersIdPatch(this.user.id, body);
+        break;
+      case 'athlete':
+        updateFunction = this.athleteService.updateAthleteAthletesIdPatch(this.user.id, body);
+        break;
+      default:
+        this.alertService.show('Passwort ändern fehlgeschlagen','Bitte versuche es später erneut',"error");
+        return;
     }
 
-    updateFunction && updateFunction.subscribe({
+    updateFunction.subscribe({
       next: (response) => {
         this.alertService.show('Passwort erfolgreich geändert', 'Sie können sich nun mit dem neuen Passwort anmelden', 'success');
         this.router.navigate(['/athleten']);
