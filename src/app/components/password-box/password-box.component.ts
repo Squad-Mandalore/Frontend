@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, AbstractControl, ValidationErrors } from '@angular/forms';
 import { IconComponent } from "../icon/icon.component";
 import {UtilService} from "../../shared/service-util";
 import { NgIf } from '@angular/common';
@@ -15,21 +15,24 @@ import { NgIf } from '@angular/common';
             provide: NG_VALUE_ACCESSOR,
             multi: true,
             useExisting: PasswordBoxComponent
+        },
+        {
+            provide: NG_VALIDATORS,
+            multi: true,
+            useExisting: PasswordBoxComponent
         }
     ]
 
 })
 
-export class PasswordBoxComponent implements ControlValueAccessor {
+export class PasswordBoxComponent implements ControlValueAccessor, Validator {
     @Input() showPasswordGenerator: boolean = true;
     @Input() showCopyOption: boolean = true;
     @Input() showPasswordStrength: boolean = true;
     @Input() isAllowedToFail: boolean = false;
     @Input() placeholderText: string = "Passwort";
 
-    formValidation: formValidation = {
-        illegalPassword: false,
-    }
+    illegalPassword: boolean = false;
 
     // Whether the input is disabled or not.
     disabled: boolean = false;
@@ -61,23 +64,29 @@ export class PasswordBoxComponent implements ControlValueAccessor {
 
     }
 
-    resetValidation(){
-        this.formValidation.illegalPassword = false;
+    validate(c: AbstractControl): ValidationErrors | null {
+        if(!this.validateValues()){
+            return {
+                illegalPassword: true
+            }
+        }
+        return null;
     }
 
     validateValues(){
         const password = this.value;
-        if(this.isAllowedToFail && !this.value) return;
-    
-        this.utilService.validatePass(password!);
-    
-        if(this.utilService.validatePass(password!) === 'Illegal'){
-          this.formValidation.illegalPassword = true;
-        }else{
-          this.resetValidation();
+        if(this.isAllowedToFail && !password) {
+          this.illegalPassword = false;
+          return true;
         }
-        
-        if(password!.length === 0) return;
+
+        if(this.utilService.validatePass(password!) === 'Illegal'){
+          this.illegalPassword = true;
+          return false;
+        }else{
+          this.illegalPassword = false;
+          return true;
+        }
     }
 
     triggerInputType() {
@@ -130,7 +139,7 @@ export class PasswordBoxComponent implements ControlValueAccessor {
         } else if (this.utilService.validatePass(value) == 'Strong') {
             this.strengthTextContent = 'Stark';
             this.strengthBarWidth = '75%';
-            this.strengthBarColor = '#80C000';           
+            this.strengthBarColor = '#80C000';
         } else if (this.utilService.validatePass(value) == 'Medium'){
             this.strengthTextContent = 'Mittel';
             this.strengthBarWidth = '50%';
