@@ -7,12 +7,12 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {AlertComponent} from "../alert/alert.component";
 import {UtilService} from "../../shared/service-util";
 import {TrainerResponseSchema} from "../../shared/generated";
-import {NgClass} from "@angular/common";
+import {NgClass, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-create-trainer-modal',
   standalone: true,
-  imports: [PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, PasswordBoxComponent, ReactiveFormsModule, AlertComponent, NgClass],
+  imports: [PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, PasswordBoxComponent, ReactiveFormsModule, AlertComponent, NgClass, NgIf],
   templateUrl: './create-trainer-modal.component.html',
   styleUrl: './create-trainer-modal.component.scss',
 })
@@ -28,11 +28,10 @@ export class CreateTrainerModalComponent implements OnInit{
 
   constructor(
     private formBuilder: FormBuilder,
-    private utilService: UtilService,
   ){
     this.trainerForm = this.formBuilder.group({
       username: ['', Validators.required],
-      unhashed_password: ['', [Validators.required, this.utilService.passwordValidator()]],
+      unhashed_password: ['', Validators.required],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],

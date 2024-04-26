@@ -8,7 +8,6 @@ import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-bu
 import {
   AthleteFullResponseSchema,
 } from "../../shared/generated";
-import {UtilService} from "../../shared/service-util";
 import {FormBuilder, FormsModule, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 
 @Component({
@@ -44,12 +43,11 @@ export class CreateAthleteModalComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private utilService: UtilService,
   ) {
     // Initialize Form and Validators for received Data
     this.createAthleteForm = this.formBuilder.group({
       username: ['', Validators.required],
-      unhashed_password: ['', [Validators.required, this.utilService.passwordValidator()]],
+      unhashed_password: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
@@ -111,4 +109,3 @@ export class CreateAthleteModalComponent implements OnInit {
     this.fileCallback.emit(this.selectedFile);
   }
 }
-

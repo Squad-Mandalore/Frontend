@@ -33,57 +33,28 @@ export class UtilService {
    * @return {boolean} - true or false Value if valid / not valid
    */
 
-  public passwordValidator(): ValidatorFn{
-    return (control: AbstractControl): ValidationErrors | null => {
-      const valid = this.validatePass(control.value);
-      return !valid ? {invalidPassword: {value: control.value}} : null;
-    }
-  }
-
-
   /**
    * validates a password with pre-setting requirements -> schema: PassValidator
    * @param {string} password - Password which has to be validated
    * @return {boolean} - true or false Value if valid / not valid
    */
 
-  public validatePass(password:string) {
-    return schema.validate(password);
-  }
-
-  public validateGoodPass(password:string) {
-    return goodSchema.validate(password)
-  }
-
-  public validateMiddlePass(password:string) {
-    return middleSchema.validate(password)
+  public validatePass(password: string): string {
+    if (veryStrongRegex.test(password)) {
+      return 'VeryStrong';
+    } else if (strongRegex.test(password)) {
+      return 'Strong';
+    } else if (mediumRegex.test(password)) {
+      return 'Medium';
+    } else if (weakRegex.test(password)) {
+      return 'Weak';
+    } else {
+      return 'Illegal';
+    }
   }
 }
 
-const schema = new PassValidator();
-
-schema
-  .is().min(12)
-  .is().max(69)
-  .has().symbols()
-  .has().uppercase()
-  .has().lowercase()
-  .has().digits()
-  .has().not().spaces()
-
-const goodSchema = new PassValidator();
-
-goodSchema
-  .is().min(10)
-  .has().uppercase()
-  .has().lowercase()
-  .has().digits()
-
-const middleSchema = new PassValidator();
-
-middleSchema
-  .is().min(5)
-
-
-
-
+const veryStrongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[\W]).{12,60}$/;
+const strongRegex = /^(?:(?=.*[a-z])(?=.*[A-Z])(?=.*[\d]).{12,60}|(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{12,60}|(?=.*[a-z])(?=.*[\d])(?=.*[\W]).{12,60}|(?=.*[A-Z])(?=.*[\d])(?=.*[\W]).{12,60})$/;
+const mediumRegex = /^(?:(?=.*[a-z])(?=.*[A-Z]).{12,60}|(?=.*[a-z])(?=.*[\d]).{12,60}|(?=.*[a-z])(?=.*[\W]).{12,60}|(?=.*[A-Z])(?=.*[\d]).{12,60}|(?=.*[A-Z])(?=.*[\W]).{12,60}|(?=.*[\d])(?=.*[\W]).{12,60})$/;
+const weakRegex = /^(?:[a-z]{12,60}|[A-Z]{12,60}|\d{12,60}|\W{12,60})$/;

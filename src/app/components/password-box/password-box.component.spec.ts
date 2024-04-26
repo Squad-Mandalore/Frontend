@@ -20,32 +20,39 @@ describe('PasswordBoxComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should update password strength to "Schwach" for a password with less than 5 characters', () => {
-        component.onInput('1234'); // Less than 5 characters
-        expect(component.strengthTextContent).toEqual('Schwach');
-        expect(component.strengthBarWidth).toEqual('20%');
-        expect(component.strengthBarColor).toEqual('#ff6347');
+    it('should update password strength to "Nicht Zulässig" for a password with less than 12 characters', () => {
+        component.onInput('1234'); // Less than 12 characters
+        expect(component.strengthTextContent).toEqual('Nicht Zulässig');
+        expect(component.strengthBarWidth).toEqual('0%');
+        expect(component.strengthBarColor).toEqual('#FF0000');
     });
 
-    it('should update password strength to "Mittel" for a password with 5 to 9 characters', () => {
-        component.onInput('abcd123'); // 7 characters
+    it('should update password strength to "Schwach" when 1 of the 4 requirements are met', () => {
+        component.onInput('aaaaaaaaaaaa'); // 12 characters
+        expect(component.strengthTextContent).toEqual('Schwach');
+        expect(component.strengthBarWidth).toEqual('25%');
+        expect(component.strengthBarColor).toEqual('#FF0000');
+    });
+
+    it('should update password strength to "Medium" when 2 of the 4 requirements are met', () => {
+        component.onInput('aaaaaaaaaaa1'); // 12 characters
         expect(component.strengthTextContent).toEqual('Mittel');
         expect(component.strengthBarWidth).toEqual('50%');
-        expect(component.strengthBarColor).toEqual('#ffa500');
+        expect(component.strengthBarColor).toEqual('#FF8000');
     });
 
-    it('should update password strength to "Gut" for a password with 10 to 11 characters', () => {
-        component.onInput('strongPwd12'); // 10 characters
-        expect(component.strengthTextContent).toEqual('Gut');
-        expect(component.strengthBarWidth).toEqual('70%');
-        expect(component.strengthBarColor).toEqual('#2ecc71');
+    it('should update password strength to "Stark" when 3 of the 4 requirements are met (lower, upper, numbers)', () => {
+        component.onInput('aaaaaaaaaa1?'); // 12 characters
+        expect(component.strengthTextContent).toEqual('Stark');
+        expect(component.strengthBarWidth).toEqual('75%');
+        expect(component.strengthBarColor).toEqual('#80C000');
     });
 
-    it('should update password strength to "Sehr stark" for a password with 12 or more characters', () => {
-        component.onInput('VeryStrongPwd!'); // 13 characters
+    it('should update password strength to "Sehr stark" when 4 of the 4 requirements are met', () => {
+        component.onInput('aaaaaaaaaA1?'); /// 12 characters
         expect(component.strengthTextContent).toEqual('Sehr stark');
         expect(component.strengthBarWidth).toEqual('100%');
-        expect(component.strengthBarColor).toEqual('#2ecc71');
+        expect(component.strengthBarColor).toEqual('#00FF00');
     });
 
     it('should call onChange method when input value changes', () => {
