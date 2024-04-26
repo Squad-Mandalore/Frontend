@@ -8,7 +8,7 @@ import { UserCardComponent } from '../../components/user-card/user-card.componen
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { AthleteCompletesResponseSchema, AthletePatchSchema, AthletePostSchema, AthleteResponseSchema, CompletesResponseSchema, CompletesService, TrainersService } from '../../shared/generated';
+import { AthleteCompletesResponseSchema, AthletePatchSchema, AthletePostSchema, AthleteResponseSchema, CompletesResponseSchema, CompletesService, CsvService, ResponseParseCsvFileCsvParsePost, TrainersService } from '../../shared/generated';
 import { Subscription } from 'rxjs';
 import customSort from '../../../utils/custom-sort';
 import customFilter from '../../../utils/custom-filter';
@@ -21,9 +21,9 @@ import { AlertService } from '../../shared/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CreateCompletesComponent } from '../../components/create-completes-modal/create-completes-modal.component';
 import { enterLeaveAnimation } from '../../shared/animation';
-import { CreateAthleteModalComponent } from '../../components/create-athlete-modal/create-athlete-modal.component';
 import { FormGroup } from '@angular/forms';
 import { LoggerService } from '../../shared/logger.service';
+import { CreateAthleteModalComponent } from '../../components/create-athlete-modal/create-athlete-modal.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,7 +37,17 @@ import { LoggerService } from '../../shared/logger.service';
 })
 
 export class DashboardPageComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private completesService: CompletesService, private confirmationService: ConfirmationService, private router: Router, private athleteService: AthletesService, private alertService: AlertService, private trainerService: TrainersService, private logger: LoggerService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private completesService: CompletesService,
+    private confirmationService: ConfirmationService,
+    private router: Router,
+    private athleteService: AthletesService,
+    private alertService: AlertService,
+    private logger: LoggerService,
+    private csvService: CsvService,
+  ) {}
+
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
   selectedAthlete?: AthleteFullResponseSchema;
@@ -174,6 +184,25 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   })
   }
 
+  csvParse(file: File) {
+    this.csvService.parseCsvFileCsvParsePost(file).subscribe({
+      next: (response: ResponseParseCsvFileCsvParsePost) => {
+        let arr: string[] = Object.keys(response).map(key => `${key}: ${response[key as keyof typeof response]}`);
+        let str: string = arr.join('\n');
+        this.gnNoTini();
+        this.alertService.show('CSV-Daten erfolgreich hinzugefügt', str, 'success');
+        // important because you havent typed modals properly
+        this.modals.showDetails.isActive = false;
+        this.modals.patchAthleteModal.isActive = false;
+        this.modals.createAthleteModal.isActive = false;
+        this.modals.createCompletesModal.isActive = false;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.alertService.show('Hochladen der CSV-Datei fehlgeschlagen', error.error.detail, 'error');
+      },
+    })
+  }
+
   setSorting(property: string){
     if(this.sorting.property === property){
       this.sorting.direction = this.sorting.direction === "asc" ? "desc" : "asc";
@@ -287,7 +316,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   getColorVariable(completes: AthleteCompletesResponseSchema[]){
-    return calculateProgressColor(completes)
+    return calculateProgressColor(completes);
   }
 
   dashOffset(athlete: AthleteFullResponseSchema): number {
@@ -295,149 +324,37 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     return this.dashArray * (1 - progressDecimal);
   }
 
+  gnNoTini(): void {
+    this.athletes.length = 0;
+    this.athleteService.getAllAthletesAthletesGet().subscribe({
+      next: (athletes: AthleteResponseSchema[]) => {
+        for(const athlete of athletes){
+          this.athleteService.getAthleteFullAthletesIdFullGet(athlete.id).subscribe({
+            next: (fullAthleteObject: AthleteFullResponseSchema) => {
+              if (this.selectedAthlete?.id === fullAthleteObject.id) {
+                this.selectedAthlete = fullAthleteObject;
+              }
+              this.athletes.push(fullAthleteObject);
+            },
+            error: (error: HttpErrorResponse) => {
+              this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
+            }
+          })
+        }
+        // this.selectedAthlete = tempAthlete;
+        this.isLoading = false;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
+        this.isLoading = false;
+      }
+    });
+  }
+
   ngOnInit(): void {
     if(this.athletes.length === 0){
-      this.athleteService.getAllAthletesAthletesGet().subscribe({
-        next: (athletes: AthleteResponseSchema[]) => {
-          for(const athlete of athletes){
-            this.athleteService.getAthleteFullAthletesIdFullGet(athlete.id).subscribe({
-              next: (fullAthleteObject: AthleteFullResponseSchema) => {
-                this.athletes.push(fullAthleteObject);
-              },
-              error: (error: HttpErrorResponse) => {
-                this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
-              }
-            })
-          }
-          this.isLoading = false;
-        },
-        error: (error: HttpErrorResponse) => {
-          this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
-          this.isLoading = false;
-        }
-      });
+      this.gnNoTini();
     }
-
-//     this.athletes.push(
-//       {
-//         id: "1",
-//         username: 'test1',
-//         email: 'test1@example.com',
-//         firstname: 'John',
-//         lastname: 'Doe',
-//         created_at: '2024-02-26',
-//         gender: "m",
-//         last_password_change: '2024-02-26',
-//         last_edited_at: '2024-02-26',
-//         birthday: '2003-02-26',
-//         type: 'Sportler',
-//         certificates: [],
-//         trainer: {
-//           id: "1",
-//           username: "john_doe",
-//           email: "john@example.com",
-//           firstname: "John",
-//           lastname: "Doe",
-//           created_at: "2023-01-01",
-//           last_password_change: "2023-05-01",
-//           last_edited_at: "2023-10-01",
-//           type: "Trainer",
-//         },
-//         completes: [
-//           {
-//             athlete_id: "1",
-//             exercise: {
-//               id: "1",
-//               title: "50 Meter Sprint",
-//               category: {
-//                 id: "1",
-//                 title: "Schnelligkeit",
-//               },
-//               from_age: 1,
-//               to_age: 9,
-//               rules: [],
-//             },
-//             tracked_by: "Kay Schulz",
-//             tracked_at: "12.10.2023",
-//             result: "10s",
-//             points: 3
-//           },
-//           {
-//             athlete_id: "2",
-//             exercise: {
-//               id: "2",
-//               title: "Long Jump",
-//               category: {
-//                 id: "1",
-//                 title: "Schnelligkeit",
-//               },
-//               from_age: 10,
-//               to_age: 15,
-//               rules: []
-//             },
-//             tracked_by: "Lisa Müller",
-//             tracked_at: "14.10.2023",
-//             result: "4.2m",
-//             points: 2,
-//           },
-//           {
-//             athlete_id: "3",
-//             exercise: {
-//               id: "3",
-//               title: "High Jump",
-//               category: {
-//                 id: "2",
-//                 title: "Koordination",
-//               },
-//               from_age: 16,
-//               to_age: 20,
-//               rules: []
-//             },
-//             tracked_by: "Max Mustermann",
-//             tracked_at: "16.10.2023",
-//             result: "1.9m",
-//             points: 1,
-//           },
-//           {
-//             athlete_id: "4",
-//             exercise: {
-//               id: "4",
-//               title: "100 Meter Sprint",
-//               category: {
-//                 id: "1",
-//                 title: "Schnelligkeit",
-//               },
-//               from_age: 21,
-//               to_age: 30,
-//               rules: []
-//             },
-//             tracked_by: "Emma Schmidt",
-//             tracked_at: "18.10.2023",
-//             result: "11s",
-//             points: 2
-//           },
-//           {
-//             athlete_id: "5",
-//             exercise: {
-//               id: "5",
-//               title: "Shot Put",
-//               category: {
-//                 id: "3",
-//                 title: "Kraft",
-//               },
-//               from_age: 31,
-//               to_age: 40,
-//               rules: []
-//             },
-//             tracked_by: "Sophie Fischer",
-//             tracked_at: "20.10.2023",
-//             result: "14.5m",
-//             points: 1,
-//           }
-//         ]
-//       }
-//     )
-
     this.routeSubscription = this.route.queryParams.subscribe(params => {
       const athleteId = params['id'];
       if(athleteId){

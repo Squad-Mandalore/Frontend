@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TrainerPatchSchema, TrainerPostSchema, TrainerResponseSchema, TrainersService } from '../../shared/generated';
+import { CsvService, ResponseParseCsvFileCsvParsePost, TrainerPatchSchema, TrainerPostSchema, TrainerResponseSchema, TrainersService } from '../../shared/generated';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from '../../shared/confirmation.service';
@@ -27,8 +27,16 @@ import { LoggerService } from '../../shared/logger.service';
 })
 
 export class TrainerOverviewPageComponent {
-  constructor(private route: ActivatedRoute, private confirmationService: ConfirmationService, private router: Router, private trainerService: TrainersService, private alertService: AlertService, private logger: LoggerService) { }
-  trainer: TrainerResponseSchema[] = []
+  constructor(
+    private route: ActivatedRoute,
+    private confirmationService: ConfirmationService,
+    private router: Router,
+    private trainerService: TrainersService,
+    private alertService: AlertService,
+    private logger: LoggerService,
+    private csvService: CsvService
+  ) {}
+  trainers: TrainerResponseSchema[] = []
   selectedTrainer?: TrainerResponseSchema;
   isLoading: boolean = true;
   routeSubscription!: Subscription;
@@ -61,7 +69,7 @@ export class TrainerOverviewPageComponent {
       next: (reponse: TrainerResponseSchema) => {
         this.alertService.show('Trainer erstellt', 'Trainer wurde erfolgreich erstellt.', 'success');
         this.modals.createTrainerModal.isActive = false;
-        this.trainer.push(reponse);
+        this.trainers.push(reponse);
       },
       error: (error) => {
         if(error.status == 422){
@@ -89,7 +97,7 @@ export class TrainerOverviewPageComponent {
         this.alertService.show('Trainer aktualisier', 'Trainer wurde erfolgreich bearbeitet.', 'success');
         this.modals.patchTrainerModal.isActive = false;
         this.selectedTrainer = response;
-        this.trainer = this.trainer.map(element => element.id === response.id ? response : element);
+        this.trainers = this.trainers.map(element => element.id === response.id ? response : element);
       },
       error: (error) => {
         if(error.status == 422){
@@ -113,7 +121,7 @@ export class TrainerOverviewPageComponent {
         this.trainerService.deleteTrainerTrainersIdDelete(trainer.id).subscribe({
           next: () => {
            this.alertService.show('Trainer erfolgreich gelöscht', 'Der Trainer wurde erfolgreich entfernt', "success");
-           this.trainer = this.trainer.filter(element => element.id !== trainer.id);
+           this.trainers = this.trainers.filter(element => element.id !== trainer.id);
            this.selectedTrainer = undefined;
            this.modals.showDetails.isActive = false;
           },
@@ -125,11 +133,56 @@ export class TrainerOverviewPageComponent {
     );
   }
 
+  csvParse(file: File) {
+    this.csvService.parseCsvFileCsvParsePost(file).subscribe({
+      next: (response: ResponseParseCsvFileCsvParsePost) => {
+        let arr: string[] = Object.keys(response).map(key => `${key}: ${response[key as keyof typeof response]}`);
+        let str: string = arr.join('\n');
+        this.gnNoTini();
+        this.alertService.show('CSV-Daten erfolgreich hinzugefügt', str, 'success');
+        // no loop because no type
+        this.modals.showDetails.isActive = false;
+        this.modals.patchTrainerModal.isActive = false;
+        this.modals.createTrainerModal.isActive = false;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.alertService.show('Hochladen der CSV-Datei fehlgeschlagen', error.error.detail, 'error');
+      },
+    })
+  }
+
+  gnNoTini(): void {
+    this.trainers.length = 0;
+    this.trainerService.getAllTrainersTrainersGet().subscribe({
+      next: (trainers: TrainerResponseSchema[]) => {
+        for(const trainer of trainers){
+          this.trainers.push(trainer);
+        }
+        this.isLoading = false;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.alertService.show('Abfragen der Trainer fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.routeSubscription = this.route.queryParams.subscribe(params => {
+          const trainerId = params['id'];
+          if(trainerId){
+            this.selectedTrainer = this.trainers.filter(element => element.id == trainerId)[0];
+              if(!this.selectedTrainer){
+                this.router.navigate(['/trainer']);
+              }
+          }
+        });
+      }
+    });
+  }
+
   ngOnInit(): void {
-    if(this.trainer.length === 0){
+    if(this.trainers.length === 0){
       this.trainerService.getAllTrainersTrainersGet().subscribe({
         next: (trainers: TrainerResponseSchema[]) => {
-          this.trainer = trainers;
+          this.trainers = trainers;
           this.isLoading = false;
           console.log("here");
         },
@@ -142,7 +195,7 @@ export class TrainerOverviewPageComponent {
             const trainerId = params['id'];
             console.log('there');
             if(trainerId){
-              this.selectedTrainer = this.trainer.filter(element => element.id == trainerId)[0];
+              this.selectedTrainer = this.trainers.filter(element => element.id == trainerId)[0];
                 if(!this.selectedTrainer){
                   this.router.navigate(['/trainer']);
                 }

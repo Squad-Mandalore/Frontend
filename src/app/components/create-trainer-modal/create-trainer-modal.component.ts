@@ -1,15 +1,13 @@
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
 import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-button.component";
 import {IconComponent} from "../icon/icon.component";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AlertComponent} from "../alert/alert.component";
-import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
-import {TrainerResponseSchema, TrainersService} from "../../shared/generated";
+import {TrainerResponseSchema} from "../../shared/generated";
 import {NgClass, NgIf} from "@angular/common";
-import { LoggerService } from "../../shared/logger.service";
 
 @Component({
   selector: 'app-create-trainer-modal',
@@ -22,9 +20,15 @@ export class CreateTrainerModalComponent implements OnInit{
   @Input({required: true}) modal: any;
   @Input() selectedTrainer?: TrainerResponseSchema;
   @Output() trainerCallback = new EventEmitter<FormGroup>();
+  @Output() fileCallback = new EventEmitter<File>();
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
+  selectedFile?: File;
   trainerForm;
-  constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService, private logger: LoggerService){
+
+  constructor(
+    private formBuilder: FormBuilder,
+  ){
     this.trainerForm = this.formBuilder.group({
       username: ['', Validators.required],
       unhashed_password: ['', Validators.required],
@@ -51,5 +55,22 @@ export class CreateTrainerModalComponent implements OnInit{
 
   onSubmit(){
     this.trainerCallback.emit(this.trainerForm);
+  }
+
+  triggerFileInput(): void {
+    this.fileInput.nativeElement.click(); // This will open the file dialog
+  }
+
+  onFileChange(event: any): void {
+    this.selectedFile = event.target.files[0];
+    this.onCSVSubmit();
+  }
+
+  onCSVSubmit(){
+    if (!this.selectedFile) {
+      return;
+    }
+
+    this.fileCallback.emit(this.selectedFile);
   }
 }

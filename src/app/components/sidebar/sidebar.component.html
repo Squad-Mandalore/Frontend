@@ -56,7 +56,7 @@
                 <app-quaternary-button (click)="modals.createTrainerModal.isActive = true" [iconName]="'user-plus'" [tooltipText]="'Trainer hinzufügen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"></app-quaternary-button>
             </div>
         </div>
-        <div id="sidebar-content" class="empty" *ngIf="trainer.length === 0 && !isLoading; else hasTrainer">
+        <div id="sidebar-content" class="empty" *ngIf="trainers.length === 0 && !isLoading; else hasTrainer">
             <img src="assets/img/humans-statistics-sitting-woman.png" alt="create-athlete"/>
             <p id="information-text-big">Erstelle deinen ersten Trainer</p>
             <p id="information-text-small">
@@ -67,7 +67,7 @@
         <ng-template #hasTrainer>
             <div id="sidebar-content-wrapper">
                 <div id="sidebar-content" class="filled">
-                    <div *ngFor="let tempTrainer of customFilterCallTrainer(trainer, {firstname: {filterValue: searchValue, valueFullFit: false}, lastname: {filterValue: searchValue, valueFullFit: false} }, false)">
+                    <div *ngFor="let tempTrainer of customFilterCallTrainer(trainers, {firstname: {filterValue: searchValue, valueFullFit: false}, lastname: {filterValue: searchValue, valueFullFit: false} }, false)">
                         <a [routerLink]="['/trainer']" [queryParams]="{id: tempTrainer.id}">
                             <app-trainer-card [trainer]="tempTrainer"></app-trainer-card>
                         </a>

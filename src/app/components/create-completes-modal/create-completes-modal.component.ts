@@ -4,19 +4,14 @@ import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angula
 import {AlertComponent} from "../alert/alert.component";
 import {IconComponent} from "../icon/icon.component";
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
-import {AthleteCompletesResponseSchema, AthleteFullResponseSchema, AthletePostSchema, AthletesService, CategoriesService, CategoryFullResponseSchema, CategoryVeryFullResponseSchema, CompletesResponseSchema} from "../../shared/generated";
-import {LoggerService} from "../../shared/logger.service";
+import {AthleteCompletesResponseSchema, AthleteFullResponseSchema, AthleteResponseSchema, AthletesService, CategoriesService, CategoryFullResponseSchema, CategoryVeryFullResponseSchema, CompletesResponseSchema, CsvService, ResponseParseCsvFileCsvParsePost} from "../../shared/generated";
 import {AlertService} from "../../shared/alert.service";
-import {UtilService} from "../../shared/service-util";
 import { SecondaryButtonComponent } from "../buttons/secondary-button/secondary-button.component";
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import {CompletesPostSchema, CompletesService} from "../../shared/generated";
 import { HttpErrorResponse } from "@angular/common/http";
-import { ResponseGetCategoriesByAthleteIdCategoriesGet } from "../../shared/generated";
 import customFilter from "../../../utils/custom-filter";
 import customSort from "../../../utils/custom-sort";
-
-
 
 @Component({
   selector: 'app-create-completes',
@@ -49,6 +44,11 @@ export class CreateCompletesComponent implements OnInit{
   givenRulesValue: string = '';
   @Input() selectedAthlete?: AthleteFullResponseSchema;
   @Input() modals!: any;
+  @Input() athletes!: AthleteFullResponseSchema[];
+  @Output() fileCallback = new EventEmitter<File>();
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+  selectedFile?: File;
 
   time = {
     hours: null,
@@ -72,10 +72,8 @@ export class CreateCompletesComponent implements OnInit{
   constructor(
     private formBuilder: FormBuilder,
     private alertService: AlertService,
-    private utilService: UtilService,
     private completesService: CompletesService,
-    private categoriesService: CategoriesService
-
+    private categoriesService: CategoriesService,
   ){
     this.createCompletesForm = this.formBuilder.group({
       exercise_id: ['', Validators.required],
@@ -290,4 +288,21 @@ export class CreateCompletesComponent implements OnInit{
       }
     });
   }
+
+  triggerFileInput(): void {
+    this.fileInput.nativeElement.click(); // This will open the file dialog
+  }
+
+  onFileChange(event: any): void {
+    this.selectedFile = event.target.files[0];
+    this.onCSVSubmit();
+  }
+
+  onCSVSubmit(){
+    if (!this.selectedFile) {
+      return;
+    }
+    this.fileCallback.emit(this.selectedFile);
+  }
+
 }

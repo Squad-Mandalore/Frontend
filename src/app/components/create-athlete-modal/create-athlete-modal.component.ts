@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-
+import {Component, ElementRef, ViewChild, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgClass, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
 import {AlertComponent} from "../alert/alert.component";
@@ -8,12 +7,8 @@ import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.c
 import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-button.component";
 import {
   AthleteFullResponseSchema,
-  AthletesService,
 } from "../../shared/generated";
-import {LoggerService} from "../../shared/logger.service";
-import {AlertService} from "../../shared/alert.service";
-import {UtilService} from "../../shared/service-util";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormsModule, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -41,13 +36,13 @@ export class CreateAthleteModalComponent implements OnInit {
   @Input({required: true}) modal: any;
   @Input() selectedAthlete?: AthleteFullResponseSchema;
   @Output() athleteCallback = new EventEmitter<FormGroup>();
+  @Output() fileCallback = new EventEmitter<File>();
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+  selectedFile?: File;
 
   constructor(
-    private athleteApi: AthletesService,
-    private logger: LoggerService,
     private formBuilder: FormBuilder,
-    private alertService: AlertService,
-    private utilService: UtilService,
   ) {
     // Initialize Form and Validators for received Data
     this.createAthleteForm = this.formBuilder.group({
@@ -96,5 +91,21 @@ export class CreateAthleteModalComponent implements OnInit {
   onClickSwitchGender(value: string) {
     this.isMale = value === "male";
     this.createAthleteForm.patchValue({ gender: this.isMale ? "m" : "f" });
+  }
+
+  triggerFileInput(): void {
+    this.fileInput.nativeElement.click();
+  }
+
+  onFileChange(event: any): void {
+    this.selectedFile = event.target.files[0];
+    this.onCSVSubmit();
+  }
+
+  onCSVSubmit(){
+    if (!this.selectedFile) {
+      return;
+    }
+    this.fileCallback.emit(this.selectedFile);
   }
 }
