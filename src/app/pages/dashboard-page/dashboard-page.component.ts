@@ -316,7 +316,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   getColorVariable(completes: AthleteCompletesResponseSchema[]){
-    return calculateProgressColor(completes)
+    return calculateProgressColor(completes);
   }
 
   dashOffset(athlete: AthleteFullResponseSchema): number {
@@ -331,6 +331,9 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         for(const athlete of athletes){
           this.athleteService.getAthleteFullAthletesIdFullGet(athlete.id).subscribe({
             next: (fullAthleteObject: AthleteFullResponseSchema) => {
+              if (this.selectedAthlete?.id === fullAthleteObject.id) {
+                this.selectedAthlete = fullAthleteObject;
+              }
               this.athletes.push(fullAthleteObject);
             },
             error: (error: HttpErrorResponse) => {
@@ -338,6 +341,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
             }
           })
         }
+        // this.selectedAthlete = tempAthlete;
         this.isLoading = false;
       },
       error: (error: HttpErrorResponse) => {
