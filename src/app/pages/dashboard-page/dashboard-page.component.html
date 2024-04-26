@@ -237,7 +237,17 @@
                       </div>
                     </div>
                     <ng-template #filledBlock>
-
+                      <embed src="assets/DSA_Schwimmnachweis_2022_beschreibbar-Neu.pdf"
+                             style="width: auto;height: 200px"
+                             type="application/pdf">
+                      <div class="flex flex-col gap-10">
+                        <label class="position-relative text-align-center cursor-pointer">
+                          <a class="label-text" [href]="selectedAthleteCertificate" download="certificate.pdf">Download</a>
+                        </label>
+                        <label class="position-relative text-align-center cursor-pointer">
+                          <span class="label-text">Nachweis löschen</span>
+                        </label>
+                      </div>
                     </ng-template>
                 </div>
             </div>

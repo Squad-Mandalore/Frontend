@@ -1,34 +1,34 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
-import { NavbarBottomComponent } from '../../components/navbar-bottom/navbar-bottom.component';
-import { NgClass, NgFor, NgIf, DatePipe } from '@angular/common';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {SidebarComponent} from '../../components/sidebar/sidebar.component';
+import {NavbarBottomComponent} from '../../components/navbar-bottom/navbar-bottom.component';
+import {DatePipe, NgClass, NgFor, NgIf} from '@angular/common';
 
-import { UserCardComponent } from '../../components/user-card/user-card.component';
-import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
-import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
-import { IconComponent } from '../../components/icon/icon.component';
+import {UserCardComponent} from '../../components/user-card/user-card.component';
+import {PrimaryButtonComponent} from '../../components/buttons/primary-button/primary-button.component';
+import {SecondaryButtonComponent} from '../../components/buttons/secondary-button/secondary-button.component';
+import {IconComponent} from '../../components/icon/icon.component';
 import {
   AthleteCompletesResponseSchema,
-  AthleteResponseSchema, CertificatePostSchema, CertificateResponseSchema,
+  AthleteFullResponseSchema,
+  AthleteResponseSchema,
+  AthletesService,
+  CertificateResponseSchema,
   CertificatesService,
   CompletesResponseSchema,
-  CompletesService, TrainerResponseSchema,
+  CompletesService,
   TrainersService
 } from '../../shared/generated';
-import { Subscription } from 'rxjs';
+import {Subscription} from 'rxjs';
 import customSort from '../../../utils/custom-sort';
 import customFilter from '../../../utils/custom-filter';
-import { calculateProgress, calculateProgressPercent } from '../../../utils/calculate-progress';
-import { calculateProgressColor } from '../../../utils/calculate-progress';
-import { ConfirmationService } from '../../shared/confirmation.service';
-import { AthleteFullResponseSchema } from '../../shared/generated';
-import { AthletesService } from '../../shared/generated';
-import { AlertService } from '../../shared/alert.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { CreateCompletesComponent } from '../../components/create-completes-modal/create-completes-modal.component';
-import { enterLeaveAnimation } from '../../shared/animation';
-import { CreateAthleteModalComponent } from '../../components/create-athlete-modal/create-athlete-modal.component';
+import {calculateProgress, calculateProgressColor, calculateProgressPercent} from '../../../utils/calculate-progress';
+import {ConfirmationService} from '../../shared/confirmation.service';
+import {AlertService} from '../../shared/alert.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {CreateCompletesComponent} from '../../components/create-completes-modal/create-completes-modal.component';
+import {enterLeaveAnimation} from '../../shared/animation';
+import {CreateAthleteModalComponent} from '../../components/create-athlete-modal/create-athlete-modal.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -52,6 +52,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
   selectedAthlete: AthleteFullResponseSchema | null = null;
+  selectedAthleteCertificate: string | undefined ;
   selectedFile: File | null = null;
   isLoading: boolean = true;
   filter: any = {};
@@ -358,17 +359,10 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     const fileContent = await this.readFileContent(this.selectedFile!);
 
     if (fileContent instanceof Blob) {
-      // Create the body object
-      const body: CertificatePostSchema = {
-        athlete_id: this.selectedAthlete?.id!,
-        title: this.selectedAthlete?.username!,
-        blob: fileContent
-      };
 
-      console.log(body);
 
       // Send the body object to the backend
-      this.certificateService.createCertificateCertificatesPost(body).subscribe({
+      this.certificateService.createCertificateCertificatesPost(fileContent, this.selectedAthlete?.id! , this.selectedAthlete?.username! ).subscribe({
         next: (response: CertificateResponseSchema) => {
           this.alertService.show('Zertifikat hochgeladen', 'Zertifikat wurde erfolgreich erstellt.', 'success');
           console.log(response);
@@ -385,6 +379,12 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       console.error('Error reading file content');
       // Handle error - file content couldn't be read
     }
+    //
+    this.certificateService.getCertificatesCertificatesIdGet("e89c620b-df31-4634-92ab-77a778714812").subscribe({
+      next: (response: Blob) => {
+        this.selectedAthleteCertificate = URL.createObjectURL(response)
+      }
+    })
   }
 
 // Function to read file content and return as Blob
