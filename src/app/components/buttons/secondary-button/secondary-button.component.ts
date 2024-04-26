@@ -21,7 +21,7 @@ export class SecondaryButtonComponent {
     @Input() iconWidth: string = '15';
     @Input() iconHeight: string = '15';
     @Input() disabled: boolean = false;
-    @Input() type: string = 'submit';
+    @Input() type: string = 'button';
     @Output() click = new EventEmitter<any>();
 
     onButtonClick(event: Event) {

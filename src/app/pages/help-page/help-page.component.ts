@@ -8,7 +8,8 @@ import { HeadlinesService } from '../../shared/headlines.service';
 import { LoggerService } from '../../shared/logger.service';
 import { IconComponent } from '../../components/icon/icon.component';
 import { QuaternaryButtonComponent } from '../../components/buttons/quaternary-button/quaternary-button.component';
-
+import { jsPDF } from 'jspdf';
+import { font } from "./font";
 
 @Component({
   selector: 'app-help-page',
@@ -64,6 +65,7 @@ export class HelpPageComponent implements AfterViewInit {
 
   }
 
+  // Handle the scroll event on the content element
   onContentScroll(_event: Event) {
     const { headlineIndex, subHeadlineIndex } = this.calculateHeadlineInViewAndSubHeadlineInView();
     this.headlineInView.emit(headlineIndex);
@@ -72,6 +74,7 @@ export class HelpPageComponent implements AfterViewInit {
     this.currentSubHeadline = subHeadlineIndex;
   }
 
+  // Calculate the headline and subheadline in view
   calculateHeadlineInViewAndSubHeadlineInView(): { headlineIndex: number, subHeadlineIndex: number } {
     let headlineIndex = 0;
     let closestSubHeadlineIndex = 0;
@@ -118,12 +121,14 @@ export class HelpPageComponent implements AfterViewInit {
     return { headlineIndex, subHeadlineIndex: closestSubHeadlineIndex };
   }
 
+  // Scroll to the clicked headline
   scrollToHeadline(index: number) {
     if (this.headlineElementsArray.length > index) {
       this.headlineElementsArray[index].scrollIntoView({ behavior: 'smooth', block: "start", inline: "nearest" });
     }
   }
 
+  // Scroll to the subheadline of the current headline
   scrollToSubHeadline({ headlineIndex, subHeadlineIndex }: { headlineIndex: number, subHeadlineIndex: number }) {
     if (this.headlines.length > headlineIndex) {
       const headline = this.headlines[headlineIndex];
@@ -133,4 +138,51 @@ export class HelpPageComponent implements AfterViewInit {
       }
     }
   }
+
+downloadPDF() {
+  if (!this.content) return;
+
+  const element = this.content.nativeElement;
+  const pdf = new jsPDF({
+    orientation: 'portrait',
+    unit: 'pt',
+    format: 'a4'
+  });
+
+  // Add the custom font to the PDF
+  pdf.addFileToVFS('assets/fonts/Inter-Medium-normal.ttf', font);
+  pdf.addFont('assets/fonts/Inter-Medium-normal.ttf', 'Inter-Medium', 'normal');
+  pdf.setFont('Inter-Medium', 'normal');
+  pdf.setFontSize(18); // Set the font size for the headline
+
+  // Adding the headline text at the top of the document
+  pdf.text('Nutzungshinweise', 20, 40);
+
+  // Now render the HTML content below the headline
+  pdf.html(element, {
+    callback: (doc) => {
+      doc.save('help-page.pdf');
+    },
+    x: 10,
+    y: 40,
+    margin: [20, 0, 30, 0],
+    width: 575, // Width of A4 at 72 DPI minus margins
+    windowWidth: element.scrollWidth,
+    autoPaging: "text",
+    fontFaces: [
+      {
+        family: 'Inter-Medium',
+        style: 'normal',
+        weight: 'normal',
+        src: [
+          {
+            url: 'assets/fonts/Inter-Medium-normal.ttf',
+            format: 'truetype'
+          }
+        ]
+      }
+    ]
+  });
+
+}
 }

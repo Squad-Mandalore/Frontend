@@ -1,11 +1,13 @@
 <div id="page">
     <app-help-sidebar (headlineClicked)="scrollToHeadline($event)"
-        (subHeadlineClicked)="scrollToSubHeadline($event)" [selectedHeadline]="currentHeadline" [selectedSubHeadline]="currentSubHeadline"></app-help-sidebar>
+        (subHeadlineClicked)="scrollToSubHeadline($event)" [selectedHeadline]="currentHeadline" [selectedSubHeadline]="currentSubHeadline">
+    </app-help-sidebar>
     <div id="content" #content>
         <div>
             <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
             <div id="headline-wrapper">
                 <p class="headline">Eigener Account</p>
+                <app-primary-button (click)="downloadPDF()"  [text]="'Download Help Page as PDF'"></app-primary-button>
             </div>
             <div id="general-information-wrapper">
                 <p class="sub-headline">Login</p>
