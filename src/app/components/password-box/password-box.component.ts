@@ -67,6 +67,7 @@ export class PasswordBoxComponent implements ControlValueAccessor {
 
     validateValues(){
         const password = this.value;
+        if(this.isAllowedToFail && !this.value) return;
     
         this.utilService.validatePass(password!);
     
