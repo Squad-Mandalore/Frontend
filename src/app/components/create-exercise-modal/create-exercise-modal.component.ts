@@ -42,7 +42,7 @@ export class CreateExerciseModalComponent implements OnInit {
   constructor(private categoriesService: CategoriesService, private rulesService: RulesService, private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private exerciseService: ExercisesService){
     this.exerciseForm = this.formBuilder.group({
       title: ['', Validators.required],
-      fromAge: [1, [Validators.required, utilService.passwordValidator()]],
+      fromAge: [1, Validators.required],
       toAge: [99, Validators.required],
       year: [new Date().getFullYear(), Validators.required],
 
