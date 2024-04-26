@@ -24,7 +24,6 @@ import { enterLeaveAnimation } from '../../shared/animation';
 import { FormGroup } from '@angular/forms';
 import { LoggerService } from '../../shared/logger.service';
 import { CreateAthleteModalComponent } from '../../components/create-athlete-modal/create-athlete-modal.component';
-import { FileCallbackData } from '../../shared/file-callback-data';
 
 @Component({
   selector: 'app-dashboard',
@@ -185,14 +184,18 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   })
   }
 
-  csvParse(fileCallBackData: FileCallbackData) {
-    this.csvService.parseCsvFileCsvParsePost(fileCallBackData.file).subscribe({
+  csvParse(file: File) {
+    this.csvService.parseCsvFileCsvParsePost(file).subscribe({
       next: (response: ResponseParseCsvFileCsvParsePost) => {
         let arr: string[] = Object.keys(response).map(key => `${key}: ${response[key as keyof typeof response]}`);
         let str: string = arr.join('\n');
         this.gnNoTini();
         this.alertService.show('CSV-Daten erfolgreich hinzugefügt', str, 'success');
-        this.modals[fileCallBackData.modalType as keyof typeof this.modals].isActive = false;
+        // important because you havent typed modals properly
+        this.modals.showDetails.isActive = false;
+        this.modals.patchAthleteModal.isActive = false;
+        this.modals.createAthleteModal.isActive = false;
+        this.modals.createCompletesModal.isActive = false;
       },
       error: (error: HttpErrorResponse) => {
         this.alertService.show('Hochladen der CSV-Datei fehlgeschlagen', error.error.detail, 'error');

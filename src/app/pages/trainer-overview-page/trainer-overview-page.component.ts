@@ -14,7 +14,6 @@ import { CreateTrainerModalComponent } from '../../components/create-trainer-mod
 import { enterLeaveAnimation } from '../../shared/animation';
 import { FormGroup } from '@angular/forms';
 import { LoggerService } from '../../shared/logger.service';
-import { FileCallbackData } from '../../shared/file-callback-data';
 
 @Component({
   selector: 'app-trainer-overview-page',
@@ -134,14 +133,17 @@ export class TrainerOverviewPageComponent {
     );
   }
 
-  csvParse(fileCallBackData: FileCallbackData) {
-    this.csvService.parseCsvFileCsvParsePost(fileCallBackData.file).subscribe({
+  csvParse(file: File) {
+    this.csvService.parseCsvFileCsvParsePost(file).subscribe({
       next: (response: ResponseParseCsvFileCsvParsePost) => {
         let arr: string[] = Object.keys(response).map(key => `${key}: ${response[key as keyof typeof response]}`);
         let str: string = arr.join('\n');
         this.gnNoTini();
         this.alertService.show('CSV-Daten erfolgreich hinzugefügt', str, 'success');
-        this.modals[fileCallBackData.modalType as keyof typeof this.modals].isActive = false;
+        // no loop because no type
+        this.modals.showDetails.isActive = false;
+        this.modals.patchTrainerModal.isActive = false;
+        this.modals.createTrainerModal.isActive = false;
       },
       error: (error: HttpErrorResponse) => {
         this.alertService.show('Hochladen der CSV-Datei fehlgeschlagen', error.error.detail, 'error');

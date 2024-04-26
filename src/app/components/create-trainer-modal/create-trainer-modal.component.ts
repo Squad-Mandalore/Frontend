@@ -8,7 +8,6 @@ import {AlertComponent} from "../alert/alert.component";
 import {UtilService} from "../../shared/service-util";
 import {TrainerResponseSchema} from "../../shared/generated";
 import {NgClass} from "@angular/common";
-import {FileCallbackData} from "../../shared/file-callback-data";
 
 @Component({
   selector: 'app-create-trainer-modal',
@@ -21,7 +20,7 @@ export class CreateTrainerModalComponent implements OnInit{
   @Input({required: true}) modal: any;
   @Input() selectedTrainer?: TrainerResponseSchema;
   @Output() trainerCallback = new EventEmitter<FormGroup>();
-  @Output() fileCallback = new EventEmitter<FileCallbackData>();
+  @Output() fileCallback = new EventEmitter<File>();
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   selectedFile?: File;
@@ -73,7 +72,6 @@ export class CreateTrainerModalComponent implements OnInit{
       return;
     }
 
-    let fileCallbackData: FileCallbackData = {file: this.selectedFile, modalType: "createTrainerModal"};
-    this.fileCallback.emit(fileCallbackData);
+    this.fileCallback.emit(this.selectedFile);
   }
 }

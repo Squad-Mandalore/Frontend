@@ -12,7 +12,6 @@ import {CompletesPostSchema, CompletesService} from "../../shared/generated";
 import { HttpErrorResponse } from "@angular/common/http";
 import customFilter from "../../../utils/custom-filter";
 import customSort from "../../../utils/custom-sort";
-import { FileCallbackData } from "../../shared/file-callback-data";
 
 @Component({
   selector: 'app-create-completes',
@@ -46,7 +45,7 @@ export class CreateCompletesComponent implements OnInit{
   @Input() selectedAthlete?: AthleteFullResponseSchema;
   @Input() modals!: any;
   @Input() athletes!: AthleteFullResponseSchema[];
-  @Output() fileCallback = new EventEmitter<FileCallbackData>();
+  @Output() fileCallback = new EventEmitter<File>();
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   selectedFile?: File;
@@ -303,8 +302,7 @@ export class CreateCompletesComponent implements OnInit{
     if (!this.selectedFile) {
       return;
     }
-    let fileCallbackData: FileCallbackData = {file: this.selectedFile, modalType: "createCompletesModal"};
-    this.fileCallback.emit(fileCallbackData);
+    this.fileCallback.emit(this.selectedFile);
   }
 
 }

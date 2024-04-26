@@ -7,22 +7,9 @@ import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.c
 import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-button.component";
 import {
   AthleteFullResponseSchema,
-  AthletePatchSchema,
-  AthletePostSchema,
-  AthleteResponseSchema,
-  AthletesService,
-  CsvService,
-  Gender,
-  ResponseParseCsvFileCsvParsePost
 } from "../../shared/generated";
-import {LoggerService} from "../../shared/logger.service";
-import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
 import {FormBuilder, FormsModule, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {HttpErrorResponse} from '@angular/common/http';
-import { FileCallbackData } from '../../shared/file-callback-data';
-
-
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -50,7 +37,7 @@ export class CreateAthleteModalComponent implements OnInit {
   @Input({required: true}) modal: any;
   @Input() selectedAthlete?: AthleteFullResponseSchema;
   @Output() athleteCallback = new EventEmitter<FormGroup>();
-  @Output() fileCallback = new EventEmitter<FileCallbackData>();
+  @Output() fileCallback = new EventEmitter<File>();
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   selectedFile?: File;
@@ -121,8 +108,7 @@ export class CreateAthleteModalComponent implements OnInit {
     if (!this.selectedFile) {
       return;
     }
-    let fileCallbackData: FileCallbackData = {file: this.selectedFile, modalType: "createAthleteModal"};
-    this.fileCallback.emit(fileCallbackData);
+    this.fileCallback.emit(this.selectedFile);
   }
 }
 
