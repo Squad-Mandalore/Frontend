@@ -97,5 +97,4 @@ export class CreateAthleteModalComponent implements OnInit {
     this.isMale = value === "male";
     this.createAthleteForm.patchValue({ gender: this.isMale ? "m" : "f" });
   }
-
 }
