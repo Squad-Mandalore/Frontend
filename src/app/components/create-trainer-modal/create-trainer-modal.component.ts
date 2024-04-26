@@ -23,10 +23,6 @@ export class CreateTrainerModalComponent implements OnInit{
   @Input() selectedTrainer?: TrainerResponseSchema;
   @Output() trainerCallback = new EventEmitter<FormGroup>();
 
-  formValidation: formValidation = {
-    illegalPassword: false,
-  }
-
   trainerForm;
   constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService, private logger: LoggerService){
     this.trainerForm = this.formBuilder.group({
@@ -36,22 +32,6 @@ export class CreateTrainerModalComponent implements OnInit{
       lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
     });
-  }
-
-  resetValidation(){
-    this.formValidation.illegalPassword = false;
-  }
-
-  validateValues(){
-    const password = this.trainerForm.value.unhashed_password;
-
-    if(this.utilService.validatePass(password!) === 'Illegal'){
-      this.formValidation.illegalPassword = true;
-    }else{
-      this.resetValidation();
-    }
-    
-    if(password!.length === 0) return;
   }
 
   ngOnInit() {
@@ -70,13 +50,6 @@ export class CreateTrainerModalComponent implements OnInit{
   }
 
   onSubmit(){
-    this.validateValues();
-    if(this.formValidation.illegalPassword === true) return;
-
     this.trainerCallback.emit(this.trainerForm);
   }
-}
-
-interface formValidation {
-  illegalPassword: boolean,
 }

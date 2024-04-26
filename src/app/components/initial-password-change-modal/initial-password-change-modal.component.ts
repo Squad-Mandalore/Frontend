@@ -47,12 +47,6 @@ export class InitialPasswordChangeModalComponent {
     }else{
       this.resetValidation('oldPassword');
     }
-
-    if(this.utilService.validatePass(password) === 'Illegal'){
-      this.formValidation.illegalPassword = true;
-    }else{
-      this.resetValidation('illegalPassword');
-    }
     
     //ich finds kinda useless aber idk/idc; LG BB223
     if(password.length === 0 || passwordRepeat.length === 0) return;

@@ -19,11 +19,17 @@ import { NgIf } from '@angular/common';
     ]
 
 })
+
 export class PasswordBoxComponent implements ControlValueAccessor {
     @Input() showPasswordGenerator: boolean = true;
     @Input() showCopyOption: boolean = true;
     @Input() showPasswordStrength: boolean = true;
+    @Input() isAllowedToFail: boolean = false;
     @Input() placeholderText: string = "Passwort";
+
+    formValidation: formValidation = {
+        illegalPassword: false,
+    }
 
     // Whether the input is disabled or not.
     disabled: boolean = false;
@@ -53,6 +59,24 @@ export class PasswordBoxComponent implements ControlValueAccessor {
 
     constructor(private utilService: UtilService) {
 
+    }
+
+    resetValidation(){
+        this.formValidation.illegalPassword = false;
+    }
+
+    validateValues(){
+        const password = this.value;
+    
+        this.utilService.validatePass(password!);
+    
+        if(this.utilService.validatePass(password!) === 'Illegal'){
+          this.formValidation.illegalPassword = true;
+        }else{
+          this.resetValidation();
+        }
+        
+        if(password!.length === 0) return;
     }
 
     triggerInputType() {
@@ -135,4 +159,8 @@ export class PasswordBoxComponent implements ControlValueAccessor {
       this.value = this.utilService.genPass()
       this.onInput(this.value)
     }
+}
+
+interface formValidation {
+    illegalPassword: boolean,
 }

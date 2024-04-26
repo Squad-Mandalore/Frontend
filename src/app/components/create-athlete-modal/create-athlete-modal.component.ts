@@ -42,10 +42,6 @@ export class CreateAthleteModalComponent implements OnInit {
   @Input() selectedAthlete?: AthleteFullResponseSchema;
   @Output() athleteCallback = new EventEmitter<FormGroup>();
 
-  formValidation: formValidation = {
-    illegalPassword: false,
-  }
-
   constructor(
     private athleteApi: AthletesService,
     private logger: LoggerService,
@@ -87,28 +83,7 @@ export class CreateAthleteModalComponent implements OnInit {
     }
   }
 
-  resetValidation(){
-    this.formValidation.illegalPassword = false;
-  }
-
-  validateValues(){
-    const password = this.createAthleteForm.value.unhashed_password;
-
-    this.utilService.validatePass(password!);
-
-    if(this.utilService.validatePass(password!) === 'Illegal'){
-      this.formValidation.illegalPassword = true;
-    }else{
-      this.resetValidation();
-    }
-    
-    if(password!.length === 0) return;
-  }
-
   onSubmit() {
-    this.validateValues();
-    if(this.formValidation.illegalPassword === true) return;
-
     this.athleteCallback.emit(this.createAthleteForm);
   }
 
@@ -123,8 +98,4 @@ export class CreateAthleteModalComponent implements OnInit {
     this.createAthleteForm.patchValue({ gender: this.isMale ? "m" : "f" });
   }
 
-}
-
-interface formValidation {
-  illegalPassword: boolean,
 }

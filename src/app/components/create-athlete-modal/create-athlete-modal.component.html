@@ -15,10 +15,7 @@
           <div id="password-password-strength-wrapper">
             <label class="label">
               <p class="label-text">Passwort</p>
-              <app-password-box formControlName="unhashed_password" (focusout)="validateValues()" (input)="resetValidation()"/>
-              <div class="error-text">
-                <p *ngIf="formValidation.illegalPassword">Benötigt mindestens 12 Zeichen</p>
-              </div>
+              <app-password-box [isAllowedToFail]="!!selectedAthlete" formControlName="unhashed_password"/>
             </label>
           </div>
 
