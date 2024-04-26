@@ -7,11 +7,12 @@ import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.c
 import {AthleteCompletesResponseSchema, AthleteFullResponseSchema, AthleteResponseSchema, AthletesService, CategoriesService, CategoryFullResponseSchema, CategoryVeryFullResponseSchema, CompletesResponseSchema, CsvService, ResponseParseCsvFileCsvParsePost} from "../../shared/generated";
 import {AlertService} from "../../shared/alert.service";
 import { SecondaryButtonComponent } from "../buttons/secondary-button/secondary-button.component";
-import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import {CompletesPostSchema, CompletesService} from "../../shared/generated";
 import { HttpErrorResponse } from "@angular/common/http";
 import customFilter from "../../../utils/custom-filter";
 import customSort from "../../../utils/custom-sort";
+import { FileCallbackData } from "../../shared/file-callback-data";
 
 @Component({
   selector: 'app-create-completes',
@@ -42,12 +43,13 @@ export class CreateCompletesComponent implements OnInit{
   categories: any[] = [];
   selectedExercise: any = null;
   givenRulesValue: string = '';
-  @Input() selectedAthlete!: AthleteFullResponseSchema | null;
+  @Input() selectedAthlete?: AthleteFullResponseSchema;
   @Input() modals!: any;
   @Input() athletes!: AthleteFullResponseSchema[];
+  @Output() fileCallback = new EventEmitter<FileCallbackData>();
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
-  selectedFile: File | null = null;
+  selectedFile?: File;
 
   time = {
     hours: null,
@@ -73,9 +75,6 @@ export class CreateCompletesComponent implements OnInit{
     private alertService: AlertService,
     private completesService: CompletesService,
     private categoriesService: CategoriesService,
-    private csvService: CsvService,
-    private athleteService: AthletesService,
-
   ){
     this.createCompletesForm = this.formBuilder.group({
       exercise_id: ['', Validators.required],
@@ -304,48 +303,8 @@ export class CreateCompletesComponent implements OnInit{
     if (!this.selectedFile) {
       return;
     }
-
-    this.csvService.parseCsvFileCsvParsePost(this.selectedFile).subscribe({
-      next: (response: ResponseParseCsvFileCsvParsePost) => {
-        let arr: string[] = [];
-        Object.keys(response).forEach((key) => {
-          const value = (response as any)[key];
-          arr.push(`Key: ${key}, Value: ${value}`);
-        });
-        let str: string = '';
-        for (const strt of arr) {
-          str += strt + '\n';
-        }
-        
-        this.athleteService.getAllAthletesAthletesGet().subscribe({
-          next: (athletes: AthleteResponseSchema[]) => {
-            for(const athlete of athletes){ 
-              this.athleteService.getAthleteFullAthletesIdFullGet(athlete.id).subscribe({
-                next: (fullAthleteObject: AthleteFullResponseSchema) => {
-                  const elementIndex = this.athletes.findIndex(element => element.id === athlete.id);
-                  if(elementIndex === -1){
-                    this.athletes.push(fullAthleteObject);
-                  }else{
-                    this.athletes[elementIndex] = fullAthleteObject;
-                  }
-                },
-                error: (error: HttpErrorResponse) => {
-                  this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
-                }
-              })
-            }
-          },
-          error: (error: HttpErrorResponse) => {
-            this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
-          }
-        });
-
-        this.alertService.show('CSV-Daten erfolgreich hinzugefügt', str, 'success');
-        this.modals.createCompletesModal.isActive = false;
-      },
-      error: (error: HttpErrorResponse) => {
-        this.alertService.show('Hochladen der CSV-Datei fehlgeschlagen', error.error.detail, 'error');
-      },
-    })
+    let fileCallbackData: FileCallbackData = {file: this.selectedFile, modalType: "createCompletesModal"};
+    this.fileCallback.emit(fileCallbackData);
   }
+
 }

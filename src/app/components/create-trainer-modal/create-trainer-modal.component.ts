@@ -1,15 +1,14 @@
 import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
 import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-button.component";
 import {IconComponent} from "../icon/icon.component";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
-import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AlertComponent} from "../alert/alert.component";
-import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
-import {CsvService, ResponseParseCsvFileCsvParsePost, TrainerPostSchema, TrainerResponseSchema, TrainersService} from "../../shared/generated";
+import {TrainerResponseSchema} from "../../shared/generated";
 import {NgClass} from "@angular/common";
-import { HttpErrorResponse } from "@angular/common/http";
+import {FileCallbackData} from "../../shared/file-callback-data";
 
 @Component({
   selector: 'app-create-trainer-modal',
@@ -18,46 +17,46 @@ import { HttpErrorResponse } from "@angular/common/http";
   templateUrl: './create-trainer-modal.component.html',
   styleUrl: './create-trainer-modal.component.scss',
 })
-export class CreateTrainerModalComponent {
-  @Input() modals!: any;
-  @Input() trainer!: TrainerResponseSchema[];
+export class CreateTrainerModalComponent implements OnInit{
+  @Input({required: true}) modal: any;
+  @Input() selectedTrainer?: TrainerResponseSchema;
+  @Output() trainerCallback = new EventEmitter<FormGroup>();
+  @Output() fileCallback = new EventEmitter<FileCallbackData>();
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
-  selectedFile: File | null = null;
-
+  selectedFile?: File;
   trainerForm;
-  constructor(private formBuilder: FormBuilder, private alertService: AlertService, private utilService: UtilService, private trainerService: TrainersService, private csvService: CsvService){
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private utilService: UtilService,
+  ){
     this.trainerForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', [Validators.required, utilService.passwordValidator()]],
+      unhashed_password: ['', [Validators.required, this.utilService.passwordValidator()]],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
     });
   }
 
+  ngOnInit() {
+    if(this.selectedTrainer){
+      Object.keys(this.trainerForm.controls).forEach(key => {
+        this.trainerForm.get(key)!.removeValidators(Validators.required);
+        this.trainerForm.get(key)!.updateValueAndValidity();
+      });
+      this.trainerForm.patchValue({
+        username: this.selectedTrainer.username,
+        email: this.selectedTrainer.email,
+        firstname: this.selectedTrainer.firstname,
+        lastname: this.selectedTrainer.lastname,
+      })
+    }
+  }
+
   onSubmit(){
-    let body: TrainerPostSchema = {
-      username: this.trainerForm.value.username!,
-      unhashed_password: this.trainerForm.value.password!,
-      firstname: this.trainerForm.value.firstname!,
-      lastname: this.trainerForm.value.lastname!,
-      email: this.trainerForm.value.email!,
-    };
-    this.trainerService.createTrainerTrainersPost(body).subscribe({
-      next: (reponse: TrainerResponseSchema) => {
-        this.alertService.show('Trainer erstellt', 'Trainer wurde erfolgreich erstellt.', 'success');
-        this.modals.createTrainerModal.isActive = false;
-        this.trainer.push(reponse);
-      },
-      error: (error) => {
-        if(error.status == 422){
-          this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
-        }else{
-          this.alertService.show('Erstellung fehlgeschlagen','Bitte versuche es später erneut',"error");
-        }
-      }
-    });
+    this.trainerCallback.emit(this.trainerForm);
   }
 
   triggerFileInput(): void {
@@ -74,23 +73,7 @@ export class CreateTrainerModalComponent {
       return;
     }
 
-    this.csvService.parseCsvFileCsvParsePost(this.selectedFile).subscribe({
-      next: (response: ResponseParseCsvFileCsvParsePost) => {
-        let arr: string[] = [];
-        Object.keys(response).forEach((key) => {
-          const value = (response as any)[key];
-          arr.push(`Key: ${key}, Value: ${value}`);
-        });
-        let str: string = '';
-        for (const strt of arr) {
-          str += strt + '\n';
-        }
-        this.alertService.show('ERFOLG!', str, 'success');
-        this.modals.createTrainerModal.isActive = false;
-      },
-      error: (error: HttpErrorResponse) => {
-        this.alertService.show('FEHLSCHLAG!', error.error.detail, 'error');
-      },
-    })
+    let fileCallbackData: FileCallbackData = {file: this.selectedFile, modalType: "createTrainerModal"};
+    this.fileCallback.emit(fileCallbackData);
   }
 }

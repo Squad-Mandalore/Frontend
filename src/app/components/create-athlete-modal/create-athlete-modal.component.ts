@@ -1,5 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
-
+import {Component, ElementRef, ViewChild, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgClass, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {PasswordBoxComponent} from "../password-box/password-box.component";
 import {AlertComponent} from "../alert/alert.component";
@@ -8,6 +7,7 @@ import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.c
 import {SecondaryButtonComponent} from "../buttons/secondary-button/secondary-button.component";
 import {
   AthleteFullResponseSchema,
+  AthletePatchSchema,
   AthletePostSchema,
   AthleteResponseSchema,
   AthletesService,
@@ -18,8 +18,11 @@ import {
 import {LoggerService} from "../../shared/logger.service";
 import {AlertService} from "../../shared/alert.service";
 import {UtilService} from "../../shared/service-util";
-import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormsModule, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {HttpErrorResponse} from '@angular/common/http';
+import { FileCallbackData } from '../../shared/file-callback-data';
+
+
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -40,102 +43,58 @@ import {HttpErrorResponse} from '@angular/common/http';
   templateUrl: './create-athlete-modal.component.html',
   styleUrl: './create-athlete-modal.component.scss'
 })
-export class CreateAthleteModalComponent {
+export class CreateAthleteModalComponent implements OnInit {
   createAthleteForm;
   showFirstPage: boolean = true;
   isMale: boolean = true;
-  isStringMale: Gender = "m";
-  @Input() modals!: any;
-  @Input() selectedAthlete!: AthleteFullResponseSchema | null;
-  @Input() athletes: AthleteFullResponseSchema[] = [];
+  @Input({required: true}) modal: any;
+  @Input() selectedAthlete?: AthleteFullResponseSchema;
+  @Output() athleteCallback = new EventEmitter<FormGroup>();
+  @Output() fileCallback = new EventEmitter<FileCallbackData>();
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
-  selectedFile: File | null = null;
+  selectedFile?: File;
 
-  constructor(private athleteService: AthletesService,
-    private logger: LoggerService,
+  constructor(
     private formBuilder: FormBuilder,
-    private alertService: AlertService,
     private utilService: UtilService,
-    private csvService: CsvService,
-
   ) {
     // Initialize Form and Validators for received Data
     this.createAthleteForm = this.formBuilder.group({
       username: ['', Validators.required],
-      unhashed_password: ['', [Validators.required, this.utilService.passwordValidator]],
+      unhashed_password: ['', [Validators.required, this.utilService.passwordValidator()]],
       email: ['', [Validators.required, Validators.email]],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
+      gender: ['m', Validators.required],
       day: ['', Validators.required],
       month: ['', Validators.required],
       year: ['', Validators.required],
-    })
+    });
+  }
+
+  ngOnInit() {
+    if(this.selectedAthlete){
+      Object.keys(this.createAthleteForm.controls).forEach(key => {
+        this.createAthleteForm.get(key)!.removeValidators(Validators.required);
+        this.createAthleteForm.get(key)!.updateValueAndValidity();
+      });
+      this.createAthleteForm.patchValue({
+        username: this.selectedAthlete.username,
+        email: this.selectedAthlete.email,
+        firstname: this.selectedAthlete.firstname,
+        lastname: this.selectedAthlete.lastname,
+        gender: this.selectedAthlete.gender,
+        day: this.selectedAthlete.birthday.split("-")[2],
+        month: this.selectedAthlete.birthday.split("-")[1],
+        year: this.selectedAthlete.birthday.split("-")[0],
+      })
+      this.isMale = this.selectedAthlete.gender === "m";
+    }
   }
 
   onSubmit() {
-    if (this.createAthleteForm.invalid){
-      this.logger.error("Form invalid")
-      return;
-    }
-    // For switch between Male / Female, because clickable div is used
-    if (!this.isMale) {
-      this.isStringMale = "f"
-    }
-
-    // Get date values from the Form
-    const day = this.createAthleteForm.value.day!
-    const month = this.createAthleteForm.value.month!
-    const year = this.createAthleteForm.value.year!
-
-    // Add Data for the Http-Request for the Backend
-    const body : AthletePostSchema = {
-    username: this.createAthleteForm.value.username!,
-    email: this.createAthleteForm.value.email!,
-    unhashed_password: this.createAthleteForm.value.unhashed_password!,
-    firstname: this.createAthleteForm.value.firstname!,
-    lastname: this.createAthleteForm.value.lastname!,
-    birthday: year + "-" + month.toString().padStart(2,'0') + "-" + day.toString().padStart(2,'0'), // Format Birthday for Backend
-    gender: this.isStringMale!
-    }
-
-    // Http-Request for Post of the Athlete to the Backend
-    this.athleteService.createAthleteAthletesPost(body).subscribe({
-      // Post Athlete if allowed
-      next: (response: AthleteResponseSchema) => {
-        this.alertService.show('Athlet erstellt', 'Athlet wurde erfolgreich erstellt.', 'success');
-        this.modals.createAthleteModal.isActive = false;
-        console.log(response)
-        if(response && response.id){
-          this.athleteService.getAthleteFullAthletesIdFullGet(response.id).subscribe({
-            // Post Athlete if allowed
-            next: (response: AthleteFullResponseSchema) => {
-              if(response){
-                this.athletes.push(response)
-                console.log(this.athletes)
-              }
-            },
-            // Deny Athlete if Backend send Http-Error
-            error: (error) => {
-              if(error.status == 422){
-                this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
-              }else{
-                this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen',"error");
-              }
-            }
-          })
-        }
-      },
-      // Deny Athlete if Backend send Http-Error
-      error: (error) => {
-        if(error.status == 422){
-          this.alertService.show('Erstellung fehlgeschlagen','Benutzername ist nicht verfügbar.',"error");
-        }else{
-          this.alertService.show('Erstellung fehlgeschlagen','Bei der Erstellung ist etwas schief gelaufen',"error");
-        }
-      }
-  })
-
+    this.athleteCallback.emit(this.createAthleteForm);
   }
 
   // Page-Switch
@@ -146,6 +105,7 @@ export class CreateAthleteModalComponent {
   // clickable div for Gender
   onClickSwitchGender(value: string) {
     this.isMale = value === "male";
+    this.createAthleteForm.patchValue({ gender: this.isMale ? "m" : "f" });
   }
 
   triggerFileInput(): void {
@@ -161,49 +121,8 @@ export class CreateAthleteModalComponent {
     if (!this.selectedFile) {
       return;
     }
-
-    this.csvService.parseCsvFileCsvParsePost(this.selectedFile).subscribe({
-      next: (response: ResponseParseCsvFileCsvParsePost) => {
-        let arr: string[] = [];
-        Object.keys(response).forEach((key) => {
-          const value = (response as any)[key];
-          arr.push(`${key}: ${value}`);
-        });
-        let str: string = '';
-        for (const strt of arr) {
-          str += strt + '\n';
-        }
-
-        this.athleteService.getAllAthletesAthletesGet().subscribe({
-          next: (athletes: AthleteResponseSchema[]) => {
-            for(const athlete of athletes){ 
-              this.athleteService.getAthleteFullAthletesIdFullGet(athlete.id).subscribe({
-                next: (fullAthleteObject: AthleteFullResponseSchema) => {
-                  const elementIndex = this.athletes.findIndex(element => element.id === athlete.id);
-                  if(elementIndex === -1){
-                    this.athletes.push(fullAthleteObject);
-                  }else{
-                    this.athletes[elementIndex] = fullAthleteObject;
-                  }
-                },
-                error: (error: HttpErrorResponse) => {
-                  this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
-                }
-              })
-            }
-          },
-          error: (error: HttpErrorResponse) => {
-            this.alertService.show('Abfragen der Athleten fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
-          }
-        });    
-
-        this.alertService.show('CSV-Daten erfolgreich hinzugefügt', str, 'success');
-        this.modals.createAthleteModal.isActive = false;
-      },
-      error: (error: HttpErrorResponse) => {
-        this.alertService.show('Hochladen der CSV-Datei fehlgeschlagen', error.error.detail, 'error');
-      },
-    })
+    let fileCallbackData: FileCallbackData = {file: this.selectedFile, modalType: "createAthleteModal"};
+    this.fileCallback.emit(fileCallbackData);
   }
 }
 

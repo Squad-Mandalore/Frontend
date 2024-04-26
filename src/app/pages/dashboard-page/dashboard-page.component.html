@@ -16,7 +16,7 @@
                 <app-icon [iconName]="'star'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
             </div>
             <app-secondary-button class="secondary-button" [text]="'Details'" [strokeWidth]="'1.5'" (click)="modals.showDetails.isActive = true"></app-secondary-button>
-            <app-primary-button [text]="'Bearbeiten'" [iconName]="'edit-1'"></app-primary-button>
+            <app-primary-button [text]="'Bearbeiten'" [iconName]="'edit-1'" (click)="modals.patchAthleteModal.isActive = true"></app-primary-button>
         </div>
         <div id="container-wrapper">
             <div id="results-container" [ngClass]="{'background-color-white': selectedAthlete}">
@@ -393,5 +393,6 @@
 </div>
 <div id="overlay-lower" *ngIf="selectedAthlete;" (click)="modals.showDetails.isActive = false" [ngClass]="{'active': selectedAthlete && modals.showDetails.isActive}"></div>
 
-<app-create-completes [@enterAnimation] *ngIf="modals.createCompletesModal.isActive" [modals]="modals" [athletes]="athletes" [selectedAthlete]="selectedAthlete"></app-create-completes>
-<app-create-athlete-modal [@enterAnimation] *ngIf="modals.createAthleteModal.isActive" [modals]="modals" [athletes]="athletes" [selectedAthlete]="selectedAthlete"></app-create-athlete-modal>
+<app-create-completes [@enterAnimation] *ngIf="modals.createCompletesModal.isActive" [modals]="modals" [selectedAthlete]="selectedAthlete" (fileCallback)="csvParse($event)"></app-create-completes>
+<app-create-athlete-modal [@enterAnimation] *ngIf="modals.patchAthleteModal.isActive" [modal]="modals.patchAthleteModal" [selectedAthlete]="selectedAthlete" (athleteCallback)="patchAthlete($event)"></app-create-athlete-modal>
+<app-create-athlete-modal [@enterAnimation] *ngIf="modals.createAthleteModal.isActive" [modal]="modals.createAthleteModal" (athleteCallback)="createAthlete($event)" (fileCallback)="csvParse($event)"></app-create-athlete-modal>
