@@ -180,10 +180,6 @@ export class TrainerOverviewPageComponent {
     });
   }
 
-  getUser(){
-    
-  }
-
   ngOnInit(): void {
     this.authService.whoAmIAuthWhoamiGet().subscribe({
       next: (user: UserResponseSchema) => {
