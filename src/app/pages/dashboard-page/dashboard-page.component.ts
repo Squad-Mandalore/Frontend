@@ -8,7 +8,7 @@ import { UserCardComponent } from '../../components/user-card/user-card.componen
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { AthleteCompletesResponseSchema, AthletePatchSchema, AthletePostSchema, AthleteResponseSchema, CompletesResponseSchema, CompletesService, CsvService, ResponseParseCsvFileCsvParsePost, TrainersService } from '../../shared/generated';
+import { AthleteCompletesResponseSchema, AthletePatchSchema, AthletePostSchema, AthleteResponseSchema, AuthService, CompletesResponseSchema, CompletesService, CsvService, ResponseParseCsvFileCsvParsePost, TrainersService, UserResponseSchema } from '../../shared/generated';
 import { Subscription } from 'rxjs';
 import customSort from '../../../utils/custom-sort';
 import customFilter from '../../../utils/custom-filter';
@@ -46,8 +46,10 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private logger: LoggerService,
     private csvService: CsvService,
+    private authService: AuthService,
   ) {}
 
+  user!: UserResponseSchema;
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
   selectedAthlete?: AthleteFullResponseSchema;
@@ -352,16 +354,32 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if(this.athletes.length === 0){
-      this.gnNoTini();
-    }
-    this.routeSubscription = this.route.queryParams.subscribe(params => {
-      const athleteId = params['id'];
-      if(athleteId){
-        this.selectedAthlete = this.athletes.filter(element => element.id == athleteId)[0];
-        if(!this.selectedAthlete){
-          this.router.navigate(['/athleten']);
+    this.authService.whoAmIAuthWhoamiGet().subscribe({
+      next: (user: UserResponseSchema) => {
+        this.user = user;
+      },
+      complete: ()=>{
+        if(this.user.type === 'athlete'){
+          this.athleteService.getAthleteFullAthletesIdFullGet(this.user.id).subscribe({
+            next: (athlete: AthleteFullResponseSchema) => {
+              this.selectedAthlete = athlete;
+            }
+          })
+          return;
         }
+
+        if(this.athletes.length === 0){
+          this.gnNoTini();
+        }
+        this.routeSubscription = this.route.queryParams.subscribe(params => {
+          const athleteId = params['id'];
+          if(athleteId){
+            this.selectedAthlete = this.athletes.filter(element => element.id == athleteId)[0];
+            if(!this.selectedAthlete){
+              this.router.navigate(['/athleten']);
+            }
+          }
+        })
       }
     })
   }

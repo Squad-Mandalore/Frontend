@@ -4,7 +4,7 @@ import { AuthExtentionService } from '../auth-extention.service';
 import { AuthService, UserResponseSchema } from '../generated';
 import { firstValueFrom } from 'rxjs';
 
-export const authGuard: CanActivateFn = async () => {
+export const authGuard: CanActivateFn = async (req) => {
     const authExtService = inject(AuthExtentionService);
     const authService = inject(AuthService);
     const user = await firstValueFrom(authService.whoAmIAuthWhoamiGet());
@@ -13,5 +13,11 @@ export const authGuard: CanActivateFn = async () => {
         authExtService.logout();
         return false;
     }
+
+    console.log(req)
+    if(user.type === "athlete" && req.url[0] && req.url[0].path.includes("trainer")){
+        return false;
+    }
+
     return true;
 };

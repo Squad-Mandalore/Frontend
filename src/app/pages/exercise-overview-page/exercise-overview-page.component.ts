@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { NavbarBottomComponent } from '../../components/navbar-bottom/navbar-bottom.component';
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { RulePostSchema, RuleResponseSchema, RulesService } from '../../shared/generated';
+import { AuthService, RulePostSchema, RuleResponseSchema, RulesService, UserResponseSchema } from '../../shared/generated';
 import { UserCardComponent } from '../../components/user-card/user-card.component';
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
@@ -37,12 +37,13 @@ import { animate, style, transition, trigger } from '@angular/animations';
 })
 
 export class ExerciseOverviewComponent implements OnInit, OnDestroy {
-  constructor(private alertService: AlertService, private rulesService: RulesService, private confirmationService: ConfirmationService) { }
+  constructor(private authService: AuthService, private alertService: AlertService, private rulesService: RulesService, private confirmationService: ConfirmationService) { }
   exercises: RuleResponseSchema[] = [];
   filter: any = {};
   sorting: {property: string, direction: "asc" | "desc"} = {property: 'category', direction: 'asc'};
   searchValue = "";
   isLoading: boolean = true;
+  user!: UserResponseSchema;
 
   modals = {
     createTrainerModal: {
@@ -142,16 +143,23 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.rulesService.getAllRulesRulesGet().subscribe({
-      next: (exercises: RuleResponseSchema[]) => {
-        this.exercises = exercises;
-        this.isLoading = false;
+    this.authService.whoAmIAuthWhoamiGet().subscribe({
+      next: (user: UserResponseSchema)=>{
+        this.user = user;
       },
-      error: (error: HttpErrorResponse) => {
-        this.alertService.show('Abfragen der Übungen fehlgeschlagen', 'Bitte versuche es später erneut', "error");
-        this.isLoading = false;
+      complete: ()=>{
+        this.rulesService.getAllRulesRulesGet().subscribe({
+          next: (exercises: RuleResponseSchema[]) => {
+            this.exercises = exercises;
+            this.isLoading = false;
+          },
+          error: (error: HttpErrorResponse) => {
+            this.alertService.show('Abfragen der Übungen fehlgeschlagen', 'Bitte versuche es später erneut', "error");
+            this.isLoading = false;
+          }
+        });
       }
-    });
+    })
   }
 
   ngOnDestroy(): void {

@@ -111,7 +111,7 @@
                         </div> -->
                     </div>
                 </div>
-                <app-primary-button *ngIf="exercises.length > 0" [text]="'Disziplin hinzufügen'" [iconName]="'plus'" (click)="modals.createExerciseModal.isActive = true"></app-primary-button>
+                <app-primary-button *ngIf="exercises.length > 0 && user && user.type !== 'athlete'" [text]="'Disziplin hinzufügen'" [iconName]="'plus'" (click)="modals.createExerciseModal.isActive = true"></app-primary-button>
             </div>
             <div id="empty-state" *ngIf="exercises.length === 0; else filledState">
                 <img src="assets/img/humans-running.png" alt="placeholder-image">
