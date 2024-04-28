@@ -365,6 +365,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       this.certificateService.createCertificateCertificatesPost(fileContent, this.selectedAthlete?.id! , this.selectedAthlete?.username! ).subscribe({
         next: (response: CertificateResponseSchema) => {
           this.alertService.show('Zertifikat hochgeladen', 'Zertifikat wurde erfolgreich erstellt.', 'success');
+          this.selectedAthlete?.certificates.push(response)
           console.log(response);
         },
         error: (error) => {
@@ -379,15 +380,28 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       console.error('Error reading file content');
       // Handle error - file content couldn't be read
     }
-    //
-    this.certificateService.getCertificatesCertificatesIdGet("e89c620b-df31-4634-92ab-77a778714812").subscribe({
-      next: (response: Blob) => {
-        this.selectedAthleteCertificate = URL.createObjectURL(response)
-      }
-    })
   }
 
-// Function to read file content and return as Blob
+  onClickDownloadCertificate() {
+    if (this.selectedAthlete?.certificates.length! > 0) {
+      this.certificateService.getCertificatesCertificatesIdGet(this.selectedAthlete?.certificates[0].id!).subscribe({
+        next: (response: Blob) => {
+          this.selectedAthleteCertificate = URL.createObjectURL(response)
+        }
+      })
+    }
+  }
+
+  onClickDeleteCertificate() {
+    if (this.selectedAthlete?.certificates.length! > 0) {
+      this.certificateService.deleteCertificateCertificatesIdDelete(this.selectedAthlete?.certificates[0].id!).subscribe({
+        next: () => {
+          this.selectedAthlete?.certificates.splice(0, this.selectedAthlete?.certificates.length)
+        }
+      })
+    }
+  }
+
   async readFileContent(file: File): Promise<Blob | ArrayBuffer | null> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
