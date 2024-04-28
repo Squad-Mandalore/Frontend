@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CsvService, ResponseParseCsvFileCsvParsePost, TrainerPatchSchema, TrainerPostSchema, TrainerResponseSchema, TrainersService } from '../../shared/generated';
+import { AuthService, CsvService, ResponseParseCsvFileCsvParsePost, TrainerPatchSchema, TrainerPostSchema, TrainerResponseSchema, TrainersService, UserResponseSchema } from '../../shared/generated';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from '../../shared/confirmation.service';
@@ -28,6 +28,7 @@ import { LoggerService } from '../../shared/logger.service';
 
 export class TrainerOverviewPageComponent {
   constructor(
+    private authService: AuthService,
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private router: Router,
@@ -36,6 +37,7 @@ export class TrainerOverviewPageComponent {
     private logger: LoggerService,
     private csvService: CsvService
   ) {}
+  user!: UserResponseSchema;
   trainers: TrainerResponseSchema[] = []
   selectedTrainer?: TrainerResponseSchema;
   isLoading: boolean = true;
@@ -178,32 +180,51 @@ export class TrainerOverviewPageComponent {
     });
   }
 
+  getUser(){
+    
+  }
+
   ngOnInit(): void {
-    if(this.trainers.length === 0){
-      this.trainerService.getAllTrainersTrainersGet().subscribe({
-        next: (trainers: TrainerResponseSchema[]) => {
-          this.trainers = trainers;
-          this.isLoading = false;
-          console.log("here");
-        },
-        error: (error: HttpErrorResponse) => {
-          this.alertService.show('Abfragen der Trainer fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.routeSubscription = this.route.queryParams.subscribe(params => {
-            const trainerId = params['id'];
-            console.log('there');
-            if(trainerId){
-              this.selectedTrainer = this.trainers.filter(element => element.id == trainerId)[0];
-                if(!this.selectedTrainer){
-                  this.router.navigate(['/trainer']);
+    this.authService.whoAmIAuthWhoamiGet().subscribe({
+      next: (user: UserResponseSchema) => {
+        this.user = user;
+      },
+      complete: ()=>{
+        if(this.user.type === 'trainer'){
+          this.trainerService.getTrainerTrainersIdGet(this.user.id).subscribe({
+            next: (trainer: TrainerResponseSchema) => {
+              this.selectedTrainer = trainer;
+            }
+          })
+          return;
+        }
+
+        if(this.trainers.length === 0){
+          this.trainerService.getAllTrainersTrainersGet().subscribe({
+            next: (trainers: TrainerResponseSchema[]) => {
+              this.trainers = trainers;
+              this.isLoading = false;
+            },
+            error: (error: HttpErrorResponse) => {
+              this.alertService.show('Abfragen der Trainer fehlgeschlagen', 'Bitte probiere es später nochmal', "error");
+              this.isLoading = false;
+            },
+            complete: () => {
+              this.routeSubscription = this.route.queryParams.subscribe(params => {
+                const trainerId = params['id'];
+                
+                if(trainerId){
+                  this.selectedTrainer = this.trainers.filter(element => element.id == trainerId)[0];
+                  if(!this.selectedTrainer){
+                    this.router.navigate(['/trainer']);
+                  }
                 }
+              });
             }
           });
-        }
-      });
-    }
+        }  
+      }
+    })
   }
 
   ngOnDestroy(): void {
