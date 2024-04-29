@@ -8,7 +8,18 @@ import { UserCardComponent } from '../../components/user-card/user-card.componen
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { AthleteCompletesResponseSchema, AthletePatchSchema, AthletePostSchema, AthleteResponseSchema, CompletesResponseSchema, CompletesService, CsvService, ResponseParseCsvFileCsvParsePost, TrainersService } from '../../shared/generated';
+import {
+  AthleteCompletesResponseSchema,
+  AthletePatchSchema,
+  AthletePostSchema,
+  AthleteResponseSchema, CertificateResponseSchema, CertificateSingleResponseSchema,
+  CertificatesService,
+  CompletesResponseSchema,
+  CompletesService,
+  CsvService,
+  ResponseParseCsvFileCsvParsePost,
+  TrainersService
+} from '../../shared/generated';
 import { Subscription } from 'rxjs';
 import customSort from '../../../utils/custom-sort';
 import customFilter from '../../../utils/custom-filter';
@@ -24,6 +35,7 @@ import { enterLeaveAnimation } from '../../shared/animation';
 import { FormGroup } from '@angular/forms';
 import { LoggerService } from '../../shared/logger.service';
 import { CreateAthleteModalComponent } from '../../components/create-athlete-modal/create-athlete-modal.component';
+import {TertiaryButtonComponent} from "../../components/buttons/tertiary-button/tertiary-button.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -46,10 +58,12 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private logger: LoggerService,
     private csvService: CsvService,
+    private certificateService: CertificatesService
   ) {}
 
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
+  selectedFile: File | undefined;
   selectedAthlete?: AthleteFullResponseSchema;
   isLoading: boolean = true;
   filter: any = {};
