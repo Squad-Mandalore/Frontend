@@ -13,12 +13,12 @@ import {
   AthleteFullResponseSchema,
   AthleteResponseSchema,
   AthletesService,
-  CertificateResponseSchema,
+  CertificateResponseSchema, CertificateSingleResponseSchema,
   CertificatesService,
   CompletesResponseSchema,
   CompletesService,
   TrainersService
-} from '../../shared/generated';
+} from '../../shared/generated'
 import {Subscription} from 'rxjs';
 import customSort from '../../../utils/custom-sort';
 import customFilter from '../../../utils/custom-filter';
@@ -362,7 +362,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
 
       // Send the body object to the backend
-      this.certificateService.createCertificateCertificatesPost(fileContent, this.selectedAthlete?.id! , this.selectedAthlete?.username! ).subscribe({
+      this.certificateService.createCertificateCertificatesPost(fileContent, this.selectedAthlete?.id! , this.selectedAthlete?.username!+ "-Schwimmnachweis" ).subscribe({
         next: (response: CertificateResponseSchema) => {
           this.alertService.show('Zertifikat hochgeladen', 'Zertifikat wurde erfolgreich erstellt.', 'success');
           this.selectedAthlete?.certificates.push(response)
@@ -385,8 +385,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   onClickDownloadCertificate() {
     if (this.selectedAthlete?.certificates.length! > 0) {
       this.certificateService.getCertificatesCertificatesIdGet(this.selectedAthlete?.certificates[0].id!).subscribe({
-        next: (response: Blob) => {
-          this.selectedAthleteCertificate = URL.createObjectURL(response)
+        next: (response: CertificateSingleResponseSchema) => {
+          this.base64ToPdf(response.blob, response.title)
         }
       })
     }
@@ -400,6 +400,31 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         }
       })
     }
+  }
+
+  base64ToPdf(base64String: string, fileName: string): void {
+    const byteCharacters = atob(base64String);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+    // Erstelle einen URL für das Blob-Objekt
+    const url = window.URL.createObjectURL(blob);
+
+    // Erstelle einen versteckten Link und klicke darauf, um die PDF-Datei herunterzuladen
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.style.display = 'none';
+    a.href = url;
+    a.download = fileName;
+    a.click();
+
+    // Freigabe des Objekts
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
   }
 
   async readFileContent(file: File): Promise<Blob | ArrayBuffer | null> {
