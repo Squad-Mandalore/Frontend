@@ -46,14 +46,7 @@ export class LoginPageComponent {
         private alertService: AlertService
     ) {
         if (this.authExtService.isLoggedIn()) {
-            this.authService.whoAmIAuthWhoamiGet().subscribe({
-                next: (user: UserResponseSchema) => {
-                    this.router.navigate(['/athleten']);
-                },
-                error: () => {
-                    this.alertService.show("Abfragen des Benutzers fehlgeschlagen", "Bitte probiere es später erneut.", "error");
-                }
-            });
+          this.router.navigate(['/athleten']);
         }
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
