@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from "@angular/common"
+import { UserResponseSchema } from '../../shared/generated';
 
 @Component({
   selector: 'app-user-card',
@@ -12,8 +13,8 @@ import { CommonModule } from "@angular/common"
 export class UserCardComponent {
   @Input() showIconOnly: boolean = false;
   @Input() progress: number = 0;
-  @Input() medal: string | null = null;
-  @Input() user!: User;
+  @Input() medal?: string;
+  @Input() user?: UserResponseSchema;
 
   circumference: number = 2 * Math.PI * 24;
 
@@ -21,12 +22,4 @@ export class UserCardComponent {
     const progressDecimal = this.progress / 100;
     return this.circumference * (1 - progressDecimal);
   }
-}
-
-
-interface User {
-  id: string,
-  firstname: string,
-  lastname: string,
-  type: string,
 }

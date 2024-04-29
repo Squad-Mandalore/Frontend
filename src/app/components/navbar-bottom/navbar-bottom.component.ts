@@ -21,11 +21,11 @@ import { enterLeaveAnimation } from '../../shared/animation';
 })
 export class NavbarBottomComponent implements OnInit {
   urlParts: any = [];
-  user!: UserResponseSchema;
+  user?: UserResponseSchema;
 
   constructor(
     private route: ActivatedRoute,
-    private authExtService: AuthExtentionService, 
+    private authExtService: AuthExtentionService,
     private authService: AuthService
   ){
     this.urlParts = this.route.snapshot.url.map(segment => segment.toString());
