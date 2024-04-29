@@ -29,11 +29,12 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {CreateCompletesComponent} from '../../components/create-completes-modal/create-completes-modal.component';
 import {enterLeaveAnimation} from '../../shared/animation';
 import {CreateAthleteModalComponent} from '../../components/create-athlete-modal/create-athlete-modal.component';
+import {TertiaryButtonComponent} from "../../components/buttons/tertiary-button/tertiary-button.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, CreateCompletesComponent, CreateAthleteModalComponent],
+  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, CreateCompletesComponent, CreateAthleteModalComponent, TertiaryButtonComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
   animations: [
@@ -52,7 +53,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
   selectedAthlete: AthleteFullResponseSchema | null = null;
-  selectedAthleteCertificate: string | undefined ;
+  selectedAthleteCertificate: CertificateSingleResponseSchema | undefined ;
   selectedFile: File | null = null;
   isLoading: boolean = true;
   filter: any = {};
@@ -360,7 +361,6 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
     if (fileContent instanceof Blob) {
 
-
       // Send the body object to the backend
       this.certificateService.createCertificateCertificatesPost(fileContent, this.selectedAthlete?.id! , this.selectedAthlete?.username!+ "-Schwimmnachweis" ).subscribe({
         next: (response: CertificateResponseSchema) => {
@@ -382,26 +382,34 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Trigger download and request to the backend
   onClickDownloadCertificate() {
     if (this.selectedAthlete?.certificates.length! > 0) {
       this.certificateService.getCertificatesCertificatesIdGet(this.selectedAthlete?.certificates[0].id!).subscribe({
         next: (response: CertificateSingleResponseSchema) => {
           this.base64ToPdf(response.blob, response.title)
+          this.alertService.show('Zertifikat download', 'Zertifikat Download gestartet', 'success');
         }
       })
     }
   }
 
+  // Trigger deletion of the selected athlete-certificate
   onClickDeleteCertificate() {
     if (this.selectedAthlete?.certificates.length! > 0) {
       this.certificateService.deleteCertificateCertificatesIdDelete(this.selectedAthlete?.certificates[0].id!).subscribe({
         next: () => {
           this.selectedAthlete?.certificates.splice(0, this.selectedAthlete?.certificates.length)
+          this.alertService.show('Zertifikat gelöscht', 'Zertifikat wurde erfolgreich gelöscht.', 'success');
+        },
+        error: (error) => {
+          this.alertService.show('Erstellung fehlgeschlagen', 'Bitte versuche es später erneut', "error");
         }
       })
     }
   }
 
+  // This Method is necessary to parse the base64 string of the backend Response to a downloadable pdf
   base64ToPdf(base64String: string, fileName: string): void {
     const byteCharacters = atob(base64String);
     const byteNumbers = new Array(byteCharacters.length);
@@ -411,10 +419,10 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     const byteArray = new Uint8Array(byteNumbers);
     const blob = new Blob([byteArray], { type: 'application/pdf' });
 
-    // Erstelle einen URL für das Blob-Objekt
+    // Create URL for Blob Object
     const url = window.URL.createObjectURL(blob);
 
-    // Erstelle einen versteckten Link und klicke darauf, um die PDF-Datei herunterzuladen
+    // Create hidden Link which triggers download of the file
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.style.display = 'none';
@@ -422,11 +430,12 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     a.download = fileName;
     a.click();
 
-    // Freigabe des Objekts
+    // Release the URL-Object
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
   }
 
+  // Create Upload und parse uploaded File to a Blob which can be processed
   async readFileContent(file: File): Promise<Blob | ArrayBuffer | null> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();

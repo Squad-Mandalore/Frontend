@@ -238,16 +238,13 @@
                     </div>
                     <ng-template #filledBlock>
                       <div id="swimcert-outset-container">
-                        <a> Schwimmnachweis vorhanden </a>
+                        <p class="headline-small">Schwimmnachweis vorhanden</p>
+<!--                        TODO: Dummy Picture for style, need to be removed in final solution-->
                         <img id="swimcert-image" src="assets/img/swimmcert-exists.jpg" alt="Schwimmnachweis vorhanden"/>
-                        <div class="flex flex-col gap-10">
-                          <label class="position-relative text-align-center cursor-pointer">
-                            <a class="label-text" (click)="onClickDownloadCertificate()">Download</a>
-                          </label>
-                          <label class="position-relative text-align-center cursor-pointer">
-                            <span class="label-text" (click)="onClickDeleteCertificate()">Nachweis löschen</span>
-                          </label>
-                        </div>
+                        <div class="flex gap-10">
+                          <app-primary-button class="full-width" (click)="onClickDownloadCertificate()" [text]="'Download'" [minWidth]="'100%'"/>
+                          <app-primary-button class="full-width" (click)="onClickDeleteCertificate()" [isDeleteButton]="true" [text]="'Nachweis löschen'" [minWidth]="'100%'" [iconName]="'delete'" [strokeWidth]="'2'"/>
+                      </div>
                       </div>
                     </ng-template>
                 </div>
