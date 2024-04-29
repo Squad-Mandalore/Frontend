@@ -24,6 +24,9 @@ import { enterLeaveAnimation } from '../../shared/animation';
 import { FormGroup } from '@angular/forms';
 import { LoggerService } from '../../shared/logger.service';
 import { CreateAthleteModalComponent } from '../../components/create-athlete-modal/create-athlete-modal.component';
+import { PDFDocument, StandardFonts, rgb, PDFForm } from 'pdf-lib';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -46,6 +49,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private logger: LoggerService,
     private csvService: CsvService,
+    private http: HttpClient,
   ) {}
 
   athletes: AthleteFullResponseSchema[] = []
@@ -264,6 +268,99 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       }
     )
   }
+
+  async createPDF() {
+    // Load the PDF
+    this.http.get('/assets/pdfs/einzelpruefkarte.pdf', { responseType: 'blob' }).subscribe((file: Blob) => {
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const pdfBytes = new Uint8Array(reader.result as ArrayBuffer);
+        const pdfDoc = await PDFDocument.load(pdfBytes);
+        const form = pdfDoc.getForm();
+
+        // Fill the form with sample data
+        await this.fillPDF(form);
+
+        // Save and download the filled PDF
+        const filledPdfBytes = await pdfDoc.save();
+        const blob = new Blob([filledPdfBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'filled-form.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
+async fillPDF(form: PDFForm) {
+  // Fill the form with sample data
+  // Header
+  form.getTextField('Nachname').setText('Doe');
+  form.getTextField('Vorname').setText('John');
+  form.getTextField('TTMMJJJJ').setText('01011990');
+  form.getTextField('Alter das im Kalenderjahr erreicht wird').setText('31');
+  form.getTextField('Geschlecht w  m').setText('m');
+  const currentYear = new Date().getFullYear();
+  const year = currentYear.toString().slice(-2);
+  form.getTextField('0').setText(year);
+  form.getTextField('Telefon / E-Mail').setText('                                      / john.doe@example.com');
+  // Ausdauer
+  form.getTextField('Wert').setText('10'); // Laufen
+  form.getTextField('Wert_2').setText('20'); // 10km Lauf
+  form.getTextField('Wert_3').setText('30'); // Dauer- / Geländelauf
+  form.getTextField('Wert_4').setText('40'); // 7,5 km Walking / Nordic Walking
+  form.getTextField('Wert_5').setText('50'); // Schwimmen
+  form.getTextField('Wert_6').setText('60'); // Radfahren
+  form.getTextField('Punkte Ausdauer').setText('100');
+  form.getTextField('Datum_1').setText('01.02.2022');
+  // Kraft
+  form.getTextField('Wert_7').setText('70'); // Schlagball / Wurfball
+  form.getTextField('Wert_8').setText('80'); // Medizinball
+  form.getTextField('Wert_9').setText('90'); // Kugelstoßen
+  form.getTextField('Wert_10').setText('100'); //Steinstoßen
+  form.getTextField('Wert_11').setText('110'); // Standweitsprung
+  form.getTextField('Punkte Kraft').setText('200');
+  form.getTextField('Datum_2').setText('02.03.2022');
+  // Schnelligkeit
+  form.getTextField('Wert_12').setText('120'); // Laufen
+  form.getTextField('Wert_13').setText('130'); // Schwimmen
+  form.getTextField('Wert_14').setText('140'); // Radfahren
+  form.getTextField('Punkte Schnelligkeit').setText('300');
+  form.getTextField('Datum_3').setText('03.03.2022');
+  // Koordination
+  form.getTextField('Wert_15').setText('150'); // Hochsprung
+  form.getTextField('Wert_16').setText('160'); // Weitsprung
+  form.getTextField('Wert_17').setText('170'); // Zonenweitsprung
+  form.getTextField('Wert_18').setText('180'); // Drehwurf
+  form.getTextField('Wert_19').setText('190'); // Schleuderball
+  form.getTextField('Punkte Koordination').setText('400');
+  form.getTextField('Datum_4').setText('04.04.2022');
+  // Footer
+  form.getCheckBox('Nachweis der Schwimmfertigkeit liegt vor').check();
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  form.getTextField('Ausstellungsdatum').setText(formattedDate);
+  form.getCheckBox('Kinder und Jugendliche').check();
+  form.getTextField('GESAMTPUNKTZAHL').setText('1000');
+  form.getCheckBox('Bronze').check();
+  form.getCheckBox('Silber').check();
+  form.getCheckBox('Gold').check();
+
+  // Maybe you want to ask the user for the values
+  // form.getTextField('Ident-Nr. 6').setText('ID');
+  // form.getTextField('Ident-Nr. 5').setText('ID');
+  // form.getTextField('Ident-Nr. 4').setText('ID');
+  // form.getTextField('Ident-Nr. 3').setText('ID');
+  // form.getTextField('Ident-Nr. 2').setText('ID');
+  // form.getTextField('Ident-Nr. 1').setText('ID');
+  
+
+}
+  
 
   calculateCategoryMedal(category: string, completes: CompletesResponseSchema[]){
     if(completes.length === 0) return 'none';
