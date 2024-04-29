@@ -18,7 +18,7 @@ import { TrainerCardComponent } from '../trainer-card/trainer-card.component';
 })
 export class SidebarComponent {
   @Input() athletes: AthleteFullResponseSchema[] = [];
-  @Input() trainer: TrainerResponseSchema[] = [];
+  @Input() trainers: TrainerResponseSchema[] = [];
   @Input() type!: "athlete" | "trainer";
   @Input() modals: any = {};
   @Input() isLoading!: boolean;

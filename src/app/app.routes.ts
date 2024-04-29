@@ -7,13 +7,13 @@ import { TrainerOverviewPageComponent } from './pages/trainer-overview-page/trai
 import { HelpPageComponent } from './pages/help-page/help-page.component';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'athleten', pathMatch: 'full'},
+    {path: '', redirectTo: 'login', pathMatch: 'full'},
     {path: "login", component: LoginPageComponent},
     {path: "athleten", component: DashboardPageComponent, canActivate: [authGuard]},
-    {path: "athleten/:id", component: DashboardPageComponent},
-    {path: "trainer", component: TrainerOverviewPageComponent},
-    {path: "trainer/:id", component: TrainerOverviewPageComponent},
-    {path: "exercises", component: ExerciseOverviewComponent},
-    {path: "help", component: HelpPageComponent},
-    {path: "**", redirectTo: 'athleten'}
+    {path: "athleten/:id", component: DashboardPageComponent, canActivate: [authGuard]},
+    {path: "trainer", component: TrainerOverviewPageComponent, canActivate: [authGuard]},
+    {path: "trainer/:id", component: TrainerOverviewPageComponent, canActivate: [authGuard]},
+    {path: "exercises", component: ExerciseOverviewComponent, canActivate: [authGuard]},
+    {path: "help", component: HelpPageComponent, canActivate: [authGuard]},
+    {path: "**", redirectTo: 'login'}
 ];

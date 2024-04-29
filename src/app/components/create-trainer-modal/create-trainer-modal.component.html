@@ -1,8 +1,10 @@
-<div id="overlay" (click)="modals.createTrainerModal.isActive = false"></div>
+<div id="overlay" (click)="modal.isActive = false"></div>
 <form id="modal" [formGroup]="trainerForm" (ngSubmit)="onSubmit()">
   <div id="modal-header">
-    <p id="modal-headline">Neuen Trainer hinzufügen</p>
-    <app-icon (click)="modals.createTrainerModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+    <p id="modal-headline">{{modal.title}}</p>
+    <img src="assets/img/upload.svg" title="Upload CSV" alt="Upload Icon" (click)="triggerFileInput()" id="upload">
+    <input type="file" #fileInput (change)="onFileChange($event)" accept=".csv" style="display: none;">
+    <app-icon (click)="modal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
   </div>
     <div id="input-wrapper">
       <label class="label">
@@ -12,7 +14,7 @@
       <div id="password-password-strength-wrapper">
         <label class="label">
           <p class="label-text">Password</p>
-          <app-password-box formControlName="password"></app-password-box>
+          <app-password-box formControlName="unhashed_password"></app-password-box>
         </label>
       </div>
       <div id="name-input-wrapper">
@@ -31,7 +33,7 @@
       </label>
     </div>
   <div id="modal-footer">
-    <app-secondary-button (click)="modals.createTrainerModal.isActive = false" type="button" text="Abbrechen" minWidth="100%" description="Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen."></app-secondary-button>
-    <app-primary-button [disabled]="!trainerForm.valid" text="Trainer anlegen" minWidth="100%" description="Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt."></app-primary-button>
+    <app-secondary-button (click)="modal.isActive = false" text="Abbrechen" minWidth="100%" description="Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen."></app-secondary-button>
+    <app-primary-button [text]="modal.primeButtonText" minWidth="100%" description="Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt."></app-primary-button>
   </div>
 </form>

@@ -1,49 +1,193 @@
 <div id="overlay" (click)="modals.createExerciseModal.isActive = false"></div>
 <form id="modal" [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
-  <div id="modal-header">
-    <p id="modal-headline">Neue Übung hinzufügen</p>
-    <app-icon (click)="modals.createExerciseModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
-  </div>
-    <div id="input-wrapper">
-        <label class="label">
-            <p class="label-text">Titel</p>
-            <input class="input" type="text" formControlName="title" placeholder="100 Meter Sprint">
-        </label>
-        <div id="age-wrapper">
-            <p class="label-text">Alter</p>
-            <div id="age-input-wrapper">
+    <div id="modal-header">
+        <p id="modal-headline">Neue Übung hinzufügen</p>
+        <app-icon (click)="modals.createExerciseModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+     </div>
+    <div id="input-wrapper" class="height-80-percent">
+        <div *ngIf="page == 1" class="flex flex-col gap-20 height-full">
+            <label class="label">
+                <p class="label-text">hinzufügen zu:</p>
+                <div id="slider-wrapper-horizontal">
+                    <div class="slider-element" [ngClass]="useExistingExercise === false ? 'active' : 'disabled'" (click)="useExistingExercise = false; selectedExercise = null">
+                        <span>neuer Disziplin</span>
+                    </div>
+                    <div class="slider-element" [ngClass]="useExistingExercise === true ? 'active' : 'disabled'" (click)="useExistingExercise = true">
+                        <span>bestehender Disziplin</span>
+                    </div>
+                </div>
+            </label>
+            <div *ngIf="useExistingExercise == false" class="flex flex-col gap-20">
                 <label class="label">
-                    <p class="label-text">von</p>
-                    <input class="input" type="number" min="1" max="999" formControlName="fromAge" placeholder="1">
+                    <p class="label-text">Titel</p>
+                    <input class="input width-full" (focusin)="deactivateValidation('invalidTitle'); deactivateValidation('titleAlreadyExists')" (focusout)="validateInput('title')" [ngClass]="{'invalid' : validation.invalidTitle || validation.titleAlreadyExists}" type="text" formControlName="title" placeholder="100 Meter Sprint">
+                    <div class="error-text">
+                        <p *ngIf="validation.invalidTitle">Eingabe ist erforderlich</p>
+                        <p *ngIf="validation.titleAlreadyExists">Übung existiert bereits in dieser Kategorie</p>
+                    </div>
                 </label>
-                <label class="label">
-                    <p class="label-text">bis</p>
-                    <input class="input" type="number" min="fromAge" max="999" formControlName="toAge" placeholder="99">
-                </label>
+                <div class="label">
+                    <p class="label-text">Kategorie</p>
+                    <div id="slider-wrapper-horizontal">
+                        <div class="slider-element" *ngFor="let category of categories; index as i;" [ngClass]="selectedCategory === category.title ? 'active' : 'disabled'" (click)="selectedCategory = category.title; validateInput('title')">
+                            <span>{{ category.title }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="label">
+                    <p class="label-text">Eingabemaske</p>
+                    <div id="slider-wrapper-horizontal">
+                        <div class="slider-element" *ngFor="let mask of masks; index as i;" [ngClass]="selectedMask === mask ? 'active' : 'disabled'" (click)="selectedMask = mask">
+                            <span>{{ mask }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col height-full width-full overflow-auto gap-20" *ngIf="useExistingExercise == true">
+                <div class="flex items-center gap-10 category-wrapper" *ngFor="let category of categories; index as i;">
+                    <div class="discipline-name" data-minheight="150px">
+                        <div>{{category.title}}</div>
+                    </div>
+                    <div class="flex flex-col width-full" *ngIf="category.exercises.length !== 0; else filledState">
+                        <div (click)="selectedExercise = exercise" [ngClass]="{'active': selectedExercise?.id === exercise.id}" class="discipline-item flex items-center space-between" *ngFor="let exercise of category.exercises; index as j;">
+                            <div [title]="exercise.title">{{exercise.title}}</div>
+                        </div>
+                    </div>
+                    <ng-template #filledState>
+                        <div class="flex flex-col width-full">
+                            <p class="discipline-item-empty-state">Keine Disziplinen verfügbar</p>
+                            <p class="discipline-item-empty-state">Bitte füge zuerst eine in dieser Kategorie hinzu</p>
+                        </div>
+                    </ng-template>
+                </div>
             </div>
         </div>
-        <div class="label">
-            <p class="label-text"> Kategorie </p>
-            <div id="slider-wrapper">
-                <div class="slider-element" [ngClass]="category === 'Kraft' ? 'active' : 'disabled'" (click)="category = 'Kraft'">
-                    <span>Kraft</span>
+        <div *ngIf="page == 2" class="flex flex-col gap-20">
+            <div id="age-wrapper">
+                <p class="label-text">Alter</p>
+                <div id="age-input-wrapper">
+                    <label class="label">
+                        <p class="label-text">von</p>
+                        <input class="input width-full" (focusout)="validateInput('age'); validateInput('rule');" (focusin)="deactivateValidation('nonsenseAge'); deactivateValidation('emptyAge')" type="number" min="1" max="999" formControlName="fromAge" placeholder="1">
+                    </label>
+                    <label class="label">
+                        <p class="label-text">bis</p>
+                        <input class="input width-full" (focusout)="validateInput('age'); validateInput('rule');" (focusin)="deactivateValidation('nonsenseAge'); deactivateValidation('emptyAge')" type="number" min="fromAge" max="999" formControlName="toAge" placeholder="99">
+                    </label>
                 </div>
-                <div class="slider-element" [ngClass]="category === 'Ausdauer' ? 'active' : 'disabled'" (click)="category = 'Ausdauer'">
-                    <span>Ausdauer</span>
+                <div class="error-text">
+                    <p *ngIf="validation.emptyAge">Beide Felder müssen befüllt sein</p>
+                    <p *ngIf="validation.nonsenseAge">Anfangsalter muss mindestens so hoch sein wie Endalter</p>
                 </div>
-                <div class="slider-element" [ngClass]="category === 'Koordination' ? 'active' : 'disabled'" (click)="category = 'Koordination'">
-                    <span>Koordination</span>
+            </div>
+            <label class="label">
+                <p class="label-text">Jahr</p>
+                <input class="input width-full" type="number" min="1945" formControlName="year" placeholder="2024">
+            </label>
+            <div class="label">
+                <p class="label-text">Geschlecht</p>
+                <div id="slider-wrapper-horizontal">
+                    <div class="slider-element" [ngClass]="selectedGender === 'm' ? 'active' : 'disabled'" (click)="selectedGender = 'm'; validateInput('rule');">
+                        <span>männlich</span>
+                    </div>
+                    <div class="slider-element" [ngClass]="selectedGender === 'f' ? 'active' : 'disabled'" (click)="selectedGender = 'f'; validateInput('rule');">
+                        <span>weiblich</span>
+                    </div>
                 </div>
-                <div class="slider-element" [ngClass]="category === 'Schnelligkeit' ? 'active' : 'disabled'" (click)="category = 'Schnelligkeit'">
-                    <span>Schnelligkeit</span>
+            </div>
+            <div class="error-text">
+                <p *ngIf="validation.ruleAlreadyExists">Regel überschneidet sich mit anderer Regel in Altersgruppe und Geschlecht</p>
+            </div>
+        </div>
+        <div *ngIf="page == 3" class="flex flex-col gap-20">
+            <div class="flex flex-col gap-20 margin-auto width-full" id="common-menu" *ngIf="subPage === 1">
+                <label class="label">
+                    <p class="label-text">Gold</p>
+                    <input class="input width-full" type="number" name="anzahl" formControlName="goldQuantity" placeholder="Anzahl"/>
+                </label>
+                <div class="divider"></div>
+                <label class="label">
+                    <p class="label-text">Silber</p>
+                    <input class="input width-full" type="number" name="anzahl" formControlName="silverQuantity" placeholder="Anzahl"/>
+                </label>
+                <div class="divider"></div>
+                <label class="label">
+                    <p class="label-text">Bronze</p>
+                    <input class="input width-full" type="number" name="anzahl" formControlName="bronzeQuantity" placeholder="Anzahl"/>
+                </label>
+            </div>
+            <div class="flex flex-col gap-20 margin-auto width-full" *ngIf="subPage === 2">
+                <p class="label-text">Gold</p>
+                <div>
+                    <input class="input width-20-percent" type="number" formControlName="goldHours" placeholder="hh" style="display: inline-block"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="goldMinutes" placeholder="mm" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="goldSeconds" placeholder="ss" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="goldMilliseconds" placeholder="ms" style="display: inline-block;"/>
+                </div>
+                <div class="divider"></div>
+                <p class="label-text">Silber</p>
+                <div>
+                    <input class="input width-20-percent" type="number" formControlName="silverHours" placeholder="hh" style="display: inline-block"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="silverMinutes" placeholder="mm" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="silverSeconds" placeholder="ss" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="silverMilliseconds" placeholder="ms" style="display: inline-block;"/>
+                </div>
+                <div class="divider"></div>
+                <p class="label-text">Bronze</p>
+                <div>
+                    <input class="input width-20-percent" type="number" formControlName="bronzeHours" placeholder="hh" style="display: inline-block"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="bronzeMinutes" placeholder="mm" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="bronzeSeconds" placeholder="ss" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="bronzeMilliseconds" placeholder="ms" style="display: inline-block;"/>
+                </div>
+            </div>
+            <div class="flex flex-col gap-20 margin-auto width-full" id="common-menu" *ngIf="subPage === 3">
+                <p class="label-text">Gold</p>
+                <div>
+                    <input class="input width-20-percent" type="number" name="completes-distance-kilometers" formControlName="goldKilometers" placeholder="km" style="display: inline-block"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-meters" formControlName="goldMeters" placeholder="m" style="display: inline-block;"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-centimeters" formControlName="goldCentimeters" placeholder="cm" style="display: inline-block;"/>
+                </div>
+                <div class="divider"></div>
+                <p class="label-text">Silber</p>
+                <div>
+                    <input class="input width-20-percent" type="number" name="completes-distance-kilometers" formControlName="silverKilometers" placeholder="km" style="display: inline-block"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-meters" formControlName="silverMeters" placeholder="m" style="display: inline-block;"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-centimeters" formControlName="silverCentimeters" placeholder="cm" style="display: inline-block;"/>
+                </div>
+                <div class="divider"></div>
+                <p class="label-text">Bronze</p>
+                <div>
+                    <input class="input width-20-percent" type="number" name="completes-distance-kilometers" formControlName="bronzeKilometers" placeholder="km" style="display: inline-block"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-meters" formControlName="bronzeMeters" placeholder="m" style="display: inline-block;"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-centimeters" formControlName="bronzeCentimeters" placeholder="cm" style="display: inline-block;"/>
                 </div>
             </div>
         </div>
     </div>
-  <div id="modal-footer">
-    <app-secondary-button (click)="modals.createExerciseModal.isActive = false" type="button" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
-    <app-primary-button [disabled]="!exerciseForm.valid" [text]="'Übung anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
-  </div>
+    <div id="modal-footer">
+        <app-secondary-button *ngIf="page === 1" (click)="modals.createExerciseModal.isActive = false" type="button" [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+        <app-primary-button *ngIf="page === 1" (click)="changePage($event, 2)" [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
+        <app-secondary-button *ngIf="page === 2" (click)="changePage($event, 1)" type="button" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+        <app-primary-button *ngIf="page === 2 && (!useExistingExercise && selectedMask !== 'Medaille' || useExistingExercise && selectedExercise?.rules[0]?.bronze !== 'Bronze')" (click)="changePage($event, 3)" [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
+        <app-secondary-button *ngIf="page === 3" (click)="changePage($event, 2)" type="button" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+        <app-primary-button *ngIf="page === 3 || page === 2 && (!useExistingExercise && selectedMask === 'Medaille' || useExistingExercise && selectedExercise?.rules[0]?.bronze === 'Bronze')" [text]="'Übung anlegen'" [minWidth]="'100%'" type="submit" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
+    </div>
 </form>
 
 

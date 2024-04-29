@@ -38,6 +38,17 @@
   cursor: pointer;
 }
 
+#upload{
+  margin-left: 10px;
+  margin-right: auto;
+}
+
+#upload:hover{
+  background-color: var(--accent-100);
+  cursor: pointer;
+  border-color: var(--accent-200);
+}
+
 .label{
   display: flex;
   flex-direction: column;
@@ -224,3 +235,6 @@
   }
 }
 
+.ng-invalid {
+  border-color: red;
+}

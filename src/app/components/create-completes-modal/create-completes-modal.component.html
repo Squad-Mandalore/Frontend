@@ -2,6 +2,8 @@
 <form id="modal" [formGroup]="createCompletesForm" (ngSubmit)="onSubmit()">
   <div id="modal-header">
     <p id="modal-headline">Neue Leistung erfassen</p>
+    <img src="assets/img/upload.svg" title="Upload CSV" alt="Upload Icon" (click)="triggerFileInput()" id="upload">
+    <input type="file" #fileInput (change)="onFileChange($event)" accept=".csv" style="display: none;">
     <app-icon (click)="modals.createCompletesModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
   </div>
   <div class="flex flex-col gap-20 height-full width-full overflow-hidden padding-bottom-60" *ngIf="showPage === 1">

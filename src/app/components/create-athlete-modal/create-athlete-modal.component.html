@@ -1,8 +1,10 @@
-<div id="overlay" (click)="modals.createAthleteModal.isActive = false"></div>
+<div id="overlay" (click)="modal.isActive = false"></div>
 <form id="modal" [formGroup]="createAthleteForm" (ngSubmit)="onSubmit()">
   <div id="modal-header">
-    <p id="modal-headline">Neuen Sportler hinzufügen</p>
-    <app-icon (click)="modals.createAthleteModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+    <p id="modal-headline">{{modal.title}}</p>
+    <img src="assets/img/upload.svg" title="Upload CSV" alt="Upload Icon" (click)="triggerFileInput()" id="upload">
+    <input type="file" #fileInput (change)="onFileChange($event)" accept=".csv" style="display: none;">
+    <app-icon (click)="modal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
   </div>
     <div id="input-wrapper">
       <ng-container *ngIf="showFirstPage">
@@ -15,7 +17,7 @@
           <div id="password-password-strength-wrapper">
             <label class="label">
               <p class="label-text">Passwort</p>
-              <app-password-box formControlName="unhashed_password"/>
+              <app-password-box [isAllowedToFail]="!!selectedAthlete" formControlName="unhashed_password"/>
             </label>
           </div>
 
@@ -64,15 +66,12 @@
     </div>
   <div id="modal-footer">
     <ng-container *ngIf="showFirstPage">
-    <app-secondary-button (click)="modals.createAthleteModal.isActive = false" type="button" text="Abbrechen" minWidth="100%" description="Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen."></app-secondary-button>
+    <app-secondary-button (click)="modal.isActive = false" text="Abbrechen" minWidth="100%" description="Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen."></app-secondary-button>
       <app-primary-button (click)="onClickSwitchPage()" [text]="'Weiter'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
     </ng-container>
     <ng-container *ngIf="!showFirstPage">
-      <app-secondary-button (click)="onClickSwitchPage()" type="button" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
-      <app-primary-button [disabled]="!createAthleteForm.valid" [text]="'Sportler anlegen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
+      <app-secondary-button (click)="onClickSwitchPage()" [text]="'Zurück'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+      <app-primary-button [text]="modal.primeButtonText" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion ausgeführt.'"></app-primary-button>
     </ng-container>
   </div>
 </form>
-
-
-
