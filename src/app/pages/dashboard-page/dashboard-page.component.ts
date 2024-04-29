@@ -277,7 +277,6 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         const pdfBytes = new Uint8Array(reader.result as ArrayBuffer);
         const pdfDoc = await PDFDocument.load(pdfBytes);
         const form = pdfDoc.getForm();
-
         // Fill the form with sample data
         if (!await this.fillPDF(form)) {
           return;
@@ -293,6 +292,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        this.alertService.show('PDF erstellt', 'Die PDF wurde erfolgreich erstellt.', 'success');
       };
       reader.readAsArrayBuffer(file);
     });
@@ -461,7 +461,6 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     medalsAndPoints.forEach(({ category, points, complete }) => {
       categoryPoints[category] = { points, complete };
     });
-    console.log({ totalPoints, globalMedal, hasMedalInEachCategory: true, categoryPoints });
     return { totalPoints, globalMedal, hasMedalInEachCategory: true, categoryPoints };
   }
 
