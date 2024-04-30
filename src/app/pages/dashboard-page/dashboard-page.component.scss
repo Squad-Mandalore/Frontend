@@ -488,19 +488,30 @@
     border-radius: 2px;
 }
 
+.swimcert-wraper{
+  display: flex;
+  gap: 10px;
+}
+
+.swimcert-button-container{
+  margin-left:  auto;
+  display: flex;
+  place-self: flex-end;
+  gap: 5px;
+}
+
 #swimcert-outset-container{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 30px;
-  border: 1px dashed var(--accent-300);
   height: 100%;
   width: 100%;
   border-radius: 2px;
 }
 
 #swimcert-image{
+  display: flex;
+  align-self: center;
   height: 70%;
   width: 70%;
   border: 2px groove var(--accent-150);

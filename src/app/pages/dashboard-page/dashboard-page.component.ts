@@ -424,6 +424,13 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   // Trigger deletion of the selected athlete-certificate
   onClickDeleteCertificate() {
+    this.confirmationService.show(
+      'Schwimmnachweis wirklich löschen?',
+      'Mit dieser Aktion wird der ausgewählte Schwimmnachweis unwiderruflich gelöscht.',
+      'Nachweis löschen',
+      'Abbrechen',
+      true,
+      () => {
     if (this.selectedAthlete?.certificates.length! > 0) {
       this.certificateService.deleteCertificateCertificatesIdDelete(this.selectedAthlete?.certificates[0].id!).subscribe({
         next: () => {
@@ -434,7 +441,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
           this.alertService.show('Erstellung fehlgeschlagen', 'Bitte versuche es später erneut', "error");
         }
       })
-    }
+    }}
+    )
   }
 
   // This Method is necessary to parse the base64 string of the backend Response to a downloadable pdf
