@@ -312,11 +312,12 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       const birthYear = this.selectedAthlete.birthday?.split('-')[0];
       const age = currentYear - Number(birthYear);
       form.getTextField('Alter das im Kalenderjahr erreicht wird').setText(age.toString());
-      form.getTextField('Geschlecht w  m').setText(this.selectedAthlete.gender ?? 'D');
+      form.getTextField('Geschlecht w  m').setText(this.selectedAthlete.gender === 'm' ? 'm' : 'w');
       const year = currentYear.toString().slice(-2);
       form.getTextField('0').setText(year);
       const ttmmjjjj = this.selectedAthlete.birthday?.split('-').reverse().join('') ?? '';
       form.getTextField('TTMMJJJJ').setText(ttmmjjjj);
+      form.getTextField('Telefon / E-Mail').setText(this.selectedAthlete.email ?? '');
 
       // Ausdauer
       const ausdauerCompleteName = categoryPoints['Ausdauer']?.complete?.exercise.title.toLowerCase().replace(/\s+/g, '');
@@ -336,7 +337,9 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         this.alertService.show('Warnung', 'Ausdauer-Wert konnte nicht zugeordnet werden.', 'error');
       }
       form.getTextField('Punkte Ausdauer').setText(categoryPoints['Ausdauer']?.points?.toString() ?? '0');
-      form.getTextField('Datum_1').setText(categoryPoints['Ausdauer']?.complete?.tracked_at ?? '');
+      let trackedAt = categoryPoints['Ausdauer']?.complete?.tracked_at ?? '';
+      let germanDate = new Date(trackedAt).toLocaleDateString('de-DE');
+      form.getTextField('Datum_1').setText(germanDate);
 
       // Kraft
       const kraftCompleteName = categoryPoints['Kraft']?.complete?.exercise.title.toLowerCase().replace(/\s+/g, '');
@@ -356,7 +359,9 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         this.alertService.show('Warnung', 'Kraft-Wert konnte nicht zugeordnet werden.', 'error');
       }
       form.getTextField('Punkte Kraft').setText(categoryPoints['Kraft']?.points?.toString() ?? '0');
-      form.getTextField('Datum_2').setText(categoryPoints['Kraft']?.complete?.tracked_at ?? '');
+      trackedAt = categoryPoints['Kraft']?.complete?.tracked_at ?? '';
+      germanDate = new Date(trackedAt).toLocaleDateString('de-DE');
+      form.getTextField('Datum_2').setText(germanDate);
 
       // Schnelligkeit
       const schnellCompleteName = categoryPoints['Schnelligkeit']?.complete?.exercise.title.toLowerCase().replace(/\s+/g, '');
@@ -372,16 +377,18 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         this.alertService.show('Warnung', 'Schnelligkeit-Wert konnte nicht zugeordnet werden.', 'error');
       }
       form.getTextField('Punkte Schnelligkeit').setText(categoryPoints['Schnelligkeit']?.points?.toString() ?? '0');
-      form.getTextField('Datum_3').setText(categoryPoints['Schnelligkeit']?.complete?.tracked_at ?? '');
+      trackedAt = categoryPoints['Schnelligkeit']?.complete?.tracked_at ?? '';
+      germanDate = new Date(trackedAt).toLocaleDateString('de-DE');
+      form.getTextField('Datum_3').setText(germanDate);
 
       // Koordination
       const koordinationCompleteName = categoryPoints['Koordination']?.complete?.exercise.title.toLowerCase().replace(/\s+/g, '');
       if (koordinationCompleteName.includes('hochsprung')) {
         form.getTextField('Wert_15').setText(categoryPoints['Koordination']?.complete?.result ?? '');
-      } else if (koordinationCompleteName.includes('weitsprung')) {
-        form.getTextField('Wert_16').setText(categoryPoints['Koordination']?.complete?.result ?? '');
       } else if (koordinationCompleteName.includes('zonenweitsprung')) {
         form.getTextField('Wert_17').setText(categoryPoints['Koordination']?.complete?.result ?? '');
+      } else if (koordinationCompleteName.includes('weitsprung')) {
+        form.getTextField('Wert_16').setText(categoryPoints['Koordination']?.complete?.result ?? '');
       } else if (koordinationCompleteName.includes('drehwurf')) {
         form.getTextField('Wert_18').setText(categoryPoints['Koordination']?.complete?.result ?? '');
       } else if (koordinationCompleteName.includes('schleuderball')) {
@@ -395,17 +402,22 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         this.alertService.show('Warnung', 'Koordination-Wert konnte nicht zugeordnet werden.', 'error');
       }
       form.getTextField('Punkte Koordination').setText(categoryPoints['Koordination']?.points?.toString() ?? '0');
-      form.getTextField('Datum_4').setText(categoryPoints['Koordination']?.complete?.tracked_at ?? '');
+      trackedAt = categoryPoints['Koordination']?.complete?.tracked_at ?? '';
+      germanDate = new Date(trackedAt).toLocaleDateString('de-DE');
+      form.getTextField('Datum_4').setText(germanDate);
 
       // Footer
       if (this.selectedAthlete.certificates?.length) {
         form.getCheckBox('Nachweis der Schwimmfertigkeit liegt vor').check();
       }
       const currentDate = new Date();
-      const formattedDate = currentDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const formattedDate = currentDate.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
       form.getTextField('Ausstellungsdatum').setText(formattedDate);
       if (age < 18) {
         form.getCheckBox('Kinder und Jugendliche').check();
+      }
+      else {
+        form.getCheckBox('Erwachsene Gültigkeitsdauer bei Erwachsenen auf 5 Jahre begrenzt').check();
       }
 
       form.getTextField('GESAMTPUNKTZAHL').setText(totalPoints.toString());
