@@ -240,4 +240,10 @@
     [style.height.px]="iconHeight" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline style="fill: none; stroke-linecap: round; stroke-linejoin: round;" points="15 6 12 3 9 6"></polyline><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="3" x2="12" y1="21" x1="12"></line></svg>
 
     <svg *ngSwitchCase="'arrow-down'" class="icon" [style.strokeWidth]="strokeWidth" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path style="fill: none; stroke-linecap: round; stroke-linejoin: round;" d="M12,3V21M9,18l3,3,3-3"></path></svg>
+
+    <svg *ngSwitchCase="'download'" class="icon" [style.stroke]="iconColor" [style.width.px]="iconWidth" [style.height.px]="iconHeight" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 5V16M12 16L15 13M12 16L9 13" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M4 20V18C4 16.9391 4.42143 15.9217 5.17157 15.1716C5.92172 14.4214 6.93913 14 8 14H16C17.0609 14 18.0783 14.4214 18.8284 15.1716C19.5786 15.9217 20 16.9391 20 18V20" [attr.stroke-width]="strokeWidth" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
 </div>
