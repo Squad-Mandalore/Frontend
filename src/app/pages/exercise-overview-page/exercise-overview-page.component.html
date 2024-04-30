@@ -189,7 +189,7 @@
                         <span>{{exercise.silver}}</span>
                         <span>{{exercise.bronze}}</span>
                         <span>{{exercise.exercise.category.title}}</span>
-                        <div class="flex items-center more-icon cursor-pointer">
+                        <div class="flex items-center more-icon cursor-pointer"  *ngIf="user && user.type !== 'athlete'">
                             <app-icon [iconName]="'more-vertical'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'20'" [iconWidth]="'20'"></app-icon>
                             <div class="undermenu">
                                 <div class="menu-item">
