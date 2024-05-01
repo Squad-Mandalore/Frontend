@@ -269,7 +269,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     )
   }
 
-  async createPDF() {
+  async createPDF(athleteId: string = '') {
     // Load the PDF
     this.http.get('/assets/pdfs/einzelpruefkarte.pdf', { responseType: 'blob' }).subscribe((file: Blob) => {
       const reader = new FileReader();
@@ -278,7 +278,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         const pdfDoc = await PDFDocument.load(pdfBytes);
         const form = pdfDoc.getForm();
         // Fill the form with sample data
-        if (!await this.fillPDF(form)) {
+        if (!await this.fillPDF(form, athleteId)) {
           return;
         }
 
@@ -298,7 +298,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  async fillPDF(form: PDFForm) {
+  async fillPDF(form: PDFForm, athleteId: string = '') {
     if (this.selectedAthlete) {
       const { totalPoints, globalMedal, hasMedalInEachCategory, categoryPoints } = this.calculateGlobalMedal(this.selectedAthlete.completes);
       if (!hasMedalInEachCategory) {
@@ -306,147 +306,213 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         return false;
       }
       // PDF Header
-      form.getTextField('Nachname').setText(this.selectedAthlete.lastname ?? 'Kein');
-      form.getTextField('Vorname').setText(this.selectedAthlete.firstname ?? 'Name');
-      const currentYear = new Date().getFullYear();
-      const birthYear = this.selectedAthlete.birthday?.split('-')[0];
-      const age = currentYear - Number(birthYear);
-      form.getTextField('Alter das im Kalenderjahr erreicht wird').setText(age.toString());
-      form.getTextField('Geschlecht w  m').setText(this.selectedAthlete.gender === 'm' ? 'm' : 'w');
-      const year = currentYear.toString().slice(-2);
-      form.getTextField('0').setText(year);
-      const ttmmjjjj = this.selectedAthlete.birthday?.split('-').reverse().join('') ?? '';
-      form.getTextField('TTMMJJJJ').setText(ttmmjjjj);
-      form.getTextField('Telefon / E-Mail').setText(this.selectedAthlete.email ?? '');
+      await this.fillPDFHeader(form);
 
       // Ausdauer
-      const ausdauerCompleteName = categoryPoints['Ausdauer']?.complete?.exercise.title.toLowerCase().replace(/\s+/g, '');
-      if (ausdauerCompleteName.includes('laufen')) {
-        form.getTextField('Wert').setText(categoryPoints['Ausdauer']?.complete?.result ?? '');
-      } else if (ausdauerCompleteName.includes('10kmlauf')) {
-        form.getTextField('Wert_2').setText(categoryPoints['Ausdauer']?.complete?.result ?? '');
-      } else if (ausdauerCompleteName.includes('dauer-/geländelauf')) {
-        form.getTextField('Wert_3').setText(categoryPoints['Ausdauer']?.complete?.result ?? '');
-      } else if (ausdauerCompleteName.includes('7,5kmwalking/nordicwalking')) {
-        form.getTextField('Wert_4').setText(categoryPoints['Ausdauer']?.complete?.result ?? '');
-      } else if (ausdauerCompleteName.includes('schwimmen')) {
-        form.getTextField('Wert_5').setText(categoryPoints['Ausdauer']?.complete?.result ?? '');
-      } else if (ausdauerCompleteName.includes('radfahren')) {
-        form.getTextField('Wert_6').setText(categoryPoints['Ausdauer']?.complete?.result ?? '');
-      } else {
-        this.alertService.show('Warnung', 'Ausdauer-Wert konnte nicht zugeordnet werden.', 'error');
-      }
-      form.getTextField('Punkte Ausdauer').setText(categoryPoints['Ausdauer']?.points?.toString() ?? '0');
-      let trackedAt = categoryPoints['Ausdauer']?.complete?.tracked_at ?? '';
-      let germanDate = new Date(trackedAt).toLocaleDateString('de-DE');
-      form.getTextField('Datum_1').setText(germanDate);
-
+      await this.fillPDFAusdauer(form, categoryPoints);
       // Kraft
-      const kraftCompleteName = categoryPoints['Kraft']?.complete?.exercise.title.toLowerCase().replace(/\s+/g, '');
-      if (kraftCompleteName.includes('schlagball/wurfball')) {
-        form.getTextField('Wert_7').setText(categoryPoints['Kraft']?.complete?.result ?? '');
-      } else if (kraftCompleteName.includes('medizinball')) {
-        form.getTextField('Wert_8').setText(categoryPoints['Kraft']?.complete?.result ?? '');
-      } else if (kraftCompleteName.includes('kugelstoßen')) {
-        form.getTextField('Wert_9').setText(categoryPoints['Kraft']?.complete?.result ?? '');
-      } else if (kraftCompleteName.includes('steinstoßen')) {
-        form.getTextField('Wert_10').setText(categoryPoints['Kraft']?.complete?.result ?? '');
-      } else if (kraftCompleteName.includes('standweitsprung')) {
-        form.getTextField('Wert_11').setText(categoryPoints['Kraft']?.complete?.result ?? '');
-      } else if (kraftCompleteName.includes('gerätturnen')) {
-        form.getTextField('Übung 627').setText(categoryPoints['Kraft']?.complete?.result ?? '');
-      } else {
-        this.alertService.show('Warnung', 'Kraft-Wert konnte nicht zugeordnet werden.', 'error');
-      }
-      form.getTextField('Punkte Kraft').setText(categoryPoints['Kraft']?.points?.toString() ?? '0');
-      trackedAt = categoryPoints['Kraft']?.complete?.tracked_at ?? '';
-      germanDate = new Date(trackedAt).toLocaleDateString('de-DE');
-      form.getTextField('Datum_2').setText(germanDate);
-
+      await this.fillPDFKraft(form, categoryPoints);
       // Schnelligkeit
-      const schnellCompleteName = categoryPoints['Schnelligkeit']?.complete?.exercise.title.toLowerCase().replace(/\s+/g, '');
-      if (schnellCompleteName.includes('laufen')) {
-        form.getTextField('Wert_12').setText(categoryPoints['Schnelligkeit']?.complete?.result ?? '');
-      } else if (schnellCompleteName.includes('schwimmen')) {
-        form.getTextField('Wert_13').setText(categoryPoints['Schnelligkeit']?.complete?.result ?? '');
-      } else if (schnellCompleteName.includes('radfahren')) {
-        form.getTextField('Wert_14').setText(categoryPoints['Schnelligkeit']?.complete?.result ?? '');
-      } else if (schnellCompleteName.includes('gerätturnen')) {
-        form.getTextField('Übung 634').setText(categoryPoints['Schnelligkeit']?.complete?.result ?? '');
-      } else {
-        this.alertService.show('Warnung', 'Schnelligkeit-Wert konnte nicht zugeordnet werden.', 'error');
-      }
-      form.getTextField('Punkte Schnelligkeit').setText(categoryPoints['Schnelligkeit']?.points?.toString() ?? '0');
-      trackedAt = categoryPoints['Schnelligkeit']?.complete?.tracked_at ?? '';
-      germanDate = new Date(trackedAt).toLocaleDateString('de-DE');
-      form.getTextField('Datum_3').setText(germanDate);
-
+      await this.fillPDFSchnelligkeit(form, categoryPoints);
       // Koordination
-      const koordinationCompleteName = categoryPoints['Koordination']?.complete?.exercise.title.toLowerCase().replace(/\s+/g, '');
-      if (koordinationCompleteName.includes('hochsprung')) {
-        form.getTextField('Wert_15').setText(categoryPoints['Koordination']?.complete?.result ?? '');
-      } else if (koordinationCompleteName.includes('zonenweitsprung')) {
-        form.getTextField('Wert_17').setText(categoryPoints['Koordination']?.complete?.result ?? '');
-      } else if (koordinationCompleteName.includes('weitsprung')) {
-        form.getTextField('Wert_16').setText(categoryPoints['Koordination']?.complete?.result ?? '');
-      } else if (koordinationCompleteName.includes('drehwurf')) {
-        form.getTextField('Wert_18').setText(categoryPoints['Koordination']?.complete?.result ?? '');
-      } else if (koordinationCompleteName.includes('schleuderball')) {
-        form.getTextField('Wert_19').setText(categoryPoints['Koordination']?.complete?.result ?? '');
-      } else if (koordinationCompleteName.includes('seilspringen')) {
-        form.getTextField('Übung').setText(categoryPoints['Koordination']?.complete?.exercise.title.replace('Seilspringen ', '') ?? '');
-        form.getTextField('Anzahl 2').setText(categoryPoints['Koordination']?.complete?.result ?? '');
-      } else if (koordinationCompleteName.includes('gerätturnen')) {
-        form.getTextField('Übung 647').setText(categoryPoints['Koordination']?.complete?.result ?? '');
-      } else {
-        this.alertService.show('Warnung', 'Koordination-Wert konnte nicht zugeordnet werden.', 'error');
-      }
-      form.getTextField('Punkte Koordination').setText(categoryPoints['Koordination']?.points?.toString() ?? '0');
-      trackedAt = categoryPoints['Koordination']?.complete?.tracked_at ?? '';
-      germanDate = new Date(trackedAt).toLocaleDateString('de-DE');
-      form.getTextField('Datum_4').setText(germanDate);
+      await this.fillPDFKoordination(form, categoryPoints);
 
       // Footer
-      if (this.selectedAthlete.certificates?.length) {
-        form.getCheckBox('Nachweis der Schwimmfertigkeit liegt vor').check();
-      }
-      const currentDate = new Date();
-      const formattedDate = currentDate.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
-      form.getTextField('Ausstellungsdatum').setText(formattedDate);
-      if (age < 18) {
-        form.getCheckBox('Kinder und Jugendliche').check();
-      }
-      else {
-        form.getCheckBox('Erwachsene Gültigkeitsdauer bei Erwachsenen auf 5 Jahre begrenzt').check();
-      }
+      await this.fillPDFFooter(form, totalPoints, globalMedal);
 
-      form.getTextField('GESAMTPUNKTZAHL').setText(totalPoints.toString());
-      switch (globalMedal) {
-        case 'gold':
-          form.getCheckBox('Gold').check();
-          break;
-        case 'silver':
-          form.getCheckBox('Silber').check();
-          break;
-        case 'bronze':
-          form.getCheckBox('Bronze').check();
-          break;
-        default:
-          break;
+      if (athleteId) {
+        form.getTextField('Ident-Nr. 6').setText(athleteId);
+        form.getTextField('Ident-Nr. 5').setText(athleteId);
+        form.getTextField('Ident-Nr. 4').setText(athleteId);
+        form.getTextField('Ident-Nr. 3').setText(athleteId);
+        form.getTextField('Ident-Nr. 2').setText(athleteId);
+        form.getTextField('Ident-Nr. 1').setText(athleteId);
       }
       return true;
     }
     this.alertService.show('Fehler', 'Kein Athlet gefunden.', 'error');
-    return false;
-    // Maybe you want to ask the user for the values
-    // form.getTextField('Ident-Nr. 6').setText('ID');
-    // form.getTextField('Ident-Nr. 5').setText('ID');
-    // form.getTextField('Ident-Nr. 4').setText('ID');
-    // form.getTextField('Ident-Nr. 3').setText('ID');
-    // form.getTextField('Ident-Nr. 2').setText('ID');
-    // form.getTextField('Ident-Nr. 1').setText('ID');
+    return false
 
+  }
 
+  async fillPDFHeader(form: PDFForm) {
+    if (!this.selectedAthlete) return;
+    form.getTextField('Nachname').setText(this.selectedAthlete.lastname ?? 'Kein');
+    form.getTextField('Vorname').setText(this.selectedAthlete.firstname ?? 'Name');
+    const currentYear = new Date().getFullYear();
+    const birthYear = this.selectedAthlete.birthday?.split('-')[0];
+    const age = currentYear - Number(birthYear);
+    form.getTextField('Alter das im Kalenderjahr erreicht wird').setText(age.toString());
+    form.getTextField('Geschlecht w  m').setText(this.selectedAthlete.gender === 'm' ? 'm' : 'w');
+    const year = currentYear.toString().slice(-2);
+    form.getTextField('0').setText(year);
+    const ttmmjjjj = this.selectedAthlete.birthday?.split('-').reverse().join('') ?? '';
+    form.getTextField('TTMMJJJJ').setText(ttmmjjjj);
+    const email = this.selectedAthlete.email ?? 'E-Mail';
+    form.getTextField('Telefon / E-Mail').setText(`+49 XXX XXXXXXX / ${email}`);
+  }
+
+  async fillPDFAusdauer(form: PDFForm, categoryPoints: any) {
+    const ausdauerCompleteName = categoryPoints['Ausdauer']?.complete?.exercise.title.toLowerCase().replace(/\s+/g, '');
+    const ausdauerResult = categoryPoints['Ausdauer']?.complete?.result ?? '';
+    const [hours, minutes, seconds, milliseconds] = ausdauerResult.split(':');
+    const totalMinutes = parseInt(hours) * 60 + parseInt(minutes);
+    const formattedResult = `${totalMinutes}, ${seconds}`;
+
+    if (ausdauerCompleteName.includes('laufen')) {
+      form.getTextField('Wert').setText(formattedResult);
+    } else if (ausdauerCompleteName.includes('10kmlauf')) {
+      form.getTextField('Wert_2').setText(formattedResult);
+    } else if (ausdauerCompleteName.includes('dauer-/geländelauf')) {
+      form.getTextField('Wert_3').setText(formattedResult);
+    } else if (ausdauerCompleteName.includes('7,5kmwalking/nordicwalking')) {
+      form.getTextField('Wert_4').setText(formattedResult);
+    } else if (ausdauerCompleteName.includes('schwimmen')) {
+      form.getTextField('Wert_5').setText(formattedResult);
+    } else if (ausdauerCompleteName.includes('radfahren')) {
+      form.getTextField('Wert_6').setText(formattedResult);
+    } else {
+      this.alertService.show('Warnung', 'Ausdauer-Wert konnte nicht zugeordnet werden.', 'error');
+    }
+
+    form.getTextField('Punkte Ausdauer').setText(categoryPoints['Ausdauer']?.points?.toString() ?? '0');
+    const trackedAt = categoryPoints['Ausdauer']?.complete?.tracked_at ?? '';
+    const germanDate = new Date(trackedAt).toLocaleDateString('de-DE');
+    form.getTextField('Datum_1').setText(germanDate);
+  }
+
+  async fillPDFKraft(form: PDFForm, categoryPoints: any) {
+    const kraftCompleteName = categoryPoints['Kraft']?.complete?.exercise.title.toLowerCase().replace(/\s+/g, '');
+    const kraftResult = categoryPoints['Kraft']?.complete?.result ?? '';
+    let formattedResult = '';
+
+    if (kraftCompleteName.includes('gerätturnen')) {
+      form.getTextField('Übung 627').setText(kraftResult);
+    } else {
+      const [km, mmm, cmcm] = kraftResult.split(':');
+      const totalMeters = parseInt(km) * 1000 + parseInt(mmm) * 100 + parseInt(cmcm);
+      formattedResult = `${totalMeters}, ${cmcm}`;
+
+      if (kraftCompleteName.includes('schlagball/wurfball')) {
+        form.getTextField('Wert_7').setText(formattedResult);
+      } else if (kraftCompleteName.includes('medizinball')) {
+        form.getTextField('Wert_8').setText(formattedResult);
+      } else if (kraftCompleteName.includes('kugelstoßen')) {
+        form.getTextField('Wert_9').setText(formattedResult);
+      } else if (kraftCompleteName.includes('steinstoßen')) {
+        form.getTextField('Wert_10').setText(formattedResult);
+      } else if (kraftCompleteName.includes('standweitsprung')) {
+        form.getTextField('Wert_11').setText(formattedResult);
+      } else {
+        this.alertService.show('Warnung', 'Kraft-Wert konnte nicht zugeordnet werden.', 'error');
+      }
+    }
+
+    form.getTextField('Punkte Kraft').setText(categoryPoints['Kraft']?.points?.toString() ?? '0');
+    const trackedAt = categoryPoints['Kraft']?.complete?.tracked_at ?? '';
+    const germanDate = new Date(trackedAt).toLocaleDateString('de-DE');
+    form.getTextField('Datum_2').setText(germanDate);
+  }
+
+  async fillPDFSchnelligkeit(form: PDFForm, categoryPoints: any) {
+    const schnellCompleteName = categoryPoints['Schnelligkeit']?.complete?.exercise.title.toLowerCase().replace(/\s+/g, '');
+    const schnellResult = categoryPoints['Schnelligkeit']?.complete?.result ?? '';
+    let formattedResult = '';
+
+    if (schnellCompleteName.includes('gerätturnen')) {
+      form.getTextField('Übung 634').setText(schnellResult);
+    } else {
+      const [hh, mm, ss, msmsms] = schnellResult.split(':');
+      const totalSeconds = parseInt(hh) * 3600 + parseInt(mm) * 60 + parseInt(ss) + parseInt(msmsms.slice(0, 2)) / 1000;
+      formattedResult = `${totalSeconds}, ${msmsms.slice(0, 2)}`;
+
+      if (schnellCompleteName.includes('laufen')) {
+        form.getTextField('Wert_12').setText(formattedResult);
+      } else if (schnellCompleteName.includes('schwimmen')) {
+        form.getTextField('Wert_13').setText(formattedResult);
+      } else if (schnellCompleteName.includes('radfahren')) {
+        form.getTextField('Wert_14').setText(formattedResult);
+      } else {
+        this.alertService.show('Warnung', 'Schnelligkeit-Wert konnte nicht zugeordnet werden.', 'error');
+      }
+    }
+
+    form.getTextField('Punkte Schnelligkeit').setText(categoryPoints['Schnelligkeit']?.points?.toString() ?? '0');
+    const trackedAt = categoryPoints['Schnelligkeit']?.complete?.tracked_at ?? '';
+    const germanDate = new Date(trackedAt).toLocaleDateString('de-DE');
+    form.getTextField('Datum_3').setText(germanDate);
+  }
+
+  async fillPDFKoordination(form: PDFForm, categoryPoints: any) {
+    const koordinationCompleteName = categoryPoints['Koordination']?.complete?.exercise.title.toLowerCase().replace(/\s+/g, '');
+    const koordinationResult = categoryPoints['Koordination']?.complete?.result ?? '';
+    let formattedResult = '';
+
+    if (koordinationCompleteName.includes('hochsprung') || (koordinationCompleteName.includes('weitsprung') && !koordinationCompleteName.includes('zonenweitsprung')) || koordinationCompleteName.includes('schleuderball')) {
+      const [km, mmm, cmcm] = koordinationResult.split(':');
+      const totalMeters = parseInt(km) * 1000 + parseInt(mmm) * 100 + parseInt(cmcm);
+      formattedResult = `${totalMeters}, ${cmcm}`;
+    } else {
+      formattedResult = koordinationResult;
+    }
+
+    if (koordinationCompleteName.includes('hochsprung')) {
+      form.getTextField('Wert_15').setText(formattedResult);
+    } else if (koordinationCompleteName.includes('zonenweitsprung')) {
+      form.getTextField('Wert_17').setText(formattedResult.replace(/^0+/, ''));
+    } else if (koordinationCompleteName.includes('weitsprung')) {
+      form.getTextField('Wert_16').setText(formattedResult);
+    } else if (koordinationCompleteName.includes('drehwurf')) {
+      form.getTextField('Wert_18').setText(formattedResult.replace(/^0+/, ''));
+    } else if (koordinationCompleteName.includes('schleuderball')) {
+      form.getTextField('Wert_19').setText(formattedResult);
+    } else if (koordinationCompleteName.includes('seilspringen')) {
+      form.getTextField('Übung').setText(categoryPoints['Koordination']?.complete?.exercise.title.replace('Seilspringen ', '') ?? '');
+      form.getTextField('Anzahl 2').setText(formattedResult.replace(/^0+/, ''));
+    } else if (koordinationCompleteName.includes('gerätturnen')) {
+      form.getTextField('Übung 647').setText(formattedResult);
+    } else {
+      this.alertService.show('Warnung', 'Koordination-Wert konnte nicht zugeordnet werden.', 'error');
+    }
+
+    form.getTextField('Punkte Koordination').setText(categoryPoints['Koordination']?.points?.toString() ?? '0');
+    const trackedAt = categoryPoints['Koordination']?.complete?.tracked_at ?? '';
+    const germanDate = new Date(trackedAt).toLocaleDateString('de-DE');
+    form.getTextField('Datum_4').setText(germanDate);
+  }
+
+  async fillPDFFooter(form: PDFForm, totalPoints: number, globalMedal: string) {
+    if (!this.selectedAthlete) return;
+    if (this.selectedAthlete.certificates?.length) {
+      form.getCheckBox('Nachweis der Schwimmfertigkeit liegt vor').check();
+    }
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    form.getTextField('Ausstellungsdatum').setText(formattedDate);
+    const currentYear = new Date().getFullYear();
+    const birthYear = this.selectedAthlete.birthday?.split('-')[0];
+    const age = currentYear - Number(birthYear);
+    if (age < 18) {
+      form.getCheckBox('Kinder und Jugendliche').check();
+    }
+    else {
+      form.getCheckBox('Erwachsene Gültigkeitsdauer bei Erwachsenen auf 5 Jahre begrenzt').check();
+    }
+
+    form.getTextField('GESAMTPUNKTZAHL').setText(totalPoints.toString());
+    switch (globalMedal) {
+      case 'gold':
+        form.getCheckBox('Gold').check();
+        break;
+      case 'silver':
+        form.getCheckBox('Silber').check();
+        break;
+      case 'bronze':
+        form.getCheckBox('Bronze').check();
+        break;
+      default:
+        break;
+    }
   }
   
   calculateGlobalMedal(completes: CompletesResponseSchema[]) {
