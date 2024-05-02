@@ -1,13 +1,13 @@
 #modal{
     z-index: 110;
     height: minmax(170px, fit-content);
-    width: 500px;
-    padding: 20px;
+    width: 31.25rem;
+    padding: 1.25rem;
     background-color: var(--accent-0);
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    border-radius: 5px;
+    gap: 1.875rem;
+    border-radius: 0.3125rem;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -19,15 +19,15 @@
     height: fit-content;
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    gap: 0.625rem;
 }
 
 #modal-content{
-    width: calc(100% - 50px);
+    width: calc(100% - 3.125rem);
     height: fit-content;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 0.9375rem;
 }
 
 #modal-footer{
@@ -36,7 +36,7 @@
     display: flex;
     align-items: center;
     justify-content: end;
-    gap: 10px;
+    gap: 0.625rem;
 }
 
 #overlay{
@@ -63,7 +63,7 @@
 
 #description{
     font-family: 'Inter Medium';
-    font-size: 15px;
+    font-size: 0.9375rem;
     color: var(--accent-400);
     width: 100%;
     text-overflow: ellipsis;

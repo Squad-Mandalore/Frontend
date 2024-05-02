@@ -9,19 +9,19 @@
 }
 
 #modal{
-  height: 580px;
-  width: 450px;
-  padding: 20px;
+  height: 36.25rem;
+  width: 28.125rem;
+  padding: 1.25rem;
   background-color: var(--accent-0);
-  border-radius: 10px;
+  border-radius: 0.625rem;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 10px 10px 40px #00000020;
+  box-shadow: 0.625rem 0.625rem 2.5rem #00000020;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.25rem;
 }
 
 #modal-header{
@@ -31,12 +31,12 @@
 }
 
 #modal-headline{
-  font-size: 18px;
+  font-size: 1.125rem;
   font-family: "Inter Medium";
 }
 
 .headline-small{
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-family: "Inter Medium";
   color: var(--accent-900);
 }
@@ -46,7 +46,7 @@
 }
 
 #upload{
-  margin-left: 10px;
+  margin-left: 0.625rem;
   margin-right: auto;
 }
 
@@ -58,22 +58,22 @@
 
 .category-wrapper{
   height: fit-content;
-  width: calc(100% - 15px);
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--accent-150);
+  width: calc(100% - 0.9375rem);
+  padding-bottom: 0.625rem;
+  border-bottom: 0.0625rem solid var(--accent-150);
 }
 
 .discipline-name{
   font-family: "Inter Medium";
-  font-size: 14px;
-  width: 37px;
+  font-size: 0.875rem;
+  width: 2.3125rem;
   height: 100%;
-  min-height: 120px;
-  padding: 10px;
+  min-height: 7.5rem;
+  padding: 0.625rem;
   background-color: var(--brand-100);
   color: var(--brand-500);
   position: relative;
-  border-radius: 3px;
+  border-radius: 0.1875rem;
 }
 
 .discipline-name>div{
@@ -85,25 +85,25 @@
 
 .discipline-item{
   font-family: "Inter Medium";
-  font-size: 14px;
-  padding: 10px;
+  font-size: 0.875rem;
+  padding: 0.625rem;
   color: var(--accent-600);
   transition: all 200ms;
-  border: 1px solid transparent;
-  border-radius: 3px;
+  border: 0.0625rem solid transparent;
+  border-radius: 0.1875rem;
   width: 100%;
 }
 
 .discipline-item-empty-state{
   font-family: "Inter Medium";
-  font-size: 14px;
-  padding: 10px;
+  font-size: 0.875rem;
+  padding: 0.625rem;
   color: var(--accent-600);
   width: 100%;
 }
 
 .discipline-item>div:first-child{
-  width: 150px;
+  width: 9.375rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -138,19 +138,19 @@
   justify-content: space-between;
 }
 .gap-5{
-  gap: 5px;
+  gap: 0.3125rem;
 }
 .gap-10{
-  gap: 10px;
+  gap: 0.625rem;
 }
 .gap-15{
-  gap: 15px;
+  gap: 0.9375rem;
 }
 .gap-20{
-  gap: 20px;
+  gap: 1.25rem;
 }
 .font-size-13{
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .height-full{
   height: 100%;
@@ -168,7 +168,7 @@
   overflow: hidden;
 }
 .padding-bottom-60{
-  padding-bottom: 60px;
+  padding-bottom: 3.75rem;
 }
 .margin-auto{
   margin: auto;
@@ -177,7 +177,7 @@
   margin-left: auto;
 }
 .margin-top-30{
-  margin-top: 30px;
+  margin-top: 1.875rem;
 }
 .text-accent-500{
   color: var(--accent-500);
@@ -186,15 +186,15 @@
 .label{
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .count-label{
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
   width: 60%;
 }
 
@@ -208,28 +208,28 @@
 
 .label-text{
   font-family: "Inter Medium";
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .input{
   display: flex;
-  padding: 5px 20px;
-  height: 50px;
+  padding: 0.3125rem 1.25rem;
+  height: 3.125rem;
   width: 100%;
-  border: 1px solid var(--accent-300);
+  border: 0.0625rem solid var(--accent-300);
   color: var(--accent-500);
   transition: all 150ms;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
 }
 
 .multiple-input{
-  padding: 5px 20px;
-  height: 50px;
+  padding: 0.3125rem 1.25rem;
+  height: 3.125rem;
   width: 20%;
-  border: 1px solid var(--accent-300);
+  border: 0.0625rem solid var(--accent-300);
   color: var(--accent-500);
   transition: all 150ms;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -240,7 +240,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .input:focus, .input:hover, .multiple-input:focus, .multiple-input:hover, .time-input:focus, .time-input:hover{
   outline: 0;
-  border: 1px solid var(--brand-500);
+  border: 0.0625rem solid var(--brand-500);
 }
 
 form{
@@ -252,40 +252,40 @@ form{
 #password-password-strength-wrapper{
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.625rem;
 }
 
 #progress-wrapper{
-  height: 5px;
+  height: 0.3125rem;
   width: 100%;
   background-color: var(--accent-150);
-  border-radius: 100px;
+  border-radius: 6.25rem;
 }
 
 #progress-bar{
   height: 100%;
-  border-radius: 100px;
+  border-radius: 6.25rem;
 }
 
 #password-strength-text{
   color: var(--accent-500);
-  font-size: 10px;
+  font-size: 0.625rem;
   margin-left: auto;
 }
 
 #name-input-wrapper{
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.625rem;
 }
 
 #modal-footer{
   display: flex;
   align-items: center;
   width: 90%;
-  gap: 20px;
+  gap: 1.25rem;
   position: absolute;
-  bottom: 20px;
+  bottom: 1.25rem;
 }
 
 #modal-footer *{
@@ -293,49 +293,49 @@ form{
 }
 
 #Koordination, #Kraft, #Ausdauer, #Schnelligkeit {
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
 .category-title-wrapper {
-  border-radius: 3px;
-  font-size: 14px;
+  border-radius: 0.1875rem;
+  font-size: 0.875rem;
   font-family: 'Inter Medium';
   writing-mode: vertical-rl;
   transform: rotate(180deg);
 }
 
 .discipline {
-  border-radius: 3px;
-  width: 363px;
-  height: 35px;
+  border-radius: 0.1875rem;
+  width: 22.6875rem;
+  height: 2.1875rem;
   display: flex;
   justify-content: space-between;
 }
 
 .discipline-title-wrapper {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-family: 'Inter Medium';
-  width: 190px;
-  height: 15px;
+  width: 11.875rem;
+  height: 0.9375rem;
 }
 
 .last-date {
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-family: 'Inter Medium';
   display: flex;
-  width: 101px;
-  height: 13px;
+  width: 6.3125rem;
+  height: 0.8125rem;
   white-space: nowrap;
 }
 
 .medal {
-  width: 12px;
-  height: 12px;
-  border-radius: 100px;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 6.25rem;
 }
 .none{
   background-color: transparent;
-  border: 1px solid var(--accent-500);
+  border: 0.0625rem solid var(--accent-500);
 }
 .gold{
   background-color: var(--gold);
@@ -348,10 +348,10 @@ form{
 }
 
 #discipline-menu-header {
-  width: 410px;
-  height: 24px;
-  margin-bottom: 20px;
-  font-size: 18px;
+  width: 25.625rem;
+  height: 1.5rem;
+  margin-bottom: 1.25rem;
+  font-size: 1.125rem;
   font-family: 'Inter Medium';
 }
 
@@ -359,29 +359,29 @@ form{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 142px;
-  margin-bottom: 20px;
-  font-size: 15px;
-  margin-top: 30px;
+  width: 8.875rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.9375rem;
+  margin-top: 1.875rem;
   font-family: 'Inter Medium';
 }
 
 .test-button-space{
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 
 .specific-discipline{
   display: flex;
-  font-size: 15px;
-  margin-top: 30px;
-  margin-bottom: 150px;
+  font-size: 0.9375rem;
+  margin-top: 1.875rem;
+  margin-bottom: 9.375rem;
   font-family: "TeleNeo Medium";
 }
 
 // erstmal gucken lol
 .option {
-  padding: 10px;
-  border: 1px solid #ddd; /* Leichte Grenze für jede Option */
+  padding: 0.625rem;
+  border: 0.0625rem solid #ddd; /* Leichte Grenze für jede Option */
   font-family: "TeleNeo Medium";
 }
 
@@ -391,7 +391,7 @@ input[type="radio"] {
 
 input[type="radio"]:checked + label {
   background-color: lightblue; /* Hintergrundfarbe für ausgewähltes Label */
-  border-radius: 5px; /* Optional: fügt abgerundete Ecken hinzu */
+  border-radius: 0.3125rem; /* Optional: fügt abgerundete Ecken hinzu */
 }
 
 #slider-wrapper{
@@ -399,20 +399,20 @@ input[type="radio"]:checked + label {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  gap: 8px;
-  padding: 5px;
+  gap: 0.5rem;
+  padding: 0.3125rem;
   background-color: var(--accent-150);
-  border-radius: 5px;
+  border-radius: 0.3125rem;
 }
 
 .slider-element{
   width: 100%;
-  height: 36px;
-  border-radius: 3px;
+  height: 2.25rem;
+  border-radius: 0.1875rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-family: "Inter Medium";
   transition: all 200ms;
 }

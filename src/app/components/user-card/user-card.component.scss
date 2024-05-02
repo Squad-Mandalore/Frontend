@@ -1,0 +1,115 @@
+    .skeleton {
+        background-color: var(--accent-150);
+    }
+
+    .width-95{
+        width: 5.9375rem;
+    }
+    
+    .width-200{
+        width: 12.5rem;
+
+    }
+
+    .border-radius-full{
+        border-radius: 6.25rem;
+    }
+
+    .height-12{
+        height: 0.75rem;
+    }
+
+    .height-10{
+        height: 0.625rem;
+    }
+
+    @keyframes progress-bar {
+        from {stroke-dashoffset: 150;}
+        to {stroke-dashoffset: attr(dashoffset);}
+    }
+    #progress-bar *{
+        animation: progress-bar 1s;
+    }
+    #progress-bar{
+        transform: scale(1.4) rotate(180deg); 
+        padding: 0.0625rem;
+        @media (max-width: 56.25rem) {
+            transform: scale(1) rotate(180deg); 
+        }
+    }
+    #progress{
+        display: grid;
+        place-items: center;
+        height: 2.5rem;
+        width: 2.5rem;
+    }
+    .grid-item{
+        grid-row-start: 1;
+        grid-row-end: 2;
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+    #text-wrapper{
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        max-width: 11.25rem;
+        @media (max-width: 56.25rem) {
+            display: none;    
+        }
+    }
+    #name{
+        font-size: 1.0rem;
+        font-family: "Inter Medium";
+        font-weight: 500;
+        letter-spacing: -0.0.1875rem;
+        width: 100%;
+        overflow: hidden;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+        @media (max-width: 56.25rem) {
+            display: none;    
+        }
+    }
+    #role{
+        font-size: 0.8125rem;
+        font-family: "Inter Medium";
+        font-weight: 500;
+        color: var(--accent-300);
+        overflow: hidden;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+        @media (max-width: 56.25rem) {
+            display: none;    
+        }
+    }
+    .card{
+        display: flex;
+        gap: 1.25rem;
+        width: fit-content;
+        align-items: center;
+        height: 2.5rem;
+        min-width: 12.5rem;
+        @media (max-width: 56.25rem) {
+            max-width: 2.5rem; 
+            min-width: 2.5rem;     
+        }
+    }
+    #icon{
+        background-color: var(--accent-150);
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 100%;
+        font-family: "Inter Medium";
+        font-weight: 500;
+        font-size: 1.0rem;
+        @media (max-width: 56.25rem) {
+            width: 2rem;
+            height: 2rem;  
+            font-size: 0.9rem;
+        }
+    }
+
