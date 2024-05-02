@@ -412,9 +412,11 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   // Trigger download and request to the backend
-  onClickDownloadCertificate() {
-    if (this.selectedAthlete?.certificates.length! > 0) {
-      this.certificateService.getCertificatesCertificatesIdGet(this.selectedAthlete?.certificates[0].id!).subscribe({
+  onClickDownloadCertificate(selectedAthlete: AthleteFullResponseSchema | undefined, event: Event) {
+    // stopPropagation because eventEmitter in button component triggers the method twice
+    event.stopPropagation()
+    if (selectedAthlete!.certificates.length! > 0) {
+      this.certificateService.getCertificatesCertificatesIdGet(selectedAthlete!.certificates[0].id!).subscribe({
         next: (response: CertificateSingleResponseSchema) => {
           this.base64ToPdf(response.blob, response.title)
           this.alertService.show('Zertifikat download', 'Zertifikat Download gestartet', 'success');
