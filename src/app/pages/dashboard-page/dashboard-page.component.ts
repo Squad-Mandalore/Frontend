@@ -36,11 +36,12 @@ import { FormGroup } from '@angular/forms';
 import { LoggerService } from '../../shared/logger.service';
 import { CreateAthleteModalComponent } from '../../components/create-athlete-modal/create-athlete-modal.component';
 import {TertiaryButtonComponent} from "../../components/buttons/tertiary-button/tertiary-button.component";
+import {QuaternaryButtonComponent} from "../../components/buttons/quaternary-button/quaternary-button.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, CreateCompletesComponent, CreateAthleteModalComponent, TertiaryButtonComponent],
+  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, CreateCompletesComponent, CreateAthleteModalComponent, TertiaryButtonComponent, QuaternaryButtonComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
   animations: [

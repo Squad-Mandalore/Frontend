@@ -241,8 +241,8 @@
                         <div class="swimcert-wraper">
                         <p class="headline-small">Schwimmnachweis vorhanden</p>
                         <div class="swimcert-button-container">
-                          <app-primary-button (click)="onClickDownloadCertificate()" [iconName]="'download'" />
-                          <app-primary-button (click)="onClickDeleteCertificate()" [isDeleteButton]="true" [iconName]="'delete'" [strokeWidth]="'2'"/>
+                          <app-quaternary-button (click)="onClickDownloadCertificate()" [minWidth]="'100%'" [iconName]="'download'" [tooltipText]="'Nachweis herunterladen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"/>
+                          <app-quaternary-button (click)="onClickDeleteCertificate()" [minWidth]="'100%'" [iconName]="'delete'" [tooltipText]="'Nachweis löschen'" [strokeWidth]="'2'" [backgroundColor]="'var(--danger)'" [iconColor]="'var(--accent-0)'"/>
                         </div>
                         </div>
                         <!--                        TODO: Dummy Picture for style, need to be removed in final solution-->
