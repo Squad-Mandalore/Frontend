@@ -8,7 +8,7 @@ import { UserCardComponent } from '../../components/user-card/user-card.componen
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { AthleteCompletesResponseSchema, AthletePatchSchema, AthletePostSchema, AthleteResponseSchema, CompletesResponseSchema, CompletesService, CsvService, ResponseParseCsvFileCsvParsePost, TrainersService } from '../../shared/generated';
+import { AthleteCompletesResponseSchema, AthletePatchSchema, AthletePostSchema, AthleteResponseSchema, CompletesResponseSchema, CompletesService, CsvService, ResponseParseCsvFileCsvParsePost} from '../../shared/generated';
 import { Subscription } from 'rxjs';
 import customSort from '../../../utils/custom-sort';
 import customFilter from '../../../utils/custom-filter';
@@ -19,16 +19,28 @@ import { AthleteFullResponseSchema } from '../../shared/generated';
 import { AthletesService } from '../../shared/generated';
 import { AlertService } from '../../shared/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CreateCompletesComponent } from '../../components/create-completes-modal/create-completes-modal.component';
 import { enterLeaveAnimation } from '../../shared/animation';
 import { FormGroup } from '@angular/forms';
 import { LoggerService } from '../../shared/logger.service';
 import { CreateAthleteModalComponent } from '../../components/create-athlete-modal/create-athlete-modal.component';
+import { CreateCompletesComponent } from '../../components/completes-modal/create-completes-modal/create-completes-modal.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, CreateCompletesComponent, CreateAthleteModalComponent],
+  imports: [
+    SidebarComponent,
+    DatePipe, NavbarBottomComponent,
+    NgIf,
+    NgFor,
+    NgClass,
+    UserCardComponent,
+    PrimaryButtonComponent,
+    SecondaryButtonComponent,
+    IconComponent,
+    CreateCompletesComponent,
+    CreateAthleteModalComponent
+  ],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
   animations: [

@@ -20,7 +20,7 @@ export class DistanceinputComponent implements ControlValueAccessor{
   disabled: boolean = false;
 
   // The value of the input.
-  value: string;
+  value: string = '';
 
   // Callback function to be called when the value changes.
   onChange: (value: string) => void = (_: string) => { };
@@ -36,8 +36,6 @@ export class DistanceinputComponent implements ControlValueAccessor{
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
-    console.log("skfjklasd" + this.value);
-    this.onChange("000:000:00");
   }
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
@@ -82,11 +80,5 @@ export class DistanceinputComponent implements ControlValueAccessor{
 
     this.value = kilometersResult+':'+metersResult+':'+centimetersResult;
     this.onChange(this.value);
-  }
-
-  constructor(){
-    this.value = "000:000:00";
-    this.onChange(this.value);
-    console.log(this.value);
   }
 }

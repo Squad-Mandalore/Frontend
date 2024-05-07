@@ -1,19 +1,18 @@
 import {NgClass, CommonModule, NgIf, NgSwitch, NgSwitchCase, DatePipe} from "@angular/common";
-import {PasswordBoxComponent} from "../password-box/password-box.component";
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {AlertComponent} from "../alert/alert.component";
-import {IconComponent} from "../icon/icon.component";
-import {PrimaryButtonComponent} from "../buttons/primary-button/primary-button.component";
-import {AthleteCompletesResponseSchema, AthleteFullResponseSchema, AthleteResponseSchema, AthletesService, CategoriesService, CategoryFullResponseSchema, CategoryVeryFullResponseSchema, CompletesResponseSchema, CsvService, ResponseParseCsvFileCsvParsePost} from "../../shared/generated";
-import {AlertService} from "../../shared/alert.service";
-import { SecondaryButtonComponent } from "../buttons/secondary-button/secondary-button.component";
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
-import {CompletesPostSchema, CompletesService} from "../../shared/generated";
 import { HttpErrorResponse } from "@angular/common/http";
-import customFilter from "../../../utils/custom-filter";
-import customSort from "../../../utils/custom-sort";
 import { TimeinputComponent } from "../timeinput/timeinput.component";
 import { DistanceinputComponent } from "../distanceinput/distanceinput.component";
+import { AthleteCompletesResponseSchema, AthleteFullResponseSchema, CategoriesService, CompletesPostSchema, CompletesService } from "../../../shared/generated";
+import { IconComponent } from "../../icon/icon.component";
+import { PrimaryButtonComponent } from "../../buttons/primary-button/primary-button.component";
+import { SecondaryButtonComponent } from "../../buttons/secondary-button/secondary-button.component";
+import { PasswordBoxComponent } from "../../password-box/password-box.component";
+import { AlertComponent } from "../../alert/alert.component";
+import { AlertService } from "../../../shared/alert.service";
+import customSort from "../../../../utils/custom-sort";
+import customFilter from "../../../../utils/custom-filter";
 
 @Component({
   selector: 'app-create-completes',
@@ -101,18 +100,20 @@ export class CreateCompletesComponent implements OnInit{
     if (givenValue.match(/^\d{4}$/)) {
       this.subPage = 1;
     } else if (givenValue.match(/^\d{2}:\d{2}:\d{2}:\d{3}$/)) {
+      this.createCompletesForm.patchValue({result: "00:00:00:000"});
       this.subPage = 2;
     } else if (givenValue.match(/^\d{3}:\d{3}:\d{2}$/)) {
+      this.createCompletesForm.patchValue({result: "000:000:00"});
       this.subPage = 3;
     } else {
+      this.createCompletesForm.patchValue({result: "0"});
       this.subPage = 4;
     }
   }
 
   onSubmit() {
     this.completesData.exercise_id = this.selectedExercise.id;
-    console.log(this.createCompletesForm.value.result);
-   
+
     if (this.createCompletesForm.value.quantity != '') {
       const quantity = +this.createCompletesForm.value.quantity!;
 

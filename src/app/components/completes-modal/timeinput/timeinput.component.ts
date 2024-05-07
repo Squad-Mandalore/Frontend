@@ -46,7 +46,6 @@ export class TimeinputComponent implements ControlValueAccessor {
 
   change(hours: number, minutes: number, seconds: number, milliseconds:number){
     let combinedSeconds = ((hours || 0) * 3600) + ((minutes || 0) * 60) + ((seconds || 0) * 1) + ((milliseconds || 0) * 0.001);
-    console.log(combinedSeconds);
 
     let hoursResult = '';
     let minutesResult = '';
@@ -91,7 +90,6 @@ export class TimeinputComponent implements ControlValueAccessor {
     }
 
     this.value = hoursResult+':'+minutesResult+':'+secondsResult+':'+millisecondsResult;
-    console.log(this.value);
     this.onChange(this.value);
   }
 }
