@@ -393,6 +393,6 @@
 </div>
 <div id="overlay-lower" *ngIf="selectedAthlete;" (click)="modals.showDetails.isActive = false" [ngClass]="{'active': selectedAthlete && modals.showDetails.isActive}"></div>
 
-<app-create-completes [@enterAnimation] *ngIf="modals.createCompletesModal.isActive" [modals]="modals" [selectedAthlete]="selectedAthlete" (fileCallback)="csvParse($event)"></app-create-completes>
+<app-create-completes [@enterAnimation] *ngIf="modals.createCompletesModal.isActive" [modal]="modals.createCompletesModal" [selectedAthlete]="selectedAthlete!" (fileCallback)="csvParse($event)"></app-create-completes>
 <app-create-athlete-modal [@enterAnimation] *ngIf="modals.patchAthleteModal.isActive" [modal]="modals.patchAthleteModal" [selectedAthlete]="selectedAthlete" (athleteCallback)="patchAthlete($event)" (fileCallback)="csvParse($event)"></app-create-athlete-modal>
 <app-create-athlete-modal [@enterAnimation] *ngIf="modals.createAthleteModal.isActive" [modal]="modals.createAthleteModal" (athleteCallback)="createAthlete($event)" (fileCallback)="csvParse($event)"></app-create-athlete-modal>
