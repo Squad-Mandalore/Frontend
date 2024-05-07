@@ -52,19 +52,6 @@ export class CreateCompletesComponent implements OnInit{
 
   selectedFile?: File;
 
-  time = {
-    hours: null,
-    minutes: null,
-    seconds: null,
-    milliseconds: null
-  };
-
-  distance = {
-    kilometers: null,
-    meters: null,
-    centimeters: null
-  }
-
   public completesData: CompletesPostSchema = {
     exercise_id: '',
     athlete_id: '',

@@ -85,6 +85,9 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       title: "Sportler bearbeiten",
       primeButtonText: "Speichern",
     },
+    patchCompletesModal: {
+      isActive: false,
+    },
   }
 
   patchAthlete(createAthleteForm: FormGroup) {
