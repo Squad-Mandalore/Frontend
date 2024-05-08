@@ -134,7 +134,7 @@
     box-shadow: 0.25rem 0.25rem 1.25rem #00000010;
     background-color: var(--accent-50);
 
-    @media (max-width: 56.25rem) {
+    @media (max-width: 1000px) {
         width: 4rem;
         max-width: 4rem;
         overflow: hidden;
@@ -142,7 +142,7 @@
 }
 
 #primary-button, .headline, .description, #header {
-    @media (max-width: 56.25rem) {
+    @media (max-width: 1000px) {
         display: none;
     }
 }
@@ -150,7 +150,7 @@
 #sidebar-content-wrapper{
     padding: 1.25rem 1.875rem 1.875rem 1.875rem;
     overflow: auto;
-    @media (max-width: 56.25rem) {
+    @media (max-width: 1000px) {
         padding: 0.625rem; 
         max-width: 4rem;
         overflow-y: auto;
@@ -169,7 +169,7 @@
     background-color: transparent;
     cursor: pointer;
 
-    @media (max-width: 56.25rem) {
+    @media (max-width: 1000px) {
         width: max-content;
         min-width: 2.5rem;
         height: auto;

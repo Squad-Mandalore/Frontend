@@ -8,15 +8,18 @@
         <div id="general-information-wrapper">
             <app-user-card [user]="selectedAthlete"></app-user-card>
             <div class="chip margin-left-auto">
-                <span>{{selectedAthlete.gender === 'm' ? 'männlich' : 'weiblich'}}</span>
+                <span class="large-screen">{{selectedAthlete.gender === 'm' ? 'männlich' : 'weiblich'}}</span>
                 <app-icon [iconName]="selectedAthlete.gender === 'm' ? 'male' : 'female'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
             </div>
             <div class="chip">
-                <span>geboren am {{selectedAthlete.birthday | date:'dd.MM.yyyy'}}</span>
+                <span class="large-screen">geboren am {{selectedAthlete.birthday | date:'dd.MM.yyyy'}}</span>
+                <span class="small-screen">{{selectedAthlete.birthday | date:'MM.yyyy'}}</span>
                 <app-icon [iconName]="'star'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
             </div>
-            <app-secondary-button class="secondary-button" [text]="'Details'" [strokeWidth]="'1.5'" (click)="modals.showDetails.isActive = true"></app-secondary-button>
-            <app-primary-button [text]="'Bearbeiten'" [iconName]="'edit-1'" (click)="modals.patchAthleteModal.isActive = true"></app-primary-button>
+            <app-secondary-button class="secondary-button large-screen" [text]="'Details'" [strokeWidth]="'1.5'" (click)="modals.showDetails.isActive = true"></app-secondary-button>
+            <app-quaternary-button class="secondary-button small-screen inline-block" [iconName]="'list'"[tooltipText]="'Details'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'" (click)="modals.showDetails.isActive = true"></app-quaternary-button>
+            <app-primary-button class="large-screen" [text]="'Bearbeiten'" [iconName]="'edit-1'" (click)="modals.patchAthleteModal.isActive = true"></app-primary-button>
+            <app-quaternary-button class="small-screen inline-block" [iconName]="'edit-1'" [tooltipText]="'Bearbeiten'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'" (click)="modals.patchAthleteModal.isActive = true"></app-quaternary-button>
         </div>
         <div id="container-wrapper">
             <div id="results-container" [ngClass]="{'background-color-white': selectedAthlete}">

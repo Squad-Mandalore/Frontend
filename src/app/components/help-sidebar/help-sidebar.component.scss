@@ -188,7 +188,7 @@
     box-shadow: 0.25rem 0.25rem 1.25rem #00000010;
     background-color: var(--accent-50);
 
-    @media (max-width: 56.25rem) {
+    @media (max-width: 1000px) {
         display: none;
     }
 }

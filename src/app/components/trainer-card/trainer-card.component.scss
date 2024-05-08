@@ -11,6 +11,13 @@
     border-radius: 0.3125rem;
     border: 0.0625rem solid transparent;
     transition: border-color 300ms;
+    @media (max-width: 1000px) {
+        max-width: 2.5rem; 
+        width: 2.5rem;     
+        height: 2.5rem;
+        max-height: 2.5rem;
+        padding: 0px;
+    }
 }
 #trainer-card.isInactive:hover{
     cursor: pointer;
@@ -30,6 +37,13 @@
     border: 0.0625rem solid var(--brand-400);
     transition: border-color 300ms;
     cursor: pointer;
+    @media (max-width: 1000px) {
+        max-width: 2.5rem; 
+        width: 2.5rem;     
+        height: 2.5rem;
+        max-height: 2.5rem;
+        padding: 0px;
+    }
 }
 #trainer-card.isActive::after{
     content: '';
@@ -42,4 +56,16 @@
     background-color: var(--brand-500);
     border-radius: 6.25rem;
     transform: translateY(-50%);
+    @media (max-width: 1000px) {
+        display: none;
+    }
+}
+
+#trainer-card {
+    @media (max-width: 1000px) {
+        max-width: 2.5rem; 
+        width: 2.5rem;     
+        height: 2.5rem;
+        max-height: 2.5rem;
+    }
 }

@@ -33,8 +33,13 @@
     #progress-bar{
         transform: scale(1.4) rotate(180deg); 
         padding: 0.0625rem;
-        @media (max-width: 56.25rem) {
+        margin-top: 0.0625rem;
+        margin-left: 0.0625rem;
+        @media (max-width: 1000px) {
             transform: scale(1) rotate(180deg); 
+            padding: 0.0446rem;
+            margin-top: 0.0446rem;
+            margin-left: 0.0446rem;
         }
     }
     #progress{
@@ -54,7 +59,7 @@
         flex-direction: column;
         gap: 0.25rem;
         max-width: 11.25rem;
-        @media (max-width: 56.25rem) {
+        @media (max-width: 1000px) {
             display: none;    
         }
     }
@@ -67,7 +72,7 @@
         overflow: hidden;
         text-wrap: nowrap;
         text-overflow: ellipsis;
-        @media (max-width: 56.25rem) {
+        @media (max-width: 1000px) {
             display: none;    
         }
     }
@@ -79,7 +84,7 @@
         overflow: hidden;
         text-wrap: nowrap;
         text-overflow: ellipsis;
-        @media (max-width: 56.25rem) {
+        @media (max-width: 1000px) {
             display: none;    
         }
     }
@@ -90,7 +95,7 @@
         align-items: center;
         height: 2.5rem;
         min-width: 12.5rem;
-        @media (max-width: 56.25rem) {
+        @media (max-width: 1000px) {
             max-width: 2.5rem; 
             min-width: 2.5rem;     
         }
@@ -106,7 +111,7 @@
         font-family: "Inter Medium";
         font-weight: 500;
         font-size: 1.0rem;
-        @media (max-width: 56.25rem) {
+        @media (max-width: 1000px) {
             width: 2rem;
             height: 2rem;  
             font-size: 0.9rem;
