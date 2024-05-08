@@ -31,15 +31,11 @@
         animation: progress-bar 1s;
     }
     #progress-bar{
-        transform: scale(1.4) rotate(180deg); 
+        transform: scale(1.4) rotate(180deg) translate(0.5px, 0.1px); 
         padding: 0.0625rem;
-        margin-top: 0.0625rem;
-        margin-left: 0.0625rem;
         @media (max-width: 1000px) {
-            transform: scale(1) rotate(180deg); 
+            transform: scale(1) rotate(180deg) translate(0.1px, 0.005px); 
             padding: 0.0446rem;
-            margin-top: 0.0446rem;
-            margin-left: 0.0446rem;
         }
     }
     #progress{
@@ -98,6 +94,8 @@
         @media (max-width: 1000px) {
             max-width: 2.5rem; 
             min-width: 2.5rem;     
+            transform: translate(-0.8px, -0.1px)
+
         }
     }
     #icon{
