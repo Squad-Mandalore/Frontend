@@ -24,6 +24,7 @@ import { FormGroup } from '@angular/forms';
 import { LoggerService } from '../../shared/logger.service';
 import { CreateAthleteModalComponent } from '../../components/create-athlete-modal/create-athlete-modal.component';
 import { CreateCompletesComponent } from '../../components/completes-modal/create-completes-modal/create-completes-modal.component';
+import { PatchCompletesComponent } from '../../components/completes-modal/patch-completes-modal/patch-completes-modal.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,7 +40,8 @@ import { CreateCompletesComponent } from '../../components/completes-modal/creat
     SecondaryButtonComponent,
     IconComponent,
     CreateCompletesComponent,
-    CreateAthleteModalComponent
+    CreateAthleteModalComponent,
+    PatchCompletesComponent,
   ],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
@@ -87,6 +89,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     },
     patchCompletesModal: {
       isActive: false,
+      completes: {} as CompletesResponseSchema,
     },
   }
 
@@ -197,6 +200,12 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         }
       }
   })
+  }
+
+  patchCompletedExercise(completes: CompletesResponseSchema) {
+    this.modals.patchCompletesModal.completes = completes;
+    this.modals.patchCompletesModal.isActive = true;
+    console.log(completes);
   }
 
   csvParse(file: File) {

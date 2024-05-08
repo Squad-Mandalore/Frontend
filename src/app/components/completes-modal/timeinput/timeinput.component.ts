@@ -16,6 +16,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       ]
 })
 export class TimeinputComponent implements ControlValueAccessor {
+  hours: string = '';
+  minutes: string = '';
+  seconds: string = '';
+  milliseconds: string = '';
   // Whether the input is disabled or not.
   disabled: boolean = false;
 
@@ -33,6 +37,11 @@ export class TimeinputComponent implements ControlValueAccessor {
 
   writeValue(value: string): void {
     this.value = value;
+    const time: string[] = this.value.split(':');
+    this.hours = time[0];
+    this.minutes = time[1];
+    this.seconds = time[2];
+    this.milliseconds = time[3];
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;

@@ -1,5 +1,5 @@
-<input #kilometers class="multiple-input" type="number" placeholder="km" (change)="change(kilometers.valueAsNumber, meters.valueAsNumber, centimeters.valueAsNumber)" style="display: inline-block"/>
+<input #kilometersin class="multiple-input" type="number" [value]="kilometers" placeholder="km" (change)="change(kilometersin.valueAsNumber, metersin.valueAsNumber, centimetersin.valueAsNumber)" style="display: inline-block"/>
 ,
-<input #meters class="multiple-input" type="number" placeholder="m" (change)="change(kilometers.valueAsNumber, meters.valueAsNumber, centimeters.valueAsNumber)" style="display: inline-block;"/>
+<input #metersin class="multiple-input" type="number" [value]="meters" placeholder="m" (change)="change(kilometersin.valueAsNumber, metersin.valueAsNumber, centimetersin.valueAsNumber)" style="display: inline-block;"/>
 ,
-<input #centimeters class="multiple-input" type="number" placeholder="cm" (change)="change(kilometers.valueAsNumber, meters.valueAsNumber, centimeters.valueAsNumber)" style="display: inline-block;"/>
+<input #centimetersin class="multiple-input" type="number" [value]="centimeters" placeholder="cm" (change)="change(kilometersin.valueAsNumber, metersin.valueAsNumber, centimetersin.valueAsNumber)" style="display: inline-block;"/>

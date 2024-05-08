@@ -16,6 +16,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       ]
 })
 export class DistanceinputComponent implements ControlValueAccessor{
+  kilometers: string = '';
+  meters: string = '';
+  centimeters: string = '';
   // Whether the input is disabled or not.
   disabled: boolean = false;
 
@@ -33,6 +36,10 @@ export class DistanceinputComponent implements ControlValueAccessor{
 
   writeValue(value: string): void {
     this.value = value;
+    const distance: string[] = this.value.split(':');
+    this.kilometers = distance[0];
+    this.meters = distance[1];
+    this.centimeters = distance[2];
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;

@@ -9,7 +9,7 @@
   <div class="flex flex-col gap-20 height-full width-full overflow-hidden padding-bottom-60 font-family-inter-medium">
 
     <div class="flex flex-col gap-10 margin-auto width-full" id="common-menu">
-      <div class="headline-small">{{selectedExercise.title}}</div>
+      <div class="headline-small">{{selectedCompletes.exercise.title}}</div>
 
       <ng-container [ngSwitch]="subPage">
 
@@ -23,51 +23,27 @@
 
         <ng-container *ngSwitchCase="4">
           <div id="slider-wrapper">
-            <div class="slider-element" [ngClass]="createCompletesForm.value.result === '3' ? 'active' : 'disabled'" (click)="createCompletesForm.value.result = '3'">
+            <div class="slider-element" [ngClass]="completesForm.value.result === '3' ? 'active' : 'disabled'" (click)="completesForm.value.result = '3'">
                 <span>Gold</span>
             </div>
-            <div class="slider-element" [ngClass]="createCompletesForm.value.result === '2' ? 'active' : 'disabled'" (click)="createCompletesForm.value.result = '2'">
+            <div class="slider-element" [ngClass]="completesForm.value.result === '2' ? 'active' : 'disabled'" (click)="completesForm.value.result = '2'">
                 <span>Silber</span>
             </div>
-            <div class="slider-element" [ngClass]="createCompletesForm.value.result === '1' ? 'active' : 'disabled'" (click)="createCompletesForm.value.result = '1'">
+            <div class="slider-element" [ngClass]="completesForm.value.result === '1' ? 'active' : 'disabled'" (click)="completesForm.value.result = '1'">
                 <span>Bronze</span>
             </div>
-            <div class="slider-element" [ngClass]="createCompletesForm.value.result === '0' ? 'active' : 'disabled'" (click)="createCompletesForm.value.result = '0'">
+            <div class="slider-element" [ngClass]="completesForm.value.result === '0' ? 'active' : 'disabled'" (click)="completesForm.value.result = '0'">
                 <span>Keine Medaille</span>
             </div>
           </div>
         </ng-container>
-
-        <div class="flex flex-col gap-15 margin-top-30">
-
-          <p class="text-accent-500 font-family-inter-medium font-size-13">Medaillewerte:</p>
-
-          <div class="flex items-center gap-20">
-            <div class="medal gold"></div>
-            <span class="text-accent-500 font-family-inter-medium font-size-13">Gold</span>
-            <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].gold }}</div>
-          </div>
-
-          <div class="flex items-center gap-20">
-            <div class="medal silver"></div>
-            <span class="text-accent-500 font-family-inter-medium font-size-13">Silber</span>
-            <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].silver }}</div>
-          </div>
-
-          <div class="flex items-center gap-20">
-            <div class="medal bronze"></div>
-            <span class="text-accent-500 font-family-inter-medium font-size-13">Bronze</span>
-            <div class="margin-left-auto width-half text-accent-500 font-family-inter-medium font-size-13">{{ selectedExercise.rules[0].bronze }}</div>
-          </div>
-        </div>
-
       </ng-container>
 
     </div>
 
   </div>
   <div id="modal-footer">
-    <app-secondary-button (click)="changePage($event, 0)" text="Schließen" minWidth="100%" description="Zurück zur Dashboardansicht."></app-secondary-button>
+    <app-secondary-button (click)="modal.isActive = false" text="Schließen" minWidth="100%" description="Zurück zur Dashboardansicht."></app-secondary-button>
     <app-primary-button text="Erfassen" minWidth="100%" description="speichert die Leistung"></app-primary-button>
   </div>
 </form>
