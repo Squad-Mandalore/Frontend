@@ -510,11 +510,11 @@
 }
 
 #swimcert-image{
+  object-fit: contain;
   display: flex;
   align-self: center;
-  height: 70%;
+  height: 100%;
   width: 70%;
-  border: 2px groove var(--accent-150);
 
 }
 
