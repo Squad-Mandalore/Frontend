@@ -135,16 +135,21 @@
     font-size: 0.8125rem;
     color: var(--accent-300);
 }
-
 #container-wrapper {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
     height: 85%;
     max-width: 100%;
-    overflow-y: auto; 
+    overflow-y: hidden;
     overflow-x: hidden;
-    height: fit-content;
+    min-height: max-content;
+}
+
+@media (max-height: 900px) {
+    #container-wrapper {
+        overflow-y: auto;
+    }
 }
 
 #container-wrapper-vertical {
@@ -758,6 +763,10 @@
 
 
     @media (max-width: 1500px) {
+        .chip {
+            padding: 0.75rem;
+        }
+
         #content {
             padding: 0.125rem;
         }

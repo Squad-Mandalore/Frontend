@@ -56,12 +56,27 @@
     flex-direction: column;
     gap: 1.25rem;
 }
+
+#sidebar-content.empty.small-screen{
+    display: none;
+    @media (max-width: 1000px) {
+        display: block;
+    }
+}
+
+#sidebar-content.empty.large-screen{
+    display: block;
+    @media (max-width: 1000px) {
+        display: none;
+    }
+}
+
 #sidebar-content.filled{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-    gap: 0.9375rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        gap: 0.9375rem;
 }
 
 #search-bar{
@@ -141,6 +156,8 @@
     }
 }
 
+
+
 #primary-button, .headline, .description, #header {
     @media (max-width: 1000px) {
         display: none;
@@ -174,6 +191,7 @@
         min-width: 2.5rem;
         height: auto;
         min-height: 2.5rem;
+        display: grid;
     }
 }
 

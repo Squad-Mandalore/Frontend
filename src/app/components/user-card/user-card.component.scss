@@ -22,6 +22,7 @@
     .height-10{
         height: 0.625rem;
     }
+    
 
     @keyframes progress-bar {
         from {stroke-dashoffset: 150;}
@@ -31,10 +32,10 @@
         animation: progress-bar 1s;
     }
     #progress-bar{
-        transform: scale(1.4) rotate(180deg) translate(0.5px, 0.1px); 
+        transform: scale(1.4) rotate(180deg); 
         padding: 0.0625rem;
         @media (max-width: 1000px) {
-            transform: scale(1) rotate(180deg) translate(0.1px, 0.005px); 
+            transform: scale(1) rotate(180deg); 
             padding: 0.0446rem;
         }
     }
@@ -94,7 +95,7 @@
         @media (max-width: 1000px) {
             max-width: 2.5rem; 
             min-width: 2.5rem;     
-            transform: translate(-0.8px, -0.1px)
+            transform: translate(-0.08rem, -0.00625rem);
 
         }
     }
