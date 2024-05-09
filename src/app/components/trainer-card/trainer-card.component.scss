@@ -1,45 +1,72 @@
 #trainer-card.isInactive{
-    padding: 18px;
-    height: 76px;
-    width: 400px;
+    padding: 1.125rem;
+    height: 4.75rem;
+    width: 25.0rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
     background-color: var(--accent-0);
-    box-shadow: 0 0 30px var(--accent-200);
-    border-radius: 5px;
-    border: 1px solid transparent;
+    box-shadow: 0 0 1.875rem var(--accent-200);
+    border-radius: 0.3125rem;
+    border: 0.0625rem solid transparent;
     transition: border-color 300ms;
+    @media (max-width: 1000px) {
+        max-width: 2.5rem; 
+        width: 2.5rem;     
+        height: 2.5rem;
+        max-height: 2.5rem;
+        padding: 0px;
+    }
 }
 #trainer-card.isInactive:hover{
     cursor: pointer;
     border-color: var(--brand-400);
 }
 #trainer-card.isActive{
-    padding: 18px;
-    height: 76px;
-    width: 400px;
+    padding: 1.125rem;
+    height: 4.75rem;
+    width: 25.0rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
     background-color: var(--brand-100);
-    box-shadow: 0 0 40px var(--accent-200);
-    border-radius: 5px;
-    border: 1px solid var(--brand-400);
+    box-shadow: 0 0 2.5rem var(--accent-200);
+    border-radius: 0.3125rem;
+    border: 0.0625rem solid var(--brand-400);
     transition: border-color 300ms;
     cursor: pointer;
+    @media (max-width: 1000px) {
+        max-width: 2.5rem; 
+        width: 2.5rem;     
+        height: 2.5rem;
+        max-height: 2.5rem;
+        padding: 0px;
+    }
 }
 #trainer-card.isActive::after{
     content: '';
     position: absolute;
     display: block;
-    width: 5px;
-    height: 46px;
+    width: 0.3125rem;
+    height: 2.875rem;
     right: 0;
     top: 50%;
     background-color: var(--brand-500);
-    border-radius: 100px;
+    border-radius: 6.25rem;
     transform: translateY(-50%);
+    @media (max-width: 1000px) {
+        display: none;
+    }
+}
+
+#trainer-card {
+    @media (max-width: 1000px) {
+        max-width: 2.5rem; 
+        width: 2.5rem;     
+        height: 2.5rem;
+        max-height: 2.5rem;
+        transform: translate(-0.05rem, -0.00625rem);
+    }
 }

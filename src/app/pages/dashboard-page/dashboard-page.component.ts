@@ -7,6 +7,7 @@ import { NgClass, NgFor, NgIf, DatePipe } from '@angular/common';
 import { UserCardComponent } from '../../components/user-card/user-card.component';
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
+import { QuaternaryButtonComponent } from '../../components/buttons/quaternary-button/quaternary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
 import { AthleteCompletesResponseSchema, AthletePatchSchema, AthletePostSchema, AthleteResponseSchema, CompletesResponseSchema, CompletesService, CsvService, ResponseParseCsvFileCsvParsePost, TrainersService } from '../../shared/generated';
 import { Subscription } from 'rxjs';
@@ -28,7 +29,7 @@ import { CreateAthleteModalComponent } from '../../components/create-athlete-mod
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent, CreateCompletesComponent, CreateAthleteModalComponent],
+  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, QuaternaryButtonComponent, IconComponent, CreateCompletesComponent, CreateAthleteModalComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
   animations: [
