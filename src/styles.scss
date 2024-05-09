@@ -58,13 +58,13 @@ a {
 }
 
 *::-webkit-scrollbar {
-  width: 5px;
+  width: 0.3125rem;
   background-color: transparent;
 }
 
 *::-webkit-scrollbar-thumb {
   background: var(--accent-200);
-  border-radius: 20px;
+  border-radius: 1.25rem;
 }
 
 // Inter

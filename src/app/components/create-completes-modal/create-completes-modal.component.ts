@@ -89,11 +89,7 @@ export class CreateCompletesComponent implements OnInit{
       meters: ['', Validators.required],
       centimeters: ['', Validators.required],
       quantity: ['', Validators.required],
-      medal: ['-', Validators.required],
-      goldActive: ['', Validators.required],
-      silverActive: ['', Validators.required],
-      bronzeActive: ['', Validators.required],
-      noneActive: ['', Validators.required],
+      medal: ['0', Validators.required],
     })
   }
 

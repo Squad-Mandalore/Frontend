@@ -121,16 +121,16 @@
       <div class="headline-small">{{selectedExercise.title}}</div>
       <div>
         <div id="slider-wrapper">
-          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === 'Gold' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = 'Gold'">
+          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === '3' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = '3'">
               <span>Gold</span>
           </div>
-          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === 'Silber' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = 'Silber'">
+          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === '2' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = '2'">
               <span>Silber</span>
           </div>
-          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === 'Bronze' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = 'Bronze'">
+          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === '1' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = '1'">
               <span>Bronze</span>
           </div>
-          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === '-' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = '-'">
+          <div class="slider-element" [ngClass]="createCompletesForm.value.medal === '0' ? 'active' : 'disabled'" (click)="createCompletesForm.value.medal = '0'">
               <span>Keine Medaille</span>
           </div>
         </div>
