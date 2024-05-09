@@ -291,7 +291,8 @@
     <div class="flex flex-col gap-30 inter-medium">
         <div class="flex items-center justify-between">
             <p class="headline-small">Leistungsübersicht:</p>
-            <span class="accent-500 hover-underline cursor-pointer inter-regular">PDF herunterladen</span>
+            <!-- TODO: Nutzer Fragen ob er eine ID eingeben möchte -->
+            <span class="accent-500 hover-underline cursor-pointer inter-regular" (click)="createPDF()" tabindex="0">PDF herunterladen</span> 
         </div>
         <div class="flex items-center">
             <p>Schnelligkeit</p>
