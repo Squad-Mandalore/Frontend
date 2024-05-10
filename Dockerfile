@@ -3,7 +3,7 @@ FROM node:latest as node
 WORKDIR /app
 COPY . .
 RUN npm install
-RUN npm apigen-f
+RUN npm run apigen-f
 RUN npm run build --prod
 
 # Main Image
