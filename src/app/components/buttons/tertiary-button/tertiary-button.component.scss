@@ -1,16 +1,16 @@
 .tertiary-button {
-    padding: 12px 30px;
-    min-width: 80px;
+    padding: 0.75rem 1.875rem;
+    min-width: 5.0rem;
     max-width: max-content;
-    height: 39px;
-    border-radius: 5px;
+    height: 2.4375rem;
+    border-radius: 0.3125rem;
     background-color: var(--accent-0);
     color: var(--accent-900);
     display: flex;
     justify-content: center;
     align-items: center;
     border: 0;
-    font-family: "Inter Medium";
+    font-family: "Inter Medium", "Inter-Medium";
     font-size: .95rem;
     transition: all 200ms;
     cursor: pointer;

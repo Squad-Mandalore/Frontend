@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, AbstractControl, ValidationErrors } from '@angular/forms';
 import { IconComponent } from "../icon/icon.component";
 import {UtilService} from "../../shared/service-util";
-
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-password-box',
     standalone: true,
-    imports: [IconComponent],
+    imports: [IconComponent, NgIf],
     templateUrl: './password-box.component.html',
     styleUrl: './password-box.component.scss',
     providers: [
@@ -15,55 +15,78 @@ import {UtilService} from "../../shared/service-util";
             provide: NG_VALUE_ACCESSOR,
             multi: true,
             useExisting: PasswordBoxComponent
+        },
+        {
+            provide: NG_VALIDATORS,
+            multi: true,
+            useExisting: PasswordBoxComponent
         }
     ]
 
 })
-export class PasswordBoxComponent implements ControlValueAccessor {
 
-    /**
-      * Whether the input is disabled or not.
-      */
+export class PasswordBoxComponent implements ControlValueAccessor, Validator {
+    @Input() showPasswordGenerator: boolean = true;
+    @Input() showCopyOption: boolean = true;
+    @Input() showPasswordStrength: boolean = true;
+    @Input() isAllowedToFail: boolean = false;
+    @Input() placeholderText: string = "Passwort";
+
+    illegalPassword: boolean = false;
+
+    // Whether the input is disabled or not.
     disabled: boolean = false;
 
-    /**
-     * The value of the input.
-     */
-    value!: string;
+    // The value of the input.
+    value: string = "";
 
-    /**
-     * Callback function to be called when the value changes.
-     */
+
+    // Callback function to be called when the value changes.
     onChange: (value: string) => void = (_: string) => { };
 
-    /**
-     * Callback function to be called when the input is touched.
-     */
+    // Callback function to be called when the input is touched.
     onTouched: () => void = () => { };
 
-    /**
-     * Indicate if the input has been touched.
-     */
+    // Indicate if the input has been touched.
     touched: boolean = false;
 
-    /**
-     * The width of the password strength bar.
-     */
-    strengthBarWidth: string = '20%';
+    // The width of the password strength bar.
+    strengthBarWidth: string = '0%';
 
-    /**
-     * The background color of the password strength bar.
-     */
+    // The background color of the password strength bar.
     strengthBarColor: string = '#ff6347';
 
-    /**
-     * The text content of the password strength.
-     */
-    strengthTextContent: string = 'Schwach';
+    // The text content of the password strength.
+    strengthTextContent: string = 'Nicht Zulässig';
     inputType = "password";
 
     constructor(private utilService: UtilService) {
 
+    }
+
+    validate(c: AbstractControl): ValidationErrors | null {
+        if(!this.validateValues()){
+            return {
+                illegalPassword: true
+            }
+        }
+        return null;
+    }
+
+    validateValues(){
+        const password = this.value;
+        if(this.isAllowedToFail && !password) {
+          this.illegalPassword = false;
+          return true;
+        }
+
+        if(this.utilService.validatePass(password!) === 'Illegal'){
+          this.illegalPassword = true;
+          return false;
+        }else{
+          this.illegalPassword = false;
+          return true;
+        }
     }
 
     triggerInputType() {
@@ -100,35 +123,41 @@ export class PasswordBoxComponent implements ControlValueAccessor {
      */
     writeValue(value: string): void {
         this.value = value;
+        this.evaluatePasswordStrength(this.value);
     }
 
     /**
      * Handle input event, update password strength and call onChange.
      * @param value Input value
      */
-    onInput(value: string): void {
-        this.value = value;
-        const passwordLength = this.value.length;
 
-        // Evaluate password strength
-        if (this.utilService.validatePass(this.value)) {
+    evaluatePasswordStrength(value: string): void {
+        if (this.utilService.validatePass(value) == 'VeryStrong') {
             this.strengthTextContent = 'Sehr stark';
             this.strengthBarWidth = '100%';
-            this.strengthBarColor = '#2ecc71'; // Green
-        } else if (this.utilService.validateGoodPass(this.value)) {
-            this.strengthTextContent = 'Gut';
-            this.strengthBarWidth = '70%';
-            this.strengthBarColor = '#2ecc71'; // Green
-        } else if (this.utilService.validateMiddlePass(this.value)){
+            this.strengthBarColor = '#00FF00';
+        } else if (this.utilService.validatePass(value) == 'Strong') {
+            this.strengthTextContent = 'Stark';
+            this.strengthBarWidth = '75%';
+            this.strengthBarColor = '#80C000';
+        } else if (this.utilService.validatePass(value) == 'Medium'){
             this.strengthTextContent = 'Mittel';
             this.strengthBarWidth = '50%';
-            this.strengthBarColor = '#ffa500'; // Orange
-        } else if (passwordLength < 5) {
+            this.strengthBarColor = '#FF8000';
+        } else if (this.utilService.validatePass(value) == 'Weak'){
             this.strengthTextContent = 'Schwach';
-            this.strengthBarWidth = '20%';
-            this.strengthBarColor = '#ff6347'; // Red
+            this.strengthBarWidth = '25%';
+            this.strengthBarColor = '#FF0000';
+        } else if (this.utilService.validatePass(value) == 'Illegal') {
+            this.strengthTextContent = 'Nicht Zulässig';
+            this.strengthBarWidth = '0%';
+            this.strengthBarColor = '#FF0000';
         }
+    }
 
+    onInput(value: string): void {
+        this.value = value;
+        this.evaluatePasswordStrength(value);
         this.onChange(this.value);
     }
 
@@ -140,5 +169,8 @@ export class PasswordBoxComponent implements ControlValueAccessor {
       this.value = this.utilService.genPass()
       this.onInput(this.value)
     }
+}
 
+interface formValidation {
+    illegalPassword: boolean,
 }

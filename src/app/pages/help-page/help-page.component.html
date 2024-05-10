@@ -1,4 +1,349 @@
-<div>
-    <!-- content here -->
+<div id="page">
+    <app-help-sidebar (headlineClicked)="scrollToHeadline($event)"
+        (subHeadlineClicked)="scrollToSubHeadline($event)" [selectedHeadline]="currentHeadline" [selectedSubHeadline]="currentSubHeadline">
+    </app-help-sidebar>
+    <div id="content" #content>
+        <div>
+            <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+            <div id="headline-wrapper">
+                <p class="headline">Eigener Account</p>
+                <app-primary-button (click)="downloadPDF()"  [text]="'Download Help Page as PDF'"></app-primary-button>
+            </div>
+            <div id="general-information-wrapper">
+                <p class="sub-headline">Login</p>
+                <p>Falls Sie die Seite zum ersten Mal nutzen wollen, benutzen Sie bitte den vorgegebenen Standard Admin
+                    Nutzer.</p>
+                <p>Falls Sie nicht der Admin sind und die Webapplikation zum ersten Mal nutzen wollen, müssen Sie die
+                    Login Daten bei Ihrem Admin anfragen.</p>
+                <p>Nach dem Ersten Login werden Sie gebeten das Passwort zu ändern.
+                    <br>Ist das geschehen, können Sie sich ab sofort mit Ihrem neuen Passwort anmelden.
+                </p>
+                <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="breakline"></div>
+                <p class="sub-headline">Passwort vergessen</p>
+                <p>Falls Sie ihr passwort vergessen sollten, ist ihr Nutzerkonto unwiederruflich für Sie verloren und
+                    muss neu erstellt werden.</p>
+                <p>Mögliches verfahren um als Admin die Daten anderer wieder zu erlangen:</p>
+                <li>CSV des Nutzers und seiner Übungen exportieren</li>
+                <li>Nutzer löschen</li>
+                <li>Nutzer mit den selben Daten wieder erstellen</li>
+                <li>CSV wieder importieren</li>
+                <p>Hier wird wieder ein neues Passwort festgelegt und kann weitergegeben werden</p>
+                <p>Sollte der Admin sein passwort vergessen, muss die Datenbank neu Aufgesetzt werden, das heißt ein
+                    komplett Reset der Webapplikation.</p>
+                <p class="sub-headline">Passwort ändern</p>
+                <p>Wenn Sie sich an Ihr Passwort errinern, können Sie es in der Trainerübersicht unter Ihrem eigenen
+                    Nutzer ändern.</p>
+                <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="breakline"></div>
+                <p class="sub-headline">Abmelden</p>
+                <p>Um sich Abzumelden, klicken Sie <svg width="20" height="20" viewBox="0 0 20 20"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12.5 2.5H15.8333C16.2754 2.5 16.6993 2.67559 17.0118 2.98816C17.3244 3.30072 17.5 3.72464 17.5 4.16667V15.8333C17.5 16.2754 17.3244 16.6993 17.0118 17.0118C16.6993 17.3244 16.2754 17.5 15.8333 17.5H12.5"
+                            stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M8.33325 14.1667L12.4999 10L8.33325 5.83334" stroke="black" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12.5 10H2.5" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg> unten rechts in der Navigatorleiste.<br>Sie können dann ihren Account wechseln oder sich
+                    erneut anmelden.</p>
+                <p>Den eigenen Nutzer zu löschen ist nicht möglich, dies kann nur der Admin. <br><strong>Der Admin kann
+                        sich nicht selbst löschen</strong></p>
+            </div>
+        </div>
+        <div>
+            <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+            <div id="headline-wrapper">
+                <p class="headline">Athleten</p>
+            </div>
+            <div id="general-information-wrapper">
+                <p class="sub-headline">Athleten erstellen</p>
+                <p>Um ein neues Konto zu erstellen, müssen Sie entweder als Admin oder als Trainer angemeldet sein und
+                    sich auf der Athletenübersicht <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M23 20.9999V18.9999C22.9993 18.1136 22.7044 17.2527 22.1614 16.5522C21.6184 15.8517 20.8581 15.3515 20 15.1299"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M16 3.12988C16.8604 3.35018 17.623 3.85058 18.1676 4.55219C18.7122 5.2538 19.0078 6.11671 19.0078 7.00488C19.0078 7.89305 18.7122 8.75596 18.1676 9.45757C17.623 10.1592 16.8604 10.6596 16 10.8799"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg> befinden.<br>Hier können Sie jetzt entweder mit <app-icon class="inline-block"  [iconName]="'plus'" [iconHeight]="'20'" [iconWidth]="'20'" [strokeWidth]="'2'" [iconColor]="'var(--accent-300)'"></app-icon>
+                    in der Seitenleiste
+                    links oder mit <app-primary-button class="inline-block" [iconName]="'user-plus'" [text]="'Erstellen'"></app-primary-button> beziehungsweise <app-quaternary-button class="inline-block" [iconName]="'user-plus'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"></app-quaternary-button>
+                    neben der Suchleiste einen neuen Athleten erstellen.</p>
+                <p>Einen Nutzer können Sie entweder Erstellen indem Sie alle benötigten Daten in die vorhandenen
+                    Textfelder einpflegen oder per CSV Upload gleich mehrere Nutzer auf einmal erstellen.</p>
+                <p>!Bitte denken Sie daran, das Passwort des neu erstellten Nutzers zu kopieren, da es auf keine andere
+                    Weise abgerufen werden kann.<br>Nach dem ersten Login können diese, wie in Abschnitt "Login"
+                    beschrieben, Ihr Passwort ändern!<br></p>
+                <p>Das Format der CSV ist:<br></p>
+                <table>
+                    <tr>
+                        <th>Vorname</th>
+                        <th>Nachname</th>
+                        <th>E-Mail</th>
+                        <th>Geburtsdatum</th>
+                        <th>Geschlecht</th>
+                    </tr>
+                    <tr>
+                        <td>Text</td>
+                        <td>Text</td>
+                        <td>Text: Format ...&#64;...</td>
+                        <td>TT.MM.JJJJ</td>
+                        <td>M/W</td>
+                    </tr>
+                </table>
+                <p>Das Trennzeichen der CSV ist das Semicolon ";".</p>
+                <p>Athleten welche per CSV erstellt werden bekommen momentan ein zufälliges Passwort zugewiesen welches
+                    nicht eingesehen werden kann.
+                    <br>Da Athleten momentan sowieso nicht die Webapplikation nutzen sollen, ist dies kein Problem.
+                    <br>Um einfache Zukünftige implementierung von Athleten zu ermöglichen, ist es jedoch möglich ein
+                    Passwort für Athleten in dem integrierten Nutzer Erstellungssystem zu setzen.
+                </p>
+                <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="breakline"></div>
+                <p class="sub-headline">Athleten finden</p>
+                <p>Um einen Athleten zu finden, können Sie die Suchleiste oben in der Seitenleiste links
+                    benutzen.<br>Die Suchleiste sucht
+                    nach dem Vor- und Nachnamen des Athleten und zeigt Ihnen alle Athleten an, die den eingegebenen Text
+                    in entweder Vor- oder Nachnamen enthalten.
+                    <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="breakline"></div>
+                <p class="sub-headline">Athleten bearbeiten</p>
+                <p>Einzelne Athleten können Sie ebenso in der Athletenübersicht <svg width="20" height="20"
+                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M23 20.9999V18.9999C22.9993 18.1136 22.7044 17.2527 22.1614 16.5522C21.6184 15.8517 20.8581 15.3515 20 15.1299"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M16 3.12988C16.8604 3.35018 17.623 3.85058 18.1676 4.55219C18.7122 5.2538 19.0078 6.11671 19.0078 7.00488C19.0078 7.89305 18.7122 8.75596 18.1676 9.45757C17.623 10.1592 16.8604 10.6596 16 10.8799"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg> bearbeiten. Hierfür müssen Sie nur einen Athleten in der Leiste links anklicken und dann oben
+                    rechts auf <app-primary-button class="inline-block" [text]="'Bearbeiten'" [iconName]="'edit-1'"></app-primary-button>
+                    .<br>
+                    Hier können Sie alle persönlichen Daten des Athletens anpassen, außer deren Passwort.</p>
+                <p>Auf dem Knopf "Details" direkt neben "Bearbeiten" können Sie einen Athleten auch löschen.</p>
+                <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="breakline"></div>
+                <p class="sub-headline">Daten Erfassen</p>
+                <p>Damit Sie einem Athleten seine erreichten Werte eintragen können müssen Sie genau wie bei den anderen
+                    Schritten in die Athletenübersicht <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M23 20.9999V18.9999C22.9993 18.1136 22.7044 17.2527 22.1614 16.5522C21.6184 15.8517 20.8581 15.3515 20 15.1299"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M16 3.12988C16.8604 3.35018 17.623 3.85058 18.1676 4.55219C18.7122 5.2538 19.0078 6.11671 19.0078 7.00488C19.0078 7.89305 18.7122 8.75596 18.1676 9.45757C17.623 10.1592 16.8604 10.6596 16 10.8799"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg> wechseln.<br>Wenn Sie hier einen Athleten auswählen sehen Sie in der Mitte des Bildschirms
+                    eine Mitteilung, dass noch keine Einträge vorhanden sind, oder die bereits eingetragenen Übungsdaten
+                    des Athleten.<br>
+                    Hier können Sie auf <app-primary-button class="inline-block" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
+                    klicken um ein neues Modal zu öffnen.<br>In diesem Modal können Sie
+                    sehr Intuitiv auswählen welche Übung aus welcher Kategorie passend zur Altersklasse des Athleten
+                    erfassen wollen.<br>
+                    Haben Sie die Übung gefunden müssen Sie nurnoch die passenden Werte eingeben. Das neue Fenster passt
+                    sich automatisch an die bedürfnisse der Übung an.<br>
+                    z.B. haben Sprints ein Feld um die Zeit zu erfassen und Seilspringen ein Feld um die Anzahl der
+                    Wiederholungen einzutragen.</p>
+                <p>Sobald Sie das geschafft haben, wird die Übung in der Datenbank eingetragen und in der Liste der
+                    Erfassten Übungen angezeigt.</p>
+                <p>Auch hier können Daten per CSV eingepflegt werden.</p>
+                <p>Das Format der CSV ist:<br></p>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Vorname</th>
+                        <th>Geschlecht</th>
+                        <th>Geburtsjahr</th>
+                        <th>Geburtstag</th>
+                        <th>Übung</th>
+                        <th>Kategorie</th>
+                        <th>Datum</th>
+                        <th>Ergebnis</th>
+                        <th>Punkte</th>
+                        <th>DBS</th>
+                    </tr>
+                    <tr>
+                        <td>Text</td>
+                        <td>Text</td>
+                        <td>M/W</td>
+                        <td>JJJJ</td>
+                        <td>TT.MM</td>
+                        <td>Text</td>
+                        <td>Text</td>
+                        <td>TT.MM.JJJJ</td>
+                        <td>Wert / Text</td>
+                        <td>Zahl</td>
+                        <td>Ja/Nein</td>
+                    </tr>
+                </table>
+                <p>Das Trennzeichen der CSV ist das Semicolon ";".</p>
+                <p>Beachte hier, dass die Werte stimmen müssen und nicht existente Übungen automatisch erstellt werden.</p>
+                <p>Übungen welche am selben Tag wie bereichts vorhandene gleiche Übungen eingetragen werden, überschreiben diese.</p>
+                <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="breakline"></div>
+                <p class="sub-headline">Erfasste Übungen einsehen</p>
+                <p>In der Ansicht eines Athletens können Sie nach dem erfassen mindestens einer Übung eine Liste der
+                    erfassten Übungen sehen.<br>
+                    Die erfassten Übungen können Sie jetzt mittels der Filter funktion oben rechts so Filtern, dass nur
+                    relevante Übungen angezeigt werden.<br>
+                    Die Sortieren Funktion finden Sie auf den grauen Überschriften über der Liste, klicken Sie einfach
+                    an nach was Sie sortieren wollen. Ein erneuter Klick auf dieselbe Kategorie ändert die
+                    Sortierreihenfolge.</p>
+                <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="breakline"></div>
+                <p class="sub-headline">Erfasste Übungen bearbeiten</p>
+                <p>Wenn Sie sich in der Übersicht eines Athletens befinden und dessen Übungen sehen, können Sie diese auch
+                bearbeiten.<br>
+                Klicken Sie dafür einfach auf die drei Punkte rechts neben der Übung und wählen Sie "Bearbeiten <app-icon class="inline-block small" [iconName]="'edit-1'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>".<br>
+                Hier können Sie die Werte der Übung anpassen und speichern.<br>
+                Sollten Sie eine Übung löschen wollen, können Sie dies ebenfalls über die drei Punkte machen.
+                </p>
+            </div>
+        </div>
+        <div>
+            <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+            <div id="headline-wrapper">
+                <p class="headline">Trainer verwalten</p>
+            </div>
+            <div id="general-information-wrapper">
+                <p class="sub-headline">Trainer erstellen</p>
+                <p>In der Trainerübersicht <svg width="20" height="20" viewBox="0 0 21 20" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M13.8333 3.33325H15.4999C15.9419 3.33325 16.3659 3.50885 16.6784 3.82141C16.991 4.13397 17.1666 4.55789 17.1666 4.99992V16.6666C17.1666 17.1086 16.991 17.5325 16.6784 17.8451C16.3659 18.1577 15.9419 18.3333 15.4999 18.3333H5.49992C5.05789 18.3333 4.63397 18.1577 4.32141 17.8451C4.00885 17.5325 3.83325 17.1086 3.83325 16.6666V4.99992C3.83325 4.55789 4.00885 4.13397 4.32141 3.82141C4.63397 3.50885 5.05789 3.33325 5.49992 3.33325H7.16659"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M13.0001 1.66675H8.00008C7.53984 1.66675 7.16675 2.03984 7.16675 2.50008V4.16675C7.16675 4.62699 7.53984 5.00008 8.00008 5.00008H13.0001C13.4603 5.00008 13.8334 4.62699 13.8334 4.16675V2.50008C13.8334 2.03984 13.4603 1.66675 13.0001 1.66675Z"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg> können Sie wie in der Athleten
+                    Ansicht alle Trainer sehen und nach ihnen suchen. Auch hier können Sie mit <app-quaternary-button class="inline-block" [iconName]="'user-plus'" [tooltipText]="'Sportler hinzufügen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"></app-quaternary-button> neben der
+                    Suchleiste oder dem <app-icon class="inline-block"  [iconName]="'plus'" [iconHeight]="'20'" [iconWidth]="'20'" [strokeWidth]="'2'" [iconColor]="'var(--accent-300)'"></app-icon> unter den vorhandenen Trainern einen neuen Trainer erstellen.</p>
+                <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="breakline"></div>
+                <p class="sub-headline">Trainer bearbeiten</p>
+                <p>Wenn Sie hier auf einen Trainer klicken, können Sie diesen bearbeiten oder löschen.</p>
+                <p>Beim bearbeiten können Sie alle Daten des Trainers bis auf deren Passwort ändern.</p>
+                <p>Beim Löschen eines Trainers werden alle Daten des Trainers gelöscht und können nicht
+                    wiederhergestellt
+                    werden.<br>Die Erfassten Übungen des Trainers bleiben vorhanden.</p>
+            </div>
+        </div>
+        <div>
+            <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+            <div id="headline-wrapper">
+                <p class="headline">Übungskatalog</p>
+            </div>
+            <div id="general-information-wrapper">
+                <p class="sub-headline">Übungen einsehen</p>
+                <p>Im Übungskatalog <svg width="20" height="20" viewBox="0 0 21 20" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.16663 5H18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M7.16663 10H18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M7.16663 15H18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M3 5H3.00833" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M3 10H3.00833" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M3 15H3.00833" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg> können Sie alle Übungen sehen, die in der Datenbank vorhanden sind.<br>Diese können Sie vor
+                    dem ersten Start in der values.json im Backend festlegen.<br>
+                    Standardmäßig sind dort alle Übungen der Altersklassen 6-18 im Jahr 2024 eingetragen.</p>
+                <p>Hier können Sie wie bei der Übersicht eines Athleten nach den Überschriften, durch anklicken dieser,
+                    sortieren und einen Filter anwenden um nur relevante Übungen anzeigen zu lassen.</p>
+                <p>Die Suchfunktion ist in dieser Übersicht sehr ausgefeilt, denn es kann nach allem gesucht werden.<br>
+                    <li>Name</li>
+                    <li>Benötigte Werte für eine Medaille</li>
+                    <li>Kategorie</li>
+                    <li>Geschlecht</li>
+                    <li>...</li>
+                    Tippen Sie einfach ein nach was Sie suchen. Zusammen mit dem Filter und der Sortierung finden Sie
+                    garantiert alles was Sie brauchen.
+                </p>
+                <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="breakline"></div>
+                <p class="sub-headline">Übungen bearbeiten</p>
+                <p>Falls Sie die Übungen aktuell halten wollen, können Sie deren Werte bearbeiten. Klicken Sie dafür
+                    einfach die drei Punkte rechts an der Übung.</p>
+                <p>Das Löschen einer Übung ist auch möglich, bedenken Sie hier, dass das unwiederruflich ist.</p>
+                <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="breakline"></div>
+                <p class="sub-headline">Übungen hinzufügen</p>
+                <p>Um Übungen hinzuzufügen, klicken Sie einfach oben rechts auf "Disziplin hinzufügen", hier können Sie
+                    dann alle benötigten Daten einer Übung eintragen.</p>
+                <p>Es liegt in Ihrer verantwortung, die Übungen korrekt einzutragen, sodass Sie mit den offiziellen
+                    Übungen übereinstimmen.</p>
+            </div>
+        </div>
+        <div>
+            <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+            <div id="headline-wrapper">
+                <p class="headline">Über Uns</p>
+            </div>
+            <div id="general-information-wrapper">
+                <p class="sub-headline">Das Team</p>
+                <p> Diese Webapplikation wurde von einem Team von 9 Studenten, im 3. Semester, im Rahmen des Moduls Projektmanagement an
+                    der Provadis Hochschule erstellt.</p>
+                <p>Das Projekt diente der Erfahrung mittels Scrum ein Projekt von beginn bis zum Schluss durchzuführen.
+                </p>
+                <p>Das Team:</p>
+                <li>PO: Mike Busam</li>
+                <li>Scrum Master: Moritz Bosch</li>
+                <li>Entwickler:</li>
+                <li>Ben Zelleröhr</li>
+                <li>Lucas Buchholz</li>
+                <li>Lucas Knesel</li>
+                <li>Markus Siegert</li>
+                <li>Marvin Hofmann</li>
+                <li>Ole Einar Grundmann</li>
+                <li>Ronny Vater</li>
+                <p>Zusammen unter dem Namen Squad Mandalore</p>
+                <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="breakline"></div>
+                <p class="sub-headline">Das Projekt</p>
+                <p>Zur Entwicklung dieser Webapplikation wurde ein Zeitraum von 6 Monaten festgelegt.<br>
+                Der Dozent dient in diesem Projekt als Kunde während mehrere Schülergruppen je ein Scrum Team bilden und die gleiche Webapplikation entwickeln.</p>
+            </div>
+        </div>
+        <div>
+            <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+            <div id="headline-wrapper">
+                <p class="headline">Datenschutz und Rechtliches</p>
+            </div>
+            <div id="general-information-wrapper">
+                <p class="sub-headline">Datenschutz</p>
+                <p>Diese Webapplikation ist dazu gedacht Lokal ausgeführt zu werden und von nur einer Gruppe von
+                    Personen für testzwecke genutzt zu werden.</p>
+                <p>Es wird keine Internetverbindung benötigt, da es keine Daten senden / empfangen muss.<br>
+                Somit ist es uns erlaubt, dass alle Trainer alle Athleten sehen und bearbeiten können. Auch die
+                Erstellung von Nutzern mittels deren persönlichen Daten ist in diesem Rahmen kein Problem.</p>
+                <p>Sollte diese Webapplikation in irgendeiner anderen hinsicht genutzt werden, fällt die gesamte Schuld
+                    auf die Person welche das veranlasst hat und Squad Mandalore wird davon nicht betroffen.</p>
+                <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="breakline"></div>
+                <p class="sub-headline">Rechliches</p>
+                <p>Die gesamten Rechte der Webseite gehen über an die Deutsche Telekom AG. Squad Mandalore darf keine eigenständigen Aussagen über die Nutzung der Webapplikation treffen.</p>
+                <p>Die momentanen Rechte sind wie folgt: Die Webseite darf nür für das Projekt genutzt werden und wird nicht öffentlich zugänglich gemacht.</p>
+            </div>
+        </div>
+    </div>
 </div>
 <app-navbar-bottom></app-navbar-bottom>

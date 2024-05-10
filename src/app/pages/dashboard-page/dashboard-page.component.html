@@ -8,15 +8,18 @@
         <div id="general-information-wrapper">
             <app-user-card [user]="selectedAthlete"></app-user-card>
             <div class="chip margin-left-auto">
-                <span>{{selectedAthlete.gender === 'm' ? 'männlich' : 'weiblich'}}</span>
+                <span class="large-screen">{{selectedAthlete.gender === 'm' ? 'männlich' : 'weiblich'}}</span>
                 <app-icon [iconName]="selectedAthlete.gender === 'm' ? 'male' : 'female'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
             </div>
             <div class="chip">
-                <span>geboren am {{selectedAthlete.birthday | date:'dd.MM.yyyy'}}</span>
+                <span class="large-screen">geboren am {{selectedAthlete.birthday | date:'dd.MM.yyyy'}}</span>
+                <span class="small-screen">{{selectedAthlete.birthday | date:'MM.yyyy'}}</span>
                 <app-icon [iconName]="'star'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
             </div>
-            <app-secondary-button class="secondary-button" [text]="'Details'" [strokeWidth]="'1.5'" (click)="modals.showDetails.isActive = true"></app-secondary-button>
-            <app-primary-button [text]="'Bearbeiten'" [iconName]="'edit-1'"></app-primary-button>
+            <app-secondary-button class="secondary-button large-screen" [text]="'Details'" [strokeWidth]="'1.5'" (click)="modals.showDetails.isActive = true"></app-secondary-button>
+            <app-quaternary-button class="secondary-button small-screen inline-block" [iconName]="'list'"[tooltipText]="'Details'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'" (click)="modals.showDetails.isActive = true"></app-quaternary-button>
+            <app-primary-button class="large-screen" [text]="'Bearbeiten'" [iconName]="'edit-1'" (click)="modals.patchAthleteModal.isActive = true"></app-primary-button>
+            <app-quaternary-button class="small-screen inline-block" [iconName]="'edit-1'" [tooltipText]="'Bearbeiten'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'" (click)="modals.patchAthleteModal.isActive = true"></app-quaternary-button>
         </div>
         <div id="container-wrapper">
             <div id="results-container" [ngClass]="{'background-color-white': selectedAthlete}">
@@ -158,7 +161,7 @@
                                         <span class="font-size-15 accent-900">Bearbeiten</span>
                                         <app-icon [iconName]="'edit-1'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
                                     </div>
-                                    <div class="menu-item">
+                                    <div class="menu-item" (click)="deleteCompletedExercise(result)">
                                         <span class="font-size-15 accent-900">Löschen</span>
                                         <app-icon [iconName]="'delete'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
                                     </div>
@@ -288,7 +291,8 @@
     <div class="flex flex-col gap-30 inter-medium">
         <div class="flex items-center justify-between">
             <p class="headline-small">Leistungsübersicht:</p>
-            <span class="accent-500 hover-underline cursor-pointer inter-regular">PDF herunterladen</span>
+            <!-- TODO: Nutzer Fragen ob er eine ID eingeben möchte -->
+            <span class="accent-500 hover-underline cursor-pointer inter-regular" (click)="createPDF()" tabindex="0">PDF herunterladen</span> 
         </div>
         <div class="flex items-center">
             <p>Schnelligkeit</p>
@@ -310,7 +314,7 @@
             </div>
             <div class="flex items-center gap-10 margin-left-40">
                 <p class="font-size-15 accent-500 inter-regular">gesamt</p>
-                <div class="medal" [ngClass]="{'gold': true, 'silver': false, 'bronze': false}"></div>
+                <div class="medal" [ngClass]="calculateCategoryMedal('Schnelligkeit', selectedAthlete.completes)"></div>
             </div>
         </div>
         <div class="flex items-center">
@@ -333,7 +337,7 @@
             </div>
             <div class="flex items-center gap-10 margin-left-40">
                 <p class="font-size-15 accent-500 inter-regular">gesamt</p>
-                <div class="medal" [ngClass]="{'gold': true, 'silver': false, 'bronze': false}"></div>
+                <div class="medal" [ngClass]="calculateCategoryMedal('Koordination', selectedAthlete.completes)"></div>
             </div>
         </div>
         <div class="flex items-center">
@@ -356,7 +360,7 @@
             </div>
             <div class="flex items-center gap-10 margin-left-40">
                 <p class="font-size-15 accent-500 inter-regular">gesamt</p>
-                <div class="medal" [ngClass]="{'gold': true, 'silver': false, 'bronze': false}"></div>
+                <div class="medal" [ngClass]="calculateCategoryMedal('Ausdauer', selectedAthlete.completes)"></div>
             </div>
         </div>
         <div class="flex items-center">
@@ -379,7 +383,7 @@
             </div>
             <div class="flex items-center gap-10 margin-left-40">
                 <p class="font-size-15 accent-500 inter-regular">gesamt</p>
-                <div class="medal" [ngClass]="{'gold': true, 'silver': false, 'bronze': false}"></div>
+                <div class="medal" [ngClass]="calculateCategoryMedal('Kraft', selectedAthlete.completes)"></div>
             </div>
         </div>
     </div>
@@ -393,5 +397,6 @@
 </div>
 <div id="overlay-lower" *ngIf="selectedAthlete;" (click)="modals.showDetails.isActive = false" [ngClass]="{'active': selectedAthlete && modals.showDetails.isActive}"></div>
 
-<app-create-completes [@enterAnimation] *ngIf="modals.createCompletesModal.isActive" [modals]="modals" [selectedAthlete]="selectedAthlete"></app-create-completes>
-<app-create-athlete-modal [@enterAnimation] *ngIf="modals.createAthleteModal.isActive" [modals]="modals" [athletes]="athletes"></app-create-athlete-modal>
+<app-create-completes [@enterAnimation] *ngIf="modals.createCompletesModal.isActive" [modals]="modals" [selectedAthlete]="selectedAthlete" (fileCallback)="csvParse($event)"></app-create-completes>
+<app-create-athlete-modal [@enterAnimation] *ngIf="modals.patchAthleteModal.isActive" [modal]="modals.patchAthleteModal" [selectedAthlete]="selectedAthlete" (athleteCallback)="patchAthlete($event)" (fileCallback)="csvParse($event)"></app-create-athlete-modal>
+<app-create-athlete-modal [@enterAnimation] *ngIf="modals.createAthleteModal.isActive" [modal]="modals.createAthleteModal" (athleteCallback)="createAthlete($event)" (fileCallback)="csvParse($event)"></app-create-athlete-modal>

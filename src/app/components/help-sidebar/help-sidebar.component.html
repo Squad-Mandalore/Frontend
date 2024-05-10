@@ -1,0 +1,17 @@
+<div id="sidebar">
+    <div id="header">
+        <div>
+            <p class="headline">Nutzungshinweise</p>
+            <p class="description">Klicke eine Überschrift um zu ihr zu springen</p>
+        </div>
+    </div>
+    <div id="breakline"></div>
+    <div id="sidebar-content-wrapper">
+        <div *ngFor="let headline of headlines; let i = index" (click)="onHeadlineClick(i + 1); selectedHeadline = i; selectedSubHeadline = null">
+            <p class="click-headline" [ngClass]="{'active': selectedHeadline === i}">{{ headline.title }}</p>
+            <div class="sub-headlines" *ngIf="selectedHeadline === i && headline.subtitles.length > 0">
+                <a *ngFor="let subtitle of headline.subtitles; let j = index" class="click-subheadline" [ngClass]="{'active': selectedSubHeadline === j}" (click)="$event.stopPropagation(); onSubHeadlineClick(i, j); selectedSubHeadline = j">{{ subtitle }}</a>
+            </div>
+        </div>
+    </div>
+</div>

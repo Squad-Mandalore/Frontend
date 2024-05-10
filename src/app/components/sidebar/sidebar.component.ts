@@ -8,6 +8,7 @@ import customFilter from '../../../utils/custom-filter';
 import { IconComponent } from '../icon/icon.component';
 import { AthleteFullResponseSchema, TrainerResponseSchema } from '../../shared/generated';
 import { TrainerCardComponent } from '../trainer-card/trainer-card.component';
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,11 +19,17 @@ import { TrainerCardComponent } from '../trainer-card/trainer-card.component';
 })
 export class SidebarComponent {
   @Input() athletes: AthleteFullResponseSchema[] = [];
-  @Input() trainer: TrainerResponseSchema[] = [];
+  @Input() trainers: TrainerResponseSchema[] = [];
   @Input() type!: "athlete" | "trainer";
   @Input() modals: any = {};
   @Input() isLoading!: boolean;
+  windowWidth: number = window.innerWidth;
   searchValue = "";
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.windowWidth = (event.target as Window).innerWidth;
+  }
 
   customFilterCallAthletes(array: any[], options: Object, selectionFullFit:boolean = false){
     return customFilter(array, options, selectionFullFit, "athlete");
