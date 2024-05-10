@@ -94,7 +94,7 @@ export class TrainerOverviewPageComponent {
     });
     this.trainerService.updateTrainerTrainersIdPatch(this.selectedTrainer!.id, body).subscribe({
       next: (response: TrainerResponseSchema) => {
-        this.alertService.show('Trainer aktualisier', 'Trainer wurde erfolgreich bearbeitet.', 'success');
+        this.alertService.show('Trainer aktualisiert', 'Trainer wurde erfolgreich bearbeitet.', 'success');
         this.modals.patchTrainerModal.isActive = false;
         this.selectedTrainer = response;
         this.trainers = this.trainers.map(element => element.id === response.id ? response : element);
