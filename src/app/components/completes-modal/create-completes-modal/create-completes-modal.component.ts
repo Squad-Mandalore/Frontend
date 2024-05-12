@@ -67,7 +67,7 @@ export class CreateCompletesComponent implements OnInit{
     this.createCompletesForm = this.formBuilder.group({
       exercise_id: ['', Validators.required],
       result: ['', Validators.required],
-      quantity: ['', Validators.required],
+      quantity: [''],
     })
   }
 
@@ -99,17 +99,17 @@ export class CreateCompletesComponent implements OnInit{
   }
 
   onSubmit() {
-    this.completesData.exercise_id = this.selectedExercise.id;
-
     if (this.createCompletesForm.value.quantity != '') {
       const quantity = +this.createCompletesForm.value.quantity!;
 
-      this.completesData.result = this.submitNewQuantity(quantity);
-    } else {
-      this.completesData.result = this.createCompletesForm.value.result!;
+      this.createCompletesForm.patchValue({result: this.submitNewQuantity(quantity)});
     }
 
-    this.completesService.createCompletesCompletesPost(this.completesData).subscribe({
+    if(!this.createCompletesForm.valid) {
+      return;
+    }
+
+    this.completesService.createCompletesCompletesPost({exercise_id: this.createCompletesForm.value.exercise_id!, athlete_id: this.selectedAthlete.id, result: this.createCompletesForm.value.result!}).subscribe({
       next: (response: AthleteCompletesResponseSchema) => {
         this.alertService.show('Eintrag erfasst', 'Eintrag wurde erfolgreich hinzugefügt.', 'success');
         this.modal.isActive = false;

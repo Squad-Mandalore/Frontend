@@ -18,3 +18,9 @@ input[type="number"]::-webkit-outer-spin-button {
   outline: 0;
   border: 1px solid var(--brand-500);
 }
+
+:host.ng-invalid{
+  input {
+    border-color: red;
+  }
+}

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 
 @Component({
   selector: 'app-timeinput',
@@ -12,10 +12,26 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
             provide: NG_VALUE_ACCESSOR,
             multi: true,
             useExisting: TimeinputComponent
+        },
+        {
+            provide: NG_VALIDATORS,
+            multi: true,
+            useExisting: TimeinputComponent
         }
       ]
 })
-export class TimeinputComponent implements ControlValueAccessor {
+export class TimeinputComponent implements ControlValueAccessor , Validator{
+  validate(control: AbstractControl<any, any>): ValidationErrors | null {
+    if (!control.value.match(/^\d{2}:\d{2}:\d{2}:\d{3}$/)) {
+      return {
+        illegalInput: true
+      }
+    }
+    return null;
+  }
+  registerOnValidatorChange?(fn: () => void): void {
+    this.onValChange = fn;
+  }
   hours: string = '';
   minutes: string = '';
   seconds: string = '';
@@ -25,6 +41,9 @@ export class TimeinputComponent implements ControlValueAccessor {
 
   // The value of the input.
   value: string = "";
+
+  // Callback function to be called when the value changes.
+  onValChange: () => void = () => { };
 
   // Callback function to be called when the value changes.
   onChange: (value: string) => void = (_: string) => { };

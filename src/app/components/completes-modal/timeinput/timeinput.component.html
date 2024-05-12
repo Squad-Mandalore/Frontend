@@ -1,7 +1,7 @@
-<input #hoursin class="multiple-input" type="number" [value]="hours" placeholder="hh" (change)="change(hoursin.valueAsNumber, minutesin.valueAsNumber, secondsin.valueAsNumber, millisecondsin.valueAsNumber)" style="display: inline-block"/>
+<input #hoursin class="multiple-input" type="number" [value]="hours" placeholder="hh" min=0 (change)="change(hoursin.valueAsNumber, minutesin.valueAsNumber, secondsin.valueAsNumber, millisecondsin.valueAsNumber)" style="display: inline-block"/>
 :
-<input #minutesin class="multiple-input" type="number" [value]="minutes" placeholder="mm" (change)="change(hoursin.valueAsNumber, minutesin.valueAsNumber, secondsin.valueAsNumber, millisecondsin.valueAsNumber)" style="display: inline-block;"/>
+<input #minutesin class="multiple-input" type="number" [value]="minutes" placeholder="mm" min=0 (change)="change(hoursin.valueAsNumber, minutesin.valueAsNumber, secondsin.valueAsNumber, millisecondsin.valueAsNumber)" style="display: inline-block;"/>
 :
-<input #secondsin class="multiple-input" type="number" [value]="seconds" placeholder="ss" (change)="change(hoursin.valueAsNumber, minutesin.valueAsNumber, secondsin.valueAsNumber, millisecondsin.valueAsNumber)" style="display: inline-block;"/>
+<input #secondsin class="multiple-input" type="number" [value]="seconds" placeholder="ss" min=0 (change)="change(hoursin.valueAsNumber, minutesin.valueAsNumber, secondsin.valueAsNumber, millisecondsin.valueAsNumber)" style="display: inline-block;"/>
 :
-<input #millisecondsin class="multiple-input" type="number" [value]="milliseconds" placeholder="ms" (change)="change(hoursin.valueAsNumber, minutesin.valueAsNumber, secondsin.valueAsNumber, millisecondsin.valueAsNumber)" style="display: inline-block;"/>
+<input #millisecondsin class="multiple-input" type="number" [value]="milliseconds" placeholder="ms" min=0 (change)="change(hoursin.valueAsNumber, minutesin.valueAsNumber, secondsin.valueAsNumber, millisecondsin.valueAsNumber)" style="display: inline-block;"/>

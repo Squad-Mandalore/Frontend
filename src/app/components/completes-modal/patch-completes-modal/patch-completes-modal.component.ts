@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CompletesResponseSchema, CompletesService } from '../../../shared/generated';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertService } from '../../../shared/alert.service';
 import { PrimaryButtonComponent } from '../../buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../buttons/secondary-button/secondary-button.component';
@@ -28,8 +28,7 @@ export class PatchCompletesComponent implements OnInit {
     private completesService: CompletesService,
   ) {
     this.completesForm = this.formBuilder.group({
-      exercise_id: [''],
-      result: [''],
+      result: ['', Validators.required],
       quantity: [''],
     })
   }
@@ -56,6 +55,10 @@ export class PatchCompletesComponent implements OnInit {
     if (this.completesForm.value.quantity != '') {
       const quantity = +this.completesForm.value.quantity!;
       this.completesForm.patchValue({ result: this.submitNewQuantity(quantity) });
+    }
+
+    if(!this.completesForm.valid) {
+      return;
     }
 
     this.completesService.updateCompletesCompletesPatch(this.selectedCompletes.exercise.id, this.selectedCompletes.athlete_id, this.selectedCompletes.tracked_at, { result: this.completesForm.value.result! }).subscribe({

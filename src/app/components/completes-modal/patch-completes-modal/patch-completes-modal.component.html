@@ -14,7 +14,7 @@
       <ng-container [ngSwitch]="subPage">
 
         <label class="count-label" *ngSwitchCase="1">
-          <input class="input" type="number" name="anzahl" formControlName="quantity" placeholder="Anzahl"/>
+          <input class="input" type="number" name="anzahl" formControlName="quantity" min=0 placeholder="Anzahl"/>
         </label>
 
         <app-timeinput formControlName="result" *ngSwitchCase="2"></app-timeinput>
