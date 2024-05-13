@@ -27,18 +27,20 @@ import { LoggerService } from '../../shared/logger.service';
 import { CreateAthleteModalComponent } from '../../components/create-athlete-modal/create-athlete-modal.component';
 import { PDFDocument, PDFForm } from 'pdf-lib';
 import { HttpClient } from '@angular/common/http';
+import { FormatResultPipe } from '../../shared/format-result.pipe';
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, QuaternaryButtonComponent, IconComponent, CreateCompletesComponent, CreateAthleteModalComponent],
+  imports: [SidebarComponent, DatePipe, NavbarBottomComponent, NgIf, NgFor, NgClass, FormatResultPipe, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, QuaternaryButtonComponent, IconComponent, CreateCompletesComponent, CreateAthleteModalComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
   animations: [
     enterLeaveAnimation
   ]
 })
+
 
 export class DashboardPageComponent implements OnInit, OnDestroy {
   constructor(
@@ -51,6 +53,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private logger: LoggerService,
     private csvService: CsvService,
     private http: HttpClient,
+    
   ) { }
 
   athletes: AthleteFullResponseSchema[] = []
