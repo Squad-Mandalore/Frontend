@@ -157,7 +157,7 @@
                             <div class="flex items-center more-icon cursor-pointer">
                                 <app-icon [iconName]="'more-vertical'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'20'" [iconWidth]="'20'"></app-icon>
                                 <div class="undermenu">
-                                    <div class="menu-item">
+                                    <div class="menu-item" (click)="patchCompletedExercise(result)">
                                         <span class="font-size-15 accent-900">Bearbeiten</span>
                                         <app-icon [iconName]="'edit-1'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
                                     </div>
@@ -397,6 +397,7 @@
 </div>
 <div id="overlay-lower" *ngIf="selectedAthlete;" (click)="modals.showDetails.isActive = false" [ngClass]="{'active': selectedAthlete && modals.showDetails.isActive}"></div>
 
-<app-create-completes [@enterAnimation] *ngIf="modals.createCompletesModal.isActive" [modals]="modals" [selectedAthlete]="selectedAthlete" (fileCallback)="csvParse($event)"></app-create-completes>
+<app-create-completes [@enterAnimation] *ngIf="modals.createCompletesModal.isActive" [modal]="modals.createCompletesModal" [selectedAthlete]="selectedAthlete!" (fileCallback)="csvParse($event)"></app-create-completes>
+<app-patch-completes [@enterAnimation] *ngIf="modals.patchCompletesModal.isActive" [modal]="modals.patchCompletesModal" [selectedCompletes]="modals.patchCompletesModal.completes"></app-patch-completes>
 <app-create-athlete-modal [@enterAnimation] *ngIf="modals.patchAthleteModal.isActive" [modal]="modals.patchAthleteModal" [selectedAthlete]="selectedAthlete" (athleteCallback)="patchAthlete($event)" (fileCallback)="csvParse($event)"></app-create-athlete-modal>
 <app-create-athlete-modal [@enterAnimation] *ngIf="modals.createAthleteModal.isActive" [modal]="modals.createAthleteModal" (athleteCallback)="createAthlete($event)" (fileCallback)="csvParse($event)"></app-create-athlete-modal>
