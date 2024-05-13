@@ -47,6 +47,7 @@ import { FormatResultPipe } from '../../shared/format-result.pipe';
     CreateAthleteModalComponent,
     PatchCompletesComponent,
     FormatResultPipe,
+    QuaternaryButtonComponent,
   ],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
