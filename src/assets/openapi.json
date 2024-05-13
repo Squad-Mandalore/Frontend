@@ -5,13 +5,364 @@
     "version": "0.1.0"
   },
   "paths": {
-    "/athletes/all": {
+    "/admins/": {
+      "get": {
+        "tags": [
+          "admins"
+        ],
+        "summary": "Get All Admins",
+        "operationId": "get_all_admins_admins__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AdminResponseSchema"
+                  },
+                  "type": "array",
+                  "title": "Response Get All Admins Admins  Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/admins/{id}": {
+      "get": {
+        "tags": [
+          "admins"
+        ],
+        "summary": "Get Admin",
+        "operationId": "get_admin_admins__id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "admins"
+        ],
+        "summary": "Update Admin",
+        "operationId": "update_admin_admins__id__patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminPatchSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trainers/": {
+      "get": {
+        "tags": [
+          "trainers"
+        ],
+        "summary": "Get All Trainers",
+        "operationId": "get_all_trainers_trainers__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TrainerResponseSchema"
+                  },
+                  "type": "array",
+                  "title": "Response Get All Trainers Trainers  Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "trainers"
+        ],
+        "summary": "Create Trainer",
+        "operationId": "create_trainer_trainers__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainerPostSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainerResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/trainers/{id}": {
+      "get": {
+        "tags": [
+          "trainers"
+        ],
+        "summary": "Get Trainer",
+        "operationId": "get_trainer_trainers__id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainerResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "trainers"
+        ],
+        "summary": "Delete Trainer",
+        "operationId": "delete_trainer_trainers__id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "trainers"
+        ],
+        "summary": "Update Trainer",
+        "operationId": "update_trainer_trainers__id__patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainerPatchSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainerResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/athletes/": {
       "get": {
         "tags": [
           "athletes"
         ],
         "summary": "Get All Athletes",
-        "operationId": "get_all_athletes_athletes_all_get",
+        "operationId": "get_all_athletes_athletes__get",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -22,7 +373,51 @@
                     "$ref": "#/components/schemas/AthleteResponseSchema"
                   },
                   "type": "array",
-                  "title": "Response Get All Athletes Athletes All Get"
+                  "title": "Response Get All Athletes Athletes  Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "athletes"
+        ],
+        "summary": "Create Athlete",
+        "operationId": "create_athlete_athletes__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AthletePostSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AthleteResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -180,18 +575,145 @@
         }
       }
     },
-    "/athletes/": {
-      "post": {
+    "/athletes/{id}/full": {
+      "get": {
         "tags": [
           "athletes"
         ],
-        "summary": "Create Athlete",
-        "operationId": "create_athlete_athletes__post",
+        "summary": "Get Athlete Full",
+        "operationId": "get_athlete_full_athletes__id__full_get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AthleteFullResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/certificates/{id}": {
+      "get": {
+        "tags": [
+          "certificates"
+        ],
+        "summary": "Get Certificates",
+        "operationId": "get_certificates_certificates__id__get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CertificateSingleResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "certificates"
+        ],
+        "summary": "Delete Certificate",
+        "operationId": "delete_certificate_certificates__id__delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/certificates/": {
+      "post": {
+        "tags": [
+          "certificates"
+        ],
+        "summary": "Create Certificate",
+        "operationId": "create_certificate_certificates__post",
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/AthletePostSchema"
+                "$ref": "#/components/schemas/Body_create_certificate_certificates__post"
               }
             }
           },
@@ -203,7 +725,1033 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AthleteResponseSchema"
+                  "$ref": "#/components/schemas/CertificateResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/completes/": {
+      "get": {
+        "tags": [
+          "completes"
+        ],
+        "summary": "Get Completes",
+        "operationId": "get_completes_completes__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "exercise_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Exercise Id"
+            }
+          },
+          {
+            "name": "athlete_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Athlete Id"
+            }
+          },
+          {
+            "name": "tracked_at",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Tracked At"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompletesResponseSchema"
+                  },
+                  "title": "Response Get Completes Completes  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "completes"
+        ],
+        "summary": "Delete Ahtlete",
+        "operationId": "delete_ahtlete_completes__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "exercise_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Exercise Id"
+            }
+          },
+          {
+            "name": "athlete_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Athlete Id"
+            }
+          },
+          {
+            "name": "tracked_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tracked At"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "completes"
+        ],
+        "summary": "Create Completes",
+        "operationId": "create_completes_completes__post",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompletesPostSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompletesResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "completes"
+        ],
+        "summary": "Update Completes",
+        "operationId": "update_completes_completes__patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "exercise_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Exercise Id"
+            }
+          },
+          {
+            "name": "athlete_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Athlete Id"
+            }
+          },
+          {
+            "name": "tracked_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tracked At"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompletesPatchSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompletesResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/": {
+      "get": {
+        "tags": [
+          "categories"
+        ],
+        "summary": "Get Categories By Athlete Id",
+        "operationId": "get_categories_by_athlete_id_categories__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "athlete_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Athlete Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CategoryVeryFullResponseSchema"
+                      }
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CategoryFullResponseSchema"
+                      }
+                    }
+                  ],
+                  "title": "Response Get Categories By Athlete Id Categories  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/{id}": {
+      "get": {
+        "tags": [
+          "categories"
+        ],
+        "summary": "Get Category By Id",
+        "operationId": "get_category_by_id_categories__id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryFullResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exercises/": {
+      "get": {
+        "tags": [
+          "exercises"
+        ],
+        "summary": "Get All Exercises",
+        "operationId": "get_all_exercises_exercises__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseResponseSchema"
+                  },
+                  "type": "array",
+                  "title": "Response Get All Exercises Exercises  Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "exercises"
+        ],
+        "summary": "Create Exercise",
+        "operationId": "create_exercise_exercises__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExercisePostSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/exercises/{id}": {
+      "get": {
+        "tags": [
+          "exercises"
+        ],
+        "summary": "Get Exercise",
+        "operationId": "get_exercise_exercises__id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "exercises"
+        ],
+        "summary": "Delete Ahtlete",
+        "operationId": "delete_ahtlete_exercises__id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "exercises"
+        ],
+        "summary": "Update Exercise",
+        "operationId": "update_exercise_exercises__id__patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExercisePatchSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rules/": {
+      "get": {
+        "tags": [
+          "rules"
+        ],
+        "summary": "Get All Rules",
+        "operationId": "get_all_rules_rules__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RuleResponseSchema"
+                  },
+                  "type": "array",
+                  "title": "Response Get All Rules Rules  Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "rules"
+        ],
+        "summary": "Create Rule",
+        "operationId": "create_rule_rules__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RulePostSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RuleResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/rules/{id}": {
+      "get": {
+        "tags": [
+          "rules"
+        ],
+        "summary": "Get Rule",
+        "operationId": "get_rule_rules__id__get",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RuleResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "rules"
+        ],
+        "summary": "Delete Rule",
+        "operationId": "delete_rule_rules__id__delete",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "rules"
+        ],
+        "summary": "Update Rule",
+        "operationId": "update_rule_rules__id__patch",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RulePatchSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RuleResponseSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Login For Access Token",
+        "operationId": "login_for_access_token_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_login_for_access_token_auth_login_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Refresh Access Token",
+        "operationId": "refresh_access_token_auth_refresh_post",
+        "parameters": [
+          {
+            "name": "x-refresh-token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Refresh-Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/whoami": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Who Am I",
+        "operationId": "who_am_i_auth_whoami_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/csv/trainer.csv": {
+      "get": {
+        "tags": [
+          "csv"
+        ],
+        "summary": "Read Trainer Csv",
+        "operationId": "read_trainer_csv_csv_trainer_csv_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      }
+    },
+    "/csv/athlete.csv": {
+      "get": {
+        "tags": [
+          "csv"
+        ],
+        "summary": "Read Athlete Csv",
+        "operationId": "read_athlete_csv_csv_athlete_csv_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      }
+    },
+    "/csv/completes.csv": {
+      "get": {
+        "tags": [
+          "csv"
+        ],
+        "summary": "Read Completes Csv",
+        "operationId": "read_completes_csv_csv_completes_csv_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      }
+    },
+    "/csv/parse": {
+      "post": {
+        "tags": [
+          "csv"
+        ],
+        "summary": "Parse Csv File",
+        "operationId": "parse_csv_file_csv_parse_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_parse_csv_file_csv_parse_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "type": "object"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Parse Csv File Csv Parse Post"
                 }
               }
             }
@@ -434,356 +1982,255 @@
           }
         }
       }
-    },
-    "/csv/trainer.csv": {
-      "get": {
-        "tags": [
-          "csv"
-        ],
-        "summary": "Read Trainer Csv",
-        "operationId": "read_trainer_csv_csv_trainer_csv_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response"
-          }
-        }
-      }
-    },
-    "/csv/athlete.csv": {
-      "get": {
-        "tags": [
-          "csv"
-        ],
-        "summary": "Read Athlete Csv",
-        "operationId": "read_athlete_csv_csv_athlete_csv_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response"
-          }
-        }
-      }
-    },
-    "/csv/completes.csv": {
-      "get": {
-        "tags": [
-          "csv"
-        ],
-        "summary": "Read Completes Csv",
-        "operationId": "read_completes_csv_csv_completes_csv_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response"
-          }
-        }
-      }
-    },
-    "/auth/login": {
-      "post": {
-        "tags": [
-          "auth"
-        ],
-        "summary": "Login For Access Token",
-        "operationId": "login_for_access_token_auth_login_post",
-        "requestBody": {
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/Body_login_for_access_token_auth_login_post"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Token"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/refresh": {
-      "post": {
-        "tags": [
-          "auth"
-        ],
-        "summary": "Refresh Access Token",
-        "operationId": "refresh_access_token_auth_refresh_post",
-        "parameters": [
-          {
-            "name": "x-refresh-token",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "X-Refresh-Token"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Token"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/trainers/all": {
-      "get": {
-        "tags": [
-          "trainers"
-        ],
-        "summary": "Get All Trainers",
-        "operationId": "get_all_trainers_trainers_all_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/TrainerResponseSchema"
-                  },
-                  "type": "array",
-                  "title": "Response Get All Trainers Trainers All Get"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
-      }
-    },
-    "/trainers/{id}": {
-      "get": {
-        "tags": [
-          "trainers"
-        ],
-        "summary": "Get Trainer",
-        "operationId": "get_trainer_trainers__id__get",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TrainerResponseSchema"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "trainers"
-        ],
-        "summary": "Delete Trainer",
-        "operationId": "delete_trainer_trainers__id__delete",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "trainers"
-        ],
-        "summary": "Update Trainer",
-        "operationId": "update_trainer_trainers__id__patch",
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Id"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TrainerPatchSchema"
-              }
-            }
-          }
-        },
-        "responses": {
-          "202": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TrainerResponseSchema"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/trainers/": {
-      "post": {
-        "tags": [
-          "trainers"
-        ],
-        "summary": "Create Trainer",
-        "operationId": "create_trainer_trainers__post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TrainerPostSchema"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TrainerResponseSchema"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2PasswordBearer": []
-          }
-        ]
-      }
     }
   },
   "components": {
     "schemas": {
+      "AdminPatchSchema": {
+        "properties": {
+          "username": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Username"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "firstname": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Firstname"
+          },
+          "lastname": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lastname"
+          },
+          "unhashed_password": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unhashed Password"
+          }
+        },
+        "type": "object",
+        "title": "AdminPatchSchema"
+      },
+      "AdminResponseSchema": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "firstname": {
+            "type": "string",
+            "title": "Firstname"
+          },
+          "lastname": {
+            "type": "string",
+            "title": "Lastname"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "last_password_change": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Last Password Change"
+          },
+          "last_edited_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Last Edited At"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "username",
+          "email",
+          "firstname",
+          "lastname",
+          "created_at",
+          "last_password_change",
+          "last_edited_at",
+          "type"
+        ],
+        "title": "AdminResponseSchema"
+      },
+      "AthleteCompletesResponseSchema": {
+        "properties": {
+          "athlete_id": {
+            "type": "string",
+            "title": "Athlete Id"
+          },
+          "exercise": {
+            "$ref": "#/components/schemas/ExerciseResponseSchema"
+          },
+          "tracked_at": {
+            "type": "string",
+            "format": "date",
+            "title": "Tracked At"
+          },
+          "tracked_by": {
+            "type": "string",
+            "title": "Tracked By"
+          },
+          "trainer": {
+            "$ref": "#/components/schemas/TrainerResponseSchema"
+          },
+          "result": {
+            "type": "string",
+            "title": "Result"
+          },
+          "points": {
+            "type": "integer",
+            "title": "Points"
+          }
+        },
+        "type": "object",
+        "required": [
+          "athlete_id",
+          "exercise",
+          "tracked_at",
+          "tracked_by",
+          "trainer",
+          "result",
+          "points"
+        ],
+        "title": "AthleteCompletesResponseSchema"
+      },
+      "AthleteFullResponseSchema": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "firstname": {
+            "type": "string",
+            "title": "Firstname"
+          },
+          "lastname": {
+            "type": "string",
+            "title": "Lastname"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "last_password_change": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Last Password Change"
+          },
+          "last_edited_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Last Edited At"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date",
+            "title": "Birthday"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/Gender"
+          },
+          "trainer": {
+            "$ref": "#/components/schemas/TrainerResponseSchema"
+          },
+          "completes": {
+            "items": {
+              "$ref": "#/components/schemas/AthleteCompletesResponseSchema"
+            },
+            "type": "array",
+            "title": "Completes"
+          },
+          "certificates": {
+            "items": {
+              "$ref": "#/components/schemas/CertificateResponseSchema"
+            },
+            "type": "array",
+            "title": "Certificates"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "username",
+          "email",
+          "firstname",
+          "lastname",
+          "created_at",
+          "last_password_change",
+          "last_edited_at",
+          "type",
+          "birthday",
+          "gender",
+          "trainer",
+          "completes",
+          "certificates"
+        ],
+        "title": "AthleteFullResponseSchema"
+      },
       "AthletePatchSchema": {
         "properties": {
           "username": {
@@ -830,6 +2277,17 @@
             ],
             "title": "Lastname"
           },
+          "unhashed_password": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unhashed Password"
+          },
           "birthday": {
             "anyOf": [
               {
@@ -851,17 +2309,6 @@
                 "type": "null"
               }
             ]
-          },
-          "trainer_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Trainer Id"
           }
         },
         "type": "object",
@@ -896,10 +2343,6 @@
           },
           "gender": {
             "$ref": "#/components/schemas/Gender"
-          },
-          "trainer_id": {
-            "type": "string",
-            "title": "Trainer Id"
           }
         },
         "type": "object",
@@ -910,8 +2353,7 @@
           "firstname",
           "lastname",
           "birthday",
-          "gender",
-          "trainer_id"
+          "gender"
         ],
         "title": "AthletePostSchema"
       },
@@ -964,9 +2406,8 @@
           "gender": {
             "$ref": "#/components/schemas/Gender"
           },
-          "trainer_id": {
-            "type": "string",
-            "title": "Trainer Id"
+          "trainer": {
+            "$ref": "#/components/schemas/TrainerResponseSchema"
           }
         },
         "type": "object",
@@ -982,9 +2423,33 @@
           "type",
           "birthday",
           "gender",
-          "trainer_id"
+          "trainer"
         ],
         "title": "AthleteResponseSchema"
+      },
+      "Body_create_certificate_certificates__post": {
+        "properties": {
+          "blob": {
+            "type": "string",
+            "format": "binary",
+            "title": "Blob"
+          },
+          "athlete_id": {
+            "type": "string",
+            "title": "Athlete Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          }
+        },
+        "type": "object",
+        "required": [
+          "blob",
+          "athlete_id",
+          "title"
+        ],
+        "title": "Body_create_certificate_certificates__post"
       },
       "Body_login_for_access_token_auth_login_post": {
         "properties": {
@@ -1043,6 +2508,363 @@
         ],
         "title": "Body_login_for_access_token_auth_login_post"
       },
+      "Body_parse_csv_file_csv_parse_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_parse_csv_file_csv_parse_post"
+      },
+      "CategoryExerciseFullResponseSchema": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "rules": {
+            "items": {
+              "$ref": "#/components/schemas/CategoryRuleResponseSchema"
+            },
+            "type": "array",
+            "title": "Rules"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "id",
+          "rules"
+        ],
+        "title": "CategoryExerciseFullResponseSchema"
+      },
+      "CategoryFullResponseSchema": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "exercises": {
+            "items": {
+              "$ref": "#/components/schemas/CategoryResponseSchema"
+            },
+            "type": "array",
+            "title": "Exercises"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "id",
+          "exercises"
+        ],
+        "title": "CategoryFullResponseSchema"
+      },
+      "CategoryResponseSchema": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "id"
+        ],
+        "title": "CategoryResponseSchema"
+      },
+      "CategoryRuleResponseSchema": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/Gender"
+          },
+          "from_age": {
+            "type": "integer",
+            "title": "From Age"
+          },
+          "to_age": {
+            "type": "integer",
+            "title": "To Age"
+          },
+          "bronze": {
+            "type": "string",
+            "title": "Bronze"
+          },
+          "silver": {
+            "type": "string",
+            "title": "Silver"
+          },
+          "gold": {
+            "type": "string",
+            "title": "Gold"
+          },
+          "year": {
+            "type": "string",
+            "format": "date",
+            "title": "Year"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "gender",
+          "from_age",
+          "to_age",
+          "bronze",
+          "silver",
+          "gold",
+          "year"
+        ],
+        "title": "CategoryRuleResponseSchema"
+      },
+      "CategoryVeryFullResponseSchema": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "exercises": {
+            "items": {
+              "$ref": "#/components/schemas/CategoryExerciseFullResponseSchema"
+            },
+            "type": "array",
+            "title": "Exercises"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "id",
+          "exercises"
+        ],
+        "title": "CategoryVeryFullResponseSchema"
+      },
+      "CertificateResponseSchema": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "athlete_id": {
+            "type": "string",
+            "title": "Athlete Id"
+          },
+          "uploaded_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Uploaded At"
+          },
+          "uploaded_by": {
+            "type": "string",
+            "title": "Uploaded By"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "athlete_id",
+          "uploaded_at",
+          "uploaded_by",
+          "title"
+        ],
+        "title": "CertificateResponseSchema"
+      },
+      "CertificateSingleResponseSchema": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "blob": {
+            "type": "string",
+            "title": "Blob"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "blob"
+        ],
+        "title": "CertificateSingleResponseSchema"
+      },
+      "CompletesPatchSchema": {
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result"
+          }
+        },
+        "type": "object",
+        "title": "CompletesPatchSchema"
+      },
+      "CompletesPostSchema": {
+        "properties": {
+          "exercise_id": {
+            "type": "string",
+            "title": "Exercise Id"
+          },
+          "athlete_id": {
+            "type": "string",
+            "title": "Athlete Id"
+          },
+          "result": {
+            "type": "string",
+            "title": "Result"
+          }
+        },
+        "type": "object",
+        "required": [
+          "exercise_id",
+          "athlete_id",
+          "result"
+        ],
+        "title": "CompletesPostSchema"
+      },
+      "CompletesResponseSchema": {
+        "properties": {
+          "athlete_id": {
+            "type": "string",
+            "title": "Athlete Id"
+          },
+          "exercise": {
+            "$ref": "#/components/schemas/ExerciseResponseSchema"
+          },
+          "tracked_at": {
+            "type": "string",
+            "format": "date",
+            "title": "Tracked At"
+          },
+          "tracked_by": {
+            "type": "string",
+            "title": "Tracked By"
+          },
+          "trainer": {
+            "$ref": "#/components/schemas/TrainerResponseSchema"
+          },
+          "result": {
+            "type": "string",
+            "title": "Result"
+          },
+          "points": {
+            "type": "integer",
+            "title": "Points"
+          }
+        },
+        "type": "object",
+        "required": [
+          "athlete_id",
+          "exercise",
+          "tracked_at",
+          "tracked_by",
+          "trainer",
+          "result",
+          "points"
+        ],
+        "title": "CompletesResponseSchema"
+      },
+      "ExercisePatchSchema": {
+        "properties": {
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "type": "object",
+        "title": "ExercisePatchSchema"
+      },
+      "ExercisePostSchema": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "category_id": {
+            "type": "string",
+            "title": "Category Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "category_id"
+        ],
+        "title": "ExercisePostSchema"
+      },
+      "ExerciseResponseSchema": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "category": {
+            "$ref": "#/components/schemas/CategoryResponseSchema"
+          },
+          "rules": {
+            "items": {
+              "$ref": "#/components/schemas/RuleResponseSchema"
+            },
+            "type": "array",
+            "title": "Rules"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "category",
+          "rules"
+        ],
+        "title": "ExerciseResponseSchema"
+      },
       "Gender": {
         "type": "string",
         "enum": [
@@ -1077,6 +2899,211 @@
           "message"
         ],
         "title": "LogSchema"
+      },
+      "RuleExerciseResponseSchema": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "category": {
+            "$ref": "#/components/schemas/CategoryResponseSchema"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "category"
+        ],
+        "title": "RuleExerciseResponseSchema"
+      },
+      "RulePatchSchema": {
+        "properties": {
+          "gender": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Gender"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "from_age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "From Age"
+          },
+          "to_age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "To Age"
+          },
+          "bronze": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bronze"
+          },
+          "silver": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Silver"
+          },
+          "gold": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gold"
+          },
+          "year": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Year"
+          }
+        },
+        "type": "object",
+        "title": "RulePatchSchema"
+      },
+      "RulePostSchema": {
+        "properties": {
+          "gender": {
+            "$ref": "#/components/schemas/Gender"
+          },
+          "from_age": {
+            "type": "integer",
+            "title": "From Age"
+          },
+          "to_age": {
+            "type": "integer",
+            "title": "To Age"
+          },
+          "bronze": {
+            "type": "string",
+            "title": "Bronze"
+          },
+          "silver": {
+            "type": "string",
+            "title": "Silver"
+          },
+          "gold": {
+            "type": "string",
+            "title": "Gold"
+          },
+          "year": {
+            "type": "string",
+            "format": "date",
+            "title": "Year"
+          },
+          "exercise_id": {
+            "type": "string",
+            "title": "Exercise Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "gender",
+          "from_age",
+          "to_age",
+          "bronze",
+          "silver",
+          "gold",
+          "year",
+          "exercise_id"
+        ],
+        "title": "RulePostSchema"
+      },
+      "RuleResponseSchema": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/Gender"
+          },
+          "from_age": {
+            "type": "integer",
+            "title": "From Age"
+          },
+          "to_age": {
+            "type": "integer",
+            "title": "To Age"
+          },
+          "bronze": {
+            "type": "string",
+            "title": "Bronze"
+          },
+          "silver": {
+            "type": "string",
+            "title": "Silver"
+          },
+          "gold": {
+            "type": "string",
+            "title": "Gold"
+          },
+          "year": {
+            "type": "string",
+            "format": "date",
+            "title": "Year"
+          },
+          "exercise": {
+            "$ref": "#/components/schemas/RuleExerciseResponseSchema"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "gender",
+          "from_age",
+          "to_age",
+          "bronze",
+          "silver",
+          "gold",
+          "year",
+          "exercise"
+        ],
+        "title": "RuleResponseSchema"
       },
       "Token": {
         "properties": {
@@ -1146,6 +3173,17 @@
               }
             ],
             "title": "Lastname"
+          },
+          "unhashed_password": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unhashed Password"
           }
         },
         "type": "object",
@@ -1239,6 +3277,62 @@
           "type"
         ],
         "title": "TrainerResponseSchema"
+      },
+      "UserResponseSchema": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "firstname": {
+            "type": "string",
+            "title": "Firstname"
+          },
+          "lastname": {
+            "type": "string",
+            "title": "Lastname"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "last_password_change": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Last Password Change"
+          },
+          "last_edited_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Last Edited At"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "username",
+          "email",
+          "firstname",
+          "lastname",
+          "created_at",
+          "last_password_change",
+          "last_edited_at",
+          "type"
+        ],
+        "title": "UserResponseSchema"
       },
       "ValidationError": {
         "properties": {
