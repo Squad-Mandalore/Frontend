@@ -1,10 +1,21 @@
 #page {
     height: calc(100dvh - 4.375rem);
-    display: flex;
-    gap: 0.625rem;
+    width: 100%;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 28.75rem 1fr;
+    grid-template-rows: 1fr;
+    
+    @media (max-width: 1000px) {
+        grid-template-columns: 4rem 1fr;
+    }
 }
 
 #content {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: -1;
     position: relative;
     font-family: "Inter Medium";
     width: 100%;
@@ -136,21 +147,21 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    height: 85%;
-    max-width: 100%;
-    overflow-y: hidden;
-    overflow-x: hidden;
-    min-height: max-content;
+    // height: 85%;
+    // max-width: 100%;
+    // overflow-y: hidden;
+    // overflow-x: hidden;
+    // min-height: max-content;
 }
 
 @media (max-height: 900px) {
-    #container-wrapper {
-        overflow-y: auto;
-    }
+    // #container-wrapper {
+    //     overflow-y: auto;
+    // }
 
-    #swimcert-inset-container{
-        gap: 10px !important;
-    }
+    // #swimcert-inset-container{
+    //     gap: 10px !important;
+    // }
 }
 
 #container-wrapper-vertical {
@@ -213,7 +224,7 @@
     padding-bottom: 0.625rem;
     position: sticky;
     top: 0;
-    z-index: 10;
+    // z-index: 10;
     background-color: var(--accent-0);
 
 }
@@ -591,6 +602,8 @@
     }
 
     .position-absolute {
+        top:0;
+        left:0;
         position: absolute;
     }
 
@@ -606,7 +619,7 @@
         display: flex;
         flex-direction: column;
         gap: 3.125rem;
-        z-index: 20;
+        z-index: 40;
     }
 
     #athlete-details.active {
@@ -725,6 +738,13 @@
         visibility: visible;
     }
 
+    #overlay-higher.active {
+        z-index: 50;
+        opacity: 100;
+        visibility: visible;
+    }
+
+
     .large-screen {
         display: none;
     }
@@ -752,7 +772,7 @@
 
         #results-container {
             width: 70%;
-            height: 102%;
+            // height: 102%;
             flex-direction: column;
         }
 
