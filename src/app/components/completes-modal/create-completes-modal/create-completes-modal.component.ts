@@ -152,7 +152,7 @@ export class CreateCompletesComponent implements OnInit{
         if(!this.selectedAthlete) return;
         for(const category of this.categories){
           for(const exercise of category.exercises){
-            const pastExercises = this.customSortCall(customFilter(this.selectedAthlete.completes, {discipline: {filterValue: exercise.title, valueFullFit: true} }, true, "athlete"), {property: 'completed_at', direction: 'desc'});
+            const pastExercises = this.customSortCall(customFilter(this.selectedAthlete.completes, {discipline: {filterValue: exercise.title, valueFullFit: true}, category: {filterValue: category.title} }, true, "athlete"), {property: 'completed_at', direction: 'desc'});
             const pastExercisesPoints = pastExercises.map(element => element.points);
             exercise.best_result = pastExercisesPoints.length !== 0 ? Math.max(...pastExercisesPoints) : 0;
             exercise.last_tracked_at = pastExercises.length !== 0 ? pastExercises[0].tracked_at : null;
