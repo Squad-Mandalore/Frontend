@@ -9,5 +9,5 @@ RUN npm run build --prod
 # Main Image
 # extracts the application from the Step above. Pipeline Configuration -> Expose 80:80
 FROM nginx:alpine
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=node /app/dist/squad-mandalore-frontend/browser /usr/share/nginx/html
-
