@@ -19,7 +19,7 @@
         </div>
 
         <div class="flex flex-col width-full" *ngIf="category.exercises.length !== 0; else filledState">
-          <div (click)="selectedExercise = exercise; processSubPageToGive(); createCompletesForm.patchValue({exercise_id: exercise.id});" [ngClass]="{'active': selectedExercise?.title === exercise.title}" class="discipline-item flex items-center space-between" *ngFor="let exercise of category.exercises; index as j;">
+          <div (click)="selectedExercise = exercise; selectedCategory = category; processSubPageToGive(); createCompletesForm.patchValue({exercise_id: exercise.id});" [ngClass]="{'active': selectedExercise?.title === exercise.title && selectedCategory.id === category.id}" class="discipline-item flex items-center space-between" *ngFor="let exercise of category.exercises; index as j;">
             <div [title]="exercise.title">{{exercise.title}}</div>
 
             <div class="flex items-center gap-20" *ngIf="exercise.last_tracked_at">

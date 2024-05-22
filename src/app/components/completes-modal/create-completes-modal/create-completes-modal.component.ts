@@ -44,6 +44,7 @@ export class CreateCompletesComponent implements OnInit{
   subPage = 4;
   categories: any[] = [];
   selectedExercise: any = null;
+  selectedCategory: any = null;
   givenRulesValue: string = '';
   @Input({required: true}) selectedAthlete!: AthleteFullResponseSchema;
   @Input({required: true}) modal: any;
