@@ -1,5 +1,6 @@
 FROM node:latest as node
 # npm build in docker, can be removed when building the application made in workflow
+RUN apt-get update && apt-get install default-jre -y
 WORKDIR /app
 COPY . .
 RUN npm install
