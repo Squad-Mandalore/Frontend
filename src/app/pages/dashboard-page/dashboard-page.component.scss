@@ -1,10 +1,21 @@
 #page {
     height: calc(100dvh - 4.375rem);
-    display: flex;
-    gap: 0.625rem;
+    width: 100%;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 28.75rem 1fr;
+    grid-template-rows: 1fr;
+    
+    @media (max-width: 1000px) {
+        grid-template-columns: 4rem 1fr;
+    }
 }
 
 #content {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: -1;
     position: relative;
     font-family: "Inter Medium";
     width: 100%;
@@ -79,11 +90,9 @@
     display: flex;
     align-items: center;
     gap: 0.625rem;
-    margin-right: 1rem;
 }
 
 #headline-wrapper {
-    margin-top: 1.25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -95,7 +104,6 @@
     font-family: "Inter Medium";
     color: var(--accent-500);
     text-align: right;
-    margin-right: 1rem;
 }
 
 .margin-left-auto {
@@ -139,17 +147,21 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    height: 85%;
-    max-width: 100%;
-    overflow-y: hidden;
-    overflow-x: hidden;
-    min-height: max-content;
+    // height: 85%;
+    // max-width: 100%;
+    // overflow-y: hidden;
+    // overflow-x: hidden;
+    // min-height: max-content;
 }
 
 @media (max-height: 900px) {
-    #container-wrapper {
-        overflow-y: auto;
-    }
+    // #container-wrapper {
+    //     overflow-y: auto;
+    // }
+
+    // #swimcert-inset-container{
+    //     gap: 10px !important;
+    // }
 }
 
 #container-wrapper-vertical {
@@ -157,17 +169,14 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    margin-right: 1rem;
 }
 
 
 #header-container {
     height: 3.75rem;
-    margin-right: 1rem;
 }
 
 #results-container {
-    margin-right: 1rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -215,7 +224,7 @@
     padding-bottom: 0.625rem;
     position: sticky;
     top: 0;
-    z-index: 10;
+    // z-index: 10;
     background-color: var(--accent-0);
 
 }
@@ -301,6 +310,7 @@
     .filter:hover>.under-undermenu {
         opacity: 100;
         visibility: visible;
+        z-index: 11;
     }
 
     .filter:hover>.arrow-right {
@@ -375,7 +385,7 @@
         display: flex;
         flex-direction: column;
         gap: 0.125rem;
-        z-index: 5;
+        z-index: 11;
     }
 
     .under-undermenu {
@@ -398,7 +408,7 @@
         display: flex;
         flex-direction: column;
         gap: 0.125rem;
-        z-index: 5;
+        z-index: 15;
     }
 
     #swimcert-container {
@@ -592,6 +602,8 @@
     }
 
     .position-absolute {
+        top:0;
+        left:0;
         position: absolute;
     }
 
@@ -607,7 +619,7 @@
         display: flex;
         flex-direction: column;
         gap: 3.125rem;
-        z-index: 20;
+        z-index: 40;
     }
 
     #athlete-details.active {
@@ -715,16 +727,23 @@
         position: fixed;
         top: 0;
         left: 0;
-        z-index: 0;
+        z-index: 100;
         transition: all 100ms;
         background-color: #00000030;
     }
 
     #overlay-lower.active {
-        z-index: 10;
+        z-index: 20;
         opacity: 100;
         visibility: visible;
     }
+
+    #overlay-higher.active {
+        z-index: 50;
+        opacity: 100;
+        visibility: visible;
+    }
+
 
     .large-screen {
         display: none;
@@ -745,7 +764,6 @@
 
         #container-wrapper {
             flex-direction: row;
-            max-width: 98%;
         }
 
         #container-wrapper-vertical {
@@ -754,7 +772,7 @@
 
         #results-container {
             width: 70%;
-            height: 102%;
+            // height: 102%;
             flex-direction: column;
         }
 
@@ -767,9 +785,9 @@
             padding: 0.75rem;
         }
 
-        #content {
-            padding: 0.125rem;
-        }
+        // #content {
+        //     padding: 0.125rem;
+        // }
 
 
         .table-item > div:last-child {

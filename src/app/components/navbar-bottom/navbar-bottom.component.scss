@@ -83,7 +83,7 @@
     background-color: var(--accent-900);
 }
 
-#navbar{
+:host{
     min-width: 100dvw;
     max-width: 1920px;
     height: 70px;
@@ -93,6 +93,7 @@
     justify-content: space-between;
     padding: 0 30px;
     position: fixed;
+    z-index: 20;
     bottom: 0;
     left: 0;
     box-shadow: 0px -4px 20px #00000010;

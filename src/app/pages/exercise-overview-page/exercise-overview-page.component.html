@@ -185,9 +185,9 @@
                         <span>{{exercise.gender === 'm' ? 'm': 'w'}}</span>
                         <span>{{exercise.from_age}}</span>
                         <span>{{exercise.to_age}}</span>
-                        <span>{{exercise.gold}}</span>
-                        <span>{{exercise.silver}}</span>
-                        <span>{{exercise.bronze}}</span>
+                        <span>{{exercise.gold | formatResult}}</span>
+                        <span>{{exercise.silver | formatResult}}</span>
+                        <span>{{exercise.bronze | formatResult}}</span>
                         <span>{{exercise.exercise.category.title}}</span>
                         <div class="flex items-center more-icon cursor-pointer">
                             <app-icon [iconName]="'more-vertical'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'20'" [iconWidth]="'20'"></app-icon>

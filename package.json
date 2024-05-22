@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "apigen": "rimraf src/app/shared/generated && openapi-generator-cli generate -i http://127.0.0.1:8000/openapi.json -o src/app/shared/generated -g typescript-angular -p basePath=http://localhost:8000",
-    "apigen-f": "rimraf src/app/shared/generated && openapi-generator-cli generate -i src/assets/openapi.json -o src/app/shared/generated -g typescript-angular -p basePath=http://localhost:8000"
+    "apigen-f": "rimraf src/app/shared/generated && openapi-generator-cli generate -i src/assets/openapi.json -o src/app/shared/generated -g typescript-angular -p basePath=/api"
   },
   "private": true,
   "dependencies": {
