@@ -103,14 +103,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   patchAthlete(createAthleteForm: FormGroup) {
-    // Get date values from the Form
-    const day = createAthleteForm.value.day ?? this.selectedAthlete?.birthday?.split('-')[2];
-    const month = createAthleteForm.value.month ?? this.selectedAthlete?.birthday?.split('-')[1];
-    const year = createAthleteForm.value.year ?? this.selectedAthlete?.birthday?.split('-')[0];
-
-    // Add Data for the Http-Request for the Backend
     let body: AthletePatchSchema = {
-      birthday: year + "-" + month.toString().padStart(2, '0') + "-" + day.toString().padStart(2, '0'), // Format Birthday for Backend
       ...createAthleteForm.value
     };
     //delete empty fields, so they wont be overwritten
@@ -159,18 +152,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     })
   }
   createAthlete(createAthleteForm: FormGroup) {
-    if (createAthleteForm.invalid) {
-      this.logger.error("Form invalid");
-      return;
-    }
-    // Get date values from the Form
-    const day = createAthleteForm.value.day!;
-    const month = createAthleteForm.value.month!;
-    const year = createAthleteForm.value.year!;
-
     // Add Data for the Http-Request for the Backend
     const body: AthletePostSchema = {
-      birthday: year + "-" + month.toString().padStart(2, '0') + "-" + day.toString().padStart(2, '0'), // Format Birthday for Backend
       ...createAthleteForm.value
     };
 

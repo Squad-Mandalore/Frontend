@@ -9,6 +9,7 @@ import {
   AthleteFullResponseSchema,
 } from "../../shared/generated";
 import {FormBuilder, FormsModule, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import { LoggerService } from '../../shared/logger.service';
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -42,7 +43,7 @@ export class CreateAthleteModalComponent implements OnInit {
   selectedFile?: File;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder, private logger: LoggerService
   ) {
     // Initialize Form and Validators for received Data
     this.createAthleteForm = this.formBuilder.group({
@@ -52,9 +53,7 @@ export class CreateAthleteModalComponent implements OnInit {
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       gender: ['m', Validators.required],
-      day: [NaN, Validators.required],
-      month: [NaN, Validators.required],
-      year: [NaN, Validators.required],
+      birthday: ['', Validators.required],
     });
   }
 
@@ -70,32 +69,16 @@ export class CreateAthleteModalComponent implements OnInit {
         firstname: this.selectedAthlete.firstname,
         lastname: this.selectedAthlete.lastname,
         gender: this.selectedAthlete.gender,
-        day: parseInt(this.selectedAthlete.birthday.split("-")[2]),
-        month: parseInt(this.selectedAthlete.birthday.split("-")[1]),
-        year: parseInt(this.selectedAthlete.birthday.split("-")[0]),
+        birthday: this.selectedAthlete.birthday,
       })
       this.isMale = this.selectedAthlete.gender === "m";
     }
   }
 
   onSubmit() {
-    // check if day month and year together are a valid date)
-    const day = this.createAthleteForm.value.day;
-    const month = this.createAthleteForm.value.month;
-    const year = this.createAthleteForm.value.year;
-
-    if (!day || !month || !year) {
-      this.createAthleteForm.get('day')!.setErrors({required: true});
-      this.createAthleteForm.get('month')!.setErrors({required: true});
-      this.createAthleteForm.get('year')!.setErrors({required: true});
+    if (this.createAthleteForm.invalid) {
+      this.logger.error("Form invalid");
       return;
-    }
-
-    const date = new Date(year, month-1, day);
-    if (date.getDate() !== day || date.getMonth() !== month-1 || date.getFullYear() !== year) {
-      this.createAthleteForm.get('day')!.setErrors({invalidDate: true});
-      this.createAthleteForm.get('month')!.setErrors({invalidDate: true});
-      this.createAthleteForm.get('year')!.setErrors({invalidDate: true});
     }
     this.athleteCallback.emit(this.createAthleteForm);
   }

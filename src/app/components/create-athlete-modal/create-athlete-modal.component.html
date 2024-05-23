@@ -40,16 +40,10 @@
             </label>
           </div>
 
-          <div id="birth-input-wrapper">
-            <label for="day" class="label">
-              <p class="label-text">Geburtsdatum</p>
-              <p class="multi-input">
-                <input id="day" class="input" type="number" min=1 max=31 formControlName="day" placeholder="Tag"/>
-                <input class="input" type="number" min=1 max=12 formControlName="month" placeholder="Monat"/>
-                <input class="input" type="number" min=1945 max=9999 formControlName="year" placeholder="Jahr"/>
-              </p>
-            </label>
-          </div>
+          <label class="label">
+            <p class="label-text">Geburtsdatum</p>
+            <input class="input" type="date" formControlName="birthday" placeholder="Geburtsdatum">
+          </label>
 
           <div class="label">
             <p class="label-text"> Geschlecht </p>
