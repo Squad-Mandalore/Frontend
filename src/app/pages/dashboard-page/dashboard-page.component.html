@@ -149,7 +149,7 @@
                         </div>
                         <div class="table-item" *ngFor="let result of customSortCall(customFilterCall(selectedAthlete.completes, filter, true), this.sorting); index as i;">
                             <span>{{result.exercise.title}}</span>
-                            <span>{{result.result | formatResult}}</span> 
+                            <span>{{result.result | formatResult}}</span>
                             <span>{{result.points === 3 ? 'Gold' : result.points === 2 ? 'Silber' : result.points === 1 ? 'Bronze' : '-'}}</span>
                             <span>{{result.exercise.category.title}}</span>
                             <span>{{result.tracked_at | date:'dd.MM.yyyy'}}</span>
@@ -192,11 +192,11 @@
                             7.56856 81.1336 0.21251 103.672 0.250144C126.21 0.287778 148.114 7.71702 166.025
                             21.3987C183.936 35.0803 196.864 54.259 202.828 75.994C208.792 97.7289 207.463
                             120.82 199.043 141.727C191.319 160.907 178.019 177.277 160.925 188.757C158.37
-                            190.473 154.94 189.594 153.365" fill="none" [style.stroke]="getColorVariable(selectedAthlete.completes)" stroke-width="10" stroke-
+                            190.473 154.94 189.594 153.365" fill="none" [style.stroke]="getColorVariable(customFilterCall(selectedAthlete.completes, {tracked_at: {filterValue: currentYear, valueFullFit: false} }, true))" stroke-width="10" stroke-
                             linecap="round"/>
                         </svg>
                         <div id="current-points-wrapper">
-                            <p>{{ getProgress(selectedAthlete.completes) }}</p>
+                            <p>{{ getProgress(customFilterCall(selectedAthlete.completes, {tracked_at: {filterValue: currentYear, valueFullFit: false} }, true)) }}</p>
                         </div>
                         <div id="all-points-wrapper">
                             <p>/12</p>
@@ -211,15 +211,15 @@
                     </div>
                     <div id="progress-footer">
                         <div class="medal-wrapper">
-                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "3", valueFullFit: true} }, false).length}}</span>
+                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "3", valueFullFit: true}, tracked_at: {filterValue: currentYear, valueFullFit: false} }, true).length}}</span>
                             <div class="medal gold"></div>
                         </div>
                         <div class="medal-wrapper">
-                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "2", valueFullFit: true} }, false).length}}</span>
+                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "2", valueFullFit: true}, tracked_at: {filterValue: currentYear, valueFullFit: false} }, true).length}}</span>
                             <div class="medal silver"></div>
                         </div>
                         <div class="medal-wrapper">
-                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "1", valueFullFit: true} }, false).length}}</span>
+                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "1", valueFullFit: true}, tracked_at: {filterValue: currentYear, valueFullFit: false} }, true).length}}</span>
                             <div class="medal bronze"></div>
                         </div>
                     </div>
@@ -288,7 +288,7 @@
     <div class="flex flex-col gap-30 inter-medium">
         <div class="flex items-center justify-between">
             <p class="headline-small">Leistungsübersicht:</p>
-            <span class="accent-500 hover-underline cursor-pointer inter-regular" (click)="createPDF()" tabindex="0">PDF herunterladen</span> 
+            <span class="accent-500 hover-underline cursor-pointer inter-regular" (click)="createPDF()" tabindex="0">PDF herunterladen</span>
         </div>
         <div class="flex items-center">
             <p>Schnelligkeit</p>

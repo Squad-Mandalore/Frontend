@@ -9,7 +9,7 @@ import { PrimaryButtonComponent } from '../../components/buttons/primary-button/
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
 import { QuaternaryButtonComponent } from '../../components/buttons/quaternary-button/quaternary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { AthleteCompletesResponseSchema, AthletePatchSchema, AthletePostSchema, AthleteResponseSchema, CompletesResponseSchema, CompletesService, CsvService, ResponseParseCsvFileCsvParsePost} from '../../shared/generated';
+import { AthleteCompletesResponseSchema, AthletePatchSchema, AthletePostSchema, AthleteResponseSchema, CompletesResponseSchema, CompletesService, CsvService, ResponseParseCsvFileCsvParsePost } from '../../shared/generated';
 import { Subscription } from 'rxjs';
 import customSort from '../../../utils/custom-sort';
 import customFilter from '../../../utils/custom-filter';
@@ -68,9 +68,12 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private logger: LoggerService,
     private csvService: CsvService,
     private http: HttpClient,
-    
-  ) { }
 
+  ) {
+    this.currentYear = new Date().getFullYear().toString();
+  }
+
+  currentYear: string;
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
   selectedAthlete?: AthleteFullResponseSchema;
@@ -526,7 +529,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         break;
     }
   }
-  
+
   calculateGlobalMedal(completes: CompletesResponseSchema[]) {
     const categories = ['Ausdauer', 'Kraft', 'Schnelligkeit', 'Koordination'];
     const medalsAndPoints = categories.map((category, index) => {
@@ -647,7 +650,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   dashOffset(athlete: AthleteFullResponseSchema): number {
-    const progressDecimal = calculateProgressPercent(athlete.completes) / 100;
+    const progressDecimal = calculateProgressPercent(this.customFilterCall(athlete.completes, {tracked_at: {filterValue: this.currentYear, valueFullFit: false} }, true)) / 100;
     return this.dashArray * (1 - progressDecimal);
   }
 
