@@ -9,6 +9,7 @@ import {
   AthleteFullResponseSchema,
 } from "../../shared/generated";
 import {FormBuilder, FormsModule, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import { LoggerService } from '../../shared/logger.service';
 
 @Component({
   selector: 'app-create-athlete-modal',
@@ -42,7 +43,7 @@ export class CreateAthleteModalComponent implements OnInit {
   selectedFile?: File;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder, private logger: LoggerService
   ) {
     // Initialize Form and Validators for received Data
     this.createAthleteForm = this.formBuilder.group({
@@ -52,9 +53,7 @@ export class CreateAthleteModalComponent implements OnInit {
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       gender: ['m', Validators.required],
-      day: ['', Validators.required],
-      month: ['', Validators.required],
-      year: ['', Validators.required],
+      birthday: ['', Validators.required],
     });
   }
 
@@ -70,15 +69,17 @@ export class CreateAthleteModalComponent implements OnInit {
         firstname: this.selectedAthlete.firstname,
         lastname: this.selectedAthlete.lastname,
         gender: this.selectedAthlete.gender,
-        day: this.selectedAthlete.birthday.split("-")[2],
-        month: this.selectedAthlete.birthday.split("-")[1],
-        year: this.selectedAthlete.birthday.split("-")[0],
+        birthday: this.selectedAthlete.birthday,
       })
       this.isMale = this.selectedAthlete.gender === "m";
     }
   }
 
   onSubmit() {
+    if (this.createAthleteForm.invalid) {
+      this.logger.error("Form invalid");
+      return;
+    }
     this.athleteCallback.emit(this.createAthleteForm);
   }
 

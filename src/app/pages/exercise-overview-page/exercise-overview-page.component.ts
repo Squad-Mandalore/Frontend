@@ -15,11 +15,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmationService } from '../../shared/confirmation.service';
 import { CreateExerciseModalComponent } from '../../components/create-exercise-modal/create-exercise-modal.component';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { FormatResultPipe } from '../../shared/format-result.pipe';
 
 @Component({
   selector: 'app-exercise-overview',
   standalone: true,
-  imports: [SidebarComponent, ConfirmationModalComponent, CreateExerciseModalComponent, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
+  imports: [SidebarComponent, ConfirmationModalComponent, CreateExerciseModalComponent, FormatResultPipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
   templateUrl: './exercise-overview-page.component.html',
   styleUrl: './exercise-overview-page.component.scss',
   animations: [

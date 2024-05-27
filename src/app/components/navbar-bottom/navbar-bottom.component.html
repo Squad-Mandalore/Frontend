@@ -1,46 +1,44 @@
-<div id="navbar">
-  <app-user-card [user]="user" [progress]="0"></app-user-card>
-  <div class="item-wrapper">
-    <a [routerLink]="['/athleten']" class="item" data-tooltip="Athleten" routerLinkActive="isActive">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M23 20.9999V18.9999C22.9993 18.1136 22.7044 17.2527 22.1614 16.5522C21.6184 15.8517 20.8581 15.3515 20 15.1299" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M16 3.12988C16.8604 3.35018 17.623 3.85058 18.1676 4.55219C18.7122 5.2538 19.0078 6.11671 19.0078 7.00488C19.0078 7.89305 18.7122 8.75596 18.1676 9.45757C17.623 10.1592 16.8604 10.6596 16 10.8799" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="active-bar"></div>
-    </a>
-    <a *ngIf="user?.type !== 'athlete'" [routerLink]="['/trainer']" class="item" data-tooltip="Trainer" routerLinkActive="isActive">
-      <svg width="20" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M13.8333 3.33325H15.4999C15.9419 3.33325 16.3659 3.50885 16.6784 3.82141C16.991 4.13397 17.1666 4.55789 17.1666 4.99992V16.6666C17.1666 17.1086 16.991 17.5325 16.6784 17.8451C16.3659 18.1577 15.9419 18.3333 15.4999 18.3333H5.49992C5.05789 18.3333 4.63397 18.1577 4.32141 17.8451C4.00885 17.5325 3.83325 17.1086 3.83325 16.6666V4.99992C3.83325 4.55789 4.00885 4.13397 4.32141 3.82141C4.63397 3.50885 5.05789 3.33325 5.49992 3.33325H7.16659" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M13.0001 1.66675H8.00008C7.53984 1.66675 7.16675 2.03984 7.16675 2.50008V4.16675C7.16675 4.62699 7.53984 5.00008 8.00008 5.00008H13.0001C13.4603 5.00008 13.8334 4.62699 13.8334 4.16675V2.50008C13.8334 2.03984 13.4603 1.66675 13.0001 1.66675Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="active-bar"></div>
-    </a>
-    <a [routerLink]="['/exercises']" class="item" data-tooltip="Übungskatalog" routerLinkActive="isActive">
-      <svg width="20" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M7.16663 5H18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M7.16663 10H18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M7.16663 15H18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M3 5H3.00833" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M3 10H3.00833" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M3 15H3.00833" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="active-bar"></div>
-    </a>
-  </div>
-  <div class="item-wrapper">
-    <a [routerLink]="['/help']" class="item" data-tooltip="Hilfe" routerLinkActive="isActive">
-      <svg style="transform: scale(1.2); stroke-width: 1.2" data-icon-name="help" data-style="line" icon_origin_id="20484" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="help" class="icon line" width="20" height="20"><path style="fill: none; stroke-linecap: round; stroke-linejoin: round;" d="M21,12a9,9,0,1,1-9-9A9,9,0,0,1,21,12ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Z" id="primary"></path><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="7.9" x2="13.17" y1="3.58" x1="14.41" data-name="primary" id="primary-2"></line><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="7.9" x2="10.83" y1="3.58" x1="9.59" data-name="primary" id="primary-3"></line><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="13.17" x2="16.1" y1="14.41" x1="20.42" data-name="primary" id="primary-4"></line><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="10.83" x2="16.1" y1="9.59" x1="20.42" data-name="primary" id="primary-5"></line><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="16.1" x2="10.83" y1="20.42" x1="9.59" data-name="primary" id="primary-6"></line><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="16.1" x2="13.17" y1="20.42" x1="14.41" data-name="primary" id="primary-7"></line><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="10.83" x2="7.9" y1="9.59" x1="3.58" data-name="primary" id="primary-8"></line><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="13.17" x2="7.9" y1="14.41" x1="3.58" data-name="primary" id="primary-9"></line></svg>
-      <div class="active-bar"></div>
-    </a>
-    <a (click)="onClickLogOut()" class="item" data-tooltip="Logout" routerLinkActive="isActive">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12.5 2.5H15.8333C16.2754 2.5 16.6993 2.67559 17.0118 2.98816C17.3244 3.30072 17.5 3.72464 17.5 4.16667V15.8333C17.5 16.2754 17.3244 16.6993 17.0118 17.0118C16.6993 17.3244 16.2754 17.5 15.8333 17.5H12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M8.33325 14.1667L12.4999 10L8.33325 5.83334" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M12.5 10H2.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="active-bar"></div>
-    </a>
-  </div>
+<app-user-card [user]="user" [progress]="0"></app-user-card>
+<div class="item-wrapper">
+  <a [routerLink]="['/athleten']" class="item" data-tooltip="Athleten" routerLinkActive="isActive">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M23 20.9999V18.9999C22.9993 18.1136 22.7044 17.2527 22.1614 16.5522C21.6184 15.8517 20.8581 15.3515 20 15.1299" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M16 3.12988C16.8604 3.35018 17.623 3.85058 18.1676 4.55219C18.7122 5.2538 19.0078 6.11671 19.0078 7.00488C19.0078 7.89305 18.7122 8.75596 18.1676 9.45757C17.623 10.1592 16.8604 10.6596 16 10.8799" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="active-bar"></div>
+  </a>
+  <a *ngIf="user?.type !== 'athlete'" [routerLink]="['/trainer']" class="item" data-tooltip="Trainer" routerLinkActive="isActive">
+    <svg width="20" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.8333 3.33325H15.4999C15.9419 3.33325 16.3659 3.50885 16.6784 3.82141C16.991 4.13397 17.1666 4.55789 17.1666 4.99992V16.6666C17.1666 17.1086 16.991 17.5325 16.6784 17.8451C16.3659 18.1577 15.9419 18.3333 15.4999 18.3333H5.49992C5.05789 18.3333 4.63397 18.1577 4.32141 17.8451C4.00885 17.5325 3.83325 17.1086 3.83325 16.6666V4.99992C3.83325 4.55789 4.00885 4.13397 4.32141 3.82141C4.63397 3.50885 5.05789 3.33325 5.49992 3.33325H7.16659" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M13.0001 1.66675H8.00008C7.53984 1.66675 7.16675 2.03984 7.16675 2.50008V4.16675C7.16675 4.62699 7.53984 5.00008 8.00008 5.00008H13.0001C13.4603 5.00008 13.8334 4.62699 13.8334 4.16675V2.50008C13.8334 2.03984 13.4603 1.66675 13.0001 1.66675Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="active-bar"></div>
+  </a>
+  <a [routerLink]="['/exercises']" class="item" data-tooltip="Übungskatalog" routerLinkActive="isActive">
+    <svg width="20" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7.16663 5H18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M7.16663 10H18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M7.16663 15H18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M3 5H3.00833" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M3 10H3.00833" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M3 15H3.00833" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="active-bar"></div>
+  </a>
+</div>
+<div class="item-wrapper">
+  <a [routerLink]="['/help']" class="item" data-tooltip="Hilfe" routerLinkActive="isActive">
+    <svg style="transform: scale(1.2); stroke-width: 1.2" data-icon-name="help" data-style="line" icon_origin_id="20484" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="help" class="icon line" width="20" height="20"><path style="fill: none; stroke-linecap: round; stroke-linejoin: round;" d="M21,12a9,9,0,1,1-9-9A9,9,0,0,1,21,12ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Z" id="primary"></path><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="7.9" x2="13.17" y1="3.58" x1="14.41" data-name="primary" id="primary-2"></line><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="7.9" x2="10.83" y1="3.58" x1="9.59" data-name="primary" id="primary-3"></line><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="13.17" x2="16.1" y1="14.41" x1="20.42" data-name="primary" id="primary-4"></line><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="10.83" x2="16.1" y1="9.59" x1="20.42" data-name="primary" id="primary-5"></line><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="16.1" x2="10.83" y1="20.42" x1="9.59" data-name="primary" id="primary-6"></line><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="16.1" x2="13.17" y1="20.42" x1="14.41" data-name="primary" id="primary-7"></line><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="10.83" x2="7.9" y1="9.59" x1="3.58" data-name="primary" id="primary-8"></line><line style="fill: none; stroke-linecap: round; stroke-linejoin: round;" y2="13.17" x2="7.9" y1="14.41" x1="3.58" data-name="primary" id="primary-9"></line></svg>
+    <div class="active-bar"></div>
+  </a>
+  <a (click)="onClickLogOut()" class="item" data-tooltip="Logout" routerLinkActive="isActive">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.5 2.5H15.8333C16.2754 2.5 16.6993 2.67559 17.0118 2.98816C17.3244 3.30072 17.5 3.72464 17.5 4.16667V15.8333C17.5 16.2754 17.3244 16.6993 17.0118 17.0118C16.6993 17.3244 16.2754 17.5 15.8333 17.5H12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8.33325 14.1667L12.4999 10L8.33325 5.83334" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12.5 10H2.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="active-bar"></div>
+  </a>
 </div>

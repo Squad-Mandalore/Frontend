@@ -1,22 +1,22 @@
 .secondary-button {
-  padding: 12px 30px;
+  padding: 0.75rem 1.875rem;
   max-width: max-content;
-  height: 39px;
-  border-radius: 5px;
+  height: 2.4375rem;
+  border-radius: 0.3125rem;
   background-color: transparent;
   color: var(--accent-900);
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--accent-200);
+  border: 0.0625rem solid var(--accent-200);
   font-family: "Inter Medium";
   font-size: .95rem;
   transition: all 200ms;
   cursor: pointer;
 
   &.with-icon {
-    padding: 12px 14px 12px 22px;
-    gap: 8px;
+    padding: 0.75rem 0.875rem 0.75rem 1.375rem;
+    gap: 0.5rem;
   }
 
   &:hover {

@@ -15,7 +15,7 @@
             <app-quaternary-button (click)="modals.createAthleteModal.isActive = true" [iconName]="'user-plus'" [tooltipText]="'Sportler hinzufügen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"></app-quaternary-button>
         </div>
     </div>
-    <div id="sidebar-content" class="empty" *ngIf="athletes.length === 0 && !isLoading; else hasAthletes">
+    <div id="sidebar-content" class="empty" *ngIf="athletes.length === 0 && !isLoading && windowWidth >= 1000; else hasAthletes">
         <img src="assets/img/humans-statistics-sitting-woman.png" alt="create-athlete"/>
         <p id="information-text-big">Erstelle deinen ersten Athlet</p>
         <p id="information-text-small">

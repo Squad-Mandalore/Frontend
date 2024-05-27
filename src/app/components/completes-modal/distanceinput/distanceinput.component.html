@@ -1,0 +1,5 @@
+<input #kilometersin class="multiple-input" type="number" [value]="kilometers" placeholder="km" min=0 (change)="change(kilometersin.valueAsNumber, metersin.valueAsNumber, centimetersin.valueAsNumber)" style="display: inline-block"/>
+,
+<input #metersin class="multiple-input" type="number" [value]="meters" placeholder="m" min=0 (change)="change(kilometersin.valueAsNumber, metersin.valueAsNumber, centimetersin.valueAsNumber)" style="display: inline-block;"/>
+,
+<input #centimetersin class="multiple-input" type="number" [value]="centimeters" placeholder="cm" min=0 (change)="change(kilometersin.valueAsNumber, metersin.valueAsNumber, centimetersin.valueAsNumber)" style="display: inline-block;"/>
