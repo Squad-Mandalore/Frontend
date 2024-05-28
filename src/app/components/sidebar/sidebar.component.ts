@@ -6,9 +6,11 @@ import { QuaternaryButtonComponent } from '../buttons/quaternary-button/quaterna
 import { PrimaryButtonComponent } from '../buttons/primary-button/primary-button.component';
 import customFilter from '../../../utils/custom-filter';
 import { IconComponent } from '../icon/icon.component';
-import { AthleteFullResponseSchema, TrainerResponseSchema } from '../../shared/generated';
+import { AthleteFullResponseSchema, CsvService, TrainerResponseSchema } from '../../shared/generated';
 import { TrainerCardComponent } from '../trainer-card/trainer-card.component';
 import { HostListener } from '@angular/core';
+import { LoggerService } from '../../shared/logger.service';
+import { AlertService } from '../../shared/alert.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,6 +28,12 @@ export class SidebarComponent {
   windowWidth: number = window.innerWidth;
   searchValue = "";
 
+  constructor(
+    private csvService: CsvService,
+    private logger: LoggerService,
+    private alertService: AlertService,
+  ) {}
+
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     this.windowWidth = (event.target as Window).innerWidth;
@@ -38,4 +46,43 @@ export class SidebarComponent {
   customFilterCallTrainer(array: any[], options: Object, selectionFullFit:boolean = false){
     return customFilter(array, options, selectionFullFit, "athlete");
   }
+
+  triggerFileDownload() {
+    this.csvService.readAthleteCsvCsvAthleteCsvGet().subscribe({
+      next: (response: Blob) => {
+        const blob = new Blob([response], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'athlete.csv';  // You can dynamically set the filename if needed
+        document.body.appendChild(a);
+        a.click();  // Trigger a click on the element to download the file
+
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error) => {
+        this.alertService.show('Erstellung fehlgeschlagen', 'Benutzername ist nicht verfügbar.', "error");
+      },
+    })
+
+    this.csvService.readCompletesCsvCsvCompletesCsvGet().subscribe({
+      next: (response: Blob) => {
+        const blob = new Blob([response], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'completes.csv';  // You can dynamically set the filename if needed
+        document.body.appendChild(a);
+        a.click();  // Trigger a click on the element to download the file
+
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error) => {
+        this.alertService.show('Erstellung fehlgeschlagen', 'Benutzername ist nicht verfügbar.', "error");
+      },
+    })
+  }
+
 }
