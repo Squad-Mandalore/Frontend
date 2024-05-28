@@ -11,6 +11,7 @@ import { TrainerCardComponent } from '../trainer-card/trainer-card.component';
 import { HostListener } from '@angular/core';
 import { LoggerService } from '../../shared/logger.service';
 import { AlertService } from '../../shared/alert.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-sidebar',
@@ -47,7 +48,7 @@ export class SidebarComponent {
     return customFilter(array, options, selectionFullFit, "athlete");
   }
 
-  triggerFileDownload() {
+  triggerAthleteFileDownload() {
     this.csvService.readAthleteCsvCsvAthleteCsvGet().subscribe({
       next: (response: Blob) => {
         const blob = new Blob([response], { type: 'text/csv' });
@@ -61,8 +62,12 @@ export class SidebarComponent {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
       },
-      error: (error) => {
-        this.alertService.show('Erstellung fehlgeschlagen', 'Benutzername ist nicht verfügbar.', "error");
+      error: (error: HttpErrorResponse) => {
+        if (error.status == 404) {
+          this.alertService.show('Keine Athleten gefunden.', error.error.detail, 'error');
+        } else {
+          this.alertService.show('Download der CSV-Datei fehlgeschlagen', error.error.detail, 'error');
+        }
       },
     })
 
@@ -79,10 +84,37 @@ export class SidebarComponent {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
       },
-      error: (error) => {
-        this.alertService.show('Erstellung fehlgeschlagen', 'Benutzername ist nicht verfügbar.', "error");
+      error: (error: HttpErrorResponse) => {
+        if (error.status == 404) {
+          this.alertService.show('Keine abgeschlossene Übungen gefunden.', error.error.detail, 'error');
+        } else {
+          this.alertService.show('Download der CSV-Datei fehlgeschlagen', error.error.detail, 'error');
+        }
       },
     })
   }
 
+  triggerTrainerFileDownload() {
+    this.csvService.readTrainerCsvCsvTrainerCsvGet().subscribe({
+      next: (response: Blob) => {
+        const blob = new Blob([response], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'trainer.csv';  // You can dynamically set the filename if needed
+        document.body.appendChild(a);
+        a.click();  // Trigger a click on the element to download the file
+
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status == 404) {
+          this.alertService.show('Keine Trainer gefunden.', error.error.detail, 'error');
+        } else {
+          this.alertService.show('Download der CSV-Datei fehlgeschlagen', error.error.detail, 'error');
+        }
+      },
+    })
+  }
 }

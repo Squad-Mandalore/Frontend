@@ -1,4 +1,4 @@
-<button (click)="onButtonClick($event)" [type]="type" [title]="description" [style.minWidth]="minWidth" class="secondary-button" [ngClass]="{'with-icon': iconName}"
+<button [type]="type" [title]="description" [style.minWidth]="minWidth" class="secondary-button" [ngClass]="{'with-icon': iconName}"
     [disabled]="disabled">
     <span>{{ text }}</span>
     <app-icon *ngIf="iconName" [iconName]="iconName" [iconColor]="iconColor" [strokeWidth]="strokeWidth"

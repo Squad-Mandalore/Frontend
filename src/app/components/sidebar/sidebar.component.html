@@ -13,7 +13,7 @@
                 <input #searchInput id="search-input" [value]="searchInput.value" (input)="searchValue = searchInput.value" placeholder="Suchen" type="text"/>
             </div>
             <app-quaternary-button (click)="modals.createAthleteModal.isActive = true" [iconName]="'user-plus'" [tooltipText]="'Sportler hinzufügen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"></app-quaternary-button>
-            <app-quaternary-button (click)="triggerFileDownload()" [iconName]="'download'" [tooltipText]="'Download CSV'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"></app-quaternary-button>
+            <app-quaternary-button (click)="triggerAthleteFileDownload()" [iconName]="'download'" [tooltipText]="'Download CSV'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"></app-quaternary-button>
         </div>
     </div>
     <div id="sidebar-content" class="empty" *ngIf="athletes.length === 0 && !isLoading && windowWidth >= 1000; else hasAthletes">
@@ -55,6 +55,7 @@
                     <input #searchInput id="search-input" [value]="searchInput.value" (input)="searchValue = searchInput.value" placeholder="Suchen" type="text"/>
                 </div>
                 <app-quaternary-button (click)="modals.createTrainerModal.isActive = true" [iconName]="'user-plus'" [tooltipText]="'Trainer hinzufügen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"></app-quaternary-button>
+                <app-quaternary-button (click)="triggerTrainerFileDownload()" [iconName]="'download'" [tooltipText]="'Download CSV'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"></app-quaternary-button>
             </div>
         </div>
         <div id="sidebar-content" class="empty" *ngIf="trainers.length === 0 && !isLoading; else hasTrainer">
