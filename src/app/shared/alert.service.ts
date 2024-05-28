@@ -27,7 +27,7 @@ export class AlertService {
     return this.isVisible;
   }
 
-  constructor() { 
+  constructor() {
     this.type = 'success';
     this.alertTitle = 'Alert';
     this.alertDescription = 'Alert';
@@ -38,7 +38,7 @@ export class AlertService {
     }
   }
 
-  show(alertTitle: string, alertDescription: string, alertType: 'success' | 'error') {
+  show(alertTitle: string, alertDescription: string, alertType: 'success' | 'error', ms: number = 4000) {
     if (this.isVisible) {
         return;
     }
@@ -46,7 +46,7 @@ export class AlertService {
     this.alertTitle = alertTitle;
     this.alertDescription = alertDescription;
     this.isVisible = true;
-    this.timeout = setTimeout(this.closeAlert, 4000);
+    this.timeout = setTimeout(this.closeAlert, ms);
   }
 
   hide(){

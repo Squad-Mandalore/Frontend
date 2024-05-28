@@ -8,21 +8,24 @@
         <div id="general-information-wrapper">
             <app-user-card [user]="selectedAthlete"></app-user-card>
             <div class="chip margin-left-auto">
-                <span>{{selectedAthlete.gender === 'm' ? 'männlich' : 'weiblich'}}</span>
+                <span class="large-screen">{{selectedAthlete.gender === 'm' ? 'männlich' : 'weiblich'}}</span>
                 <app-icon [iconName]="selectedAthlete.gender === 'm' ? 'male' : 'female'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
             </div>
             <div class="chip">
-                <span>geboren am {{selectedAthlete.birthday | date:'dd.MM.yyyy'}}</span>
+                <span class="large-screen">geboren am {{selectedAthlete.birthday | date:'dd.MM.yyyy'}}</span>
+                <span class="small-screen">{{selectedAthlete.birthday | date:'MM.yyyy'}}</span>
                 <app-icon [iconName]="'star'" [iconColor]="'var(--accent-900)'" [strokeWidth]="'2'" [iconWidth]="'15'" [iconHeight]="'15'"></app-icon>
             </div>
-            <app-secondary-button class="secondary-button" [text]="'Details'" [strokeWidth]="'1.5'" (click)="modals.showDetails.isActive = true"></app-secondary-button>
-            <app-primary-button [text]="'Bearbeiten'" [iconName]="'edit-1'" (click)="modals.patchAthleteModal.isActive = true"></app-primary-button>
+            <app-secondary-button class="secondary-button large-screen" [text]="'Details'" [strokeWidth]="'1.5'" (click)="modals.showDetails.isActive = true"></app-secondary-button>
+            <app-quaternary-button class="secondary-button small-screen inline-block" [iconName]="'list'"[tooltipText]="'Details'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'" (click)="modals.showDetails.isActive = true"></app-quaternary-button>
+            <app-primary-button class="large-screen" [text]="'Bearbeiten'" [iconName]="'edit-1'" (click)="modals.patchAthleteModal.isActive = true"></app-primary-button>
+            <app-quaternary-button class="small-screen inline-block" [iconName]="'edit-1'" [tooltipText]="'Bearbeiten'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'" (click)="modals.patchAthleteModal.isActive = true"></app-quaternary-button>
         </div>
         <div id="container-wrapper">
             <div id="results-container" [ngClass]="{'background-color-white': selectedAthlete}">
                 <div id="results-header">
                     <p class="headline-small">Erfasste Leistungen</p>
-                    <div class="position-relative filter margin-left-auto">
+                    <div class="position-relative filter margin-left-auto" *ngIf="selectedAthlete.completes.length !== 0;">
                         <app-secondary-button class="secondary-button" id="filter-button" [ngClass]="{'has-filter': getActiveFilters() !== 0}" [attr.active-filters]="getActiveFilters()" *ngIf="selectedAthlete.completes.length > 0" [text]="'Filter'" [iconName]="'filter-1'"></app-secondary-button>
                         <div class="undermenu accent-500">
                             <div class="menu-item filter cursor-pointer position-relative">
@@ -146,7 +149,7 @@
                         </div>
                         <div class="table-item" *ngFor="let result of customSortCall(customFilterCall(selectedAthlete.completes, filter, true), this.sorting); index as i;">
                             <span>{{result.exercise.title}}</span>
-                            <span>{{result.result}}</span>
+                            <span>{{result.result | formatResult}}</span> 
                             <span>{{result.points === 3 ? 'Gold' : result.points === 2 ? 'Silber' : result.points === 1 ? 'Bronze' : '-'}}</span>
                             <span>{{result.exercise.category.title}}</span>
                             <span>{{result.tracked_at | date:'dd.MM.yyyy'}}</span>
@@ -154,7 +157,7 @@
                             <div class="flex items-center more-icon cursor-pointer">
                                 <app-icon [iconName]="'more-vertical'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'20'" [iconWidth]="'20'"></app-icon>
                                 <div class="undermenu">
-                                    <div class="menu-item">
+                                    <div class="menu-item" (click)="patchCompletedExercise(result)">
                                         <span class="font-size-15 accent-900">Bearbeiten</span>
                                         <app-icon [iconName]="'edit-1'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
                                     </div>
@@ -222,7 +225,7 @@
                     </div>
                 </div>
                 <div id="swimcert-container" [ngClass]="{'background-color-white': selectedAthlete}">
-                    <div id="swimcert-inset-container" *ngIf="selectedAthlete.certificates.length === 0; else filledBlock">
+                    <div id="swimcert-inset-container" *ngIf="selectedAthlete.certificates.length === 0">
                         <img src="assets/img/humans-images.png" alt="missing swimming certificate"/>
                         <p class="headline-small text-align-center">Kein Schwimmnachweis<br/>vorhanden</p>
                         <p class="text-small text-align-center">Tippe auf "Nachweis hochladen" oder <br/>ziehe die Datei einfach in dieses Feld.</p>
@@ -249,6 +252,7 @@
                         <img id="swimcert-image" src="assets/img/swimmcert-exists.jpg" alt="Schwimmnachweis vorhanden"/>
                       </div>
                     </ng-template>
+
                 </div>
             </div>
         </div>
@@ -256,14 +260,14 @@
     <ng-template #elseBlock>
         <div id="content">
             <!-- <p class="headline paly">Sportler-Übersicht</p> -->
-            <div class="border-1px-grey" id="header-container"></div>
+            <!-- <div class="border-1px-grey" id="header-container"></div>
             <div id="container-wrapper">
                 <div class="border-1px-grey" id="results-container"></div>
                 <div id="container-wrapper-vertical">
                     <div class="border-1px-grey" id="progress-container"></div>
                     <div class="border-1px-grey" id="swimcert-container"></div>
                 </div>
-            </div>
+            </div> -->
             <div id="modal">
                 <img src="assets/img/statistics-image.png" alt="statistics"/>
                 <div id="text-wrapper">
@@ -298,7 +302,7 @@
     <div class="flex flex-col gap-30 inter-medium">
         <div class="flex items-center justify-between">
             <p class="headline-small">Leistungsübersicht:</p>
-            <span class="accent-500 hover-underline cursor-pointer inter-regular">PDF herunterladen</span>
+            <span class="accent-500 hover-underline cursor-pointer inter-regular" (click)="createPDF()" tabindex="0">PDF herunterladen</span> 
         </div>
         <div class="flex items-center">
             <p>Schnelligkeit</p>
@@ -403,6 +407,7 @@
 </div>
 <div id="overlay-lower" *ngIf="selectedAthlete;" (click)="modals.showDetails.isActive = false" [ngClass]="{'active': selectedAthlete && modals.showDetails.isActive}"></div>
 
-<app-create-completes [@enterAnimation] *ngIf="modals.createCompletesModal.isActive" [modals]="modals" [selectedAthlete]="selectedAthlete" (fileCallback)="csvParse($event)"></app-create-completes>
+<app-create-completes [@enterAnimation] *ngIf="modals.createCompletesModal.isActive" [modal]="modals.createCompletesModal" [selectedAthlete]="selectedAthlete!" (fileCallback)="csvParse($event)"></app-create-completes>
+<app-patch-completes [@enterAnimation] *ngIf="modals.patchCompletesModal.isActive" [modal]="modals.patchCompletesModal" [selectedCompletes]="modals.patchCompletesModal.completes"></app-patch-completes>
 <app-create-athlete-modal [@enterAnimation] *ngIf="modals.patchAthleteModal.isActive" [modal]="modals.patchAthleteModal" [selectedAthlete]="selectedAthlete" (athleteCallback)="patchAthlete($event)" (fileCallback)="csvParse($event)"></app-create-athlete-modal>
 <app-create-athlete-modal [@enterAnimation] *ngIf="modals.createAthleteModal.isActive" [modal]="modals.createAthleteModal" (athleteCallback)="createAthlete($event)" (fileCallback)="csvParse($event)"></app-create-athlete-modal>
