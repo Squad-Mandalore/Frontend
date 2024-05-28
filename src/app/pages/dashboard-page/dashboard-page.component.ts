@@ -7,19 +7,19 @@ import {DatePipe, NgClass, NgFor, NgIf} from '@angular/common';
 import { UserCardComponent } from '../../components/user-card/user-card.component';
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
-import { QuaternaryButtonComponent } from '../../components/buttons/quaternary-button/quaternary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
 import {
   AthleteCompletesResponseSchema,
   AthletePatchSchema,
   AthletePostSchema,
-  AthleteResponseSchema, CertificateResponseSchema, CertificateSingleResponseSchema,
+  AthleteResponseSchema, 
+  CertificateResponseSchema, 
+  CertificateSingleResponseSchema,
   CertificatesService,
   CompletesResponseSchema,
   CompletesService,
   CsvService,
   ResponseParseCsvFileCsvParsePost,
-  TrainersService
 } from '../../shared/generated';
 import { Subscription } from 'rxjs';
 import customSort from '../../../utils/custom-sort';
@@ -35,7 +35,6 @@ import { enterLeaveAnimation } from '../../shared/animation';
 import { FormGroup } from '@angular/forms';
 import { LoggerService } from '../../shared/logger.service';
 import { CreateAthleteModalComponent } from '../../components/create-athlete-modal/create-athlete-modal.component';
-import {TertiaryButtonComponent} from "../../components/buttons/tertiary-button/tertiary-button.component";
 import {QuaternaryButtonComponent} from "../../components/buttons/quaternary-button/quaternary-button.component";
 import { CreateCompletesComponent } from '../../components/completes-modal/create-completes-modal/create-completes-modal.component';
 import { PatchCompletesComponent } from '../../components/completes-modal/patch-completes-modal/patch-completes-modal.component';
@@ -81,11 +80,9 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private logger: LoggerService,
     private csvService: CsvService,
-    private certificateService: CertificatesService
-  ) {}
+    private certificateService: CertificatesService,
     private http: HttpClient,
-    
-  ) { }
+  ) {}
 
 
   athletes: AthleteFullResponseSchema[] = []
