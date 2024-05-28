@@ -118,7 +118,7 @@
     width: 100%;
     height: fit-content;
     display: grid;
-    grid-template-columns: minmax(max-content, 3fr) 6.25rem 6.25rem 1fr 1fr 1fr 1fr 1fr 1.875rem;
+    grid-template-columns: minmax(max-content, 3fr) 6.25rem 6.25rem 1fr 1fr 1fr 1fr 1fr 1fr 1.875rem;
     gap: 1.25rem;
     grid-template-rows: 1fr;
     padding-left: 1.25rem;
@@ -155,7 +155,7 @@
     display: grid;
     gap: 1.25rem;
     align-items: center;
-    grid-template-columns: minmax(max-content, 3fr) 6.25rem 6.25rem 1fr 1fr 1fr 1fr 1fr 1.875rem;
+    grid-template-columns: minmax(max-content, 3fr) 6.25rem 6.25rem 1fr 1fr 1fr 1fr 1fr 1fr 1.875rem;
     grid-template-rows: 1fr;
     padding: 0.9375rem 0 0.9375rem 1.25rem;
     font-size: 0.875rem;

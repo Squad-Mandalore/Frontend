@@ -140,7 +140,7 @@
                                 <app-icon *ngIf="this.sorting.property === 'from_age'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
                             </span>
                         </div>
-                        <div> 
+                        <div>
                             <span (click)="setSorting('to_age')" [ngClass]="this.sorting.property === 'to_age' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                 <span>Endalter</span>
                                 <app-icon *ngIf="this.sorting.property === 'to_age'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
@@ -173,6 +173,12 @@
                                 <app-icon *ngIf="this.sorting.property === 'category'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
                             </span>
                         </div>
+                        <div>
+                            <span (click)="setSorting('year')" [ngClass]="this.sorting.property === 'year' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
+                                <span>Wertungsjahr</span>
+                                <app-icon *ngIf="this.sorting.property === 'year'" [iconName]="this.sorting.direction === 'desc' ? 'arrow-down' : 'arrow-up'" [iconColor]="'var(--accent-400)'" [iconHeight]="'15'" [iconWidth]="'15'" [strokeWidth]="'2'"></app-icon>
+                            </span>
+                        </div>
                         <!-- <div>
                             <span (click)="setSorting('created_at')" [ngClass]="this.sorting.property === 'created_at' ? this.sorting.direction === 'asc' ? 'asc' : 'desc' : ''">
                                 <span>Erfassungsdatum</span>
@@ -189,10 +195,11 @@
                         <span>{{exercise.silver | formatResult}}</span>
                         <span>{{exercise.bronze | formatResult}}</span>
                         <span>{{exercise.exercise.category.title}}</span>
+                        <span>{{exercise.year | formatResult}}</span>
                         <div class="flex items-center more-icon cursor-pointer"  *ngIf="user && user.type !== 'athlete'">
                             <app-icon [iconName]="'more-vertical'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'20'" [iconWidth]="'20'"></app-icon>
                             <div class="undermenu">
-                                <div class="menu-item">
+                                <div class="menu-item" (click)="openEditModal(exercise)">
                                     <span class="font-size-15 accent-900">Bearbeiten</span>
                                     <app-icon [iconName]="'edit-1'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
                                 </div>
@@ -200,9 +207,9 @@
                                     <span class="font-size-15 accent-900">Löschen</span>
                                     <app-icon [iconName]="'delete'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'15'" [iconWidth]="'15'"></app-icon>
                                 </div>
-                            </div>
+                          </div>
                         </div>
-                    </div>
+                      </div>
                     <!-- <div id="create-exercise-field">
                         <app-icon [iconName]="'plus'" [iconHeight]="'20'" [iconWidth]="'20'" [strokeWidth]="'2'" [iconColor]="'var(--accent-300)'"></app-icon>
                     </div> -->
@@ -213,3 +220,10 @@
 </div>
 <app-navbar-bottom></app-navbar-bottom>
 <app-create-exercise-modal [@enterAnimation] *ngIf="modals.createExerciseModal.isActive" [modals]="modals" [exercises]="exercises"></app-create-exercise-modal>
+<app-edit-exercise-modal
+[@enterAnimation] *ngIf="modals.editExerciseModal.isActive"
+  [modals]="modals"
+  [exercises]="exercises"
+  [exercise]="selectedExercise"
+  (updateComplete)="refreshExercises()">
+</app-edit-exercise-modal>

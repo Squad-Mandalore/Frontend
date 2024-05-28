@@ -14,13 +14,15 @@ import { AlertService } from '../../shared/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmationService } from '../../shared/confirmation.service';
 import { CreateExerciseModalComponent } from '../../components/create-exercise-modal/create-exercise-modal.component';
+import { EditExerciseModalComponent } from '../../components/edit-exercise-modal/edit-exercise-modal.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { FormatResultPipe } from '../../shared/format-result.pipe';
+import { isFormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-exercise-overview',
   standalone: true,
-  imports: [SidebarComponent, ConfirmationModalComponent, CreateExerciseModalComponent, FormatResultPipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
+  imports: [SidebarComponent, ConfirmationModalComponent, CreateExerciseModalComponent, EditExerciseModalComponent, FormatResultPipe, NavbarBottomComponent, NgIf, NgFor, NgClass, UserCardComponent, PrimaryButtonComponent, SecondaryButtonComponent, IconComponent],
   templateUrl: './exercise-overview-page.component.html',
   styleUrl: './exercise-overview-page.component.scss',
   animations: [
@@ -40,6 +42,7 @@ import { FormatResultPipe } from '../../shared/format-result.pipe';
 export class ExerciseOverviewComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private alertService: AlertService, private rulesService: RulesService, private confirmationService: ConfirmationService) { }
   exercises: RuleResponseSchema[] = [];
+  selectedExercise: any;
   filter: any = {};
   sorting: {property: string, direction: "asc" | "desc"} = {property: 'category', direction: 'asc'};
   searchValue = "";
@@ -55,6 +58,9 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
     },
     createExerciseModal: {
       isActive: false
+    },
+    editExerciseModal: {
+      isActive: false,
     }
   }
 
@@ -119,6 +125,23 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
   changeSearchValue(value: string){
     this.searchValue = value;
   }
+
+  openEditModal(exercise: any) {
+    this.selectedExercise = exercise;
+    this.modals.editExerciseModal.isActive = true;
+  }
+
+  refreshExercises(): void {
+    this.rulesService.getAllRulesRulesGet().subscribe({
+      next: (rules: RuleResponseSchema[]) => {
+        this.exercises = rules;
+      },
+      error: (error) => {
+        this.alertService.show('Fetch fehlgeschlagen', 'Die Übungen konnten nicht aktualisiert werden.', 'error');
+      }
+    });
+  }
+
 
   createExercise(title: string, category_id: string, from_age: number, to_age: number, bronze_value: string){
     // const schema: RulePostSchema = {

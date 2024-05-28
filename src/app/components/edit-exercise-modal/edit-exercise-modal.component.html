@@ -1,0 +1,99 @@
+<div id="overlay" (click)="modals.editExerciseModal.isActive = false"></div>
+<form id="modal" [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
+    <div id="modal-header">
+        <p id="modal-headline">Übung bearbeiten</p>
+        <app-icon (click)="modals.editExerciseModal.isActive = false" id="cross" [iconName]="'cross'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2.3'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
+    </div>
+    <div id="input-wrapper" class="height-80-percent">
+        <div class="flex flex-col gap-20">
+            <label class="label">
+                <p class="label-text">Titel</p>
+                <input class="input width-full" title="Titel kann nicht bearbeitet werden" type="text" [value]="exercise.exercise.title" readonly>
+            </label>
+        </div>
+        <div class="flex flex-col gap-20">
+            <div class="flex flex-col gap-20 margin-auto width-full" id="common-menu" *ngIf="subPage === 1">
+                <label class="label">
+                    <p class="label-text">Gold</p>
+                    <input class="input width-full" type="number" name="anzahl" formControlName="goldQuantity" placeholder="Anzahl"/>
+                </label>
+                <div class="divider"></div>
+                <label class="label">
+                    <p class="label-text">Silber</p>
+                    <input class="input width-full" type="number" name="anzahl" formControlName="silverQuantity" placeholder="Anzahl"/>
+                </label>
+                <div class="divider"></div>
+                <label class="label">
+                    <p class="label-text">Bronze</p>
+                    <input class="input width-full" type="number" name="anzahl" formControlName="bronzeQuantity" placeholder="Anzahl"/>
+                </label>
+            </div>
+            <div class="flex flex-col gap-20 margin-auto width-full" *ngIf="subPage === 2">
+                <p class="label-text">Gold</p>
+                <div>
+                    <input class="input width-20-percent" type="number" formControlName="goldHours" placeholder="hh" style="display: inline-block"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="goldMinutes" placeholder="mm" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="goldSeconds" placeholder="ss" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="goldMilliseconds" placeholder="ms" style="display: inline-block;"/>
+                </div>
+                <div class="divider"></div>
+                <p class="label-text">Silber</p>
+                <div>
+                    <input class="input width-20-percent" type="number" formControlName="silverHours" placeholder="hh" style="display: inline-block"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="silverMinutes" placeholder="mm" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="silverSeconds" placeholder="ss" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="silverMilliseconds" placeholder="ms" style="display: inline-block;"/>
+                </div>
+                <div class="divider"></div>
+                <p class="label-text">Bronze</p>
+                <div>
+                    <input class="input width-20-percent" type="number" formControlName="bronzeHours" placeholder="hh" style="display: inline-block"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="bronzeMinutes" placeholder="mm" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="bronzeSeconds" placeholder="ss" style="display: inline-block;"/>
+                    :
+                    <input class="input width-20-percent" type="number" formControlName="bronzeMilliseconds" placeholder="ms" style="display: inline-block;"/>
+                </div>
+            </div>
+            <div class="flex flex-col gap-20 margin-auto width-full" id="common-menu" *ngIf="subPage === 3">
+                <p class="label-text">Gold</p>
+                <div>
+                    <input class="input width-20-percent" type="number" name="completes-distance-kilometers" formControlName="goldKilometers" placeholder="km" style="display: inline-block"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-meters" formControlName="goldMeters" placeholder="m" style="display: inline-block;"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-centimeters" formControlName="goldCentimeters" placeholder="cm" style="display: inline-block;"/>
+                </div>
+                <div class="divider"></div>
+                <p class="label-text">Silber</p>
+                <div>
+                    <input class="input width-20-percent" type="number" name="completes-distance-kilometers" formControlName="silverKilometers" placeholder="km" style="display: inline-block"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-meters" formControlName="silverMeters" placeholder="m" style="display: inline-block;"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-centimeters" formControlName="silverCentimeters" placeholder="cm" style="display: inline-block;"/>
+                </div>
+                <div class="divider"></div>
+                <p class="label-text">Bronze</p>
+                <div>
+                    <input class="input width-20-percent" type="number" name="completes-distance-kilometers" formControlName="bronzeKilometers" placeholder="km" style="display: inline-block"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-meters" formControlName="bronzeMeters" placeholder="m" style="display: inline-block;"/>
+                    ,
+                    <input class="input width-20-percent" type="number" name="completes-distance-centimeters" formControlName="bronzeCentimeters" placeholder="cm" style="display: inline-block;"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-footer">
+        <app-secondary-button (click)="modals.editExerciseModal.isActive = false" type="button" [text]="'Abbrechen'" [minWidth]="'100%'" [description]="'Mit Klick auf diese Schaltfläche wird die Aktion abgebrochen.'"></app-secondary-button>
+        <app-primary-button [text]="'Übung bearbeiten'" [minWidth]="'100%'" type="submit" [description]="'Übung wird Überschrieben, Nutzereinträge werden nicht automatisch aktualisiert'"></app-primary-button>
+    </div>
+</form>

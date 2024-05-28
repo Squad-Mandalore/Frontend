@@ -366,6 +366,14 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   }
 
+  getCurrentAge() : string {
+    if (!this.selectedAthlete) return '';
+    const currentYear = new Date().getFullYear();
+    const birthYear = this.selectedAthlete.birthday?.split('-')[0];
+    const age = currentYear - Number(birthYear);
+    return age.toString();
+  }
+
   async fillPDFHeader(form: PDFForm) {
     if (!this.selectedAthlete) return;
     form.getTextField('Nachname').setText(this.selectedAthlete.lastname ?? 'Kein');

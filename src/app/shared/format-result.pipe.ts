@@ -25,6 +25,11 @@ export class FormatResultPipe implements PipeTransform {
     return this.formatDistance(value);
     }
 
+    // Year (yyyy-mm-dd to yyyy)
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+        return value.split('-')[0];
+    }
+
     return value;
 
   }
