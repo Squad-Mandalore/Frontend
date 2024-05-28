@@ -148,7 +148,7 @@
                             </div>
                         </div>
                         <div class="table-item" *ngFor="let result of customSortCall(customFilterCall(selectedAthlete.completes, filter, true), this.sorting); index as i;">
-                            <span>{{result.exercise.title}}</span>
+                            <span [title]="result.exercise.title">{{result.exercise.title}}</span>
                             <span>{{result.result | formatResult}}</span>
                             <span>{{result.points === 3 ? 'Gold' : result.points === 2 ? 'Silber' : result.points === 1 ? 'Bronze' : '-'}}</span>
                             <span>{{result.exercise.category.title}}</span>
