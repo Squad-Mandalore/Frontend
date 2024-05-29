@@ -1,5 +1,5 @@
-<div id="page">
-    <app-sidebar [type]="'athlete'" [athletes]="athletes" [isLoading]="isLoading" [modals]="modals"></app-sidebar>
+<div id="page" [class]="user && user.type === 'athlete' ? 'no-offset' : ''">
+    <app-sidebar [type]="'athlete'" [athletes]="athletes" [isLoading]="isLoading" [modals]="modals" *ngIf="user && user.type !== 'athlete'"></app-sidebar>
     <div id="content" *ngIf="selectedAthlete; else elseBlock">
         <div id="headline-wrapper">
             <p class="headline">Sportler-Übersicht</p>
@@ -72,10 +72,10 @@
                                 <span class="accent-900">Trainer</span>
                                 <span class="arrow-right">></span>
                                 <div class="under-undermenu accent-500">
-                                    <!-- <div class="menu-item cursor-pointer accent-900">
+                                    <div class="menu-item cursor-pointer accent-900">
                                         <app-icon [iconName]="'search'" [iconColor]="'var(--accent-300)'" [strokeWidth]="'2'" [iconWidth]="'16'" [iconHeight]="'16'"></app-icon>
                                         <input class="input" placeholder="Suchen" #customTrainerFilter (input)="setFilter('tracked_by', customTrainerFilter.value, false)" [value]="customTrainerFilter.value"/>
-                                    </div> -->
+                                    </div>
                                     <div *ngFor="let trainer of getTrackingTrainers(selectedAthlete.completes)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_by', trainer)">
                                         <span>{{trainer}}</span>
                                         <app-icon *ngIf="filter['tracked_by'] && filter['tracked_by'].filterValue === trainer" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
@@ -99,13 +99,13 @@
                             <p class="menu-item cursor-pointer" (click)="filter = {}">Filter zurücksetzen</p>
                         </div>
                     </div>
-                    <app-primary-button (click)="modals.createCompletesModal.isActive = true" *ngIf="selectedAthlete.completes.length > 0" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
+                    <app-primary-button (click)="modals.createCompletesModal.isActive = true" *ngIf="selectedAthlete.completes.length > 0 && user && user.type !== 'athlete'" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
                 </div>
                 <div class="empty-state" *ngIf="selectedAthlete.completes.length === 0; else filledState">
                     <img src="assets/img/humans-placeholder.png" alt="people-image">
                     <p class="headline-small">Noch keine Werte vorhanden</p>
-                    <p class="text-small text-align-center">Starte jetzt eine Leistungserfassung in den Kategorien Kraft, Ausdauer, Schnelligkeit oder Koordination.</p>
-                    <app-primary-button (click)="modals.createCompletesModal.isActive = true" [text]="'Erfassen'" [iconName]="'medal-two'"></app-primary-button>
+                    <p class="text-small text-align-center">{{user && user.type === 'athlete' ? 'Bitte deinen Trainer um eine Leistungserfassung in den Kategorien Kraft, Ausdauer, Schnelligkeit oder Koordination.' : 'Starte jetzt eine Leistungserfassung in den Kategorien Kraft, Ausdauer, Schnelligkeit oder Koordination.'}}</p>
+                    <app-primary-button (click)="modals.createCompletesModal.isActive = true" [text]="'Erfassen'" [iconName]="'medal-two'" *ngIf="user && user.type !== 'athlete'"></app-primary-button>
                 </div>
                 <ng-template #filledState>
                     <div id="table-wrapper">
@@ -192,11 +192,11 @@
                             7.56856 81.1336 0.21251 103.672 0.250144C126.21 0.287778 148.114 7.71702 166.025
                             21.3987C183.936 35.0803 196.864 54.259 202.828 75.994C208.792 97.7289 207.463
                             120.82 199.043 141.727C191.319 160.907 178.019 177.277 160.925 188.757C158.37
-                            190.473 154.94 189.594 153.365" fill="none" [style.stroke]="getColorVariable(selectedAthlete.completes)" stroke-width="10" stroke-
+                            190.473 154.94 189.594 153.365" fill="none" [style.stroke]="getColorVariable(customFilterCall(selectedAthlete.completes, {tracked_at: {filterValue: currentYear, valueFullFit: false} }, true))" stroke-width="10" stroke-
                             linecap="round"/>
                         </svg>
                         <div id="current-points-wrapper">
-                            <p>{{ getProgress(selectedAthlete.completes) }}</p>
+                            <p>{{ getProgress(customFilterCall(selectedAthlete.completes, {tracked_at: {filterValue: currentYear, valueFullFit: false} }, true)) }}</p>
                         </div>
                         <div id="all-points-wrapper">
                             <p>/12</p>
@@ -211,15 +211,15 @@
                     </div>
                     <div id="progress-footer">
                         <div class="medal-wrapper">
-                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "3", valueFullFit: true} }, false).length}}</span>
+                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "3", valueFullFit: true}, tracked_at: {filterValue: currentYear, valueFullFit: false} }, true).length}}</span>
                             <div class="medal gold"></div>
                         </div>
                         <div class="medal-wrapper">
-                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "2", valueFullFit: true} }, false).length}}</span>
+                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "2", valueFullFit: true}, tracked_at: {filterValue: currentYear, valueFullFit: false} }, true).length}}</span>
                             <div class="medal silver"></div>
                         </div>
                         <div class="medal-wrapper">
-                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "1", valueFullFit: true} }, false).length}}</span>
+                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "1", valueFullFit: true}, tracked_at: {filterValue: currentYear, valueFullFit: false} }, true).length}}</span>
                             <div class="medal bronze"></div>
                         </div>
                     </div>
@@ -402,7 +402,7 @@
     <div class="flex flex-col gap-30 margin-top-auto">
         <span class="margin-left-auto inter-medium accent-500 font-size-15">erstellt am {{selectedAthlete.created_at | date:'dd.MM.yyyy'}} von {{selectedAthlete.trainer.firstname}} {{selectedAthlete.trainer.lastname}}</span>
         <div class="flex items-center gap-10 full-width">
-            <app-secondary-button class="full-width" (click)="modals.showDetails.isActive = false" [text]="'Abbrechen'" [minWidth]="'100%'"></app-secondary-button>
+            <app-secondary-button class="full-width" (click)="modals.showDetails.isActive = false" [text]="'Schließen'" [minWidth]="'100%'"></app-secondary-button>
             <app-primary-button class="full-width" [isDeleteButton]="true" [text]="'Benutzer löschen'" [minWidth]="'100%'" [iconName]="'delete'" [strokeWidth]="'2'" (click)="deleteAthlete(selectedAthlete)" id="delete-button"></app-primary-button>
         </div>
     </div>
