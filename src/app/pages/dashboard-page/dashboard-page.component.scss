@@ -5,7 +5,7 @@
     display: grid;
     grid-template-columns: 28.75rem 1fr;
     grid-template-rows: 1fr;
-    
+
     @media (max-width: 1000px) {
         grid-template-columns: 4rem 1fr;
     }
@@ -267,12 +267,18 @@
 
 
 #swimcert-image{
-  object-fit: contain;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 2;
+  grid-column-end: -1;
+  position: relative;
+  font-family: "Inter Medium";
+  object-fit: scale-down;
+  width: 100%;
+  height: 100%;
+  padding: 1.875rem;
   display: flex;
-  align-self: center;
-  height: 80%;
-  width: 70%;
-
+  flex-direction: column;
 }
 
     .table-item:hover {
@@ -420,6 +426,18 @@
         gap: 0.125rem;
         z-index: 15;
     }
+
+  .swimcert-button-container{
+    margin-left:  auto;
+    display: flex;
+    place-self: flex-end;
+    gap: 5px;
+  }
+
+  .swimcert-wraper{
+    display: flex;
+    gap: 10px;
+  }
 
     #swimcert-container {
         height: 50%;

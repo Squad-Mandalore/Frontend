@@ -149,7 +149,7 @@
                         </div>
                         <div class="table-item" *ngFor="let result of customSortCall(customFilterCall(selectedAthlete.completes, filter, true), this.sorting); index as i;">
                             <span>{{result.exercise.title}}</span>
-                            <span>{{result.result | formatResult}}</span> 
+                            <span>{{result.result | formatResult}}</span>
                             <span>{{result.points === 3 ? 'Gold' : result.points === 2 ? 'Silber' : result.points === 1 ? 'Bronze' : '-'}}</span>
                             <span>{{result.exercise.category.title}}</span>
                             <span>{{result.tracked_at | date:'dd.MM.yyyy'}}</span>
@@ -225,7 +225,7 @@
                     </div>
                 </div>
                 <div id="swimcert-container" [ngClass]="{'background-color-white': selectedAthlete}">
-                    <div id="swimcert-inset-container" *ngIf="selectedAthlete.certificates.length === 0">
+                    <div id="swimcert-inset-container" *ngIf="selectedAthlete.certificates.length === 0; else filledBlock">
                         <img src="assets/img/humans-images.png" alt="missing swimming certificate"/>
                         <p class="headline-small text-align-center">Kein Schwimmnachweis<br/>vorhanden</p>
                         <p class="text-small text-align-center">Tippe auf "Nachweis hochladen" oder <br/>ziehe die Datei einfach in dieses Feld.</p>
@@ -242,11 +242,11 @@
                     <ng-template #filledBlock>
                       <div id="swimcert-outset-container">
                         <div class="swimcert-wraper">
-                        <p class="headline-small">Schwimmnachweis vorhanden</p>
-                        <div class="swimcert-button-container">
-                          <app-quaternary-button (click)="onClickDownloadCertificate(selectedAthlete, $event)" [minWidth]="'100%'" [iconName]="'download'" [tooltipText]="'Nachweis herunterladen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"/>
-                          <app-quaternary-button (click)="onClickDeleteCertificate()" [minWidth]="'100%'" [iconName]="'delete'" [tooltipText]="'Nachweis löschen'" [strokeWidth]="'2'" [backgroundColor]="'var(--danger)'" [iconColor]="'var(--accent-0)'"/>
-                        </div>
+                        <p class="headline-small">Schwimmnachweis vorhanden </p>
+                          <div class="swimcert-button-container">
+                            <app-quaternary-button (click)="onClickDownloadCertificate(selectedAthlete, $event)" [minWidth]="'100%'" [iconName]="'download'" [tooltipText]="'Nachweis herunterladen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"/>
+                            <app-quaternary-button (click)="onClickDeleteCertificate()" [minWidth]="'100%'" [iconName]="'delete'" [tooltipText]="'Nachweis löschen'" [strokeWidth]="'2'" [backgroundColor]="'var(--danger)'" [iconColor]="'var(--accent-0)'"/>
+                          </div>
                         </div>
                         <!--                        TODO: Dummy Picture for style, need to be removed in final solution-->
                         <img id="swimcert-image" src="assets/img/swimmcert-exists.jpg" alt="Schwimmnachweis vorhanden"/>
@@ -302,7 +302,7 @@
     <div class="flex flex-col gap-30 inter-medium">
         <div class="flex items-center justify-between">
             <p class="headline-small">Leistungsübersicht:</p>
-            <span class="accent-500 hover-underline cursor-pointer inter-regular" (click)="createPDF()" tabindex="0">PDF herunterladen</span> 
+            <span class="accent-500 hover-underline cursor-pointer inter-regular" (click)="createPDF()" tabindex="0">PDF herunterladen</span>
         </div>
         <div class="flex items-center">
             <p>Schnelligkeit</p>
