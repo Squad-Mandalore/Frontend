@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {UserCardComponent} from '../user-card/user-card.component';
 import {CommonModule} from '@angular/common';
 import {ActivatedRoute, RouterModule} from '@angular/router';
 import {CreateTrainerModalComponent} from '../create-trainer-modal/create-trainer-modal.component';
 import {CreateAthleteModalComponent} from '../create-athlete-modal/create-athlete-modal.component';
-import {AthleteFullResponseSchema, AuthService, UserResponseSchema} from "../../shared/generated";
+import {AuthService, UserResponseSchema} from "../../shared/generated";
 import {AuthExtentionService} from "../../shared/auth-extention.service";
 import { enterLeaveAnimation } from '../../shared/animation';
 
@@ -21,18 +21,22 @@ import { enterLeaveAnimation } from '../../shared/animation';
 })
 export class NavbarBottomComponent implements OnInit {
   urlParts: any = [];
-  user!: UserResponseSchema;
+  user?: UserResponseSchema;
 
   constructor(
     private route: ActivatedRoute,
-    private authExtService: AuthExtentionService, 
+    private authExtService: AuthExtentionService,
     private authService: AuthService
   ){
     this.urlParts = this.route.snapshot.url.map(segment => segment.toString());
   }
 
   ngOnInit(): void {
-    this.getUser();
+    this.authService.whoAmIAuthWhoamiGet().subscribe({
+      next: (user: UserResponseSchema) => {
+        this.user = user;
+      },
+    });
   }
 
   checkIfIsActive(routeParameter : string){
@@ -44,17 +48,7 @@ export class NavbarBottomComponent implements OnInit {
     this.triggerModalClick.emit(value);
   }
 
-  getUser(){
-    this.authService.whoAmIAuthWhoamiGet().subscribe({
-      next: (user: UserResponseSchema) => {
-        this.user = user;
-      },
-    });
-  }
-
   onClickLogOut() {
     this.authExtService.logout()
   }
-
-
 }

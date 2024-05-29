@@ -111,7 +111,7 @@
                         </div> -->
                     </div>
                 </div>
-                <app-primary-button *ngIf="exercises.length > 0" [text]="'Disziplin hinzufügen'" [iconName]="'plus'" (click)="modals.createExerciseModal.isActive = true"></app-primary-button>
+                <app-primary-button *ngIf="exercises.length > 0 && user && user.type !== 'athlete'" [text]="'Disziplin hinzufügen'" [iconName]="'plus'" (click)="modals.createExerciseModal.isActive = true"></app-primary-button>
             </div>
             <div id="empty-state" *ngIf="exercises.length === 0; else filledState">
                 <img src="assets/img/humans-running.png" alt="placeholder-image">
@@ -189,7 +189,7 @@
                         <span>{{exercise.silver | formatResult}}</span>
                         <span>{{exercise.bronze | formatResult}}</span>
                         <span>{{exercise.exercise.category.title}}</span>
-                        <div class="flex items-center more-icon cursor-pointer">
+                        <div class="flex items-center more-icon cursor-pointer"  *ngIf="user && user.type !== 'athlete'">
                             <app-icon [iconName]="'more-vertical'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'2'" [iconHeight]="'20'" [iconWidth]="'20'"></app-icon>
                             <div class="undermenu">
                                 <div class="menu-item">

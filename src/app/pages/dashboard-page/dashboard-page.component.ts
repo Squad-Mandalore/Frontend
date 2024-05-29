@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SidebarComponent} from '../../components/sidebar/sidebar.component';
-import {NavbarBottomComponent} from '../../components/navbar-bottom/navbar-bottom.component';
-import {DatePipe, NgClass, NgFor, NgIf} from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
+import { NavbarBottomComponent } from '../../components/navbar-bottom/navbar-bottom.component';
+import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 
 import { UserCardComponent } from '../../components/user-card/user-card.component';
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
@@ -13,6 +13,7 @@ import {
   AthletePatchSchema,
   AthletePostSchema,
   AthleteResponseSchema,
+  AuthService,
   CertificateResponseSchema,
   CertificateSingleResponseSchema,
   CertificatesService,
@@ -20,6 +21,7 @@ import {
   CompletesService,
   CsvService,
   ResponseParseCsvFileCsvParsePost,
+  UserResponseSchema,
 } from '../../shared/generated';
 import { Subscription } from 'rxjs';
 import customSort from '../../../utils/custom-sort';
@@ -33,9 +35,8 @@ import { AlertService } from '../../shared/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { enterLeaveAnimation } from '../../shared/animation';
 import { FormGroup } from '@angular/forms';
-import { LoggerService } from '../../shared/logger.service';
 import { CreateAthleteModalComponent } from '../../components/create-athlete-modal/create-athlete-modal.component';
-import {QuaternaryButtonComponent} from "../../components/buttons/quaternary-button/quaternary-button.component";
+import { QuaternaryButtonComponent } from "../../components/buttons/quaternary-button/quaternary-button.component";
 import { CreateCompletesComponent } from '../../components/completes-modal/create-completes-modal/create-completes-modal.component';
 import { PatchCompletesComponent } from '../../components/completes-modal/patch-completes-modal/patch-completes-modal.component';
 import { PDFDocument, PDFForm } from 'pdf-lib';
@@ -78,14 +79,15 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private router: Router,
     private athleteService: AthletesService,
     private alertService: AlertService,
-    private logger: LoggerService,
     private csvService: CsvService,
-    private certificateService: CertificatesService,
+    private authService: AuthService,
     private http: HttpClient,
+    private certificateService: CertificatesService,
   ) {
     this.currentYear = new Date().getFullYear().toString();
   }
 
+  user!: UserResponseSchema;
   currentYear: string;
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
@@ -664,7 +666,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   dashOffset(athlete: AthleteFullResponseSchema): number {
-    const progressDecimal = calculateProgressPercent(this.customFilterCall(athlete.completes, {tracked_at: {filterValue: this.currentYear, valueFullFit: false} }, true)) / 100;
+    const progressDecimal = calculateProgressPercent(this.customFilterCall(athlete.completes, { tracked_at: { filterValue: this.currentYear, valueFullFit: false } }, true)) / 100;
     return this.dashArray * (1 - progressDecimal);
   }
 
@@ -696,16 +698,32 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.athletes.length === 0) {
-      this.gnNoTini();
-    }
-    this.routeSubscription = this.route.queryParams.subscribe(params => {
-      const athleteId = params['id'];
-      if (athleteId) {
-        this.selectedAthlete = this.athletes.filter(element => element.id == athleteId)[0];
-        if (!this.selectedAthlete) {
-          this.router.navigate(['/athleten']);
+    this.authService.whoAmIAuthWhoamiGet().subscribe({
+      next: (user: UserResponseSchema) => {
+        this.user = user;
+      },
+      complete: () => {
+        if (this.user.type === 'athlete') {
+          this.athleteService.getAthleteFullAthletesIdFullGet(this.user.id).subscribe({
+            next: (athlete: AthleteFullResponseSchema) => {
+              this.selectedAthlete = athlete;
+            }
+          })
+          return;
         }
+
+        if (this.athletes.length === 0) {
+          this.gnNoTini();
+        }
+        this.routeSubscription = this.route.queryParams.subscribe(params => {
+          const athleteId = params['id'];
+          if (athleteId) {
+            this.selectedAthlete = this.athletes.filter(element => element.id == athleteId)[0];
+            if (!this.selectedAthlete) {
+              this.router.navigate(['/athleten']);
+            }
+          }
+        })
       }
     })
   }
@@ -720,7 +738,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     if (fileContent instanceof Blob) {
 
       // Send the body object to the backend
-      this.certificateService.createCertificateCertificatesPost(fileContent, this.selectedAthlete?.id! , this.selectedAthlete?.username!+ "-Schwimmnachweis" ).subscribe({
+      this.certificateService.createCertificateCertificatesPost(fileContent, this.selectedAthlete?.id!, this.selectedAthlete?.username! + "-Schwimmnachweis").subscribe({
         next: (response: CertificateResponseSchema) => {
           this.alertService.show('Zertifikat hochgeladen', 'Zertifikat wurde erfolgreich erstellt.', 'success');
           this.selectedAthlete?.certificates.push(response)
@@ -763,17 +781,18 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       'Abbrechen',
       true,
       () => {
-    if (this.selectedAthlete?.certificates.length! > 0) {
-      this.certificateService.deleteCertificateCertificatesIdDelete(this.selectedAthlete?.certificates[0].id!).subscribe({
-        next: () => {
-          this.selectedAthlete?.certificates.splice(0, this.selectedAthlete?.certificates.length)
-          this.alertService.show('Zertifikat gelöscht', 'Zertifikat wurde erfolgreich gelöscht.', 'success');
-        },
-        error: (error) => {
-          this.alertService.show('Erstellung fehlgeschlagen', 'Bitte versuche es später erneut', "error");
+        if (this.selectedAthlete?.certificates.length! > 0) {
+          this.certificateService.deleteCertificateCertificatesIdDelete(this.selectedAthlete?.certificates[0].id!).subscribe({
+            next: () => {
+              this.selectedAthlete?.certificates.splice(0, this.selectedAthlete?.certificates.length)
+              this.alertService.show('Zertifikat gelöscht', 'Zertifikat wurde erfolgreich gelöscht.', 'success');
+            },
+            error: (error) => {
+              this.alertService.show('Erstellung fehlgeschlagen', 'Bitte versuche es später erneut', "error");
+            }
+          })
         }
-      })
-    }}
+      }
     )
   }
 

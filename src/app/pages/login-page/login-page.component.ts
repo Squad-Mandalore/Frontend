@@ -46,14 +46,7 @@ export class LoginPageComponent {
         private alertService: AlertService
     ) {
         if (this.authExtService.isLoggedIn()) {
-            this.authService.whoAmIAuthWhoamiGet().subscribe({
-                next: (user: UserResponseSchema) => {
-                    this.router.navigate(['/athleten']);
-                },
-                error: () => {
-                    this.alertService.show("Abfragen des Benutzers fehlgeschlagen", "Bitte probiere es später erneut.", "error");
-                }
-            });
+          this.router.navigate(['/athleten']);
         }
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
@@ -68,10 +61,10 @@ export class LoginPageComponent {
                 this.localStorageService.setItem('refresh_token', token.refresh_token);
                 this.authService.whoAmIAuthWhoamiGet().subscribe({
                     next: (user: UserResponseSchema) => {
-                        if(user.type === "athlete"){
-                            this.alertService.show("Login deaktiviert", "Der Login für Athleten wurde leider deaktiviert.", "error");
-                            return;
-                        }
+                        // if(user.type === "athlete"){
+                        //     this.alertService.show("Login deaktiviert", "Der Login für Athleten wurde leider deaktiviert.", "error");
+                        //     return;
+                        // }
 
                         if(user.created_at !== user.last_password_change){
                             this.router.navigate(['/athleten']);
