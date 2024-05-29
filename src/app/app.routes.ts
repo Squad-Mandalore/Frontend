@@ -14,7 +14,7 @@ export const routes: Routes = [
     {path: "athleten/:id", component: DashboardPageComponent, canActivate: [authGuard]},
     {path: "trainer", component: TrainerOverviewPageComponent, canActivate: [authGuard, athleteGuard]},
     {path: "trainer/:id", component: TrainerOverviewPageComponent, canActivate: [authGuard, athleteGuard]},
-    {path: "exercises", component: ExerciseOverviewComponent, canActivate: [authGuard, athleteGuard]},
+    {path: "exercises", component: ExerciseOverviewComponent, canActivate: [authGuard]},
     {path: "help", component: HelpPageComponent, canActivate: [authGuard]},
     {path: "**", redirectTo: 'login'}
 ];

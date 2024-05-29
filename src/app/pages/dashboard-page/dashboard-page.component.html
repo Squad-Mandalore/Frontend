@@ -1,4 +1,4 @@
-<div id="page">
+<div id="page" [class]="user && user.type === 'athlete' ? 'no-offset' : ''">
     <app-sidebar [type]="'athlete'" [athletes]="athletes" [isLoading]="isLoading" [modals]="modals" *ngIf="user && user.type !== 'athlete'"></app-sidebar>
     <div id="content" *ngIf="selectedAthlete; else elseBlock">
         <div id="headline-wrapper">
