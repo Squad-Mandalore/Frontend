@@ -72,10 +72,10 @@
                                 <span class="accent-900">Trainer</span>
                                 <span class="arrow-right">></span>
                                 <div class="under-undermenu accent-500">
-                                    <div class="menu-item cursor-pointer accent-900">
+                                    <!-- <div class="menu-item cursor-pointer accent-900">
                                         <app-icon [iconName]="'search'" [iconColor]="'var(--accent-300)'" [strokeWidth]="'2'" [iconWidth]="'16'" [iconHeight]="'16'"></app-icon>
                                         <input class="input" placeholder="Suchen" #customTrainerFilter (input)="setFilter('tracked_by', customTrainerFilter.value, false)" [value]="customTrainerFilter.value"/>
-                                    </div>
+                                    </div> -->
                                     <div *ngFor="let trainer of getTrackingTrainers(selectedAthlete.completes)" class="menu-item cursor-pointer accent-900" (click)="setFilter('tracked_by', trainer)">
                                         <span>{{trainer}}</span>
                                         <app-icon *ngIf="filter['tracked_by'] && filter['tracked_by'].filterValue === trainer" [iconName]="'check'" [iconColor]="'var(--accent-500)'" [strokeWidth]="'4'" [iconWidth]="'20'" [iconHeight]="'20'"></app-icon>
@@ -232,7 +232,7 @@
                       <div class="flex flex-col gap-10">
                         <label class="position-relative text-align-center cursor-pointer">
                             <span class="label-text">Nachweis hochladen</span>
-                            <input (change)="onFileSelected($event)" class="position-absolute hide-element" type="file" multiple="false"/>
+                            <input (change)="onFileSelected($event)" class="position-absolute hide-element" accept=".pdf" type="file" multiple="false"/>
                         </label>
                         <a class="text-align-center cursor-pointer text-small" href="assets/DSA_Schwimmnachweis_2022_beschreibbar-Neu.pdf" download>
                           Vorlage herunterladen
@@ -240,19 +240,21 @@
                       </div>
                     </div>
                     <ng-template #filledBlock>
-                      <div id="swimcert-outset-container">
-                        <div class="swimcert-wraper">
-                        <p class="headline-small">Schwimmnachweis vorhanden </p>
-                          <div class="swimcert-button-container">
-                            <app-quaternary-button (click)="onClickDownloadCertificate(selectedAthlete, $event)" [minWidth]="'100%'" [iconName]="'download'" [tooltipText]="'Nachweis herunterladen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"/>
-                            <app-quaternary-button (click)="onClickDeleteCertificate()" [minWidth]="'100%'" [iconName]="'delete'" [tooltipText]="'Nachweis löschen'" [strokeWidth]="'2'" [backgroundColor]="'var(--danger)'" [iconColor]="'var(--accent-0)'"/>
-                          </div>
-                        </div>
-                        <!--                        TODO: Dummy Picture for style, need to be removed in final solution-->
+                      <div id="swimcert-outer-container">
                         <img id="swimcert-image" src="assets/img/swimmcert-exists.jpg" alt="Schwimmnachweis vorhanden"/>
-                      </div>
+                        <div id="blur-overlay"></div>
+                        <div class="swimcert-headline-wrapper">
+                            <p class="headline-small">Schwimmnachweis vorhanden </p>
+                            <div class="swimcert-button-container">
+                                <app-quaternary-button (click)="onClickDownloadCertificate(selectedAthlete, $event)" [minWidth]="'100%'" [iconName]="'download'" [tooltipText]="'Nachweis herunterladen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"/>
+                                <app-quaternary-button (click)="onClickDeleteCertificate()" [minWidth]="'100%'" [iconName]="'delete'" [tooltipText]="'Nachweis löschen'" [strokeWidth]="'2'" [backgroundColor]="'var(--danger)'" [iconColor]="'var(--accent-0)'"/>
+                            </div>
+                        </div>
+                        <div id="check">
+                            <svg data-icon-name="check" data-style="line" icon_origin_id="4603" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><polyline style="fill: none; stroke: var(--brand-500); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;" points="5 12 10 17 19 8" id="primary-stroke"></polyline></svg>
+                        </div>
+                    </div>
                     </ng-template>
-
                 </div>
             </div>
         </div>

@@ -265,22 +265,6 @@
 }
 
 
-
-#swimcert-image{
-  grid-row-start: 1;
-  grid-row-end: 2;
-  grid-column-start: 2;
-  grid-column-end: -1;
-  position: relative;
-  font-family: "Inter Medium";
-  object-fit: scale-down;
-  width: 100%;
-  height: 100%;
-  padding: 1.875rem;
-  display: flex;
-  flex-direction: column;
-}
-
     .table-item:hover {
         background-color: var(--accent-150);
     }
@@ -434,10 +418,57 @@
     gap: 5px;
   }
 
-  .swimcert-wraper{
+  .swimcert-headline-wrapper{
     display: flex;
     gap: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
   }
+
+  #blur-overlay{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255, 0.4);
+  }
+
+  #check{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    padding: 1rem;
+    border-radius: 50%;
+    background-color: var(--brand-100);
+    width: 60px;
+    aspect-ratio: 1/1;
+    display: grid;
+    place-items: center;
+    box-shadow: 0px 0px 50px var(--accent-200);
+  }
+  
+  #swimcert-outer-container{
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+#swimcert-image{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    width: 50%;
+    object-fit: contain;
+    // filter: blur(0.05rem);
+    filter: drop-shadow(5px 5px 2rem var(--accent-300));
+}
+
+
 
     #swimcert-container {
         height: 50%;
