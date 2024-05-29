@@ -12,8 +12,8 @@ import {
   AthleteCompletesResponseSchema,
   AthletePatchSchema,
   AthletePostSchema,
-  AthleteResponseSchema, 
-  CertificateResponseSchema, 
+  AthleteResponseSchema,
+  CertificateResponseSchema,
   CertificateSingleResponseSchema,
   CertificatesService,
   CompletesResponseSchema,
@@ -82,9 +82,11 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private csvService: CsvService,
     private certificateService: CertificatesService,
     private http: HttpClient,
-  ) {}
+  ) {
+    this.currentYear = new Date().getFullYear().toString();
+  }
 
-
+  currentYear: string;
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
   selectedFile: File | undefined;
@@ -541,7 +543,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         break;
     }
   }
-  
+
   calculateGlobalMedal(completes: CompletesResponseSchema[]) {
     const categories = ['Ausdauer', 'Kraft', 'Schnelligkeit', 'Koordination'];
     const medalsAndPoints = categories.map((category, index) => {
@@ -662,7 +664,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   dashOffset(athlete: AthleteFullResponseSchema): number {
-    const progressDecimal = calculateProgressPercent(athlete.completes) / 100;
+    const progressDecimal = calculateProgressPercent(this.customFilterCall(athlete.completes, {tracked_at: {filterValue: this.currentYear, valueFullFit: false} }, true)) / 100;
     return this.dashArray * (1 - progressDecimal);
   }
 
