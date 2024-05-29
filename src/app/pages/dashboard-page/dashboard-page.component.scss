@@ -293,6 +293,16 @@
 }
 
 
+
+#swimcert-image{
+  object-fit: contain;
+  display: flex;
+  align-self: center;
+  height: 80%;
+  width: 70%;
+
+}
+
     .table-item:hover {
         background-color: var(--accent-150);
     }
@@ -842,3 +852,4 @@
         }
 
     }
+

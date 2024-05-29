@@ -1,15 +1,28 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { NavbarBottomComponent } from '../../components/navbar-bottom/navbar-bottom.component';
-import { NgClass, NgFor, NgIf, DatePipe } from '@angular/common';
+import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 
 import { UserCardComponent } from '../../components/user-card/user-card.component';
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
-import { QuaternaryButtonComponent } from '../../components/buttons/quaternary-button/quaternary-button.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { AthleteCompletesResponseSchema, AthletePatchSchema, AthletePostSchema, AthleteResponseSchema, AuthService, CompletesResponseSchema, CompletesService, CsvService, ResponseParseCsvFileCsvParsePost, TrainersService, UserResponseSchema } from '../../shared/generated';
+import {
+  AthleteCompletesResponseSchema,
+  AthletePatchSchema,
+  AthletePostSchema,
+  AthleteResponseSchema,
+  AuthService,
+  CertificateResponseSchema,
+  CertificateSingleResponseSchema,
+  CertificatesService,
+  CompletesResponseSchema,
+  CompletesService,
+  CsvService,
+  ResponseParseCsvFileCsvParsePost,
+  UserResponseSchema,
+} from '../../shared/generated';
 import { Subscription } from 'rxjs';
 import customSort from '../../../utils/custom-sort';
 import customFilter from '../../../utils/custom-filter';
@@ -22,13 +35,14 @@ import { AlertService } from '../../shared/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { enterLeaveAnimation } from '../../shared/animation';
 import { FormGroup } from '@angular/forms';
-import { LoggerService } from '../../shared/logger.service';
 import { CreateAthleteModalComponent } from '../../components/create-athlete-modal/create-athlete-modal.component';
+import { QuaternaryButtonComponent } from "../../components/buttons/quaternary-button/quaternary-button.component";
 import { CreateCompletesComponent } from '../../components/completes-modal/create-completes-modal/create-completes-modal.component';
 import { PatchCompletesComponent } from '../../components/completes-modal/patch-completes-modal/patch-completes-modal.component';
 import { PDFDocument, PDFForm } from 'pdf-lib';
 import { HttpClient } from '@angular/common/http';
 import { FormatResultPipe } from '../../shared/format-result.pipe';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -65,15 +79,19 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private router: Router,
     private athleteService: AthletesService,
     private alertService: AlertService,
-    private logger: LoggerService,
     private csvService: CsvService,
     private authService: AuthService,
     private http: HttpClient,
-  ) { }
+    private certificateService: CertificatesService,
+  ) {
+    this.currentYear = new Date().getFullYear().toString();
+  }
 
   user!: UserResponseSchema;
+  currentYear: string;
   athletes: AthleteFullResponseSchema[] = []
   searchValue: string = ""
+  selectedFile: File | undefined;
   selectedAthlete?: AthleteFullResponseSchema;
   isLoading: boolean = true;
   filter: any = {};
@@ -648,7 +666,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   dashOffset(athlete: AthleteFullResponseSchema): number {
-    const progressDecimal = calculateProgressPercent(athlete.completes) / 100;
+    const progressDecimal = calculateProgressPercent(this.customFilterCall(athlete.completes, { tracked_at: { filterValue: this.currentYear, valueFullFit: false } }, true)) / 100;
     return this.dashArray * (1 - progressDecimal);
   }
 
@@ -684,8 +702,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       next: (user: UserResponseSchema) => {
         this.user = user;
       },
-      complete: ()=>{
-        if(this.user.type === 'athlete'){
+      complete: () => {
+        if (this.user.type === 'athlete') {
           this.athleteService.getAthleteFullAthletesIdFullGet(this.user.id).subscribe({
             next: (athlete: AthleteFullResponseSchema) => {
               this.selectedAthlete = athlete;
@@ -694,14 +712,14 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
           return;
         }
 
-        if(this.athletes.length === 0){
+        if (this.athletes.length === 0) {
           this.gnNoTini();
         }
         this.routeSubscription = this.route.queryParams.subscribe(params => {
           const athleteId = params['id'];
-          if(athleteId){
+          if (athleteId) {
             this.selectedAthlete = this.athletes.filter(element => element.id == athleteId)[0];
-            if(!this.selectedAthlete){
+            if (!this.selectedAthlete) {
               this.router.navigate(['/athleten']);
             }
           }
@@ -709,6 +727,123 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       }
     })
   }
+
+  async onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+    console.log('Uploaded file:', this.selectedFile);
+
+    // Read file content
+    const fileContent = await this.readFileContent(this.selectedFile!);
+
+    if (fileContent instanceof Blob) {
+
+      // Send the body object to the backend
+      this.certificateService.createCertificateCertificatesPost(fileContent, this.selectedAthlete?.id!, this.selectedAthlete?.username! + "-Schwimmnachweis").subscribe({
+        next: (response: CertificateResponseSchema) => {
+          this.alertService.show('Zertifikat hochgeladen', 'Zertifikat wurde erfolgreich erstellt.', 'success');
+          this.selectedAthlete?.certificates.push(response)
+          console.log(response);
+        },
+        error: (error) => {
+          if (error.status == 422) {
+            this.alertService.show('Erstellung fehlgeschlagen', 'Zertifikat nicht erlaubt', "error");
+          } else {
+            this.alertService.show('Erstellung fehlgeschlagen', 'Bitte versuche es später erneut', "error");
+          }
+        }
+      });
+    } else {
+      console.error('Error reading file content');
+      // Handle error - file content couldn't be read
+    }
+  }
+
+  // Trigger download and request to the backend
+  onClickDownloadCertificate(selectedAthlete: AthleteFullResponseSchema | undefined, event: Event) {
+    // stopPropagation because eventEmitter in button component triggers the method twice
+    event.stopPropagation()
+    if (selectedAthlete!.certificates.length! > 0) {
+      this.certificateService.getCertificatesCertificatesIdGet(selectedAthlete!.certificates[0].id!).subscribe({
+        next: (response: CertificateSingleResponseSchema) => {
+          this.base64ToPdf(response.blob, response.title)
+          this.alertService.show('Zertifikat download', 'Zertifikat Download gestartet', 'success');
+        }
+      })
+    }
+  }
+
+  // Trigger deletion of the selected athlete-certificate
+  onClickDeleteCertificate() {
+    this.confirmationService.show(
+      'Schwimmnachweis wirklich löschen?',
+      'Mit dieser Aktion wird der ausgewählte Schwimmnachweis unwiderruflich gelöscht.',
+      'Nachweis löschen',
+      'Abbrechen',
+      true,
+      () => {
+        if (this.selectedAthlete?.certificates.length! > 0) {
+          this.certificateService.deleteCertificateCertificatesIdDelete(this.selectedAthlete?.certificates[0].id!).subscribe({
+            next: () => {
+              this.selectedAthlete?.certificates.splice(0, this.selectedAthlete?.certificates.length)
+              this.alertService.show('Zertifikat gelöscht', 'Zertifikat wurde erfolgreich gelöscht.', 'success');
+            },
+            error: (error) => {
+              this.alertService.show('Erstellung fehlgeschlagen', 'Bitte versuche es später erneut', "error");
+            }
+          })
+        }
+      }
+    )
+  }
+
+  // This Method is necessary to parse the base64 string of the backend Response to a downloadable pdf
+  base64ToPdf(base64String: string, fileName: string): void {
+    const byteCharacters = atob(base64String);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+    // Create URL for Blob Object
+    const url = window.URL.createObjectURL(blob);
+
+    // Create hidden Link which triggers download of the file
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.style.display = 'none';
+    a.href = url;
+    a.download = fileName;
+    a.click();
+
+    // Release the URL-Object
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
+
+  // Create Upload und parse uploaded File to a Blob which can be processed
+  async readFileContent(file: File): Promise<Blob | ArrayBuffer | null> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const arrayBuffer = reader.result;
+        if (arrayBuffer instanceof ArrayBuffer) {
+          // Successfully read file content
+          const blob = new Blob([new Uint8Array(arrayBuffer)], { type: file.type });
+          resolve(blob);
+        } else {
+          // Failed to read file content
+          resolve(null);
+        }
+      };
+      reader.onerror = () => {
+        reject(reader.error);
+      };
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
 
   ngOnDestroy(): void {
     if (this.routeSubscription) {

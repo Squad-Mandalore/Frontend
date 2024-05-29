@@ -192,11 +192,11 @@
                             7.56856 81.1336 0.21251 103.672 0.250144C126.21 0.287778 148.114 7.71702 166.025
                             21.3987C183.936 35.0803 196.864 54.259 202.828 75.994C208.792 97.7289 207.463
                             120.82 199.043 141.727C191.319 160.907 178.019 177.277 160.925 188.757C158.37
-                            190.473 154.94 189.594 153.365" fill="none" [style.stroke]="getColorVariable(selectedAthlete.completes)" stroke-width="10" stroke-
+                            190.473 154.94 189.594 153.365" fill="none" [style.stroke]="getColorVariable(customFilterCall(selectedAthlete.completes, {tracked_at: {filterValue: currentYear, valueFullFit: false} }, true))" stroke-width="10" stroke-
                             linecap="round"/>
                         </svg>
                         <div id="current-points-wrapper">
-                            <p>{{ getProgress(selectedAthlete.completes) }}</p>
+                            <p>{{ getProgress(customFilterCall(selectedAthlete.completes, {tracked_at: {filterValue: currentYear, valueFullFit: false} }, true)) }}</p>
                         </div>
                         <div id="all-points-wrapper">
                             <p>/12</p>
@@ -211,15 +211,15 @@
                     </div>
                     <div id="progress-footer">
                         <div class="medal-wrapper">
-                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "3", valueFullFit: true} }, false).length}}</span>
+                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "3", valueFullFit: true}, tracked_at: {filterValue: currentYear, valueFullFit: false} }, true).length}}</span>
                             <div class="medal gold"></div>
                         </div>
                         <div class="medal-wrapper">
-                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "2", valueFullFit: true} }, false).length}}</span>
+                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "2", valueFullFit: true}, tracked_at: {filterValue: currentYear, valueFullFit: false} }, true).length}}</span>
                             <div class="medal silver"></div>
                         </div>
                         <div class="medal-wrapper">
-                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "1", valueFullFit: true} }, false).length}}</span>
+                            <span class="medal-text">{{customFilterCall(selectedAthlete.completes, {points: {filterValue: "1", valueFullFit: true}, tracked_at: {filterValue: currentYear, valueFullFit: false} }, true).length}}</span>
                             <div class="medal bronze"></div>
                         </div>
                     </div>
@@ -232,13 +232,27 @@
                       <div class="flex flex-col gap-10">
                         <label class="position-relative text-align-center cursor-pointer">
                             <span class="label-text" *ngIf="user && user.type !== 'athlete'">Nachweis hochladen</span>
-                            <input class="position-absolute hide-element" type="file" multiple="false"/>
+                            <input (change)="onFileSelected($event)" class="position-absolute hide-element" type="file" multiple="false"/>
                         </label>
                         <a class="text-align-center cursor-pointer text-small" href="assets/DSA_Schwimmnachweis_2022_beschreibbar-Neu.pdf" download>
                           Vorlage herunterladen
                         </a>
                       </div>
                     </div>
+                    <ng-template #filledBlock>
+                      <div id="swimcert-outset-container">
+                        <div class="swimcert-wraper">
+                        <p class="headline-small">Schwimmnachweis vorhanden</p>
+                        <div class="swimcert-button-container">
+                          <app-quaternary-button (click)="onClickDownloadCertificate(selectedAthlete, $event)" [minWidth]="'100%'" [iconName]="'download'" [tooltipText]="'Nachweis herunterladen'" [backgroundColor]="'var(--brand-500)'" [iconColor]="'var(--accent-0)'"/>
+                          <app-quaternary-button (click)="onClickDeleteCertificate()" [minWidth]="'100%'" [iconName]="'delete'" [tooltipText]="'Nachweis löschen'" [strokeWidth]="'2'" [backgroundColor]="'var(--danger)'" [iconColor]="'var(--accent-0)'"/>
+                        </div>
+                        </div>
+                        <!--                        TODO: Dummy Picture for style, need to be removed in final solution-->
+                        <img id="swimcert-image" src="assets/img/swimmcert-exists.jpg" alt="Schwimmnachweis vorhanden"/>
+                      </div>
+                    </ng-template>
+
                 </div>
             </div>
         </div>

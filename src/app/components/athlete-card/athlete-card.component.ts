@@ -17,8 +17,11 @@ import { AthleteCompletesResponseSchema } from '../../shared/generated';
 })
 
 export class AthleteCardComponent {
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) {
+    this.currentYear = new Date().getFullYear().toString();
+  }
   routeSubscription!: Subscription;
+  currentYear: string;
 
   isActive: boolean = false;
   @Input() athlete!: AthleteFullResponseSchema;
