@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IconComponent } from '../../icon/icon.component';
 
@@ -22,9 +22,4 @@ export class QuaternaryButtonComponent {
     @Input() tooltipText: string = '';
     @Input() backgroundColor: string = "var(--accent-50)";
     @Input() disabled: boolean = false;
-    @Output() click = new EventEmitter<any>();
-
-    onButtonClick(event: Event) {
-        this.click.emit(event);
-    }
 }
