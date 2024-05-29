@@ -5,7 +5,7 @@
     display: grid;
     grid-template-columns: 28.75rem 1fr;
     grid-template-rows: 1fr;
-    
+
     @media (max-width: 1000px) {
         grid-template-columns: 4rem 1fr;
     }
@@ -18,7 +18,7 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    
+
     @media (max-width: 1000px) {
         grid-template-columns: 1fr;
     }
@@ -39,7 +39,7 @@
     gap: 1.25rem;
 }
 
-#page.no-offest #content {
+#page.no-offset #content {
     grid-row-start: 1;
     grid-row-end: 2;
     grid-column-start: 1;
