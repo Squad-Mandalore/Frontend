@@ -145,7 +145,6 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 10;
     height: 100dvh;
     width: 28.75rem;
     display: flex;
@@ -173,7 +172,7 @@
     padding: 1.25rem 1.875rem 1.875rem 1.875rem;
     overflow: auto;
     @media (max-width: 1000px) {
-        padding: 0.625rem; 
+        padding: 0.625rem;
         max-width: 4rem;
         overflow-y: auto;
         overflow-x: hidden;

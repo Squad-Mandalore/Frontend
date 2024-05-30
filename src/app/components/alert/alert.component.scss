@@ -2,7 +2,6 @@
     position: fixed;
     top: 4.375rem;
     right: 3.125rem;
-    z-index: 9999;
 }
 
 #alert {
@@ -34,7 +33,7 @@
     font-size: 0.9375rem;
     color: var(--accent-400);
     width: 100%;
-    white-space: pre-wrap;    
+    white-space: pre-wrap;
 }
 
 #close-button {

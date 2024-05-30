@@ -385,7 +385,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
-    z-index: 5;
 }
 
 .under-undermenu{
@@ -408,7 +407,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
-    z-index: 5;
 }
 
 #progress-container, #swimcert-container{
@@ -598,7 +596,6 @@
     display: flex;
     flex-direction: column;
     gap: 3.125rem;
-    z-index: 20;
 }
 
 #athlete-details.active{
@@ -702,13 +699,11 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 0;
     transition: all 100ms;
     background-color: #00000030;
 }
 
 #overlay-lower.active{
-    z-index: 10;
     opacity: 100;
     visibility: visible;
 }

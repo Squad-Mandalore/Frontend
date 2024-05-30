@@ -18,7 +18,7 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    
+
     @media (max-width: 1000px) {
         grid-template-columns: 1fr;
     }
@@ -252,7 +252,6 @@
     padding-bottom: 0.625rem;
     position: sticky;
     top: 0;
-    // z-index: 10;
     background-color: var(--accent-0);
 
 }
@@ -338,7 +337,6 @@
     .filter:hover>.under-undermenu {
         opacity: 100;
         visibility: visible;
-        z-index: 11;
     }
 
     .filter:hover>.arrow-right {
@@ -413,7 +411,7 @@
         display: flex;
         flex-direction: column;
         gap: 0.125rem;
-        z-index: 11;
+        z-index: 1;
     }
 
     .under-undermenu {
@@ -436,7 +434,6 @@
         display: flex;
         flex-direction: column;
         gap: 0.125rem;
-        z-index: 15;
     }
 
   .swimcert-button-container{
@@ -478,7 +475,7 @@
     place-items: center;
     box-shadow: 0px 0px 50px var(--accent-200);
   }
-  
+
   #swimcert-outer-container{
     height: 100%;
     width: 100%;
@@ -706,7 +703,6 @@
         display: flex;
         flex-direction: column;
         gap: 3.125rem;
-        z-index: 40;
     }
 
     #athlete-details.active {
@@ -814,19 +810,16 @@
         position: fixed;
         top: 0;
         left: 0;
-        z-index: 100;
         transition: all 100ms;
         background-color: #00000030;
     }
 
     #overlay-lower.active {
-        z-index: 20;
         opacity: 100;
         visibility: visible;
     }
 
     #overlay-higher.active {
-        z-index: 50;
         opacity: 100;
         visibility: visible;
     }

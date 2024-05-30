@@ -126,7 +126,6 @@
     position: sticky;
     top: 0;
     background-color: var(--accent-0);
-    z-index: 10;
 }
 
 #table-head > div > span{
@@ -226,7 +225,6 @@
 .more-icon:hover > .undermenu, .filter:hover > .undermenu, .filter:hover > .under-undermenu{
     opacity: 100;
     visibility: visible;
-    z-index: 15;
 }
 
 .filter:hover > .arrow-right{
@@ -305,7 +303,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
-    z-index: 5;
+    z-index: 1;
 }
 
 .under-undermenu{
@@ -328,7 +326,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
-    z-index: 5;
 }
 
 .text-align-center{

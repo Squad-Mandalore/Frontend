@@ -10,7 +10,6 @@
     top: 0;
     left: 0;
     background-color: #00000040;
-    z-index: 100;
 }
 
 #modal{
@@ -26,7 +25,6 @@
     box-shadow: 0.625rem 0.625rem 2.5rem #00000020;
     display: flex;
     flex-direction: column;
-    z-index: 101;
     max-width: 98%;
 
 }
@@ -87,7 +85,7 @@ input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-  
+
 .input:focus, .input:hover, .multiple-input:focus, .multiple-input:hover, .time-input:focus, .time-input:hover{
     outline: 0;
     border: 0.0625rem solid var(--brand-500);
@@ -189,7 +187,7 @@ input[type="number"]::-webkit-outer-spin-button {
     position: relative;
     border-radius: 0.1875rem;
   }
-  
+
   .discipline-name>div{
     position: absolute;
     top: 50%;
@@ -207,7 +205,7 @@ input[type="number"]::-webkit-outer-spin-button {
     border-radius: 0.1875rem;
     width: 21.875rem;
 }
-  
+
 .discipline-item-empty-state{
     font-family: "Inter Medium";
     font-size: 0.875rem;
@@ -215,26 +213,26 @@ input[type="number"]::-webkit-outer-spin-button {
     color: var(--accent-600);
     width: 100%;
 }
-  
+
 .discipline-item>div:first-child{
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-  
+
 .discipline-item:hover{
     background-color: var(--accent-100);
     cursor: pointer;
     border-color: var(--accent-200);
 }
-  
+
 .discipline-item.active{
     background-color: var(--brand-100);
     border-color: var(--brand-300);
     color: var(--brand-500);
 }
-  
+
 
 #input-wrapper{
     display: flex;
@@ -310,7 +308,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 #modal-footer *{
-    width: 100%;    
+    width: 100%;
 }
 
 // buttons

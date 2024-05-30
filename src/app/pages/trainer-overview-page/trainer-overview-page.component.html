@@ -1,5 +1,4 @@
 <div id="page" [class]="user && user.type === 'trainer' ? 'no-offset' : ''">
-    <app-sidebar [type]="'trainer'" [trainers]="trainers" [isLoading]="isLoading" [modals]="modals" *ngIf="user && user.type !== 'trainer'"></app-sidebar>
     <div id="content" *ngIf="selectedTrainer; else elseBlock">
         <div id="headline-wrapper">
             <p class="headline">Trainer-Übersicht</p>
@@ -33,6 +32,7 @@
             </div>
         </div>
     </ng-template>
+    <app-sidebar [type]="'trainer'" [trainers]="trainers" [isLoading]="isLoading" [modals]="modals" *ngIf="user && user.type !== 'trainer'"></app-sidebar>
 </div>
 <app-navbar-bottom></app-navbar-bottom>
 <app-create-trainer-modal [@enterAnimation] *ngIf="modals.patchTrainerModal.isActive" [modal]="modals.patchTrainerModal" [selectedTrainer]="selectedTrainer" (trainerCallback)="patchTrainer($event)" (fileCallback)="csvParse($event)"></app-create-trainer-modal>
