@@ -37,7 +37,7 @@ export class FormatResultPipe implements PipeTransform {
   removeLeadingZero(value: string): string {
     // Remove leading zeros
     let formattedValue = value
-    
+
     while (formattedValue.startsWith('0') && formattedValue.length > 1) {
         formattedValue = formattedValue.replace(/^0+/, '');
         // If there's a colon within the leading zeros, remove it

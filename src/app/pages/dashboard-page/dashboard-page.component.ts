@@ -43,7 +43,6 @@ import { PDFDocument, PDFForm } from 'pdf-lib';
 import { HttpClient } from '@angular/common/http';
 import { FormatResultPipe } from '../../shared/format-result.pipe';
 
-
 @Component({
   selector: 'app-dashboard',
   standalone: true,

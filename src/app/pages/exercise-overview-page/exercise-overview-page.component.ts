@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { NavbarBottomComponent } from '../../components/navbar-bottom/navbar-bottom.component';
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { AuthService, RulePostSchema, RuleResponseSchema, RulesService, UserResponseSchema } from '../../shared/generated';
+import { AuthService, RuleResponseSchema, RulesService, UserResponseSchema } from '../../shared/generated';
 import { UserCardComponent } from '../../components/user-card/user-card.component';
 import { PrimaryButtonComponent } from '../../components/buttons/primary-button/primary-button.component';
 import { SecondaryButtonComponent } from '../../components/buttons/secondary-button/secondary-button.component';
@@ -17,7 +17,6 @@ import { CreateExerciseModalComponent } from '../../components/create-exercise-m
 import { EditExerciseModalComponent } from '../../components/edit-exercise-modal/edit-exercise-modal.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { FormatResultPipe } from '../../shared/format-result.pipe';
-import { isFormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-exercise-overview',
@@ -145,7 +144,7 @@ export class ExerciseOverviewComponent implements OnInit, OnDestroy {
 
   createExercise(title: string, category_id: string, from_age: number, to_age: number, bronze_value: string){
     // const schema: RulePostSchema = {
-    //   title: title, 
+    //   title: title,
 
     //   gender: Gender;
     //   from_age: from_age,
