@@ -1687,7 +1687,13 @@
         "operationId": "read_trainer_csv_csv_trainer_csv_get",
         "responses": {
           "200": {
-            "description": "Successful Response"
+            "description": "Returns the trainer CSV file.",
+            "content": {
+              "text/csv": {}
+            }
+          },
+          "404": {
+            "description": "CSV file not found."
           }
         }
       }
@@ -1701,7 +1707,13 @@
         "operationId": "read_athlete_csv_csv_athlete_csv_get",
         "responses": {
           "200": {
-            "description": "Successful Response"
+            "description": "Returns the athlete CSV file.",
+            "content": {
+              "text/csv": {}
+            }
+          },
+          "404": {
+            "description": "CSV file not found."
           }
         }
       }
@@ -1715,7 +1727,13 @@
         "operationId": "read_completes_csv_csv_completes_csv_get",
         "responses": {
           "200": {
-            "description": "Successful Response"
+            "description": "Returns the completes CSV file.",
+            "content": {
+              "text/csv": {}
+            }
+          },
+          "404": {
+            "description": "CSV file not found."
           }
         }
       }
