@@ -827,7 +827,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     document.body.appendChild(a);
     a.style.display = 'none';
     a.href = url;
-    a.download = fileName;
+    a.download = fileName + '.pdf';
     a.click();
 
     // Release the URL-Object
