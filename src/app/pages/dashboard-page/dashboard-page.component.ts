@@ -319,7 +319,13 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'filled-form.pdf';
+        const filename = `Einzelprüfkarte-${this.selectedAthlete?.firstname}-${this.selectedAthlete?.lastname}.pdf`;
+        if (!this.selectedAthlete) {
+          link.download = 'Einzelprüfkarte.pdf';
+        }
+        else {
+          link.download = filename;
+        }
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
