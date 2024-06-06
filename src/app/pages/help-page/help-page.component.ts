@@ -156,12 +156,12 @@ downloadPDF() {
   pdf.setFontSize(18); // Set the font size for the headline
 
   // Adding the headline text at the top of the document
-  pdf.text('Nutzungshinweise', 20, 40);
+  pdf.text('Squad Mandalore Präsentation 07.06.2024', 20, 40);
 
   // Now render the HTML content below the headline
   pdf.html(element, {
     callback: (doc) => {
-      doc.save('help-page.pdf');
+      doc.save('squad-mandalore-slides.pdf');
     },
     x: 10,
     y: 40,
