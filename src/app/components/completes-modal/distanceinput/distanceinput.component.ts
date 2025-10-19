@@ -79,7 +79,7 @@ export class DistanceinputComponent implements ControlValueAccessor, Validator {
     let metersResult = '';
     let centimetersResult = '';
 
-    let kilometersForOutput = Math.floor(combinedCentimeters / 100000);
+    const kilometersForOutput = Math.floor(combinedCentimeters / 100000);
     if (kilometersForOutput < 10) {
       kilometersResult = '00' + kilometersForOutput.toString();
     } else if (kilometersForOutput > 9 && kilometersForOutput < 100) {
@@ -89,7 +89,7 @@ export class DistanceinputComponent implements ControlValueAccessor, Validator {
     }
     combinedCentimeters %= 100000;
 
-    let metersForOutput = Math.floor(combinedCentimeters / 100);
+    const metersForOutput = Math.floor(combinedCentimeters / 100);
     if (metersForOutput < 10) {
       metersResult = '00' + metersForOutput.toString();
     } else if (metersForOutput > 9 && metersForOutput < 100) {
@@ -99,7 +99,7 @@ export class DistanceinputComponent implements ControlValueAccessor, Validator {
     }
     combinedCentimeters %= 100;
 
-    let centimetersForOutput = Math.floor(combinedCentimeters / 1);
+    const centimetersForOutput = Math.floor(combinedCentimeters / 1);
     if (centimetersForOutput < 10) {
       centimetersResult = '0' + centimetersForOutput.toString();
     } else {

@@ -8,10 +8,9 @@ describe('QuaternaryButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QuaternaryButtonComponent]
-    })
-    .compileComponents();
-    
+      imports: [QuaternaryButtonComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(QuaternaryButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

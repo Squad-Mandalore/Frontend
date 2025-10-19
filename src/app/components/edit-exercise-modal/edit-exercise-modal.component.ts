@@ -162,12 +162,12 @@ export class EditExerciseModalComponent implements OnInit {
   }
 
   submitNewTime(hours: number, minutes: number, seconds: number, milliseconds: number): string {
-    let totalSeconds = (hours * 3600) + (minutes * 60) + seconds + (milliseconds * 0.001);
+    const totalSeconds = (hours * 3600) + (minutes * 60) + seconds + (milliseconds * 0.001);
 
-    let hoursResult = Math.floor(totalSeconds / 3600);
-    let minutesResult = Math.floor((totalSeconds % 3600) / 60);
-    let secondsResult = Math.floor(totalSeconds % 60);
-    let millisecondsResult = Math.floor((totalSeconds % 1) * 1000);
+    const hoursResult = Math.floor(totalSeconds / 3600);
+    const minutesResult = Math.floor((totalSeconds % 3600) / 60);
+    const secondsResult = Math.floor(totalSeconds % 60);
+    const millisecondsResult = Math.floor((totalSeconds % 1) * 1000);
 
     const formatWithLeadingZero = (value: number): string => {
       return value < 10 ? '0' + value : value.toString();
@@ -179,13 +179,13 @@ export class EditExerciseModalComponent implements OnInit {
   submitNewDistance(kilometers: number, meters: number, centimeters: number): string {
     let combinedCentimeters = (kilometers! * 100000) + (meters! * 100) + (centimeters! * 1);
 
-    let kilometersResult = Math.floor(combinedCentimeters / 100000).toString().padStart(3, '0');
+    const kilometersResult = Math.floor(combinedCentimeters / 100000).toString().padStart(3, '0');
     combinedCentimeters %= 100000;
 
-    let metersResult = Math.floor(combinedCentimeters / 100).toString().padStart(3, '0');
+    const metersResult = Math.floor(combinedCentimeters / 100).toString().padStart(3, '0');
     combinedCentimeters %= 100;
 
-    let centimetersResult = Math.floor(combinedCentimeters / 1).toString().padStart(2, '0');
+    const centimetersResult = Math.floor(combinedCentimeters / 1).toString().padStart(2, '0');
 
     return kilometersResult + ':' + metersResult + ':' + centimetersResult;
   }

@@ -8,10 +8,9 @@ describe('TimeinputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TimeinputComponent]
-    })
-    .compileComponents();
-    
+      imports: [TimeinputComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TimeinputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
