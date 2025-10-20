@@ -64,7 +64,7 @@ export class InitialPasswordChangeModalComponent {
       return;
     }
 
-    let body: TrainerPatchSchema | AthletePatchSchema | AdminPatchSchema= {
+    const body: TrainerPatchSchema | AthletePatchSchema | AdminPatchSchema= {
       unhashed_password: password
     };
 

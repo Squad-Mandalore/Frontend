@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import {DashboardPageComponent} from "./dashboard-page.component";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
+import { DashboardPageComponent } from './dashboard-page.component';
 
 describe('DashboardPageComponent', () => {
   let component: DashboardPageComponent;
@@ -8,12 +10,20 @@ describe('DashboardPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DashboardPageComponent],
+      imports: [DashboardPageComponent, HttpClientTestingModule],
       providers: [
-        { provide: ActivatedRoute, useValue: { snapshot: { url: '/athleten' } } },
-      ]
-    })
-      .compileComponents();
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              url: [{ toString: () => 'athleten' }],
+            },
+            params: of({}),
+            queryParams: of({}),
+          },
+        },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardPageComponent);
     component = fixture.componentInstance;

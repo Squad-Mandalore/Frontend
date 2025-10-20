@@ -13,11 +13,11 @@ export class AlertService {
 
   get Title(){
     return this.alertTitle;
-  };
+  }
 
   get Description(){
     return this.alertDescription;
-  };
+  }
 
   get Type() {
     return this.type;

@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 import { TrainerCardComponent } from './trainer-card.component';
 
 describe('TrainerCardComponent', () => {
@@ -7,10 +9,18 @@ describe('TrainerCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TrainerCardComponent]
-    })
-    .compileComponents();
-    
+      imports: [TrainerCardComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({}),
+            queryParams: of({}),
+          },
+        },
+      ],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TrainerCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

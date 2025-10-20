@@ -81,7 +81,7 @@ export class TimeinputComponent implements ControlValueAccessor , Validator{
     let millisecondsResult = '';
 
     // Stunden
-    let hoursForOutput = Math.floor(combinedSeconds / 3600);
+    const hoursForOutput = Math.floor(combinedSeconds / 3600);
     if(hoursForOutput < 10) {
       hoursResult = '0'+hoursForOutput.toString();
     } else {
@@ -90,7 +90,7 @@ export class TimeinputComponent implements ControlValueAccessor , Validator{
     combinedSeconds %= 3600;
 
     // Minuten
-    let minutesForOutput = Math.floor(combinedSeconds / 60);
+    const minutesForOutput = Math.floor(combinedSeconds / 60);
     if(minutesForOutput < 10) {
       minutesResult = '0'+minutesForOutput.toString();
     } else {
@@ -99,7 +99,7 @@ export class TimeinputComponent implements ControlValueAccessor , Validator{
     combinedSeconds %= 60;
 
     // Sekunden
-    let secondsForOutput = Math.floor(combinedSeconds / 1);
+    const secondsForOutput = Math.floor(combinedSeconds / 1);
     if(secondsForOutput < 10) {
       secondsResult = '0'+secondsForOutput.toString();
     } else {
@@ -108,7 +108,7 @@ export class TimeinputComponent implements ControlValueAccessor , Validator{
     combinedSeconds %= 1;
 
     // Millisekunden
-    let millisecondsForOutput = Math.floor(combinedSeconds * 1000);
+    const millisecondsForOutput = Math.floor(combinedSeconds * 1000);
     if(millisecondsForOutput < 10) {
       millisecondsResult = '00'+millisecondsForOutput.toString();
     } else if(millisecondsForOutput > 9 && millisecondsForOutput < 100) {

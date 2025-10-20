@@ -8,10 +8,9 @@ describe('DistanceinputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DistanceinputComponent]
-    })
-    .compileComponents();
-    
+      imports: [DistanceinputComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DistanceinputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

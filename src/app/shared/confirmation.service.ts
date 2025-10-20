@@ -16,11 +16,11 @@ export class ConfirmationService {
 
   get Title(){
     return this.title;
-  };
+  }
 
   get Description(){
     return this.description;
-  };
+  }
 
   get ConfirmText() {
     return this.confirmText;

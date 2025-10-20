@@ -121,7 +121,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   patchAthlete(createAthleteForm: FormGroup) {
-    let body: AthletePatchSchema = {
+    const body: AthletePatchSchema = {
       ...createAthleteForm.value
     };
     //delete empty fields, so they wont be overwritten
@@ -221,8 +221,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   csvParse(file: File) {
     this.csvService.parseCsvFileCsvParsePost(file).subscribe({
       next: (response: ResponseParseCsvFileCsvParsePost) => {
-        let arr: string[] = Object.keys(response).map(key => `${key}: ${response[key as keyof typeof response]}`);
-        let str: string = arr.join('\n');
+        const arr: string[] = Object.keys(response).map(key => `${key}: ${response[key as keyof typeof response]}`);
+        const str: string = arr.join('\n');
         this.gnNoTini();
         this.alertService.show('CSV-Daten erfolgreich hinzugefügt', str, 'success');
         // important because you havent typed modals properly

@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import {NavbarBottomComponent} from "./navbar-bottom.component";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
+import { NavbarBottomComponent } from './navbar-bottom.component';
 
 describe('NavbarBottomComponentComponent', () => {
   let component: NavbarBottomComponent;
@@ -8,12 +10,20 @@ describe('NavbarBottomComponentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavbarBottomComponent],
+      imports: [NavbarBottomComponent, HttpClientTestingModule],
       providers: [
-        { provide: ActivatedRoute, useValue: { snapshot: { url: '/athleten' } } },
-      ]
-    })
-      .compileComponents();
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              url: [{ toString: () => 'athleten' }],
+            },
+            params: of({}),
+            queryParams: of({}),
+          },
+        },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NavbarBottomComponent);
     component = fixture.componentInstance;

@@ -1,65 +1,182 @@
-# Squad-Mandalore-Frontend
+# 🏃‍♂️ Squad-Mandalore Sportvereins-Management System - Frontend
 
-## Setup
+Eine moderne Web-Applikation zur Verwaltung von Jugendvereinen und Sportvereinen. Das System ermöglicht die umfassende Verwaltung von Athleten, Trainern, Übungen, Leistungen und Sportabzeichen.
 
-1. Clone Git Project ```https://github.com/Squad-Mandalore/Frontend.git``` Or SSH / Github CLI  
+## 📋 Über das Projekt
 
-*In case of access denied push, generate Personal access token or SSH Usage 
+Das Squad-Mandalore Frontend ist eine Angular-basierte Single-Page-Application (SPA), die in Verbindung mit dem [Backend](https://github.com/Squad-Mandalore/Backend) ein vollständiges Vereinsmanagement-System bildet. Die Anwendung wurde speziell für Jugendvereine entwickelt und bietet eine intuitive Benutzeroberfläche für die tägliche Vereinsarbeit.
 
-```Profile > Settings > Developer Settings > Personal access token (classic)``` 
+### 🎯 Hauptfunktionen
 
-2. Install all Modules (Requirement Node.js installed) ```npm install```  
+- **👥 Athletenverwaltung**: Registrierung, Profilverwaltung und Leistungsübersicht von Sportlern
+- **🏃‍♂️ Trainerverwaltung**: Verwaltung von Trainerprofilen und Zuordnung zu Athletengruppen
+- **🏅 Medaillen & Auszeichnungen**: Tracking von Sportabzeichen, Medaillen und Leistungen
+- **📊 Übungskatalog**: Umfassende Datenbank mit Sportübungen und Disziplinen
+- **📈 Leistungsanalyse**: Visualisierung von Trainingsfortschritten und Wettkampfergebnissen
+- **🔐 Benutzerverwaltung**: Rollenbasierte Zugriffskontrolle (Admin, Trainer, Athlet)
+- **📱 Responsive Design**: Optimiert für Desktop, Tablet und Mobile
 
-3. To install all OpenApi files that are needed in this Project, use
+### 🛠️ Technologie-Stack
 
-```npm run apigen``` *(this requires the Backend running on localhost)*
+- **Frontend Framework**: Angular 17+
+- **UI/UX**: Custom SCSS Design System
+- **State Management**: RxJS & Angular Services
+- **Testing**: Karma + Jasmine
+- **Build Tool**: Angular CLI
+- **Code Quality**: ESLint + Prettier
+- **Package Manager**: Bun (schneller als npm)
 
-or
+## 🚀 Schnellstart
 
-```npm run apigen-f``` *(this may use an older version of the Backend-API)*
+### Voraussetzungen
 
-4. You`re good to go!
+- [Node.js](https://nodejs.org/) (Version 18 oder höher)
+- [Bun](https://bun.sh/) (Package Manager - schneller als npm)
+- [Git](https://git-scm.com/)
+- Chrome/Chromium Browser (für Tests)
 
+### Installation
 
-## Dependencies
+1. **Repository klonen**
+   ```bash
+   git clone https://github.com/Squad-Mandalore/Frontend.git
+   cd Frontend
+   ```
 
-Already installed dependencies are:  
+2. **Abhängigkeiten installieren**
+   ```bash
+   bun install
+   ```
 
-- [ESLint](https://eslint.org/docs/latest/) and [angular-eslint/schematics](https://github.com/angular-eslint/angular-eslint) Code Convention and Style
+3. **Backend einrichten**
+   
+   Das Frontend benötigt das Backend für die vollständige Funktionalität:
+   ```bash
+   # In einem separaten Terminal/Ordner
+   git clone https://github.com/Squad-Mandalore/Backend.git
+   cd Backend
+   # Folgen Sie den Setup-Anweisungen im Backend README
+   ```
 
+4. **OpenAPI Generierung**
+   
+   Für die Kommunikation mit dem Backend:
+   ```bash
+   # Mit laufendem Backend auf localhost
+   bun run apigen
+   
+   # Oder mit älterer API-Version (fallback)
+   bun run apigen-f
+   ```
 
-# Angular Introduction
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.9.
->[!NOTE]
->To use the locally installed Angular CLI **all** `ng` commands have to be prefixed with `npx`
-<details>
-  <summary>Example</summary>
+5. **Development Server starten**
+   ```bash
+   bun run dev
+   # oder
+   ng serve
+   ```
+   
+   Die Anwendung ist nun unter `http://localhost:4200` erreichbar.
 
-  Run `npx ng serve` for a dev server.
-</details>
+## 🔧 Entwicklung
 
-## Development server
+### Development Server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+```bash
+bun run start
+# oder
+ng serve
+```
+Startet den Entwicklungsserver. Die Anwendung lädt automatisch neu bei Dateiänderungen.
 
-## Code scaffolding
+### Code Generierung
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+ng generate component component-name
+ng generate service service-name
+ng generate guard guard-name
+```
 
-## Build
+### Tests ausführen
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+bun run test
+```
 
-## Running unit tests
-The Unit Tests ***require*** Chrome / Chromium Web Browser installed.
+### Build
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).  
+```bash
+# Production Build
+bun run build
+# oder Development Build
+ng build
+```
 
+## 📁 Projektstruktur
 
-## Running end-to-end tests
+```
+src/
+├── app/
+│   ├── components/          # Wiederverwendbare UI-Komponenten
+│   │   ├── athlete-card/    # Athleten-Karten
+│   │   ├── navbar-bottom/   # Navigation
+│   │   ├── sidebar/         # Seitenleiste
+│   │   └── ...
+│   ├── pages/              # Hauptseiten der Anwendung
+│   │   ├── dashboard-page/ # Dashboard/Übersicht
+│   │   ├── login-page/     # Anmeldung
+│   │   └── ...
+│   ├── shared/             # Geteilte Services und Utilities
+│   │   ├── generated/      # Auto-generierte API-Clients
+│   │   ├── guard/          # Route Guards
+│   │   └── services/       # Business Logic Services
+│   └── utils/              # Hilfsfunktionen
+├── assets/                 # Statische Assets (Bilder, Fonts)
+└── styles.scss            # Globale Styles
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🌐 API Integration
 
-## Further help
+Das Frontend kommuniziert über eine RESTful API mit dem Backend. Die API-Clients werden automatisch aus der OpenAPI-Spezifikation generiert:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- **Backend Repository**: [Squad-Mandalore/Backend](https://github.com/Squad-Mandalore/Backend)
+- **API Dokumentation**: Verfügbar im Backend unter `/docs` (Swagger UI)
+
+### API Endpoints (Beispiele)
+
+- `GET /athletes` - Athleten abrufen
+- `POST /athletes` - Neuen Athleten erstellen
+- `GET /exercises` - Übungskatalog abrufen
+- `POST /auth/login` - Benutzeranmeldung
+
+## 📦 Deployment
+
+### Docker (Compose)
+
+```bash
+# Docker Image bauen
+docker build -t squad-mandalore-frontend .
+
+# Container starten
+docker run -p 4200:80 squad-mandalore-frontend
+```
+
+## 📞 Support & Kontakt
+
+- **Issues**: [GitHub Issues](https://github.com/Squad-Mandalore/Frontend/issues)
+- **Backend**: [Squad-Mandalore/Backend](https://github.com/Squad-Mandalore/Backend)
+- **Wiki**: [Projektdokumentation](https://github.com/Squad-Mandalore/Frontend/wiki)
+
+## 📄 Lizenz
+
+Dieses Projekt unterliegt einer proprietären Lizenz. Weitere Informationen finden Sie in der [LICENSE](LICENSE) Datei.
+
+## 🔄 Changelog
+
+### Version 1.0.0
+- xxx
+- AI-generated READMe.md (pretty good tho)
+
+---
+
+**Entwickelt mit ❤️ von Squad-Mandalore für die Jugendvereinsarbeit**

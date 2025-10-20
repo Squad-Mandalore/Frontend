@@ -64,7 +64,7 @@ export class TrainerOverviewPageComponent {
      return;
     }
     // Add Data for the Http-Request for the Backend
-    let body: TrainerPostSchema = {
+    const body: TrainerPostSchema = {
       ...trainerForm.value
     };
     this.trainerService.createTrainerTrainersPost(body).subscribe({
@@ -85,7 +85,7 @@ export class TrainerOverviewPageComponent {
   }
   patchTrainer(trainerForm: FormGroup){
     // Add Data for the Http-Request for the Backend
-    let body: TrainerPatchSchema = {
+    const body: TrainerPatchSchema = {
       ...trainerForm.value
     };
     //delete empty fields, so they wont be overwritten
@@ -138,8 +138,8 @@ export class TrainerOverviewPageComponent {
   csvParse(file: File) {
     this.csvService.parseCsvFileCsvParsePost(file).subscribe({
       next: (response: ResponseParseCsvFileCsvParsePost) => {
-        let arr: string[] = Object.keys(response).map(key => `${key}: ${response[key as keyof typeof response]}`);
-        let str: string = arr.join('\n');
+        const arr: string[] = Object.keys(response).map(key => `${key}: ${response[key as keyof typeof response]}`);
+        const str: string = arr.join('\n');
         this.gnNoTini();
         this.alertService.show('CSV-Daten erfolgreich hinzugefügt', str, 'success');
         // no loop because no type
@@ -208,7 +208,7 @@ export class TrainerOverviewPageComponent {
             complete: () => {
               this.routeSubscription = this.route.queryParams.subscribe(params => {
                 const trainerId = params['id'];
-                
+
                 if(trainerId){
                   this.selectedTrainer = this.trainers.filter(element => element.id == trainerId)[0];
                   if(!this.selectedTrainer){
@@ -218,7 +218,7 @@ export class TrainerOverviewPageComponent {
               });
             }
           });
-        }  
+        }
       }
     })
   }
